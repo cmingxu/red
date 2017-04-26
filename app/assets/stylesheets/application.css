@@ -1,0 +1,66 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require font-awesome
+ *= require bootstrap-markdown.min
+ *= require_self
+ */
+
+
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+.icon_holder{
+  background-color: #6db5f9;
+  margin: 10px;
+  padding: 10px;
+}
+
+.preview_holder{
+  display: block;
+  width: 100px;
+  height: 100px;
+  border: 1px solid dashed;
+  content: '';
+}
+
+.quick_link_table{
+  border: 1px solid dashed;
+}
+
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('../assets/glyphicons-halflings-regular.eot');
+  src: url('../assets/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),
+  url('../assets/glyphicons-halflings-regular.woff') format('woff'),
+  url('../assets/glyphicons-halflings-regular.ttf') format('truetype'),
+  url('../assets/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}

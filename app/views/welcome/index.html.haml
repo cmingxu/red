@@ -1,0 +1,11 @@
+%h1 foobar
+= $zk.get path: '/mesos/json.info_0000000007'
+%hr
+= $zk.get_children path: '/mesos'
+
+-x =  Mesos.new(leader: "http://114.55.130.152:5050").state
+
+- x.each do |k,v|
+  %h1= k
+  = v
+
