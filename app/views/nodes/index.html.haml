@@ -1,0 +1,27 @@
+%h3 全部主机
+
+%table.table.table-stripped
+  %thead
+    %tr
+      %th 主机名
+      %th IP
+      %th CPU
+      %th 内存
+      %th 磁盘
+
+  %tbody
+    - @nodes.each do |node|
+      %tr
+        %td= link_to node.hostname, node_path(node)
+        %td= node.state
+        %td= node.state
+        %td= node.state
+        %td= node.state
+        %td
+          = link_to '容器', node_containers_path(node)
+          = link_to '镜像', node_images_path(node)
+          = link_to '网络', node_networks_path(node)
+          = link_to '存储', node_volumes_path(node)
+
+
+

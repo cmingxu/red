@@ -1,0 +1,22 @@
+%h3 所有镜像
+
+%table.table.table-stripped
+  %thead
+    %tr
+      %th ID
+      %th 标签
+      %th 大小
+      %th 创建时间
+
+  %tbody
+    - @images.each do |image|
+      %tr
+        %td= link_to truncate(image.id, length: 18), node_image_path(@node, image.id)
+        %td
+          .label.label-primary
+            = image.info["RepoTags"].first
+        %td= number_to_human_size image.info["Size"]
+        %td= Time.at(image.info["Created"])
+
+
+

@@ -1,0 +1,43 @@
+= panel_item('操作', :cogs) do
+  .btn-group{role: 'group', 'aria-label':'...'}
+    - container_actions.each do |action|
+      = link_to action[:display], send("#{action[:action]}_node_container_path", @node, @container.id), method: :patch, class: "btn btn-#{action[:btn_suffix]} btn-lg"
+
+= panel_item('容器状态', :server) do
+  = link_to fa_icon("plus", text: "指标"), stats_node_container_path(@node, @container.id)
+  = link_to fa_icon("plus", text: "日志"), logs_node_container_path(@node, @container.id)
+  = link_to fa_icon("plus", text: "控制台"), console_node_container_path(@node, @container.id)
+
+  %table.table
+    %tr
+      %td 名称
+      %td= @container.info["Name"]
+    %tr
+      %td 状态
+      %td= @container.info["State"]["Status"]
+    %tr
+      %td 创建时间
+      %td= @container.info["State"]["StartedAt"]
+
+
+= panel_item('容器详情', :server) do
+  %table.table
+
+= panel_item('容器存储', :cubes) do
+  %table.table.table-stripped
+    %thead
+      %tr
+        %td 主机地址
+        %td 容器地址
+    %tbody
+      - (@container.info["HostConfig"]["Binds"] || []).each do |m|
+        %tr
+          - source, destination = m.split(":")[0], m.split(":")[1]
+          %td= source
+          %td= destination
+
+
+.panel.panel-default
+  .panel-heading Container Networks
+  .panel-body
+    %table.table
