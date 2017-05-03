@@ -1,10 +1,19 @@
 Rails.application.routes.draw do
+  resources :registries
+  resources :images
+  resources :service_templates
+
+  resources :groups
+  resources :users
+
   namespace :api do
     resources :nodes  do
     end
 
     resource :mesos, only: [:show], controller: :mesos, action: :index
   end
+
+  resources :apps
 
   resources :nodes do
     resources :containers, only: [:index, :show]  do
@@ -27,6 +36,8 @@ Rails.application.routes.draw do
     resources :volumes, only: [:index, :show]
   end
 
+  put 'toggle_locale', controller: :application
+  
   get 'welcome/index'
   get 'mesos/index', as: :mesos
 

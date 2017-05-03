@@ -26,14 +26,17 @@
           %span.icon-bar
           %span.icon-bar
           %span.icon-bar
-        %a.navbar-brand(href="#") 
+        %a.navbar-brand(href="/")
+          = image_tag "logo-shurenyun-ico2.svg"
         .navbar-collapse.collapse.navbar-responsive-collapse
-          %ul.nav.navbar-nav
-            %li= link_to "应用", services_path
-            %li= link_to "基础", services_path
-            %li= link_to "账户", services_path
-            %li= link_to "Mesos", mesos_path
-            %li= link_to "主机", nodes_path
+          %ul.nav.navbar-nav.pull-right
+            %li= link_to t('nav.services'), services_path
+            %li= link_to t('nav.service_templates'), service_templates_path
+            %li= link_to t('nav.regiries'), registries_path
+            %li= link_to t('nav.mesos'), mesos_path
+            %li= link_to t('nav.host'), nodes_path
+            %li= link_to fa_icon(:user) + " cming.xu@gmail.com", root_path
+            %li= link_to fa_icon(:flag), toggle_locale_path, remote: true, method: :put
 
     .container-fluid
       .row

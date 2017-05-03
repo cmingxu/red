@@ -1,0 +1,1 @@
+json.array! @service_templates, partial: 'service_templates/service_template', as: :service_template

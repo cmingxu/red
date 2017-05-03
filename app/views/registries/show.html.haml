@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @registry.name
+%p
+  %b Hash:
+  = @registry.hash
+%p
+  %b Size:
+  = @registry.size
+
+= link_to 'Edit', edit_registry_path(@registry)
+\|
+= link_to 'Back', registries_path

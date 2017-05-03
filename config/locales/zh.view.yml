@@ -1,0 +1,18 @@
+zh-CN:
+  common:
+    id: "ID"
+    name: "名称"
+    size: "大小"
+    created_at: "创建时间"
+    finishied_at: "完成时间"
+    last_edit_at: "最后修改于"
+  nav:
+    host: "主机"
+    infra: "基础"
+    account: "账号"
+    services: "服务"
+    mesos: "Mesos"
+    service_templates: "应用模板"
+    regiries: "镜像管理"
+
+  app:

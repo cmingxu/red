@@ -1,0 +1,15 @@
+.panel
+  .media
+    .media-left.media-middle
+      = image_tag @service_template.icon, height: 200
+    .media-body
+      %h4.media-heading= @service_template.name
+      %p= @service_template.desc
+
+  .panel-body
+    .fobar{'data-provide': 'markdown-editable'}
+      = @service_template.readme
+
+
+
+

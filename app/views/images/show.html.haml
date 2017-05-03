@@ -1,39 +1,15 @@
-= panel_item "标签", :cc do
-  = link_to "xx", ""
+%p#notice= notice
 
+%p
+  %b Name:
+  = @image.name
+%p
+  %b Hash:
+  = @image.hash
+%p
+  %b Size:
+  = @image.size
 
-= panel_item "详情", :copy do
-  %table.table.table-stripped
-    %tr
-      %td ID
-      %td= @image.id
-
-    %tr
-      %td 大小
-      %td= number_to_human_size @image.info["Size"]
-
-    %tr
-      %td 创建时间
-      %td= @image.info["Created"]
-
-    %tr
-      %td Build
-      %td= number_to_human_size @image.info["Size"]
-
-
-    %tr
-      %td 作者
-      %td= number_to_human_size @image.info["Size"]
-
-
-
-
-
-
-
-
-
-
-
-
-
+= link_to 'Edit', edit_image_path(@image)
+\|
+= link_to 'Back', images_path

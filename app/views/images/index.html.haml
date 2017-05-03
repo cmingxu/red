@@ -1,22 +1,25 @@
-%h3 所有镜像
+%h1 Listing images
 
-%table{class: table_classes}
+%table
   %thead
     %tr
-      %th ID
-      %th 标签
-      %th 大小
-      %th 创建时间
+      %th Name
+      %th Hash
+      %th Size
+      %th
+      %th
+      %th
 
   %tbody
     - @images.each do |image|
       %tr
-        %td= link_to truncate(image.id, length: 18), node_image_path(@node, image.id)
-        %td
-          .label.label-primary
-            = image.info["RepoTags"].first
-        %td= number_to_human_size image.info["Size"]
-        %td= Time.at(image.info["Created"])
+        %td= image.name
+        %td= image.hash
+        %td= image.size
+        %td= link_to 'Show', image
+        %td= link_to 'Edit', edit_image_path(image)
+        %td= link_to 'Destroy', image, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
+%br
 
-
+= link_to 'New Image', new_image_path

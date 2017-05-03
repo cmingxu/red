@@ -1,0 +1,23 @@
+# == Schema Information
+#
+# Table name: group_users
+#
+#  id         :integer          not null, primary key
+#  group_id   :integer
+#  user_id    :integer
+#  role       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  group_id: 1
+  user_id: 1
+  role: MyString
+
+two:
+  group_id: 1
+  user_id: 1
+  role: MyString

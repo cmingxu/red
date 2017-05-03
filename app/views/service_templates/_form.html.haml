@@ -1,0 +1,14 @@
+= simple_form_for(@service_template) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name
+    = f.input :icon
+    = f.input :group_id
+    = f.input :user_id
+    = f.input :raw_config
+    = f.input :desc
+    = f.input :readme
+
+  .form-actions
+    = f.button :submit

@@ -1,0 +1,18 @@
+en:
+  common:
+    id: "ID"
+    name: "Name"
+    size: "Size"
+    created_at: "Created"
+    finishied_at: "Finished"
+    last_edit_at: "Last modified at"
+  nav:
+    host: "Host"
+    infra: "Infra"
+    account: "Account"
+    services: "Services"
+    mesos: "Mesos"
+    service_templates: "Universe"
+    registris: "Registry"
+
+  app:

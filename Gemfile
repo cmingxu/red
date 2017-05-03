@@ -49,6 +49,9 @@ gem 'docker-api'
 gem 'docker_registry2'
 gem 'marathon-api', :require => 'marathon'
 
+gem 'ledermann-rails-settings'
+
+
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
@@ -62,7 +65,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
   gem "better_errors"
-  gem 'faker'
+  gem 'faker', git: 'git@github.com:stympy/faker.git'
 end
 
 group :development do

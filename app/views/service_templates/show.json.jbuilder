@@ -1,0 +1,1 @@
+json.partial! "service_templates/service_template", service_template: @service_template

@@ -11,3 +11,11 @@ Faker::Config.locale
 1.upto(200) do |i|
   Node.create hostname: "114.55.130.152", state: 'active'
 end
+
+Faker::Config.locale = :en
+1.upto(200) do |i|
+  ServiceTemplate.create name: Faker::Name.name,
+    icon: Faker::Avatar.image("my-own-slug"),
+    desc: Faker::Lorem.sentence(3),
+    readme: (1.upto(30).map do  Faker::Markdown.random end).join
+end

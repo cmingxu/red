@@ -1,0 +1,16 @@
+.action_bar
+  = link_to "New Service", new_service_path, class: 'btn btn-success'
+  
+%table{class: table_classes}
+  %thead
+    %tr
+      %th= t('xx')
+      %th 标签
+      %th 大小
+      %th 创建时间
+
+  %tbody
+    - @services.each do |service|
+      %tr
+        %td= service.name
+
