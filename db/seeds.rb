@@ -19,3 +19,7 @@ Faker::Config.locale = :en
     desc: Faker::Lorem.sentence(3),
     readme: (1.upto(30).map do  Faker::Markdown.random end).join
 end
+
+
+User.create email: "admin@admin.com", password: "foobar1234", role: "SITE_ADMIN"
+

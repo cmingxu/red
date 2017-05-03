@@ -1,0 +1,5 @@
+= simple_form_for current_user, url: user_path(current_user) do |form|
+  = form.input :name
+
+  = form.submit t("common.update_btn"), class: 'btn'
+

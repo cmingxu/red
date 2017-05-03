@@ -1,0 +1,4 @@
+= simple_form_for @user, :url => login_path do |form|
+  = form.input :email
+  = form.input :password
+  = form.submit "登录", class: 'btn btn-lg btn-primary col-md-4'

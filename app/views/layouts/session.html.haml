@@ -5,7 +5,6 @@
     %meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
     %meta(name="viewport" content="width=device-width, initial-scale=1.0")
     %title= content_for?(:title) ? yield(:title) : "Green"
-
     = csrf_meta_tags
     = stylesheet_link_tag "application", :media => "all"
     = favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144'
@@ -19,32 +18,33 @@
       = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"
 
 
-  %body{class: controller_name}
+  %body
     .navbar.navbar-default.navbar-static-top
-      .container-fluid
+      .container
         %button.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse")
           %span.icon-bar
           %span.icon-bar
           %span.icon-bar
-        %a.navbar-brand(href="/")
-          = image_tag "logo-shurenyun-ico2.svg"
+        %a.navbar-brand(href="#") Green
         .navbar-collapse.collapse.navbar-responsive-collapse
-          %ul.nav.navbar-nav.navbar-right
-            %li= link_to t('nav.services'), services_path
-            %li= link_to t('nav.service_templates'), service_templates_path
-            %li= link_to t('nav.regiries'), registries_path
-            %li= link_to t('nav.mesos'), mesos_path
-            %li= link_to t('nav.host'), nodes_path
-            = drop_down fa_icon(:user) + " cming.xu@gamil.com" do
-              = menu_item t('nav.setting'), setting_path
-              = menu_item t('nav.logout'), logout_path, method: :delete
-              = drop_down_divider
-              = menu_item fa_icon(:flag), toggle_locale_path, remote: true, method: :put
+          %ul.nav.navbar-nav
+            %li= link_to "Link 1", "/path1"
+            %li= link_to "Link 2", "/path2"
+            %li= link_to "Link 3", "/path3"
+            %li= link_to "Link 3", "/path3"
 
-    .container-fluid
+    .container
       .row
-        .col-lg-12
+        .col-lg-9
           = bootstrap_flash
           = yield
+        .col-lg-3
+          .well.sidebar-nav
+            %h3 Sidebar
+            %ul.nav.nav-list
+              %li.nav-header Sidebar
+              %li= link_to "Link 1", "/path1"
+              %li= link_to "Link 2", "/path2"
+              %li= link_to "Link 3", "/path3"
       %footer
         %p &copy; Company 2017

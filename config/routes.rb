@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  get 'session/new', as: :new_session
+  post 'session/create', as: :login
+  delete 'session/destroy', as: :logout
+
+  get 'settings/account', as: :setting
+  get 'settings/group'
+
   resources :registries
   resources :images
   resources :service_templates
