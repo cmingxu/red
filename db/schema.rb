@@ -12,50 +12,11 @@
 
 ActiveRecord::Schema.define(version: 20170428221834) do
 
-  create_table "apps", force: :cascade do |t|
-    t.string   "name"
-    t.string   "owner"
-    t.string   "contact"
-    t.string   "appid"
-    t.string   "token"
-    t.datetime "last_active_time"
-    t.string   "last_active_ip"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-  end
-
-  create_table "categories", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "nodes", force: :cascade do |t|
     t.string   "hostname"
     t.string   "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "products", force: :cascade do |t|
-    t.string   "name"
-    t.string   "sku"
-    t.text     "desc"
-    t.decimal  "price"
-    t.decimal  "origin_price"
-    t.boolean  "is_publish"
-    t.integer  "quantity"
-    t.integer  "app_id"
-    t.string   "icon1"
-    t.string   "icon2"
-    t.string   "icon3"
-    t.string   "icon4"
-    t.string   "icon5"
-    t.string   "icon6"
-    t.string   "icon7"
-    t.string   "icon8"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
   end
 
 end

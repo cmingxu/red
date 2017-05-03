@@ -1,0 +1,23 @@
+%h3 所有网络
+
+%table{class: table_classes}
+  %thead
+    %tr
+      %th ID
+      %th 标签
+      %th 大小
+      %th 创建时间
+
+  %tbody
+    - @networks.each do |network|
+      %tr
+        %td= link_to network.info["Name"], node_network_path(@node, network.id)
+        %td= network.info["Driver"]
+        %td= network.info["Scope"]
+        %td= network.info["Created"]
+        %td= network.info["Labels"]
+        %td= network.info["Options"]
+
+
+
+

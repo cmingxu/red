@@ -1,27 +1,25 @@
-.panel.panel-default
-  .panel-heading Mesos Agents
-  .panel-content
-    %table.table.table-stripped.table-condensed.table-bordered
-      %thead
-        %td ID
-        %td 主机名
-        %td 健康
-        %td 资源
-        %td 已用
-        %td 已分
-        %td PID
-        %td 属性
-        %td 能力
-      %tbody
-        - @state["slaves"].each do |f|
-          %tr
-            %td= f["id"]
-            %td= f["hostname"]
-            %td= f["active"]
-            %td= f["resources"]
-            %td= f["used_resources"]
-            %td= f["offered_resources"]
-            %td= f["pid"]
-            %td= f["attributes"]
-            %td= f["capbilities"]
+= panel_item("Mesos", :server) do
+  %table.table.table-stripped
+    %thead
+      %td ID
+      %td 主机名
+      %td 健康
+      %td 资源
+      %td 已用
+      %td 已分
+      %td PID
+      %td 属性
+      %td 能力
+    %tbody
+      - @state["slaves"].each do |f|
+        %tr
+          %td= f["id"]
+          %td= f["hostname"]
+          %td= f["active"]
+          %td= f["resources"]
+          %td= f["used_resources"]
+          %td= f["offered_resources"]
+          %td= f["pid"]
+          %td= f["attributes"]
+          %td= f["capbilities"]
 

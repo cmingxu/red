@@ -18,9 +18,7 @@
         %td= link_to truncate(con.id, length: 12), node_container_path(@node, c.id)
         %td
           .label.label-primary= con.state
-          (
           = con.status
-          )
         %td= con.image
         %td= con.command
         %td= con.ip

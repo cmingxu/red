@@ -46,6 +46,10 @@ gem 'zookeeper'
 gem 'httparty'
 gem 'awesome_print'
 gem 'docker-api'
+gem 'docker_registry2'
+gem 'marathon-api', :require => 'marathon'
+
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password

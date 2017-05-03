@@ -1,9 +1,10 @@
 %h3 全部主机
 
-%table.table.table-stripped
+%table{class: table_classes}
   %thead
     %tr
       %th 主机名
+      %th 状态
       %th IP
       %th CPU
       %th 内存
@@ -13,9 +14,10 @@
     - @nodes.each do |node|
       %tr
         %td= link_to node.hostname, node_path(node)
-        %td= node.state
-        %td= node.state
-        %td= node.state
+        %td= tag_label(node.state, :success)
+        %td= node.hostname
+        %td 2 core
+        %td 1023M
         %td= node.state
         %td
           = link_to '容器', node_containers_path(node)
@@ -23,5 +25,6 @@
           = link_to '网络', node_networks_path(node)
           = link_to '存储', node_volumes_path(node)
 
+= paginate @nodes
 
 

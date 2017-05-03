@@ -9,4 +9,8 @@ module ApplicationHelper
       end
     end
   end
+
+  def table_classes
+    %w(table table-stripped table-hover)
+  end
 end

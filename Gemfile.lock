@@ -68,6 +68,10 @@ GEM
     docker-api (1.32.1)
       excon (>= 0.38.0)
       json
+    docker_registry2 (0.6.0)
+      rest-client (>= 1.8.0)
+    domain_name (0.5.20170404)
+      unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
     excon (0.54.0)
     execjs (2.7.0)
@@ -91,6 +95,8 @@ GEM
       haml (~> 4.0.0)
       nokogiri (~> 1.6.0)
       ruby_parser (~> 3.5)
+    http-cookie (1.0.3)
+      domain_name (~> 0.5)
     httparty (0.14.0)
       multi_xml (>= 0.5.2)
     i18n (0.7.0)
@@ -120,6 +126,10 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
+    marathon-api (2.1.0)
+      httparty (>= 0.11)
+      json
+      trollop (>= 2.0)
     method_source (0.8.2)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
@@ -129,6 +139,7 @@ GEM
     minitest (5.9.0)
     multi_json (1.12.1)
     multi_xml (0.5.5)
+    netrc (0.11.0)
     nio4r (1.2.1)
     nokogiri (1.6.8)
       mini_portile2 (~> 2.1.0)
@@ -175,6 +186,10 @@ GEM
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
     ref (2.0.0)
+    rest-client (2.0.2)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
     ruby_parser (3.8.2)
       sexp_processor (~> 4.1)
     sass (3.4.22)
@@ -206,6 +221,7 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.5)
+    trollop (2.1.2)
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
     turbolinks-source (5.0.0)
@@ -218,6 +234,9 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.0.2)
       execjs (>= 0.3.0, < 3)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.4)
     web-console (3.3.1)
       actionview (>= 5.0)
       activemodel (>= 5.0)
@@ -240,6 +259,7 @@ DEPENDENCIES
   carrierwave (~> 1.0)
   coffee-rails (~> 4.2)
   docker-api
+  docker_registry2
   faker
   font-awesome-rails
   haml-rails (~> 0.9)
@@ -249,6 +269,7 @@ DEPENDENCIES
   kaminari
   less-rails
   listen (~> 3.0.5)
+  marathon-api
   mini_magick
   puma (~> 3.0)
   rails (~> 5.0.2)

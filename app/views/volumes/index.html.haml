@@ -1,2 +1,16 @@
-%h1 Volumes#index
-%p Find me in app/views/volumes/index.html.haml
+%h3 所有存储
+
+%table{class: table_classes}
+  %thead
+    %tr
+      %th ID
+
+  %tbody
+    - @volumes.each do |volume|
+      %tr
+        %td= link_to volume.info["Name"], node_volume_path(@node, volume.id)
+
+
+
+
+

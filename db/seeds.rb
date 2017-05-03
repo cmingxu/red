@@ -9,11 +9,5 @@ require 'faker'
 Faker::Config.locale
 
 1.upto(200) do |i|
-  Product.create name: Faker::Name.name,
-    sku: "0001%03d" % i,
-    desc: Faker::Lorem.paragraph,
-    price: 100,
-    origin_price: 98,
-    quantity: 100,
-    app: App.root_app
+  Node.create hostname: "114.55.130.152", state: 'active'
 end

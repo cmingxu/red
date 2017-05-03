@@ -4,7 +4,7 @@ class NodesController < ApplicationController
   # GET /nodes
   # GET /nodes.json
   def index
-    @nodes = Node.all
+    @nodes = Node.page params[:page]
   end
 
   # GET /nodes/1
