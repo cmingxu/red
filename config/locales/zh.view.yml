@@ -6,6 +6,7 @@ zh-CN:
     created_at: "创建时间"
     finishied_at: "完成时间"
     last_edit_at: "最后修改于"
+    update_btn: "更新"
   nav:
     host: "主机"
     infra: "基础"
@@ -14,5 +15,13 @@ zh-CN:
     mesos: "Mesos"
     service_templates: "应用模板"
     regiries: "镜像管理"
+    setting: "设置"
+    logout: "退出登录"
 
-  app:
+  active_record:
+    common:
+      name: "名称"
+    user:
+      name: "称呼"
+
+

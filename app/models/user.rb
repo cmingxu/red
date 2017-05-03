@@ -23,7 +23,7 @@ class User < ApplicationRecord
 
   has_many :services, dependent: :destroy
 
-  def update_password=(pass)
+  def update_password(pass)
     self.salt = SecureRandom.hex
     self.encrypted_password = entrypt_password(pass)
   end

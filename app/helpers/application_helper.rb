@@ -13,4 +13,12 @@ module ApplicationHelper
   def table_classes
     %w(table table-stripped table-hover)
   end
+
+  def btn_classes(extras = [])
+    %w(btn btn-lg btn-primary).push(extras).flatten
+  end
+
+  def sm_btn_classes(extras = [])
+    %w(btn btn-primary).push(extras).flatten
+  end
 end

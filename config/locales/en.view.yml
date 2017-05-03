@@ -6,6 +6,7 @@ en:
     created_at: "Created"
     finishied_at: "Finished"
     last_edit_at: "Last modified at"
+    update_btn: "Update"
   nav:
     host: "Host"
     infra: "Infra"
@@ -14,5 +15,13 @@ en:
     mesos: "Mesos"
     service_templates: "Universe"
     registris: "Registry"
+    setting: "Setting"
+    logout: "Logout"
 
-  app:
+  active_record:
+    common:
+      name: "Name"
+    user:
+      name: "Name"
+
+

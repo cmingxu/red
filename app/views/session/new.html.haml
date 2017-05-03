@@ -1,4 +1,15 @@
-= simple_form_for @user, :url => login_path do |form|
-  = form.input :email
-  = form.input :password
-  = form.submit "登录", class: 'btn btn-lg btn-primary col-md-4'
+.new_user_form.text-center.col-md-6.col-md-offset-3
+  = image_tag "logo.svg", height: 80
+
+  = simple_form_for @user, :url => login_path, class: 'login-form' do |form|
+    = form.input :email, wrapper: :horizontal_input_group, label: false do
+      %span.input-group-addon= fa_icon(:envelope)
+      = form.input_field :email, class: "form-control"
+
+    = form.input :password, wrapper: :horizontal_input_group, label: false do
+      %span.input-group-addon= fa_icon(:key)
+      = form.password_field :password, class: "form-control"
+
+    = form.submit "登录", class: sm_btn_classes('pull-right')
+
+  .clearfix

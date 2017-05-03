@@ -1,5 +1,5 @@
 = simple_form_for current_user, url: user_path(current_user) do |form|
-  = form.input :name
+  = form.input :name, label: t("active_record.common.name")
 
-  = form.submit t("common.update_btn"), class: 'btn'
+  = form.submit t("common.update_btn"), class: btn_classes
 

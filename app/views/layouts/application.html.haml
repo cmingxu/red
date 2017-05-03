@@ -39,7 +39,7 @@
               = menu_item t('nav.setting'), setting_path
               = menu_item t('nav.logout'), logout_path, method: :delete
               = drop_down_divider
-              = menu_item fa_icon(:flag), toggle_locale_path, remote: true, method: :put
+              = menu_item fa_icon(:language) + " " + desired_language, toggle_locale_path, remote: true, method: :put
 
     .container-fluid
       .row

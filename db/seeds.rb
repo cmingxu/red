@@ -6,6 +6,10 @@
 #
 require 'faker'
 
+[User, Node, ServiceTemplate].each do |m|
+  m.delete_all
+end
+
 Faker::Config.locale
 
 1.upto(200) do |i|
@@ -21,5 +25,7 @@ Faker::Config.locale = :en
 end
 
 
-User.create email: "admin@admin.com", password: "foobar1234", role: "SITE_ADMIN"
+u = User.new email: "admin@admin.com", role: "SITE_ADMIN"
+u.update_password "admin"
+u.save
 
