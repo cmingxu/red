@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
   end
 
   def desired_language
-    session[:locale].to_sym == :en ? "中文" : "English"
+    (session[:locale] || "en").to_sym == :en ? "中文" : "English"
   end
 
   def set_locale
