@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:stympy/faker.git
+  remote: https://github.com/stympy/faker.git
   revision: 1126e6b8f6c6e0254c149838793e60bc13b89a13
   specs:
     faker (1.8.0)
