@@ -21,7 +21,14 @@ zh-CN:
   active_record:
     common:
       name: "名称"
+      ip: "IP"
+      cpu: "CPU"
+      mem: "内存"
+      disk: "磁盘"
+      state: "状态"
     user:
       name: "称呼"
+    host:
+      name: '主机名'
 
 

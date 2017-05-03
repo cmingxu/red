@@ -1,14 +1,11 @@
-%h3 全部主机
-
 %table{class: table_classes}
   %thead
-    %tr
-      %th 主机名
-      %th 状态
-      %th IP
-      %th CPU
-      %th 内存
-      %th 磁盘
+    %td= t('active_record.host.name')
+    %td= t('active_record.common.state')
+    %td= t('active_record.common.ip')
+    %td= t('active_record.common.cpu')
+    %td= t('active_record.common.mem')
+    %td= t('active_record.common.disk')
 
   %tbody
     - @nodes.each do |node|
