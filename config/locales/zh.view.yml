@@ -30,6 +30,7 @@ zh-CN:
     setting: "设置"
     logout: "退出登录"
     rabc: "账号&配额"
+    audit: "审计"
   app:
     name: "应用名称"
     description: "备注"
