@@ -1,6 +1,7 @@
 {
   "name": "dsl-generated-dependencies",
   "dependencies": {
-    "bootstrap-markdown": "latest"
+    "bootstrap-markdown": "latest",
+    "angularjs": "1.6.4"
   }
 }

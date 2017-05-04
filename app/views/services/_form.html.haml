@@ -1,3 +1,7 @@
 = simple_form_for @service do |form|
   = form.input :name, label: t("active_record.service.name")
-  = form.submit t("active_record.command.submit"), class: btn_classes
+  = form.input :desc, as: :text, label: t("active_record.service.name")
+
+  .actions
+    = form.submit t("common.submit"), class: btn_classes
+    = link_to t("common.cancel"), services_path

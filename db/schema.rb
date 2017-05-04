@@ -10,17 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170503055621) do
+ActiveRecord::Schema.define(version: 20170504033544) do
 
   create_table "apps", force: :cascade do |t|
     t.string   "name"
     t.string   "backend"
+    t.decimal  "cpu",                precision: 10, scale: 2
+    t.integer  "mem"
+    t.integer  "disk"
+    t.string   "cmd"
+    t.string   "args"
+    t.integer  "priority"
+    t.string   "runas"
+    t.string   "constraints"
+    t.string   "image"
+    t.string   "network"
+    t.text     "portmappings"
+    t.boolean  "force_image"
+    t.boolean  "privileged"
+    t.text     "env"
+    t.text     "volumes"
+    t.text     "uris"
+    t.text     "gateway"
+    t.text     "health_check"
     t.integer  "instances"
     t.integer  "service_id"
     t.integer  "current_version_id"
     t.text     "raw_config"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
   end
 
   create_table "group_users", force: :cascade do |t|
@@ -75,6 +93,7 @@ ActiveRecord::Schema.define(version: 20170503055621) do
 
   create_table "services", force: :cascade do |t|
     t.string   "name"
+    t.string   "desc"
     t.integer  "group_id"
     t.integer  "user_id"
     t.datetime "created_at", null: false
@@ -90,6 +109,14 @@ ActiveRecord::Schema.define(version: 20170503055621) do
     t.datetime "updated_at"
     t.index ["target_type", "target_id", "var"], name: "index_settings_on_target_type_and_target_id_and_var", unique: true
     t.index ["target_type", "target_id"], name: "index_settings_on_target_type_and_target_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string   "tagable_type"
+    t.integer  "tagable_id"
+    t.string   "name"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "users", force: :cascade do |t|

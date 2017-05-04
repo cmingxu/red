@@ -9,6 +9,10 @@ en:
     update_btn: "Update"
     actions: "Actions"
     remove: "Remove"
+    container: "Container"
+    submit: "Save"
+    save_as_template: "Save As Template"
+    download_compose: "Download Spec File"
   nav:
     host: "Host"
     infra: "Infra"
@@ -21,11 +25,20 @@ en:
     logout: "Logout"
   service:
     new_app: "New App"
+    new_service: "New Service"
+    new_service_from_universe: "New From Universe"
 
   active_record:
     common:
       name: "Name"
     user:
+      model_name: "User"
       name: "Name"
+    app:
+      model_name: "App"
+      name: "Name"
+    service:
+      model_name: "Service"
+      name: "Service Name"
 
 

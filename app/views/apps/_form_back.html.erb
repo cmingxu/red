@@ -1,0 +1,6 @@
+<%= simple_form_for @app, url: service_apps_path(@service) do |form| %>
+  <%= form.input :name %>
+  <%= form.input :instances %>
+  <%= form.input :raw_config, as: :text %>
+  <%= form.submit t("common.submit"), class: btn_classes %>
+<% end %>

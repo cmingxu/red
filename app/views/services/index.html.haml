@@ -1,35 +1,35 @@
-.action_bar
-  = link_to "New Service", new_service_path, class: 'btn btn-success'
-
-- @services.each do |service|
-  %table.table.table-stripped.service_table.table-bordered
-    %tr.service_tr
-      %td{colspan: 3}= service.name
-      %td.text-center
-        = service.apps.length
-        = t('active_record.app.model_name')
-      %td.text-center
-        = service.apps.sum(&:instances)
-        = t('common.containers')
-      %td
-        = drop_down_menu :success, t("common.actions") do
-          = drop_down_menu_item t("common.remove"), service_path(service), method: :delete
-          = drop_down_menu_item t("service.new_app"), new_service_app_path(service)
-          = drop_down_menu_item_sepeartor
-          = drop_down_menu_item t("common.remove"), service_path(service), method: :delete
-
-    - service.apps.each do |app|
-      %tr.app_tr
-        %td Active
-        %td= app.name
-        %td Image: dataman-cloud/fooabr1.10
-        %td.text-center Service
+= panel_item("Services", :server) do
+  .action_bar
+    = link_to fa_icon(:plus) + " " + t("service.new_service"), new_service_path, class: 'btn btn-success'
+    = link_to fa_icon(:plus) + " " + t("service.new_service_from_universe"), new_service_path, class: 'btn btn-success'
+  
+  - @services.each do |service|
+    %table.table.table-stripped.service_table.table-bordered
+      %tr.service_tr
+        %td{colspan: 3}= service.name
         %td.text-center
-          = app.instances
+          = service.apps.length
+          = t('active_record.app.model_name')
+        %td.text-center
+          = service.apps.sum(&:instances)
           = t('common.containers')
         %td
-          = drop_down_menu :danger, t("common.actions") do
-            = drop_down_menu_item t("common.remove"), service_app_path(service, app), method: :delete
-  %hr
-
-
+          = drop_down_menu :success, t("common.actions") do
+            = drop_down_menu_item t("common.remove"), service_path(service), method: :delete
+            = drop_down_menu_item t("service.new_app"), new_service_app_path(service)
+            = drop_down_menu_item_sepeartor
+            = drop_down_menu_item t("common.save_as_template"), save_as_template_service_path(service)
+            = drop_down_menu_item t("common.download_compose"), download_compose_service_path(service)
+  
+      - service.apps.each do |app|
+        %tr.app_tr
+          %td Active
+          %td= app.name
+          %td Image: dataman-cloud/fooabr1.10
+          %td.text-center Service
+          %td.text-center
+            = app.instances
+            = t('common.containers')
+          %td
+            = drop_down_menu :danger, t("common.actions") do
+              = drop_down_menu_item t("common.remove"), service_app_path(service, app), method: :delete

@@ -49,8 +49,12 @@ Rails.application.routes.draw do
 
   resources :services do
     resources :apps
+    member do
+      post :save_as_template
+      get :download_compose
+    end
   end
 
-  root to: "welcome#index"
+  root to: "services#index"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

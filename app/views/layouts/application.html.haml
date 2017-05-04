@@ -17,10 +17,13 @@
     / Le HTML5 shim, for IE6-8 support of HTML elements
     /[if lt IE 9]
       = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"
+    = yield :custom_assets
 
 
   %body{class: controller_name}
-    .navbar.navbar-default.navbar-static-top
+    = render(:partial => "widgets/notice")
+
+    .navbar-inverse.navbar-default.navbar-static-top
       .container-fluid
         %button.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse")
           %span.icon-bar
@@ -32,7 +35,7 @@
           %ul.nav.navbar-nav.navbar-right
             %li= link_to t('nav.services'), services_path
             %li= link_to t('nav.service_templates'), service_templates_path
-            %li= link_to t('nav.regiries'), registries_path
+            %li.active= link_to t('nav.regiries'), registries_path
             %li= link_to t('nav.mesos'), mesos_path
             %li= link_to t('nav.host'), nodes_path
             = drop_down fa_icon(:user) + " cming.xu@gamil.com" do
@@ -41,7 +44,7 @@
               = drop_down_divider
               = menu_item fa_icon(:language) + " " + desired_language, toggle_locale_path, remote: true, method: :put
 
-    .container-fluid
+    .container-fluid.main
       .row
         .col-lg-12
           = bootstrap_flash

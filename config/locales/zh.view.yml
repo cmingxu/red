@@ -9,6 +9,9 @@ zh-CN:
     update_btn: "更新"
     actions: "操作"
     remove: "移除"
+    container: "容器"
+    submit: "保存"
+    save: "保存"
   nav:
     host: "主机"
     infra: "基础"
@@ -21,6 +24,8 @@ zh-CN:
     logout: "退出登录"
   service:
     new_app: "新应用"
+    new_service: "新服务"
+    new_service_from_universe: "从应用目录创建"
 
   active_record:
     common:
@@ -30,10 +35,17 @@ zh-CN:
       mem: "内存"
       disk: "磁盘"
       state: "状态"
+    service:
+      model_name: "服务"
+      name: "服务名"
     user:
       name: "称呼"
+      model_name: "用户"
     host:
       name: '主机名'
+    app:
+      model_name: "应用"
+      name: "应用名"
 
 
 

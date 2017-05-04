@@ -35,6 +35,7 @@ gem 'ransack'
 
 gem 'rails-bootstrap-markdown'
 
+
 gem "haml-rails", "~> 0.9"
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
