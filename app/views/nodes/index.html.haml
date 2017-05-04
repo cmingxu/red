@@ -1,11 +1,11 @@
 %table{class: table_classes}
-  %thead
-    %td= t('active_record.host.name')
-    %td= t('active_record.common.state')
-    %td= t('active_record.common.ip')
-    %td= t('active_record.common.cpu')
-    %td= t('active_record.common.mem')
-    %td= t('active_record.common.disk')
+  %tr
+    %th= t('active_record.host.name')
+    %th= t('active_record.common.state')
+    %th= t('active_record.common.ip')
+    %th= t('active_record.common.cpu')
+    %th= t('active_record.common.mem')
+    %th= t('active_record.common.disk')
 
   %tbody
     - @nodes.each do |node|

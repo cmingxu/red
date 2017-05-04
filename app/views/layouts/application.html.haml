@@ -31,13 +31,15 @@
           = image_tag "logo-shurenyun-ico2.svg"
         .navbar-collapse.collapse.navbar-responsive-collapse
           %ul.nav.navbar-nav.navbar-right
-            %li{class: navbar_nav_active_class(:services) }= link_to t('nav.services'), services_path
+            %li{class: navbar_nav_active_class(:services) }= link_to fa_icon(:bars) + " " + t('nav.services'), services_path
             %li{class: navbar_nav_active_class(:service_templates) }= link_to t('nav.service_templates'), service_templates_path
             %li{class: navbar_nav_active_class(:registries) }= link_to t('nav.registries'), registries_path
             %li{class: navbar_nav_active_class(:mesos) }= link_to t('nav.mesos'), mesos_path
             %li{class: navbar_nav_active_class(:nodes) }= link_to t('nav.host'), nodes_path
-            = drop_down fa_icon(:user) + " cming.xu@gamil.com" do
+            %li{class: navbar_nav_active_class(:rbac) }= link_to t('nav.rabc'), rabc_path
+            = drop_down fa_icon(:user) + " #{current_user.display}" do
               = menu_item t('nav.setting'), setting_path
+              = menu_item t('nav.audit'), audit_path
               = menu_item t('nav.logout'), logout_path, method: :delete
               = drop_down_divider
               = menu_item fa_icon(:language) + " " + desired_language, toggle_locale_path, remote: true, method: :put
@@ -46,7 +48,7 @@
       .row
         .col-lg-12
           = bootstrap_flash
-          = render :partial => "widgets/breadcrumb"
+          -#= render :partial => "widgets/breadcrumb"
           = panel_item(t("nav.#{page_request_meta_info[:panel_header_and_icon][:text]}"),
             page_request_meta_info[:panel_header_and_icon][:icon]) do
             = yield

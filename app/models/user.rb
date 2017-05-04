@@ -28,6 +28,10 @@ class User < ApplicationRecord
     self.encrypted_password = entrypt_password(pass)
   end
 
+  def display
+    self.name || self.email
+  end
+
   def password_valid?(pass)
     self.encrypted_password == entrypt_password(pass)
   end

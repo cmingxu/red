@@ -12,6 +12,13 @@ zh-CN:
     container: "容器"
     submit: "保存"
     save: "保存"
+    save_as_template: "存为模板"
+    download_compose: "下载Compose"
+    favorite: "置顶"
+    unfavorite: "取消置顶"
+    key: "键"
+    value: "值"
+    cancel: "取消"
   nav:
     host: "主机"
     infra: "基础"
@@ -22,10 +29,61 @@ zh-CN:
     registries: "镜像管理"
     setting: "设置"
     logout: "退出登录"
+    rabc: "账号&配额"
+  app:
+    name: "应用名称"
+    description: "备注"
+    select_image: "镜像"
+    network: "网络模式"
+    customized_network_name: "网络名称"
+    portmappings: "端口映射"
+    bridge: "桥接"
+    host: "主机"
+    user: "自定义"
+    container_port: "容器端口"
+    host_port: "主机端口"
+    port_name: "端口别名"
+    proto: "协议"
+    add_portmapping: "新映射"
+    cmd: "CMD"
+    env: "环境变量"
+    new_env: "新变量"
+    host_path: "主机路径"
+    container_path: "容器路径"
+    mode: "存取模式"
+    volumes: "存储卷"
+    new_volume: "增加卷"
+    uri_path: "数据地址"
+    uri: "URI"
+    new_uri: "增加数据地址"
+    labels: "标签"
+    new_label: "新标签"
+    gateway:
+      weight: "权重"
+    health_check:
+      protocol: "协议"
+      delayseconds: "延迟时间"
+      path: "路径"
+      value: "命令"
+      graceperiodseconds: "graceperiodseconds"
+      intervalseconds: "间隔"
+      portname: "端口别名"
+      timeoutseconds: "超时时间"
+      consecutivefailures: "最大连续失败次数"
   service:
     new_app: "新应用"
     new_service: "新服务"
     new_service_from_universe: "从应用目录创建"
+    command: "运行时"
+    volumes: "存储卷"
+    uri: "URI"
+    networking: "网络"
+    labels: "应用标签"
+    security: "安全"
+    health_check: "健康检查"
+    scheduling: "调度策略"
+    gateway: "网关配置"
+
 
   active_record:
     common:
@@ -46,6 +104,7 @@ zh-CN:
     app:
       model_name: "应用"
       name: "应用名"
+
 
 
 

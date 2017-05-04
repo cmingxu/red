@@ -1,19 +1,19 @@
 <div class="col-md-12">
   <div class="form-group" ng-class="{ 'has-error' : appForm.uris.$invalid && (appForm.uris.$dirty || submitted)}">
-    <label for="uris" class="col-sm-2 control-label"><%= t("app.uris") %></label>
+    <label for="uris" class="col-sm-2 control-label"><%= t("app.uri") %></label>
     <div class="col-sm-10">
       <table class="table table-bordered">
-        <thead>
-          <td>Path</td>
-          <td></td>
-        </thead>
+        <tr>
+          <th><%= t('app.uri_path') %></td>
+          <th></td>
+        </tr>
         <tbody>
           <tr  ng-repeat="uri in app.uris">
             <td> <input type="input" class="form-control" name="uris" ng-model="uri" ng-required=true> </td>
-            <td><a class="btn btn-danger btn-sm" ng-click="removeUris($index)"><%= fa_icon(:minus)%> </a></td>
+            <td><a class="btn btn-default btn-sm" ng-click="removeUris($index)"><%= fa_icon(:minus)%> </a></td>
           </tr>
           <tr>
-            <td colspan=5><a class="btn btn-primary btn-sm" ng-click="moreUris()"><%= fa_icon(:plus)%> New URI </a></td>
+            <td colspan=5><a class="btn btn-default btn-sm" ng-click="moreUris()"><%= fa_icon(:plus)%> <%= t('app.new_uri') %> </a></td>
           </tr>
         </tbody>
       </table>

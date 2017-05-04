@@ -3,12 +3,12 @@
     <label for="volumes" class="col-sm-2 control-label"><%= t("app.volumes") %></label>
     <div class="col-sm-10">
       <table class="table table-bordered">
-        <thead>
-          <td>Host Path</td>
-          <td>Container Path</td>
-          <td>Mode</td>
-          <td></td>
-        </thead>
+        <tr>
+          <th><%= t('app.host_path') %></td>
+          <th><%= t('app.container_path') %></td>
+          <th><%= t('app.mode') %></td>
+          <th></td>
+        </tr>
         <tbody>
           <tr  ng-repeat="volume in app.volumes">
             <td> <input type="input" class="form-control" name="volumes" ng-model="volume.hostPath" ng-required=true> </td>
@@ -20,10 +20,10 @@
                 <option value="rw"> RW </option>
               </select>
             </td>
-            <td><a class="btn btn-danger btn-sm" ng-click="removeVolumes(k)"><%= fa_icon(:minus)%> </a></td>
+            <td><a class="btn btn-default btn-sm" ng-click="removeVolumes(k)"><%= fa_icon(:minus)%> </a></td>
           </tr>
           <tr>
-            <td colspan=5><a class="btn btn-primary btn-sm" ng-click="moreVolumes()"><%= fa_icon(:plus)%> New Volume </a></td>
+            <td colspan=5><a class="btn btn-default btn-sm" ng-click="moreVolumes()"><%= fa_icon(:plus)%> <%= t('app.new_volume') %> </a></td>
           </tr>
         </tbody>
       </table>

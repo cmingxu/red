@@ -11,6 +11,7 @@ en:
     remove: "Remove"
     container: "Container"
     submit: "Save"
+    save: "Save"
     save_as_template: "Save As Template"
     download_compose: "Download Spec File"
 

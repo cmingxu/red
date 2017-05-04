@@ -37,6 +37,7 @@ module ApplicationHelper
   end
 
   def drop_down_menu_item(display, link, opts = {})
+    ap "sssssssssssssss"
     content_tag(:li) do
       link_to display, link, opts
     end

@@ -46,7 +46,7 @@
         </div>
 
         <div class="form-group" ng-class="{ 'has-error' : appForm.customized_network_name.$invalid && (appForm.customized_network_name.$dirty || submitted)}" ng-show="app.network != 'bridge' && app.network != 'host'">
-          <label for="customized_network_name" class="col-sm-2 control-label"><%= t("app.network") %></label>
+          <label for="customized_network_name" class="col-sm-2 control-label"><%= t("app.customized_network_name") %></label>
           <div class="col-sm-10">
             <input type="input" name="customized_network_name" class="form-control" id="customized_network_name" ng-model="app.customized_network_name" ng-required="app.network != 'bridge' && app.network != 'host'">
              <p ng-show="appForm.customized_network_name.$invalid && (appForm.customized_network_name.$dirty || submitted)" class="help-block">You name is required.</p>
@@ -57,13 +57,13 @@
           <label for="portmappings" class="col-sm-2 control-label"><%= t("app.portmappings") %></label>
           <div class="col-sm-10">
             <table class="table table-bordered col-md-6 col-sm-12">
-              <thead>
-                <td>Port Name</td>
-                <td ng-if="app.network=='bridge'">Container Port</td>
-                <td ng-if="app.network=='host'">Host Port</td>
-                <td>Proto</td>
-                <td></td>
-              </thead>
+              <tr>
+                <th><%= t('app.port_name') %></td>
+                <th ng-if="app.network=='bridge'"><%= t('app.container_port') %></td>
+                <th ng-if="app.network=='host'"><%= t('app.host_port') %></td>
+                <th><%= t('app.proto') %></td>
+                <th></td>
+              </tr>
               <tbody>
                 <tr  ng-repeat="portmapping in app.portmappings">
                   <td> <input type="input" class="form-control" ng-model="portmapping.name" ng-required=true> </td>
@@ -75,10 +75,10 @@
                       <option value="udp"> UDP </option>
                     </select>
                   </td>
-                  <td><a class="btn btn-danger btn-sm" ng-click="removePortmapping($index)"><%= fa_icon(:minus)%> </a></td>
+                  <td><a class="btn btn-default btn-sm" ng-click="removePortmapping($index)"><%= fa_icon(:minus)%> </a></td>
                 </tr>
                 <tr>
-                  <td colspan=5><a class="btn btn-primary btn-sm" ng-click="morePortmapping()"><%= fa_icon(:plus)%> Add Port Map </a></td>
+                  <td colspan=5><a class="btn btn-default btn-sm" ng-click="morePortmapping()"><%= fa_icon(:plus)%> <%= t('app.add_portmapping') %> </a></td>
                 </tr>
               </tbody>
             </table>
@@ -145,7 +145,7 @@
 
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-          <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+          <button type="submit" class="<%= btn_classes.join(' ') %>"><%= t('common.save') %></button>
           <%= link_to t("common.cancel"), services_path %>
         </div>
       </div>

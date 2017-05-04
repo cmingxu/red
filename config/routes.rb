@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'rabc/index', as: :rabc
+  get 'audits/index', as: :audit
+
   get 'session/new', as: :new_session
   post 'session/create', as: :login
   delete 'session/destroy', as: :logout
@@ -51,6 +54,8 @@ Rails.application.routes.draw do
     resources :apps
     member do
       post :save_as_template
+      put :favorite
+      put :unfavorite
       get :download_compose
     end
   end
