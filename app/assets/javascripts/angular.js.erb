@@ -3,11 +3,55 @@
 
 angular.module('app', [])
   .controller('AppController', function($scope) {
+    $scope.portMappingOptions = ["tcp", "udp"];
+    $scope.submitted = false;
     $scope.app = window.appObj;
+    fillApp()
 
     $scope.submit = function () {
+      $scope.submitted = true;
+      if($scope.appForm.$invalid) {
+        alert("not valid");
+      }else{
+        console.log($scope.app);
+      }
     }
 
     $scope.cancel = function () {
+    }
+
+    $scope.removePortmapping = function (index) {
+      $scope.app.portmappings.splice(index, 1);
+    }
+
+    $scope.morePortmapping = function () {
+      if($scope.app.portmappings == null) {
+        $scope.app.portmappings = [];
+      }
+
+      $scope.app.portmappings.push(
+        {name: "web",
+          containerPort: "80",
+          hostPort: "3000",
+          proto: "tcp"}
+      );
+    }
+
+    function fillApp() {
+      if($scope.app.name == null){
+        $scope.app.name = "first-app";
+      }
+
+      if($scope.app.description == null){
+        $scope.app.description = "from here to tommorrow!";
+      }
+
+      if($scope.app.image == null){
+        $scope.app.image = "wordpress:latest";
+      }
+
+      if($scope.app.network == null){
+        $scope.app.network = "bridge";
+      }
     }
   });

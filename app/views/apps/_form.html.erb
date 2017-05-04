@@ -9,29 +9,83 @@
 
 <div ng-app="app">
   <div class='row' ng-controller='AppController'>
-    <form class="form-horizontal">
+    <form class="form-horizontal" name="appForm" ng-submit="submit()">
       <div class="form_section">
-        <div class="form-group ">
-          <label for="inputEmail3" class="col-sm-2 control-label"><%= "Name" %></label>
+        <div class="form-group" ng-class="{ 'has-error' : appForm.name.$invalid && (appForm.name.$dirty || submitted)}" >
+          <label for="name" class="col-sm-2 control-label"><%= t("app.name") %></label>
           <div class="col-sm-10">
-            <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+            <input type="input" name="name" class="form-control" id="name" ng-model="app.name" ng-required="true">
+             <p ng-show="appForm.name.$invalid && (appForm.name.$dirty || submitted)" class="help-block">You name is required.</p>
           </div>
         </div>
-
-        <div class="form-group ">
-          <label for="inputPassword3" class="col-sm-2 control-label">Description</label>
-          <div class="col-sm-10">
-            <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-          </div>
-        </div>
-
 
         <div class="form-group">
-          <label for="inputPassword3" class="col-sm-2 control-label">Select Image</label>
+          <label for="description" class="col-sm-2 control-label"><%= t("app.description") %></label>
           <div class="col-sm-10">
-            <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+            <input type="input" name="description" class="form-control" id="description" ng-model="app.description">
           </div>
         </div>
+
+
+        <div class="form-group" ng-class="{ 'has-error' : appForm.image.$invalid && (appForm.image.$dirty || submitted)}" >
+          <label for="image" class="col-sm-2 control-label"><%= t("app.select_image") %></label>
+          <div class="col-sm-10">
+            <input type="input" name="image" class="form-control" id="image" ng-model="app.image">
+             <p ng-show="appForm.image.$invalid && (appForm.image.$dirty || submitted)" class="help-block">You name is required.</p>
+          </div>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error' : appForm.network.$invalid && (appForm.network.$dirty || submitted)}" >
+          <label for="network" class="col-sm-2 control-label"><%= t("app.network") %></label>
+          <div class="col-sm-10">
+              <label><input value="bridge" type="radio" name="network" ng-model="app.network" /><%= t("app.bridge") %></label>
+              <label><input value="host" type="radio" name="network" ng-model="app.network" /><%= t("app.host") %></label>
+              <label><input value="user" type="radio" name="network" ng-model="app.network" /><%= t("app.user") %></label>
+              <p ng-show="appForm.network.$invalid && (appForm.network.$dirty || submitted)" class="help-block">You name is required.</p>
+          </div>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error' : appForm.customized_network_name.$invalid && (appForm.customized_network_name.$dirty || submitted)}" ng-show="app.network != 'bridge' && app.network != 'host'">
+          <label for="customized_network_name" class="col-sm-2 control-label"><%= t("app.network") %></label>
+          <div class="col-sm-10">
+            <input type="input" name="customized_network_name" class="form-control" id="customized_network_name" ng-model="app.customized_network_name" ng-required="app.network != 'bridge' && app.network != 'host'">
+             <p ng-show="appForm.customized_network_name.$invalid && (appForm.customized_network_name.$dirty || submitted)" class="help-block">You name is required.</p>
+          </div>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error' : appForm.portmappings.$invalid && (appForm.portmappings.$dirty || submitted)}" ng-show="app.network == 'bridge' || app.network == 'host'">
+          <label for="portmappings" class="col-sm-2 control-label"><%= t("app.portmappings") %></label>
+          <div class="col-sm-10">
+            <table class="table table-bordered col-md-6 col-sm-12">
+              <thead>
+                <td>Port Name</td>
+                <td ng-if="app.network=='bridge'">Container Port</td>
+                <td ng-if="app.network=='host'">Host Port</td>
+                <td>Proto</td>
+                <td></td>
+              </thead>
+              <tbody>
+                <tr  ng-repeat="portmapping in app.portmappings">
+                  <td> <input type="input" class="form-control" ng-model="portmapping.name" ng-required=true> </td>
+                  <td ng-if="app.network=='bridge'"> <input type="input" class="form-control" ng-model="portmapping.containerPort" ng-required=true> </td>
+                  <td ng-if="app.network=='host'"> <input type="input" class="form-control" ng-model="portmapping.hostPort" ng-required=true> </td>
+                  <td>
+                    <select class='form-control' ng-model='portmapping.proto' ng-required=true>
+                      <option value="tcp"> TCP </option>
+                      <option value="udp"> UDP </option>
+                    </select>
+                  </td>
+                  <td><button type="input" class="btn btn-danger btn-sm" ng-click="removePortmapping($index)"><%= fa_icon(:minus)%> </button></td>
+                </tr>
+                <tr>
+                  <td colspan=5><button type="input" class="btn btn-primary btn-sm" ng-click="morePortmapping()"><%= fa_icon(:plus)%> Add Port Map </button></td>
+                </tr>
+              </tbody>
+            </table>
+             <p ng-show="appForm.portmappings.$invalid && (appForm.portmappings.$dirty || submitted)" class="help-block">You name is required.</p>
+          </div>
+        </div>
+
       </div>
 
 
@@ -49,7 +103,9 @@
 
         <!-- Tab panes -->
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="command">Command</div>
+          <div role="tabpanel" class="tab-pane active" id="command">
+          </div>
+
           <div role="tabpanel" class="tab-pane fade" id="volumes">Volume</div>
           <div role="tabpanel" class="tab-pane fade" id="networking">Networking</div>
           <div role="tabpanel" class="tab-pane fade" id="labels">Label</div>
