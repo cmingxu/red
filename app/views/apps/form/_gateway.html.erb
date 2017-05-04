@@ -1,0 +1,8 @@
+  <div class="form-group" ng-class="{ 'has-error' : appForm.gateway_weight.$invalid && (appForm.gateway_weight.$dirty || submitted)}">
+    <label for="gateway_weight" class="col-sm-2 control-label"><%= t("app.gateway.weight") %></label>
+    <div class="col-sm-10">
+      <input type="input" name="gateway_weight" class="form-control" id="gateway_weight" ng-model="app.gateway.weight">
+      <p ng-show="appForm.gateway_weight.$invalid && (appForm.gateway_weight.$dirty || submitted)" class="help-block">You name is required.</p>
+    </div>
+  </div>
+

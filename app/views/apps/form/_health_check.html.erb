@@ -5,3 +5,14 @@
      <p ng-show="appForm.health_check_protocol.$invalid && (appForm.health_check_protocol.$dirty || submitted)" class="help-block">You name is required.</p>
   </div>
 </div>
+
+<%- %w(path delaySeconds gracePeriodSeconds intervalSeconds portName timeoutSeconds consecutiveFailures).each do |col| %>
+  <div class="form-group" ng-class="{ 'has-error' : appForm.health_check_<%= col.downcase %>.$invalid && (appForm.health_check_<%= col.downcase %>.$dirty || submitted)}">
+    <label for="health_check_<%= col.downcase %>" class="col-sm-2 control-label"><%= t("app.health_check.#{col.downcase}") %></label>
+    <div class="col-sm-10">
+      <input type="input" name="health_check_<%= col.downcase %>" class="form-control" id="health_check_<%= col.downcase %>" ng-model="app.health_check.<%= col %>">
+      <p ng-show="appForm.health_check_<%= col.downcase %>.$invalid && (appForm.health_check_<%= col.downcase %>.$dirty || submitted)" class="help-block">You name is required.</p>
+    </div>
+  </div>
+<% end %>
+

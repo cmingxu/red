@@ -19,6 +19,11 @@ angular.module('app', [])
     $scope.cancel = function () {
     }
 
+    $scope.supportGateway = function () {
+     return $scope.app.network == "bridge" ||
+        $scope.app.network == "host";
+    }
+
     // envs
     $scope.removeEnv = function (key) {
       delete $scope.app.env[key];
@@ -31,6 +36,20 @@ angular.module('app', [])
 
       $scope.app.env["KEY" + Object.keys($scope.app.env).length] = "VALUE";
     }
+
+    // uri
+    $scope.removeUris = function (index) {
+      $scope.app.uris.splice(index, 1);
+    }
+
+    $scope.moreUris = function () {
+      if($scope.app.uris == null) {
+        $scope.app.uris = [];
+      }
+
+      $scope.app.uris.push("http://baidu.com/foobar" + $scope.app.uris.length + ".tar.gz");
+    }
+
 
     // labels
     $scope.removeLabel = function (key) {

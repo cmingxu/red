@@ -100,6 +100,7 @@
           <li role="presentation"><a href="#security" aria-controls="security" role="tab" data-toggle="tab"><%= t('service.security') %></a></li>
           <li role="presentation"><a href="#health_check" aria-controls="health_check" role="tab" data-toggle="tab"><%= t('service.health_check') %></a></li>
           <li role="presentation"><a href="#scheduling" aria-controls="scheduling" role="tab" data-toggle="tab"><%= t('service.scheduling') %></a></li>
+          <li role="presentation"><a href="#gateway" aria-controls="gateway" role="tab" data-toggle="tab" ng-if="supportGateway()"><%= t('service.gateway') %></a></li>
         </ul>
 
         <!-- Tab panes -->
@@ -132,8 +133,12 @@
             <%= render partial: 'apps/form/health_check' %>
           </div>
 
-          <div role="tabpanel" class="tab-pane" id="scheduling"
+          <div role="tabpanel" class="tab-pane" id="scheduling">
             <%= render partial: 'apps/form/scheduling' %>
+          </div>
+
+          <div role="tabpanel" class="tab-pane" id="gateway" ng-if="supportGateway()">
+            <%= render partial: 'apps/form/gateway' %>
           </div>
         </div>
       </div>

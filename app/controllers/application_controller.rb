@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
   private
   def determine_navbar_item
     case controller_name.to_sym
-    when :services, :app
+    when :services, :apps
       :services
     when :mesos
       :mesos
@@ -76,7 +76,7 @@ class ApplicationController < ActionController::Base
 
   def determine_panel_header_and_icon
     case controller_name.to_sym
-    when :services, :app
+    when :services, :apps
       {text: :services, icon: :cogs }
     when :mesos
       {text: :mesos, icon: :cogs }
