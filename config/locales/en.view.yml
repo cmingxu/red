@@ -7,6 +7,8 @@ en:
     finishied_at: "Finished"
     last_edit_at: "Last modified at"
     update_btn: "Update"
+    actions: "Actions"
+    remove: "Remove"
   nav:
     host: "Host"
     infra: "Infra"
@@ -17,6 +19,8 @@ en:
     registris: "Registry"
     setting: "Setting"
     logout: "Logout"
+  service:
+    new_app: "New App"
 
   active_record:
     common:

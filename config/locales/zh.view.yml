@@ -7,6 +7,8 @@ zh-CN:
     finishied_at: "完成时间"
     last_edit_at: "最后修改于"
     update_btn: "更新"
+    actions: "操作"
+    remove: "移除"
   nav:
     host: "主机"
     infra: "基础"
@@ -17,6 +19,8 @@ zh-CN:
     regiries: "镜像管理"
     setting: "设置"
     logout: "退出登录"
+  service:
+    new_app: "新应用"
 
   active_record:
     common:
@@ -30,5 +34,6 @@ zh-CN:
       name: "称呼"
     host:
       name: '主机名'
+
 
 

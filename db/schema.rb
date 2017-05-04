@@ -14,7 +14,8 @@ ActiveRecord::Schema.define(version: 20170503055621) do
 
   create_table "apps", force: :cascade do |t|
     t.string   "name"
-    t.integer  "intances"
+    t.string   "backend"
+    t.integer  "instances"
     t.integer  "service_id"
     t.integer  "current_version_id"
     t.text     "raw_config"

@@ -20,7 +20,6 @@ Rails.application.routes.draw do
     resource :mesos, only: [:show], controller: :mesos, action: :index
   end
 
-  resources :apps
 
   resources :nodes do
     resources :containers, only: [:index, :show]  do
@@ -48,7 +47,9 @@ Rails.application.routes.draw do
   get 'welcome/index'
   get 'mesos/index', as: :mesos
 
-  resources :services
+  resources :services do
+    resources :apps
+  end
 
   root to: "welcome#index"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
