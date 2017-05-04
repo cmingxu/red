@@ -19,7 +19,7 @@ zh-CN:
     services: "服务"
     mesos: "Mesos"
     service_templates: "应用模板"
-    regiries: "镜像管理"
+    registries: "镜像管理"
     setting: "设置"
     logout: "退出登录"
   service:

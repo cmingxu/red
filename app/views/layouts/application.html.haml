@@ -21,8 +21,6 @@
 
 
   %body{class: controller_name}
-    = render(:partial => "widgets/notice")
-
     .navbar-inverse.navbar-default.navbar-static-top
       .container-fluid
         %button.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse")
@@ -33,11 +31,11 @@
           = image_tag "logo-shurenyun-ico2.svg"
         .navbar-collapse.collapse.navbar-responsive-collapse
           %ul.nav.navbar-nav.navbar-right
-            %li= link_to t('nav.services'), services_path
-            %li= link_to t('nav.service_templates'), service_templates_path
-            %li.active= link_to t('nav.regiries'), registries_path
-            %li= link_to t('nav.mesos'), mesos_path
-            %li= link_to t('nav.host'), nodes_path
+            %li{class: navbar_nav_active_class(:services) }= link_to t('nav.services'), services_path
+            %li{class: navbar_nav_active_class(:service_templates) }= link_to t('nav.service_templates'), service_templates_path
+            %li{class: navbar_nav_active_class(:registries) }= link_to t('nav.registries'), registries_path
+            %li{class: navbar_nav_active_class(:mesos) }= link_to t('nav.mesos'), mesos_path
+            %li{class: navbar_nav_active_class(:nodes) }= link_to t('nav.host'), nodes_path
             = drop_down fa_icon(:user) + " cming.xu@gamil.com" do
               = menu_item t('nav.setting'), setting_path
               = menu_item t('nav.logout'), logout_path, method: :delete
@@ -48,6 +46,9 @@
       .row
         .col-lg-12
           = bootstrap_flash
-          = yield
+          = render :partial => "widgets/breadcrumb"
+          = panel_item(t("nav.#{page_request_meta_info[:panel_header_and_icon][:text]}"),
+            page_request_meta_info[:panel_header_and_icon][:icon]) do
+            = yield
       %footer
         %p &copy; Company 2017

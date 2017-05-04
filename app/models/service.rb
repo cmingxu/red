@@ -9,6 +9,8 @@
 #
 
 class Service < ApplicationRecord
+  attr_accessor :compose
+
   belongs_to :user
   belongs_to :group
   has_many :apps, dependent: :destroy

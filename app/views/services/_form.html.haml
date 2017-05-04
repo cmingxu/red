@@ -1,6 +1,7 @@
 = simple_form_for @service do |form|
-  = form.input :name, label: t("active_record.service.name")
-  = form.input :desc, as: :text, label: t("active_record.service.name")
+  = form.input :name, label: t("active_record.service.name"), hint: "eg. Wordpress"
+  = form.input :desc, as: :text, label: t("active_record.service.desc"), hint: "eg. my first dataman app"
+  = form.input :compose, as: :file, label: t("active_record.service.compose"), hint: "lanuch service with previously saved compose"
 
   .actions
     = form.submit t("common.submit"), class: btn_classes

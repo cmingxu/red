@@ -13,6 +13,7 @@ en:
     submit: "Save"
     save_as_template: "Save As Template"
     download_compose: "Download Spec File"
+
   nav:
     host: "Host"
     infra: "Infra"

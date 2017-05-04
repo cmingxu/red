@@ -20,20 +20,6 @@ module ApplicationHelper
   def sm_btn_classes(extras = [])
     %w(btn btn-primary).push(extras).flatten
   end
-
-#<div class="btn-group">
-  #<button type="button" class="btn btn-danger">Action</button>
-  #<button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    #<span class="sr-only">Toggle Dropdown</span>
-  #</button>
-  #<div class="dropdown-menu">
-    #<a class="dropdown-item" href="#">Action</a>
-    #<a class="dropdown-item" href="#">Another action</a>
-    #<a class="dropdown-item" href="#">Something else here</a>
-    #<div class="dropdown-divider"></div>
-    #<a class="dropdown-item" href="#">Separated link</a>
-  #</div>
-#</div>
   
   def drop_down_menu(style = :danger, display = "Actions", &block)
     id = SecureRandom.hex(10)
@@ -58,5 +44,9 @@ module ApplicationHelper
 
   def drop_down_menu_item_sepeartor
     content_tag(:li, "", class: 'divider', role: 'seperator')
+  end
+
+  def navbar_nav_active_class(navbar)
+    page_request_meta_info[:active_navbar_item] == navbar ? 'active' : ''
   end
 end

@@ -1,22 +1,21 @@
-= panel_item("Hosts", :server) do
-  %table{class: table_classes}
-    %thead
-      %tr
-        %th Name
-        %th Hash
-        %th Size
-        %th
-        %th
-        %th
-  
-    %tbody
-      - @registries.each do |registry|
-        %tr
-          %td= registry.name
-          %td= registry.hash
-          %td= registry.size
-          %td= link_to 'Show', registry
-          %td= link_to 'Edit', edit_registry_path(registry)
-          %td= link_to 'Destroy', registry, :method => :delete, :data => { :confirm => 'Are you sure?' }
+%table{class: table_classes}
+  %thead
+    %tr
+      %th Name
+      %th Hash
+      %th Size
+      %th
+      %th
+      %th
 
-  = link_to 'New Registry', new_registry_path
+  %tbody
+    - @registries.each do |registry|
+      %tr
+        %td= registry.name
+        %td= registry.hash
+        %td= registry.size
+        %td= link_to 'Show', registry
+        %td= link_to 'Edit', edit_registry_path(registry)
+        %td= link_to 'Destroy', registry, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+= link_to 'New Registry', new_registry_path
