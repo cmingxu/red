@@ -3,7 +3,6 @@
 
 angular.module('app', [])
   .controller('AppController', function($scope) {
-    $scope.portMappingOptions = ["tcp", "udp"];
     $scope.submitted = false;
     $scope.app = window.appObj;
     fillApp()
@@ -20,6 +19,52 @@ angular.module('app', [])
     $scope.cancel = function () {
     }
 
+    // envs
+    $scope.removeEnv = function (key) {
+      delete $scope.app.env[key];
+    }
+
+    $scope.moreEnv = function () {
+      if($scope.app.env == null) {
+        $scope.app.env = {};
+      }
+
+      $scope.app.env["KEY" + Object.keys($scope.app.env).length] = "VALUE";
+    }
+
+    // labels
+    $scope.removeLabel = function (key) {
+      delete $scope.app.labels[key];
+    }
+
+    $scope.moreLabels = function () {
+      if($scope.app.labels == null) {
+        $scope.app.labels = {};
+      }
+
+      $scope.app.labels["key-" + Object.keys($scope.app.labels).length] = "value";
+    }
+
+    // volumes
+    $scope.removeVolumes = function (index) {
+      $scope.app.volumes.splice(index, 1);
+    }
+
+    $scope.moreVolumes = function () {
+      if($scope.app.volumes == null) {
+        $scope.app.volumes = [];
+      }
+
+      $scope.app.volumes.push(
+        {
+          hostPath: "/",
+          containerPath: "/hostHome",
+          mode: "ro"
+        }
+      );
+    }
+
+    // portmappings
     $scope.removePortmapping = function (index) {
       $scope.app.portmappings.splice(index, 1);
     }
@@ -52,6 +97,20 @@ angular.module('app', [])
 
       if($scope.app.network == null){
         $scope.app.network = "bridge";
+      }
+
+      if($scope.app.health_check == null){
+        $scope.app.health_check = {
+          "protocol": "http",
+          "value": "echo 1;",
+          "path": "/",
+          "delaySeconds": 10,
+          "gracePeriodSeconds": 1,
+          "portName": "web",
+          "intervalSeconds": 1,
+          "timeoutSeconds": 2,
+          "consecutiveFailures": 10
+        };
       }
     }
   });

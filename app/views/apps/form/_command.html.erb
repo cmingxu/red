@@ -1,0 +1,22 @@
+<div class="col-md-12">
+  <div class="form-group" ng-class="{ 'has-error' : appForm.env.$invalid && (appForm.env.$dirty || submitted)}">
+    <table class="table table-bordered">
+      <thead>
+        <td>Key</td>
+        <td>Value</td>
+        <td></td>
+      </thead>
+      <tbody>
+        <tr  ng-repeat="(k, v) in app.env">
+          <td> <input type="input" class="form-control" name="env" ng-model="k" ng-required=true> </td>
+          <td> <input type="input" class="form-control" name="env" ng-model="v" ng-required=true> </td>
+          <td><a class="btn btn-danger btn-sm" ng-click="removeEnv(k)"><%= fa_icon(:minus)%> </a></td>
+        </tr>
+        <tr>
+          <td colspan=5><a class="btn btn-primary btn-sm" ng-click="moreEnv()"><%= fa_icon(:plus)%> New ENV </a></td>
+        </tr>
+      </tbody>
+    </table>
+    <p ng-show="appForm.env.$invalid && (appForm.env.$dirty || submitted)" class="help-block">You name is required.</p>
+  </div>
+</div>

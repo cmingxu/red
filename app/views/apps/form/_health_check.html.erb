@@ -1,0 +1,7 @@
+<div class="form-group" ng-class="{ 'has-error' : appForm.health_check_protocol.$invalid && (appForm.health_check_protocol.$dirty || submitted)}">
+  <label for="health_check_protocol" class="col-sm-2 control-label"><%= t("app.health_check.protocol") %></label>
+  <div class="col-sm-10">
+    <input type="input" name="health_check_protocol" class="form-control" id="health_check_protocol" ng-model="app.health_check.protocol">
+     <p ng-show="appForm.health_check_protocol.$invalid && (appForm.health_check_protocol.$dirty || submitted)" class="help-block">You name is required.</p>
+  </div>
+</div>

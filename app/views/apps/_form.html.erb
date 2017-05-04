@@ -75,10 +75,10 @@
                       <option value="udp"> UDP </option>
                     </select>
                   </td>
-                  <td><button type="input" class="btn btn-danger btn-sm" ng-click="removePortmapping($index)"><%= fa_icon(:minus)%> </button></td>
+                  <td><a class="btn btn-danger btn-sm" ng-click="removePortmapping($index)"><%= fa_icon(:minus)%> </a></td>
                 </tr>
                 <tr>
-                  <td colspan=5><button type="input" class="btn btn-primary btn-sm" ng-click="morePortmapping()"><%= fa_icon(:plus)%> Add Port Map </button></td>
+                  <td colspan=5><a class="btn btn-primary btn-sm" ng-click="morePortmapping()"><%= fa_icon(:plus)%> Add Port Map </a></td>
                 </tr>
               </tbody>
             </table>
@@ -94,30 +94,54 @@
         <ul class="nav nav-tabs" role="tablist" id='appTab'>
           <li role="presentation" class="active"><a href="#command" aria-controls="command" role="tab" data-toggle="tab"><%= t('service.command') %></a></li>
           <li role="presentation"><a href="#volumes" aria-controls="volumes" role="tab" data-toggle="tab"><%= t('service.volumes') %></a></li>
+          <li role="presentation"><a href="#uri" aria-controls="uri" role="tab" data-toggle="tab"><%= t('service.uri') %></a></li>
           <li role="presentation"><a href="#networking" aria-controls="networking" role="tab" data-toggle="tab"><%= t('service.networking') %></a></li>
           <li role="presentation"><a href="#labels" aria-controls="labels" role="tab" data-toggle="tab"><%= t('service.labels') %></a></li>
           <li role="presentation"><a href="#security" aria-controls="security" role="tab" data-toggle="tab"><%= t('service.security') %></a></li>
           <li role="presentation"><a href="#health_check" aria-controls="health_check" role="tab" data-toggle="tab"><%= t('service.health_check') %></a></li>
-          <li role="presentation"><a href="#constraints" aria-controls="constraints" role="tab" data-toggle="tab"><%= t('service.constraints') %></a></li>
+          <li role="presentation"><a href="#scheduling" aria-controls="scheduling" role="tab" data-toggle="tab"><%= t('service.scheduling') %></a></li>
         </ul>
 
         <!-- Tab panes -->
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="command">
+            <%= render partial: 'apps/form/command' %>
           </div>
 
-          <div role="tabpanel" class="tab-pane fade" id="volumes">Volume</div>
-          <div role="tabpanel" class="tab-pane fade" id="networking">Networking</div>
-          <div role="tabpanel" class="tab-pane fade" id="labels">Label</div>
-          <div role="tabpanel" class="tab-pane fade" id="security">Security</div>
-          <div role="tabpanel" class="tab-pane fade" id="health_check">HealthCheck</div>
-          <div role="tabpanel" class="tab-pane fade" id="constraints">Constraints</div>
+          <div role="tabpanel" class="tab-pane" id="volumes">
+            <%= render partial: 'apps/form/volumes' %>
+          </div>
+
+          <div role="tabpanel" class="tab-pane" id="uri">
+            <%= render partial: 'apps/form/uri' %>
+          </div>
+
+          <div role="tabpanel" class="tab-pane" id="networking">
+            <%= render partial: 'apps/form/networking' %>
+          </div>
+
+          <div role="tabpanel" class="tab-pane" id="labels">
+            <%= render partial: 'apps/form/labels' %>
+          </div>
+
+          <div role="tabpanel" class="tab-pane" id="security">
+            <%= render partial: 'apps/form/security' %>
+          </div>
+
+          <div role="tabpanel" class="tab-pane" id="health_check">
+            <%= render partial: 'apps/form/health_check' %>
+          </div>
+
+          <div role="tabpanel" class="tab-pane" id="scheduling"
+            <%= render partial: 'apps/form/scheduling' %>
+          </div>
         </div>
       </div>
 
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-          <button type="submit" class="btn btn-default">Submit</button>
+          <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+          <%= link_to t("common.cancel"), services_path %>
         </div>
       </div>
     </form>
