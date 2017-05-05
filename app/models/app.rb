@@ -32,12 +32,10 @@
 #
 
 class App < ApplicationRecord
+  PROTECTED_ATTRIBUTES = %w(id created_at updated_at raw_config service_id current_version_id backend)
+  include AASM
+
   attr_accessor :labels
-
-  belongs_to :service
-  belongs_to :user
-  belongs_to :group
-
   serialize :env, Hash
   serialize :health_check, Hash
   serialize :portmappings, Array
@@ -46,12 +44,27 @@ class App < ApplicationRecord
   serialize :uris, Array
   serialize :gateway, Hash
 
-  PROTECTED_ATTRIBUTES = %w(id created_at updated_at raw_config service_id current_version_id backend)
+  belongs_to :service
+  belongs_to :user
+  belongs_to :group
+
   validates :name, presence: true
   validates :name, uniqueness: { scope: :service_id }
-
   before_validation(on: :create) do |app|
     app.instances ||= 0
   end
 
+  aasm do
+    state :pending, :initial => true
+    state :running
+    state :done
+
+    event :run do
+      transitions :from => [:pending, :stop], :to => :running
+    end
+
+    event :stop do
+      transitions :from => :running, :to => :done
+    end
+  end
 end

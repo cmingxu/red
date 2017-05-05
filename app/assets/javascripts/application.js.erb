@@ -33,10 +33,10 @@ registerToggleableTableHandler = function () {
   $('.toggleable-table-handle').click(function () {
     var li = $(this).find("i");
     if(li.hasClass("fa-plus")) {
-      $(this).find("i").removeClass('fa-plus').addClass('fa-minus');
+      li.removeClass('fa-plus').addClass('fa-minus');
       $(this).parents("table").find(".app_tr").show();
     }else{
-      $(this).find("i").removeClass('fa-minus').addClass('fa-plus');
+      li.removeClass('fa-minus').addClass('fa-plus');
       $(this).parents("table").find(".app_tr").hide();
     }
   })

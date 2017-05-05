@@ -31,6 +31,7 @@ gem "bower-rails", "~> 0.11.0"
 gem "font-awesome-rails"
 
 gem 'ransack'
+gem 'aasm'
 
 
 gem 'rails-bootstrap-markdown'
