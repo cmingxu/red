@@ -10,3 +10,13 @@ table.service_table {
 .services .action_bar{
   padding-bottom: 10px;
 }
+
+.services .toggleable-table-handle{
+  cursor: pointer;
+}
+
+
+.services .app_tr{
+  display: none;
+  transition: 4.5s;
+}

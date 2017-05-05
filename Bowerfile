@@ -3,3 +3,5 @@
 
 asset 'bootstrap-markdown'
 asset 'angularjs', '1.6.4'
+asset 'axios'
+asset 'peity'

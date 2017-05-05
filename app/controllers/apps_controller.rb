@@ -19,15 +19,12 @@ class AppsController < ApplicationController
     respond_to do |format|
       if @app.save
         format.html { redirect_to services_path }
-        format.json { head :ok }
+        format.json { json_success(201) }
       else
-        format.html {render :new}
-        format.json { head :unprocessable_entity }
+        format.html { render :new }
+        format.json { json_fail(422, @app.errors.full_messages.first)}
       end
     end
-  end
-
-  def update
   end
 
   def destroy
@@ -54,6 +51,20 @@ class AppsController < ApplicationController
   end
 
   def app_params
-    params.require(:app).permit(:name, :instances, :raw_config)
+    params.require(:app).permit!
+
+    #env_keys = params[:app][:env].try(:keys) || []
+    #health_check_keys = params[:app][:health_check].try(:keys) || []
+    #label_keys = params[:app][:labels].try(:keys) || []
+    #gateway_keys = params[:app][:gateway].try(:keys) || {}
+
+
+    #params.require(:app).permit(:cpu, :mem, :disk, :cmd, :args, :priority, :runas, :name, :instances,
+                                #:constraints, :image, :network, :force_image, :privileged,
+                                #:desc, :env => env_keys, :health_check => health_check_keys,
+                                #:portmappings => [:hostPort, :containerPort, :name, :proto],
+                                #:volumes => [:hostPath, :containerPath, :mode],
+                                #:uris => [], :labels => label_keys, :gateway => gateway_keys
+                               #)
   end
 end

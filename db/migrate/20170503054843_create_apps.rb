@@ -2,6 +2,7 @@ class CreateApps < ActiveRecord::Migration[5.0]
   def change
     create_table :apps do |t|
       t.string :name
+      t.text :desc
       t.string :backend
       t.decimal :cpu, precision: 10, scale: 2
       t.integer :mem

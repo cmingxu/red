@@ -2,6 +2,8 @@
   "name": "dsl-generated-dependencies",
   "dependencies": {
     "bootstrap-markdown": "latest",
-    "angularjs": "1.6.4"
+    "angularjs": "1.6.4",
+    "axios": "latest",
+    "peity": "latest"
   }
 }

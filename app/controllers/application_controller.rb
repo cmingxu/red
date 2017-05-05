@@ -1,10 +1,10 @@
 class ApplicationController < ActionController::Base
   attr_accessor :page_request_meta_info
-  before_filter :set_page_request_meta_info
+  before_action :set_page_request_meta_info
 
   protect_from_forgery with: :exception
-  before_filter :login_required
-  before_filter :set_locale
+  before_action :login_required
+  before_action :set_locale
 
   helper_method :current_user, :desired_language, :page_request_meta_info
 
@@ -33,6 +33,19 @@ class ApplicationController < ActionController::Base
 
   def login_from_session
     User.find_by(id: session[:user_id])
+  end
+
+  def json_fail code = 422, message = "", error_code = 0
+    render json: {
+      message: message,
+      error_code: error_code
+    }, status: code
+  end
+
+  def json_success code = 200, message = ""
+    render json: {
+      message: message,
+    }, status: code
   end
 
   def desired_language

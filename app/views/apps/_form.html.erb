@@ -3,14 +3,15 @@
 <% end %>
 
 <%= javascript_tag do %>
-  var appObj = JSON.parse('<%= @app.to_json.html_safe%>');
+  var appObj = JSON.parse('<%= @app.attributes.except(*App::PROTECTED_ATTRIBUTES).to_json.html_safe%>');
   $('#appTab a:first').tab('show');
+  var postPath = "/services/" +  "<%= @service.id %>" + "/apps";
 <% end %>
 
 <div ng-app="app">
   <div class='row' ng-controller='AppController'>
     <form class="form-horizontal" name="appForm" ng-submit="submit()">
-      <div class="form_section">
+      <div class="form_section col-md-12">
         <div class="form-group" ng-class="{ 'has-error' : appForm.name.$invalid && (appForm.name.$dirty || submitted)}" >
           <label for="name" class="col-sm-2 control-label"><%= t("app.name") %></label>
           <div class="col-sm-10">
@@ -20,9 +21,9 @@
         </div>
 
         <div class="form-group">
-          <label for="description" class="col-sm-2 control-label"><%= t("app.description") %></label>
+          <label for="desc" class="col-sm-2 control-label"><%= t("app.desc") %></label>
           <div class="col-sm-10">
-            <input type="input" name="description" class="form-control" id="description" ng-model="app.description">
+            <input type="input" name="desc" class="form-control" id="desc" ng-model="app.desc">
           </div>
         </div>
 
@@ -89,7 +90,7 @@
       </div>
 
 
-      <div class='form_section'>
+      <div class='form_section col-md-12'>
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist" id='appTab'>
           <li role="presentation" class="active"><a href="#command" aria-controls="command" role="tab" data-toggle="tab"><%= t('service.command') %></a></li>
@@ -143,23 +144,11 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
+      <div class="form-group text-center">
           <button type="submit" class="<%= btn_classes.join(' ') %>"><%= t('common.save') %></button>
           <%= link_to t("common.cancel"), services_path %>
-        </div>
       </div>
     </form>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
 

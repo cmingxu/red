@@ -1,5 +1,13 @@
 //= require angularjs/angular.min.js
+//= require axios/dist/axios.min.js
 
+
+var authenticity_token = $('meta[name="csrf-token"]').attr('content');
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+axios.defaults.headers.post['Accept'] = 'application/json';
+axios.defaults.validateStatus = function (status) {
+    return status >= 200 && status < 500; // default
+}
 
 angular.module('app', [])
   .controller('AppController', function($scope) {
@@ -12,15 +20,19 @@ angular.module('app', [])
       if($scope.appForm.$invalid) {
         alert("not valid");
       }else{
-        console.log($scope.app);
+        axios.post(window.postPath, {
+          app: JSON.parse(angular.toJson($scope.app)),
+          authenticity_token: authenticity_token
+        }).then(function (response) {
+            window.location.href = "/services";
+          }, function (response) {
+            console.log(response.data.message);
+          });
       }
     }
 
-    $scope.cancel = function () {
-    }
-
     $scope.supportGateway = function () {
-     return $scope.app.network == "bridge" ||
+      return $scope.app.network == "bridge" ||
         $scope.app.network == "host";
     }
 
@@ -30,7 +42,7 @@ angular.module('app', [])
     }
 
     $scope.moreEnv = function () {
-      if($scope.app.env == null) {
+      if($scope.app.env == null || Object.getOwnPropertyNames($scope.app.env || {}).length == 0) {
         $scope.app.env = {};
       }
 
@@ -102,12 +114,29 @@ angular.module('app', [])
     }
 
     function fillApp() {
-      if($scope.app.name == null){
-        $scope.app.name = "first-app";
+      if($scope.app.cpu == null){
+        $scope.app.cpu = 0.1;
       }
 
-      if($scope.app.description == null){
-        $scope.app.description = "from here to tommorrow!";
+      if($scope.app.mem == null){
+        $scope.app.mem = 64;
+      }
+
+      if($scope.app.disk == null){
+        $scope.app.disk = 0;
+      }
+
+      if($scope.app.cmd == null){
+        $scope.app.cmd = "";
+      }
+
+
+      if($scope.app.name == null){
+        $scope.app.name = "demo-app";
+      }
+
+      if($scope.app.desc == null){
+        $scope.app.desc = "from here to sunny tommorrow!";
       }
 
       if($scope.app.image == null){
@@ -118,7 +147,7 @@ angular.module('app', [])
         $scope.app.network = "bridge";
       }
 
-      if($scope.app.health_check == null){
+      if($scope.app.health_check == null || Object.getOwnPropertyNames($scope.health_check || {}).length == 0){
         $scope.app.health_check = {
           "protocol": "http",
           "value": "echo 1;",

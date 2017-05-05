@@ -4,7 +4,26 @@
 #
 #  id                 :integer          not null, primary key
 #  name               :string
-#  intances           :integer
+#  backend            :string
+#  cpu                :decimal(10, 2)
+#  mem                :integer
+#  disk               :integer
+#  cmd                :string
+#  args               :string
+#  priority           :integer
+#  runas              :string
+#  constraints        :string
+#  image              :string
+#  network            :string
+#  portmappings       :text
+#  force_image        :boolean
+#  privileged         :boolean
+#  env                :text
+#  volumes            :text
+#  uris               :text
+#  gateway            :text
+#  health_check       :text
+#  instances          :integer
 #  service_id         :integer
 #  current_version_id :integer
 #  raw_config         :text

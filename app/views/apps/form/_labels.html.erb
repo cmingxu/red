@@ -1,25 +1,23 @@
-<div class="col-md-12">
-  <div class="form-group" ng-class="{ 'has-error' : appForm.labels.$invalid && (appForm.labels.$dirty || submitted)}">
-    <label for="labels" class="col-sm-2 control-label"><%= t("app.labels") %></label>
-    <div class="col-sm-10">
-      <table class="table table-bordered">
-        <tr>
-          <th><%= t('common.key') %></td>
-          <th><%= t('common.value') %></td>
-          <th></td>
+<div class="form-group" ng-class="{ 'has-error' : appForm.labels.$invalid && (appForm.labels.$dirty || submitted)}">
+  <label for="labels" class="col-sm-2 control-label"><%= t("app.labels") %></label>
+  <div class="col-sm-10">
+    <table class="table table-bordered">
+      <tr>
+        <th><%= t('common.key') %></td>
+        <th><%= t('common.value') %></td>
+        <th></td>
+      </tr>
+      <tbody>
+        <tr  ng-repeat="(k, v) in app.labels">
+          <td> <input type="input" class="form-control" name="labels" ng-model="k" ng-required=true> </td>
+          <td> <input type="input" class="form-control" name="labels" ng-model="v" ng-required=true> </td>
+          <td><a class="btn btn-default btn-sm" ng-click="removeLabel(k)"><%= fa_icon(:minus)%> </a></td>
         </tr>
-        <tbody>
-          <tr  ng-repeat="(k, v) in app.labels">
-            <td> <input type="input" class="form-control" name="labels" ng-model="k" ng-required=true> </td>
-            <td> <input type="input" class="form-control" name="labels" ng-model="v" ng-required=true> </td>
-            <td><a class="btn btn-default btn-sm" ng-click="removeLabel(k)"><%= fa_icon(:minus)%> </a></td>
-          </tr>
-          <tr>
-            <td colspan=5><a class="btn btn-default btn-sm" ng-click="moreLabels()"><%= fa_icon(:plus)%> <%= t('app.new_label') %> </a></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p ng-show="appForm.labels.$invalid && (appForm.labels.$dirty || submitted)" class="help-block">You name is required.</p>
+        <tr>
+          <td colspan=5><a class="btn btn-default btn-sm" ng-click="moreLabels()"><%= fa_icon(:plus)%> <%= t('app.new_label') %> </a></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+  <p ng-show="appForm.labels.$invalid && (appForm.labels.$dirty || submitted)" class="help-block">You name is required.</p>
 </div>

@@ -16,12 +16,37 @@
 //= require turbolinks
 //= require_tree .
 //= require bootstrap-markdown
+//= require peity/jquery.peity.min.js
 
+initTooltip = function () {
+  $('[data-toggle="tooltip"]').tooltip();
+}
 
+initPeity = function () {
+  $(".pie").peity("pie");
+  $(".donut").peity("donut");
+  $(".line").peity("line");
+  $(".bar").peity("bar");
+}
+
+registerToggleableTableHandler = function () {
+  $('.toggleable-table-handle').click(function () {
+    var li = $(this).find("i");
+    if(li.hasClass("fa-plus")) {
+      $(this).find("i").removeClass('fa-plus').addClass('fa-minus');
+      $(this).parents("table").find(".app_tr").show();
+    }else{
+      $(this).find("i").removeClass('fa-minus').addClass('fa-plus');
+      $(this).parents("table").find(".app_tr").hide();
+    }
+  })
+}
 
 $(document).on('turbolinks:load', function() {
+  initPeity();
+  initTooltip();
+  registerToggleableTableHandler()
 });
-
 
 function readURL(input) {
   if (input.files && input.files[0]) {
@@ -29,9 +54,9 @@ function readURL(input) {
 
     reader.onload = function (e) {
       $(e.target).nearest('.preview_holder image')
-      .attr('src', e.target.result)
-      .width(150)
-      .height(200);
+        .attr('src', e.target.result)
+        .width(150)
+        .height(200);
     };
 
     reader.readAsDataURL(input.files[0]);

@@ -14,6 +14,8 @@ en:
     save: "Save"
     save_as_template: "Save As Template"
     download_compose: "Download Spec File"
+    edit: "Edit"
+    version: "Ver."
 
   nav:
     host: "Host"
@@ -25,6 +27,8 @@ en:
     registris: "Registry"
     setting: "Setting"
     logout: "Logout"
+    rabc: "Account"
+    open_in_new_window: "View"
   service:
     new_app: "New App"
     new_service: "New Service"

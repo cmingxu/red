@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 20170504033544) do
 
   create_table "apps", force: :cascade do |t|
     t.string   "name"
+    t.text     "desc"
     t.string   "backend"
     t.decimal  "cpu",                precision: 10, scale: 2
     t.integer  "mem"
