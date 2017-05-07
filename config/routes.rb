@@ -51,7 +51,13 @@ Rails.application.routes.draw do
   get 'mesos/index', as: :mesos
 
   resources :services do
-    resources :apps
+    resources :apps do
+      member do
+        put :run
+        put :stop
+      end
+    end
+
     member do
       post :save_as_template
       put :favorite

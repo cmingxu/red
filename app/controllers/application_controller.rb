@@ -69,6 +69,14 @@ class ApplicationController < ActionController::Base
     }
   end
 
+  rescue_from ActiveRecord::RecordNotFound, with: :render_404
+  #rescue_from Exception, with: :render_404
+
+  def render_404
+    flash.notice = t("common.record_not_found")
+    redirect_to root_path
+  end
+
   private
   def determine_navbar_item
     case controller_name.to_sym
@@ -103,5 +111,6 @@ class ApplicationController < ActionController::Base
       {text: :services, icon: :cogs }
     end
   end
+
 
 end

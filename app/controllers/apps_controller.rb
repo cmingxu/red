@@ -35,6 +35,14 @@ class AppsController < ApplicationController
     end
   end
 
+  def run
+    @app.run!
+    respond_to do |format|
+      format.html { redirect_to services_url, notice: 'Service template was successfully destroyed.' }
+      format.json { head :ok }
+    end
+  end
+
   def scaleup
   end
 
@@ -48,6 +56,8 @@ class AppsController < ApplicationController
 
   def set_app
     @app = @service.apps.find params[:id]
+    ap @app
+    ap "xxxxxxxxxxxx"
   end
 
   def app_params

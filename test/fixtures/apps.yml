@@ -4,6 +4,7 @@
 #
 #  id                 :integer          not null, primary key
 #  name               :string
+#  desc               :text
 #  backend            :string
 #  cpu                :decimal(10, 2)
 #  mem                :integer

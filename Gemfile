@@ -49,7 +49,7 @@ gem 'httparty'
 gem 'awesome_print'
 gem 'docker-api'
 gem 'docker_registry2'
-gem 'marathon-api', :require => 'marathon'
+#gem 'marathon-api', :require => 'marathon'
 
 gem 'ledermann-rails-settings'
 

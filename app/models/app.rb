@@ -4,6 +4,7 @@
 #
 #  id                 :integer          not null, primary key
 #  name               :string
+#  desc               :text
 #  backend            :string
 #  cpu                :decimal(10, 2)
 #  mem                :integer
@@ -32,8 +33,8 @@
 #
 
 class App < ApplicationRecord
-  PROTECTED_ATTRIBUTES = %w(id created_at updated_at raw_config service_id current_version_id backend)
   include AASM
+  PROTECTED_ATTRIBUTES = %w(id created_at updated_at raw_config service_id current_version_id backend)
 
   attr_accessor :labels
   serialize :env, Hash
@@ -54,17 +55,65 @@ class App < ApplicationRecord
     app.instances ||= 0
   end
 
-  aasm do
+  aasm  :column => :state do
     state :pending, :initial => true
     state :running
     state :done
 
     event :run do
-      transitions :from => [:pending, :stop], :to => :running
+      transitions :from => [:pending, :stop], :to => :running, after: :deploy
     end
 
     event :stop do
       transitions :from => :running, :to => :done
     end
+  end
+
+  def state_or_backend_state
+    self.state
+  end
+
+  def deploy
+    ap marathon_hash
+    begin
+      Marathon::App.create marathon_hash
+    rescue Marathon::Error::MarathonError => e
+      puts e
+      puts e.details
+    end
+  end
+
+  def marathon_hash
+    marathon_hash = {
+      id: self.name,
+      cpus: ,
+      mem: self.mem,
+      instances: self.instances,
+      executor: "",
+      container: self.container_hash,
+      env: self.env,
+      labels: self.labels,
+      fetch: self.uris.map {|u| { "uri": u }},
+      healthChecks: [ self.health_check ]
+    }
+
+    if self.cmd.present? 
+      marathon_hash[:cmd] = self.cmd
+    end
+
+    marathon_hash
+  end
+
+  def container_hash
+    {
+      type: "DOCKER",
+      docker: {
+        image: self.image,
+        network: self.network.upcase,
+        privileged: self.privileged,
+        portMappings: self.portmappings,
+      },
+      volumes: self.volumes,
+    }
   end
 end
