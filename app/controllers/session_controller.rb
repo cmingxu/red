@@ -2,7 +2,7 @@ class SessionController < ApplicationController
   layout "session"
 
   skip_before_filter :login_required, except: :destroy
-  before_filter :required_not_login, except: :destroy
+  before_filter :required_not_login, except: [:destroy, :particles]
 
   def new
     @user = User.new

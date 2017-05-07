@@ -1,14 +1,31 @@
-= simple_form_for(@service_template) do |f|
-  = f.error_notification
+= simple_form_for(@service_template, multiple: true) do |f|
+  .row
+    .col-md-4
+      %p= image_tag  @service_template.icon.small.try(:url) || "placeholder.png", height: 200
+      %label.btn.btn-default.btn-file
+        = f.input :icon, input_html: { style: "display: none;" }, label: fa_icon(:plus) + " " + t('common.upload_icon')
+    .col-md-8
+      = f.input :name, label: false, hint: 'eg. ELK suite'
+      = f.input :desc, label: false, hint: 'eg. ELK suite include elastic search, logstash and kibana'
 
-  .form-inputs
-    = f.input :name
-    = f.input :icon
-    = f.input :group_id
-    = f.input :user_id
-    = f.input :raw_config
-    = f.input :desc
-    = f.input :readme
+  .form_section
+    %ul.nav.nav-tabs{role: 'tablist'}
+      %li.active{role: 'presentation'}
+        = link_to t('service_template.readme'), '#readme', role: 'tab', 'data-toggle': 'tab', 'aria-controls': 'readme'
+      %li
+        = link_to t('service_template.raw_config'), '#raw_config', role: 'tab', 'data-toggle': 'tab', 'aria-controls': 'raw_config'
+    .tab-content
+      .tab-pane.active#readme{role: 'tabpanel'}
+        = f.input :readme, as: :text, label: false, input_html: {'data-provide': 'markdown-editable', style: 'height: 400px;'}
 
-  .form-actions
-    = f.button :submit
+      .tab-pane#raw_config{role: 'tabpanel'}
+        = f.input :raw_config, as: :text, label: false, input_html: {style: "height: 400px;"}
+
+
+
+  .actions
+    = f.button :submit, t("common.save"), class: btn_classes
+    = link_to t('common.remove'), service_template_path(@service_template), method: :delete, class: btn_classes(['btn-danger']) if @service_template.persisted?
+    = link_to t('common.cancel'), service_templates_path
+
+

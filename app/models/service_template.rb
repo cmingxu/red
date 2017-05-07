@@ -15,10 +15,12 @@
 #
 
 class ServiceTemplate < ApplicationRecord
+  mount_uploader :icon, ServiceTemplateIconUploader
+
   validates :name, presence: true
-  validates :icon, presence: true
   validates :readme, presence: true
   validates :desc, presence: true
+  validates :raw_config, presence: true
 
   belongs_to :user
   belongs_to :group

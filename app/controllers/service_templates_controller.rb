@@ -14,7 +14,11 @@ class ServiceTemplatesController < ApplicationController
 
   # GET /service_templates/new
   def new
-    @service_template = ServiceTemplate.new
+    @service = current_user.services.find params[:service_id]
+    @service_template = ServiceTemplate.new(raw_config: @service.raw_config,
+                                            name: @service.name,
+                                            desc: @service.desc,
+                                            readme: "Readme")
   end
 
   # GET /service_templates/1/edit
@@ -28,8 +32,8 @@ class ServiceTemplatesController < ApplicationController
 
     respond_to do |format|
       if @service_template.save
-        format.html { redirect_to @service_template, notice: 'Service template was successfully created.' }
-        format.json { render :show, status: :created, location: @service_template }
+        format.html { redirect_to service_templates_path, notice: 'Service template was successfully created.' }
+        format.json { render :edit, status: :created, location: @service_template }
       else
         format.html { render :new }
         format.json { render json: @service_template.errors, status: :unprocessable_entity }
@@ -42,7 +46,7 @@ class ServiceTemplatesController < ApplicationController
   def update
     respond_to do |format|
       if @service_template.update(service_template_params)
-        format.html { redirect_to @service_template, notice: 'Service template was successfully updated.' }
+        format.html { redirect_to edit_service_template_path(@service_template), notice: 'Service template was successfully updated.' }
         format.json { render :show, status: :ok, location: @service_template }
       else
         format.html { render :edit }
