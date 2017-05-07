@@ -33,7 +33,7 @@
 
 class App < ApplicationRecord
   PROTECTED_ATTRIBUTES = %w(id created_at updated_at raw_config service_id current_version_id backend)
-  include AASM
+  #include AASM
 
   attr_accessor :labels
   serialize :env, Hash
@@ -54,17 +54,17 @@ class App < ApplicationRecord
     app.instances ||= 0
   end
 
-  aasm do
-    state :pending, :initial => true
-    state :running
-    state :done
+  #aasm do
+    #state :pending, :initial => true
+    #state :running
+    #state :done
 
-    event :run do
-      transitions :from => [:pending, :stop], :to => :running
-    end
+    #event :run do
+      #transitions :from => [:pending, :stop], :to => :running
+    #end
 
-    event :stop do
-      transitions :from => :running, :to => :done
-    end
-  end
+    #event :stop do
+      #transitions :from => :running, :to => :done
+    #end
+  #end
 end

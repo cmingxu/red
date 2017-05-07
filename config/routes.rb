@@ -60,7 +60,7 @@ Rails.application.routes.draw do
   put 'toggle_locale', controller: :application
   
   get 'welcome/index'
-  get 'mesos/index', as: :mesos
+  get 'mesos/index', as: :system
 
   resources :services do
     resources :apps
