@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'audits/index', as: :audit
 
   get 'session/new', as: :new_session
+  get 'session/particles'
   post 'session/create', as: :login
   delete 'session/destroy', as: :logout
 

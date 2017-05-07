@@ -4,6 +4,7 @@
     "bootstrap-markdown": "latest",
     "angularjs": "1.6.4",
     "axios": "latest",
-    "peity": "latest"
+    "peity": "latest",
+    "particles.js": "latest"
   }
 }
