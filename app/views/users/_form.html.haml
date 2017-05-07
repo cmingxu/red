@@ -1,8 +1,6 @@
-= simple_form_for(@user) do |f|
-  = f.error_notification
-
-  .form-inputs
-    = f.input :email
-
-  .form-actions
-    = f.button :submit
+= simple_form_for(user, url: group.present? ? group_users_path(group) : users_path, remote: true) do |f|
+  = f.input :email, label: t("user.email"), hint: "admin@foobar.com", input_html: { autocomplete: 'new-email' }
+  = f.input :password, as: :password, label: t("user.password"), hint: "", input_html: { autocomplete: 'nwe-password' }
+  = f.input :group_admin, as: :boolean, label: t("user.group_admin"),  input_html: { checked: user.admin?(group) }
+  .actions
+    = f.button :submit, t('common.save'), class: btn_classes

@@ -14,8 +14,19 @@ Rails.application.routes.draw do
   resources :images
   resources :service_templates
 
-  resources :groups
-  resources :users
+  resources :groups do 
+    resources :users
+    member do
+      put :update_quota
+    end
+  end
+
+  resources :users do
+    member do
+      put :update_quota
+    end
+  end
+
 
   namespace :api do
     resources :nodes  do

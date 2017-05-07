@@ -6,7 +6,7 @@
 #
 require 'faker'
 
-[User, Node, ServiceTemplate].each do |m|
+[User, Node, ServiceTemplate, Group].each do |m|
   m.delete_all
 end
 
@@ -21,6 +21,7 @@ Faker::Config.locale = :en
   ServiceTemplate.create name: Faker::Name.name,
     icon: Faker::Avatar.image("my-own-slug"),
     desc: Faker::Lorem.sentence(3),
+    raw_config: Faker::Lorem.sentence(3),
     readme: (1.upto(30).map do  Faker::Markdown.random end).join
 end
 

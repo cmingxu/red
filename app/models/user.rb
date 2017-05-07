@@ -18,7 +18,7 @@ require 'digest'
 
 class User < ApplicationRecord
   ROLE = %w(SITE_ADMIN USER)
-  attr_accessor :password
+  attr_accessor :password, :group_admin
 
   validates :email, presence: true
   validates :email, uniqueness: true
@@ -40,6 +40,10 @@ class User < ApplicationRecord
 
   def password_valid?(pass)
     self.encrypted_password == entrypt_password(pass)
+  end
+
+  def admin?(group)
+    self.admin_groups.include? group
   end
 
   private

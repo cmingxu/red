@@ -9,6 +9,8 @@
     = link_to raw("<ins>我的服务 #{badge(10, :default)}</ins>") , new_service_path
   .clearfix
 
+= render :partial => "widgets/list_place_holder" if @services.empty?
+
 - @services.each do |service|
   %table.table.table-striped.service_table.table-bordered.table-hover.toggleable-table
     %tr.service_tr

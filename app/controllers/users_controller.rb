@@ -24,15 +24,25 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params)
+    if @group = Group.find_by(id: params[:group_id])
+      @user = @group.users.new user_params
+    else
+      @user = User.new(user_params)
+    end
+
+    if @user.group_admin
+      @user.group_users.first(group_id: @group.id).role = "ADMIN"
+    end
 
     respond_to do |format|
-      if @user.save
+      if @group.save && @user.save
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
+        format.js { render :js => 'window.location.reload();' }
       else
         format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.js { render }
       end
     end
   end
@@ -62,13 +72,13 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params.require(:user).permit(:email)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def user_params
+    params.require(:user).permit(:email, :password)
+  end
 end

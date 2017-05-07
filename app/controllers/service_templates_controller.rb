@@ -14,11 +14,16 @@ class ServiceTemplatesController < ApplicationController
 
   # GET /service_templates/new
   def new
-    @service = current_user.services.find params[:service_id]
-    @service_template = ServiceTemplate.new(raw_config: @service.raw_config,
-                                            name: @service.name,
-                                            desc: @service.desc,
-                                            readme: "Readme")
+    if params[:service_id]
+      @service = current_user.services.find(id: params[:service_id])
+      @service_template = ServiceTemplate.new(raw_config: @service.try(:raw_config),
+                                              name: @service.try(:name),
+                                              desc: @service.try(:desc),
+                                              readme: "Readme")
+    else
+      @service_template = ServiceTemplate.new(name: "New Service Template",
+                                              readme: "Readme")
+    end
   end
 
   # GET /service_templates/1/edit
@@ -66,13 +71,13 @@ class ServiceTemplatesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_service_template
-      @service_template = ServiceTemplate.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_service_template
+    @service_template = ServiceTemplate.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def service_template_params
-      params.require(:service_template).permit(:name, :icon, :group_id, :user_id, :raw_config, :desc, :readme)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def service_template_params
+    params.require(:service_template).permit(:name, :icon, :group_id, :user_id, :raw_config, :desc, :readme)
+  end
 end

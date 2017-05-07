@@ -23,6 +23,7 @@ zh-CN:
     containers: "容器"
     edit: "编辑"
     version: "版本"
+    remove_group: "删除此组"
   nav:
     host: "主机"
     infra: "基础"
