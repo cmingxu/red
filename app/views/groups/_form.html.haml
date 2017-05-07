@@ -1,9 +1,6 @@
-= simple_form_for(@group) do |f|
-  = f.error_notification
+= simple_form_for(@group, remote: true) do |f|
+  = f.input :name, label: t('group.name'), hint: "eg. 开发部，运维部"
+  = f.input :desc, as: :text, label: t('group.desc'), hint: "eg. 负责线上事务"
 
-  .form-inputs
-    = f.input :name
-    = f.input :ower_id
-
-  .form-actions
+  .actions
     = f.button :submit

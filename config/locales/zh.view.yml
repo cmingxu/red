@@ -33,7 +33,7 @@ zh-CN:
     registries: "镜像管理"
     setting: "设置"
     logout: "退出登录"
-    rabc: "账号&配额"
+    rbac: "账号&配额"
     audit: "审计"
     open_in_new_window: "新窗口打开"
   app:

@@ -29,3 +29,8 @@ u = User.new email: "admin@admin.com", role: "SITE_ADMIN"
 u.update_password "admin"
 u.save
 
+1.upto(100) do |i|
+  group = Group.new name: Faker::Name.name, owner: User.first
+  User.first.groups << group
+end
+

@@ -36,7 +36,7 @@
             %li{class: navbar_nav_active_class(:registries) }= link_to t('nav.registries'), registries_path
             %li{class: navbar_nav_active_class(:mesos) }= link_to t('nav.mesos'), mesos_path
             %li{class: navbar_nav_active_class(:nodes) }= link_to t('nav.host'), nodes_path
-            %li{class: navbar_nav_active_class(:rbac) }= link_to t('nav.rabc'), rabc_path
+            %li{class: navbar_nav_active_class(:rbac) }= link_to t('nav.rbac'), rbac_path
             = drop_down fa_icon(:user) + " #{current_user.display}" do
               = menu_item t('nav.setting'), setting_path
               = menu_item t('nav.audit'), audit_path

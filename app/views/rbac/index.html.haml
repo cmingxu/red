@@ -1,0 +1,24 @@
+.row
+  .col-md-12.text-right
+    = link_to fa_icon(:plus) + " " + t("group.new_group"), new_group_path, class: btn_classes, remote: true
+.row
+  .col-md-4.col-lg-2
+    .list-group.group-list
+      - @groups.each do |group|
+        %a.list-group-item.group_item{href: rbac_path(group_id: group.id), class: group.id == @group.id ? 'active' : ''}
+          %h4.list-group-item-heading= group.name
+          .list-group-item-text
+            %span.text-muted= group.desc
+
+            %span.text-muted= group.owner.display
+
+            %span.text-muted= group.users.length
+
+            %span.text-muted 150 core
+            %span.text-muted 150G mem
+
+
+
+
+  .col-md-8.col-lg-10#group_detail
+    = render :partial => "groups/show", locals: { group: @group }

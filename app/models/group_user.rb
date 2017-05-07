@@ -12,6 +12,7 @@
 
 class GroupUser < ApplicationRecord
   ROLES = %(ADMIN USER)
+
   belongs_to :group
   belongs_to :user
 end

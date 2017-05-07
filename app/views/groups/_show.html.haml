@@ -1,0 +1,32 @@
+= panel_item t("common.user"), :user do
+  = group.name
+
+= panel_item t("common.quota"), :user do
+  = group.name
+
+= panel_item t("common.user"), :user do
+  %table.table.table-bordered.table-stripped
+    %thead
+      %td= t("user.name")
+      %td= t("user.email")
+      %td= t("common.application")
+
+    - group.users.each do |user|
+      %tr
+        %td= user.name
+        %td= user.email
+        %td= user.services.length
+
+= panel_item t("common.service"), :cogs do
+  %table.table.table-bordered.table-stripped
+    %thead
+      %td= t("user.name")
+      %td= t("user.email")
+      %td= t("common.application")
+
+    - group.services.each do |service|
+      %tr
+        %td= service.name
+        %td= service.desc
+
+= link_to ("common.remove"), group_path(group), method: :delete, 'data-confirm': "xxx", class: btn_classes(['btn-danger', 'col-md-12', 'btn-lg'])

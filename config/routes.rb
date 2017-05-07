@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'rabc/index', as: :rabc
+  get 'rbac/index', as: :rbac
   get 'audits/index', as: :audit
 
   get 'session/new', as: :new_session
