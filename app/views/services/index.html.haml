@@ -9,6 +9,8 @@
     = link_to raw("<ins>我的服务 #{badge(10, :default)}</ins>") , new_service_path
   .clearfix
 
+= render :partial => "widgets/list_place_holder" if @services.empty?
+
 - @services.each do |service|
   %table.table.table-striped.service_table.table-bordered.table-hover.toggleable-table
     %tr.service_tr
@@ -26,7 +28,7 @@
           = drop_down_menu_item t("service.new_app"), new_service_app_path(service), data: { turbolinks: false }
           = drop_down_menu_item t("nav.open_in_new_window"), service_path(service), target: '_blank'
           = drop_down_menu_item_sepeartor
-          = drop_down_menu_item fa_icon(:copy) + " " + t("common.save_as_template"), save_as_template_service_path(service)
+          = drop_down_menu_item fa_icon(:copy) + " " + t("common.save_as_template"), new_service_template_path(service_id: service)
           = drop_down_menu_item fa_icon(:star) + " " + t("common.favorite"), favorite_service_path(service)
           = drop_down_menu_item t("common.download_compose"), download_compose_service_path(service)
           = drop_down_menu_item_sepeartor

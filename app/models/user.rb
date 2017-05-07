@@ -18,13 +18,14 @@ require 'digest'
 
 class User < ApplicationRecord
   ROLE = %w(SITE_ADMIN USER)
-  attr_accessor :password
+  attr_accessor :password, :group_admin
 
   validates :email, presence: true
   validates :email, uniqueness: true
 
   has_many :group_users
   has_many :groups, through: :group_users
+  has_many :admin_groups, proc { where("`group_users`.role = 'ADMIN'") }, through: :group_users, source: :group
 
   has_many :services, dependent: :destroy
 
@@ -39,6 +40,10 @@ class User < ApplicationRecord
 
   def password_valid?(pass)
     self.encrypted_password == entrypt_password(pass)
+  end
+
+  def admin?(group)
+    self.admin_groups.include? group
   end
 
   private

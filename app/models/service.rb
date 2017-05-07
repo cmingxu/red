@@ -21,4 +21,8 @@ class Service < ApplicationRecord
   validates :name, presence: true
   validates :name, uniqueness: { scope: :user_id, if: Proc.new {self.user_id.present?} }
   validates :name, uniqueness: { scope: :group_id, if: Proc.new {self.group_id.present?} }
+
+  def raw_config
+    self.apps.map(&:raw_config).join("\n ")
+  end
 end

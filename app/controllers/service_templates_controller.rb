@@ -4,7 +4,7 @@ class ServiceTemplatesController < ApplicationController
   # GET /service_templates
   # GET /service_templates.json
   def index
-    @service_templates = ServiceTemplate.page params[:page]
+    @service_templates = ServiceTemplate.order("updated_at DESC").page params[:page]
   end
 
   # GET /service_templates/1
@@ -14,7 +14,16 @@ class ServiceTemplatesController < ApplicationController
 
   # GET /service_templates/new
   def new
-    @service_template = ServiceTemplate.new
+    if params[:service_id]
+      @service = current_user.services.find_by(id: params[:service_id])
+      @service_template = ServiceTemplate.new(raw_config: @service.try(:raw_config),
+                                              name: @service.try(:name),
+                                              desc: @service.try(:desc),
+                                              readme: "Readme")
+    else
+      @service_template = ServiceTemplate.new(name: "New Service Template",
+                                              readme: "Readme")
+    end
   end
 
   # GET /service_templates/1/edit
@@ -28,8 +37,8 @@ class ServiceTemplatesController < ApplicationController
 
     respond_to do |format|
       if @service_template.save
-        format.html { redirect_to @service_template, notice: 'Service template was successfully created.' }
-        format.json { render :show, status: :created, location: @service_template }
+        format.html { redirect_to service_templates_path, notice: 'Service template was successfully created.' }
+        format.json { render :edit, status: :created, location: @service_template }
       else
         format.html { render :new }
         format.json { render json: @service_template.errors, status: :unprocessable_entity }
@@ -42,7 +51,7 @@ class ServiceTemplatesController < ApplicationController
   def update
     respond_to do |format|
       if @service_template.update(service_template_params)
-        format.html { redirect_to @service_template, notice: 'Service template was successfully updated.' }
+        format.html { redirect_to edit_service_template_path(@service_template), notice: 'Service template was successfully updated.' }
         format.json { render :show, status: :ok, location: @service_template }
       else
         format.html { render :edit }
@@ -62,13 +71,13 @@ class ServiceTemplatesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_service_template
-      @service_template = ServiceTemplate.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_service_template
+    @service_template = ServiceTemplate.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def service_template_params
-      params.require(:service_template).permit(:name, :icon, :group_id, :user_id, :raw_config, :desc, :readme)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def service_template_params
+    params.require(:service_template).permit(:name, :icon, :group_id, :user_id, :raw_config, :desc, :readme)
+  end
 end

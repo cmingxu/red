@@ -1,0 +1,70 @@
+= panel_item t("common.detail_info"), :info do
+  %dl.dl-horizontal
+    %dt= t("common.name")
+    %dd= group.name
+    %dt= t("common.owner")
+    %dd= group.owner.display
+    %dt= t("common.created")
+    %dd= l(group.created_at)
+    %dt= t("common.user_count")
+    %dd= group.users.length
+    %dt= t("common.service_count")
+    %dd= group.services.length
+
+
+= panel_item t("common.group_quota"), :user do
+  = form_tag update_quota_group_path(group), class: 'form-inline' do
+    .form-group.col-md-6
+      .input-group
+        = text_field_tag "cpu", 1000, class: 'form-control', type: :number
+        .input-group-addon CORE
+    .form-group
+      .input-group
+        = text_field_tag "mem", 1000, class: 'form-control', type: :number
+        .input-group-addon M
+    = submit_tag t("common.save"), class: 'btn btn-primary btn-sm pull-right'
+
+= panel_item t("common.user"), :user do
+  .btn-group.pull-right
+    = link_to fa_icon(:plus) + " " + t("group.enroll_new_user"), "", class: 'btn btn-primary btn-sm'
+    = link_to fa_icon(:plus) + " " + t("group.new_group_user"), "#newUser", class: 'btn btn-primary btn-sm', data: { toggle: 'modal' }
+  = modal_dialog id: "newUser", header: { show_close: true, dismiss: 'modal', title: t('user.new_user') }, body:   { content: render(:partial => "users/form", locals: { group: @group, user: @group.users.new }) }, footer: { content: '' }
+
+  %table.table.table-bordered.table-striped.table-hover
+    %thead.text-center
+      %td= t("user.role")
+      %td= t("user.name")
+      %td= t("user.email")
+      %td= t("user.groups")
+      %td= t("common.application")
+      %td
+
+    - group.users.each do |user|
+      %tr
+        %td= group.group_users(user_id: user.id).first.role
+        %td= user.display
+        %td= user.email
+        %td= %w(运维组 线上运营 LiveOps).join "  "
+        %td= user.services.length
+        %td
+          = drop_down_menu :default, t("common.actions") do
+            = drop_down_menu_item t("common.edit"), ""
+            = drop_down_menu_item t("common.remove"), ""
+            = drop_down_menu_item t("common.delete_permantly"), ""
+            = drop_down_menu_item_sepeartor
+
+= panel_item t("common.service"), :cogs do
+  = link_to fa_icon(:plus) + " " + t("common.new_service"), "", class: 'btn btn-sm btn-primary pull-right'
+  
+  %table.table.table-bordered.table-stripped
+    %thead
+      %td= t("user.name")
+      %td= t("user.email")
+      %td= t("common.application")
+
+    - group.services.each do |service|
+      %tr
+        %td= service.name
+        %td= service.desc
+
+= link_to t("common.remove_group"), group_path(group), method: :delete, 'data-confirm': "xxx", class: btn_classes(['btn-danger', 'col-md-12', 'btn-lg'])

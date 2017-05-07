@@ -4,7 +4,7 @@
     %meta(charset="utf-8")
     %meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
     %meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    %title= content_for?(:title) ? yield(:title) : "Green"
+    %title= content_for?(:title) ? yield(:title) : "Dataman Red"
 
     = csrf_meta_tags
     = stylesheet_link_tag "application", :media => "all"
@@ -18,7 +18,6 @@
     /[if lt IE 9]
       = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"
     = yield :custom_assets
-
 
   %body{class: controller_name}
     .navbar-inverse.navbar-default.navbar-static-top
@@ -34,9 +33,9 @@
             %li{class: navbar_nav_active_class(:services) }= link_to fa_icon(:bars) + " " + t('nav.services'), services_path
             %li{class: navbar_nav_active_class(:service_templates) }= link_to t('nav.service_templates'), service_templates_path
             %li{class: navbar_nav_active_class(:registries) }= link_to t('nav.registries'), registries_path
-            %li{class: navbar_nav_active_class(:mesos) }= link_to t('nav.mesos'), mesos_path
             %li{class: navbar_nav_active_class(:nodes) }= link_to t('nav.host'), nodes_path
-            %li{class: navbar_nav_active_class(:rbac) }= link_to t('nav.rabc'), rabc_path
+            %li{class: navbar_nav_active_class(:rbac) }= link_to t('nav.rbac'), rbac_path
+            %li{class: navbar_nav_active_class(:system) }= link_to t('nav.system'), system_path
             = drop_down fa_icon(:user) + " #{current_user.display}" do
               = menu_item t('nav.setting'), setting_path
               = menu_item t('nav.audit'), audit_path

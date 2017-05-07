@@ -35,6 +35,7 @@
 class App < ApplicationRecord
   include AASM
   PROTECTED_ATTRIBUTES = %w(id created_at updated_at raw_config service_id current_version_id backend)
+  PROTECTED_ATTRIBUTES = %w(id created_at updated_at raw_config service_id current_version_id backend)
 
   attr_accessor :labels
   serialize :env, Hash
@@ -55,7 +56,7 @@ class App < ApplicationRecord
     app.instances ||= 0
   end
 
-  aasm  :column => :state do
+  aasm :column => :state do
     state :pending, :initial => true
     state :running
     state :done
@@ -86,7 +87,7 @@ class App < ApplicationRecord
   def marathon_hash
     marathon_hash = {
       id: self.name,
-      cpus: ,
+      cpus: self.cpu.to_f,
       mem: self.mem,
       instances: self.instances,
       executor: "",
@@ -97,7 +98,7 @@ class App < ApplicationRecord
       healthChecks: [ self.health_check ]
     }
 
-    if self.cmd.present? 
+    if self.cmd.present?
       marathon_hash[:cmd] = self.cmd
     end
 

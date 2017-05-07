@@ -1,12 +1,17 @@
 - @service_templates.each do |temp|
-  %a.col-md-3.col-lg-2.text-center{href: service_template_path(temp)}
-    .thumbnail
-      = image_tag(temp.icon, class: "card-image-top")
-      .caption
-        %h4= temp.name
-        %p= temp.desc
-        %small.text-muted
-          = l(temp.updated_at)
+  .template_holder.col-md-3.col-lg-2.text-center
+    %a.template_holder{href: edit_service_template_path(temp)}
+      .thumbnail
+        = image_tag(temp.icon.try(:small).try(:url) || "placeholder.png", class: "card-image-top")
+        .caption
+          %h4= temp.name
+          %p= temp.desc
+          %small.text-muted
+            = l(temp.updated_at)
+
+        .service_template_action.col-md-12
+          = link_to "发布服务", "", class: 'btn btn-danger btn-lg'
+
 
 .clearfix
 = paginate @service_templates

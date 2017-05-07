@@ -1,3 +1,22 @@
 // Place all the styles related to the service_templates controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+//
+
+
+.service_templates .form_section{
+  padding-top: 10px;
+}
+
+.service_templates .template_holder {
+  position: relative;
+}
+
+.service_templates .template_holder .service_template_action{
+  position: absolute;
+  z-index: 10;
+  opacity: 0.6;
+  background-color: black;
+  bottom: 20px;
+  padding: 10px 5px;
+}

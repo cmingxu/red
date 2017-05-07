@@ -27,7 +27,7 @@ en:
     registris: "Registry"
     setting: "Setting"
     logout: "Logout"
-    rabc: "Account"
+    rbac: "Account"
     open_in_new_window: "View"
   service:
     new_app: "New App"

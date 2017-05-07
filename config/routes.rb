@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
-  get 'rabc/index', as: :rabc
+  get 'rbac/index', as: :rbac
   get 'audits/index', as: :audit
 
   get 'session/new', as: :new_session
+  get 'session/particles'
   post 'session/create', as: :login
   delete 'session/destroy', as: :logout
 
@@ -13,8 +14,19 @@ Rails.application.routes.draw do
   resources :images
   resources :service_templates
 
-  resources :groups
-  resources :users
+  resources :groups do 
+    resources :users
+    member do
+      put :update_quota
+    end
+  end
+
+  resources :users do
+    member do
+      put :update_quota
+    end
+  end
+
 
   namespace :api do
     resources :nodes  do
@@ -48,7 +60,7 @@ Rails.application.routes.draw do
   put 'toggle_locale', controller: :application
   
   get 'welcome/index'
-  get 'mesos/index', as: :mesos
+  get 'mesos/index', as: :system
 
   resources :services do
     resources :apps do

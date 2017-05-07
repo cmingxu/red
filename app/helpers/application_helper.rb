@@ -14,11 +14,11 @@ module ApplicationHelper
   end
 
   def btn_classes(extras = [])
-    %w(btn btn-lg btn-primary).push(extras).flatten
+    %w(btn btn-lg btn-primary).push(extras).flatten.uniq
   end
 
   def sm_btn_classes(extras = [])
-    %w(btn btn-primary).push(extras).flatten
+    %w(btn btn-primary).push(extras).flatten.uniq
   end
   
   def drop_down_menu(style = :danger, display = "Actions", &block)
@@ -37,7 +37,6 @@ module ApplicationHelper
   end
 
   def drop_down_menu_item(display, link, opts = {})
-    ap "sssssssssssssss"
     content_tag(:li) do
       link_to display, link, opts
     end
