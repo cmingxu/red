@@ -20,6 +20,9 @@
     = yield :custom_assets
 
   %body{class: controller_name}
+    .turbolinks-progress-bar.text-center
+      %p
+        %i.fa.fa-cog.fa-spin.fa-4x.fa-fw
     .navbar-inverse.navbar-default.navbar-static-top
       .container-fluid
         %button.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse")

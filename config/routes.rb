@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   resources :images
   resources :service_templates
 
-  resources :groups do 
+  resources :groups do
     resources :users
     member do
       put :update_quota
