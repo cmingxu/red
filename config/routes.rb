@@ -59,7 +59,7 @@ Rails.application.routes.draw do
   end
 
   put 'toggle_locale', controller: :application
-  
+
   get 'welcome/index'
   get 'mesos/index', as: :mesos
 
@@ -68,6 +68,13 @@ Rails.application.routes.draw do
       member do
         put :run
         put :stop
+        put :start
+        put :restart
+        put :change
+        put :rollback
+        put :scale
+
+        get :backend_state
       end
     end
 
@@ -80,5 +87,4 @@ Rails.application.routes.draw do
   end
 
   root to: "services#index"
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

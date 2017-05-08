@@ -43,10 +43,18 @@ class AppsController < ApplicationController
     end
   end
 
-  def scaleup
+  def scale
+    @app.scale
+    set_marathon_app
+
+    respond_to do |format|
+      format.js { render }
+    end
   end
 
-  def scaledown
+  def backend_state
+    set_marathon_app
+    render layout: false
   end
 
   private
@@ -56,8 +64,15 @@ class AppsController < ApplicationController
 
   def set_app
     @app = @service.apps.find params[:id]
-    ap @app
-    ap "xxxxxxxxxxxx"
+  end
+
+  def set_marathon_app
+    begin
+      @marathon_app = Marathon::App.get @app.marathon_app_name
+    rescue Marathon::Error::NotFoundError
+    rescue Marathon::Error => e
+    end
+
   end
 
   def app_params
@@ -70,11 +85,11 @@ class AppsController < ApplicationController
 
 
     #params.require(:app).permit(:cpu, :mem, :disk, :cmd, :args, :priority, :runas, :name, :instances,
-                                #:constraints, :image, :network, :force_image, :privileged,
-                                #:desc, :env => env_keys, :health_check => health_check_keys,
-                                #:portmappings => [:hostPort, :containerPort, :name, :proto],
-                                #:volumes => [:hostPath, :containerPath, :mode],
-                                #:uris => [], :labels => label_keys, :gateway => gateway_keys
-                               #)
+    #:constraints, :image, :network, :force_image, :privileged,
+    #:desc, :env => env_keys, :health_check => health_check_keys,
+    #:portmappings => [:hostPort, :containerPort, :name, :proto],
+    #:volumes => [:hostPath, :containerPath, :mode],
+    #:uris => [], :labels => label_keys, :gateway => gateway_keys
+    #)
   end
 end

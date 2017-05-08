@@ -55,13 +55,18 @@ class App < ApplicationRecord
     app.instances ||= 0
   end
 
+
+  before_destroy do |app|
+    app.stop!
+  end
+
   aasm :column => :state do
     state :pending, :initial => true
     state :running
     state :done
 
     event :run do
-      transitions :from => [:pending, :stop], :to => :running, after: :deploy
+      transitions :from => [:pending, :stop], :to => :running, after: :run
     end
 
     event :stop do
@@ -73,8 +78,7 @@ class App < ApplicationRecord
     self.state
   end
 
-  def deploy
-    ap marathon_hash
+  def run
     begin
       Marathon::App.create marathon_hash
     rescue Marathon::Error::MarathonError => e
@@ -83,13 +87,58 @@ class App < ApplicationRecord
     end
   end
 
+  def stop!
+    begin
+      Marathon::App.delete self.marathon_app_name
+    rescue Marathon::Error::NotFoundError => e
+      Rails.logger.debug e
+    end
+
+    if self.service.apps.running.present?
+      begin
+        Marathon::Group.delete self.service.name
+      rescue Marathon::Error::NotFoundError => e
+        Rails.logger.debug e
+      end
+    end
+  end
+
+  def suspend!
+    marathon_app.suspend!
+  end
+
+  def restart
+    marathon_app.restart!
+  end
+
+  def change
+    marathon_app.change!
+  end
+
+  def rollback(version)
+    marathon_app.roll_back! version
+  end
+
+  def scale(ins = 1)
+    marathon_app.scale! ins
+  end
+
+
+  def marathon_app_name
+    self.service.name + "/" + self.name
+  end
+
+  def marathon_app
+    Marathon::App.get self.marathon_app_name
+  end
+
   def marathon_hash
     marathon_hash = {
-      id: self.name,
+      id: self.marathon_app_name,
       cpus: self.cpu.to_f,
       mem: self.mem,
       instances: self.instances,
-      executor: "",
+      #executor: "",
       container: self.container_hash,
       env: self.env,
       labels: self.labels,
@@ -108,12 +157,12 @@ class App < ApplicationRecord
     {
       type: "DOCKER",
       docker: {
-        image: self.image,
-        network: self.network.upcase,
-        privileged: self.privileged,
-        portMappings: self.portmappings,
-      },
-      volumes: self.volumes,
+      image: self.image,
+      network: self.network.upcase,
+      privileged: self.privileged,
+      portMappings: self.portmappings,
+    },
+    volumes: self.volumes,
     }
   end
 end

@@ -90,7 +90,7 @@ angular.module('app', [])
         {
           hostPath: "/",
           containerPath: "/hostHome",
-          mode: "ro"
+          mode: "RO"
         }
       );
     }
@@ -107,8 +107,8 @@ angular.module('app', [])
 
       $scope.app.portmappings.push(
         {name: "web",
-          containerPort: "80",
-          hostPort: "3000",
+          containerPort: 80,
+          hostPort: 3000,
           proto: "tcp"}
       );
     }
@@ -149,7 +149,7 @@ angular.module('app', [])
 
       if($scope.app.health_check == null || Object.getOwnPropertyNames($scope.health_check || {}).length == 0){
         $scope.app.health_check = {
-          "protocol": "http",
+          "protocol": "HTTP",
           "value": "echo 1;",
           "path": "/",
           "delaySeconds": 10,

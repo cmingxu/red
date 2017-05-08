@@ -17,13 +17,10 @@
 //= require_tree .
 //= require bootstrap-markdown
 //= require peity/jquery.peity.min.js
-//= require particles.js/particles.min.js
 
-Turbolinks.enableProgressBar();
-
-particlesJS.load('particles-js', '/session/particles.json', function() {
-  console.log('callback - particles.js config loaded');
-});
+if (typeof Turbolinks.enableProgressBar == "function") {
+  Turbolinks.enableProgressBar();
+}
 
 initTooltip = function () {
   $('[data-toggle="tooltip"]').tooltip();

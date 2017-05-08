@@ -2,7 +2,7 @@
   .pull-left
     = link_to fa_icon(:plus) + " " + t("service.new_service"), new_service_path, class: 'btn btn-primary'
     = link_to fa_icon(:copy) + " " + t("service.new_service_from_universe"), new_service_path, class: 'btn btn-primary'
-    
+
   .pull-right
     = link_to raw("<ins>我的服务 #{badge(10, :default)}</ins>") , new_service_path
     = link_to raw("<ins>我的服务 #{badge(10, :default)}</ins>") , new_service_path
@@ -12,60 +12,57 @@
 = render :partial => "widgets/list_place_holder" if @services.empty?
 
 - @services.each do |service|
-  %table.table.table-striped.service_table.table-bordered.table-hover.toggleable-table
-    %tr.service_tr
-      %td{colspan: 4}
-        %span.text-bigger.text-primary.toggleable-table-handle
-          = "#{fa_icon(:plus)} #{service.name}".html_safe
-      %td.text-center
-        %p.text-bigger= service.apps.length
-        %p.text-muted= t('active_record.app.model_name')
-      %td.text-center
-        %p.text-bigger= service.apps.sum(&:instances)
-        %p.text-muted= t('common.containers')
-      %td.text-center
-        = drop_down_menu :primary, t("common.actions") do
-          = drop_down_menu_item t("service.new_app"), new_service_app_path(service), data: { turbolinks: false }
-          = drop_down_menu_item t("nav.open_in_new_window"), service_path(service), target: '_blank'
-          = drop_down_menu_item_sepeartor
-          = drop_down_menu_item fa_icon(:copy) + " " + t("common.save_as_template"), new_service_template_path(service_id: service)
-          = drop_down_menu_item fa_icon(:star) + " " + t("common.favorite"), favorite_service_path(service)
-          = drop_down_menu_item t("common.download_compose"), download_compose_service_path(service)
-          = drop_down_menu_item_sepeartor
-          = drop_down_menu_item fa_icon(:trash, class: 'text-danger') + " " + t("common.remove"), service_path(service), method: :delete
-
-    - service.apps.each do |app|
-      %tr.app_tr
-        %td
-          - if !app.running?
-            = link_to fa_icon(:play, class: ""), run_service_app_path(service, app), method: :put
-          - else
-            = link_to fa_icon(:stop), run_service_app_path(service, app)
-          = t("service.#{app.state_or_backend_state}")
-
-        %td
-          %strong
-            = link_to app.name, service_path(service, app_id: app.id)
-        %td
-          %span.text-muted
-            = t('common.image')
-            \:
-          = app.image
-        %td
-          %span.text-muted
-            = t('common.version')
-            \:
-          %strong.text-primary= "version-1.10"
+  .service_section
+    .text-danger.pull-right.like_icon= fa_icon(:flag, class: "fa-2x")
+    %table.table.table-striped.service_table.table-bordered.table-hover.toggleable-table{class: "service_#{service.id}"}
+      %tr.service_tr
+        %td{colspan: 3}
+          %span.text-bigger.text-primary.toggleable-table-handle
+            = "#{fa_icon(:minus)} #{service.name}".html_safe
         %td.text-center
-          Service
+          %p.text-bigger= service.apps.length
+          %p
+            %span.text-muted= t('active_record.app.model_name')
+            %span.text-primary= link_to fa_icon(:refresh), "", onclick: "", data: {service_id: "service_#{service.id}" }, class: 'service_refresh_app_state_icon'
         %td.text-center
-          = app.instances
-          = t('common.containers')
+          %p.text-bigger= service.apps.sum(&:instances)
+          %p.text-muted= t('common.containers')
         %td.text-center
-          = drop_down_menu :default, t("common.actions") do
-            = drop_down_menu_item t("common.edit"), service_app_path(service, app), data: { turbolinks: false }
-            = drop_down_menu_item t("common.copy"), new_service_app_path(service, app_id: app.id), data: { turbolinks: false }
+          = drop_down_menu :primary, t("common.actions") do
+            = drop_down_menu_item t("service.new_app"), new_service_app_path(service), data: { turbolinks: false }
+            = drop_down_menu_item t("nav.open_in_new_window"), service_path(service), target: '_blank'
             = drop_down_menu_item_sepeartor
-            = drop_down_menu_item t("common.remove"), service_app_path(service, app), method: :delete
+            = drop_down_menu_item fa_icon(:copy) + " " + t("common.save_as_template"), new_service_template_path(service_id: service)
+            = drop_down_menu_item fa_icon(:star) + " " + t("common.favorite"), favorite_service_path(service)
+            = drop_down_menu_item t("common.download_compose"), download_compose_service_path(service)
+            = drop_down_menu_item_sepeartor
+            = drop_down_menu_item fa_icon(:trash, class: 'text-danger') + " " + t("common.remove"), service_path(service), method: :delete
+
+      - service.apps.each do |app|
+        %tr.app_tr
+          %td
+            %strong
+              = link_to app.name, service_path(service, app_id: app.id)
+          %td
+            %span.text-muted
+              = t('common.image')
+              \:
+            = app.image
+          %td
+            %span.text-muted
+              = t('common.version')
+              \:
+            %strong.text-primary= "version-1.10"
+          %td.text-center{class: "app_state app_state_#{app.id}", data: { 'app-state-path': backend_state_service_app_path(service, app)}}
+            = fa_icon("cog", class: "fa-spin fa-2x")
+          %td.text-center
+            = app.instances
+            = t('common.containers')
+          %td.text-center
+            = drop_down_menu :default, t("common.actions") do
+              = drop_down_menu_item t("common.edit"), service_app_path(service, app), data: { turbolinks: false }
+              = drop_down_menu_item t("common.copy"), new_service_app_path(service, app_id: app.id), data: { turbolinks: false }
+              = drop_down_menu_item_sepeartor
+              = drop_down_menu_item t("common.remove"), service_app_path(service, app), method: :delete
 
 

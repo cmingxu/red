@@ -1,0 +1,23 @@
+- if marathon_app
+  - if marathon_app.info[:tasksRunning]
+    %span.text-muted= t("app.running")
+    %strong= marathon_app.info[:tasksRunning]
+
+  - if marathon_app.info[:tasksStaged]
+    %span.text-muted= t("app.staged")
+    %strong= marathon_app.info[:tasksStaged]
+
+  - if marathon_app.info[:tasksHealthy]
+    %span.text-muted= t("app.healthy")
+    %strong= marathon_app.info[:tasksHealthy]
+
+  - if marathon_app.info[:tasksUnhealthy]
+    %span.text-muted= t("app.unhealthy")
+    %strong= marathon_app.info[:tasksUnhealthy]
+
+- if !app.running?
+  = link_to fa_icon(:play), run_service_app_path(service, app), method: :put
+- else
+  = link_to fa_icon(:stop), run_service_app_path(service, app)
+  = link_to fa_icon('arrow-up'), scale_service_app_path(service, app), method: :put, remote: :true
+
