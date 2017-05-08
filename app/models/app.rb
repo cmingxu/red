@@ -65,11 +65,11 @@ class App < ApplicationRecord
     state :running
     state :done
 
-    event :run do
-      transitions :from => [:pending, :stop], :to => :running, after: :run
+    event :backend_run do
+      transitions :from => [:pending, :stop], :to => :running
     end
 
-    event :stop do
+    event :backend_stop do
       transitions :from => :running, :to => :done
     end
   end
@@ -81,15 +81,18 @@ class App < ApplicationRecord
   def run
     begin
       Marathon::App.create marathon_hash
+      #self.backend_run!
     rescue Marathon::Error::MarathonError => e
       puts e
       puts e.details
     end
+
   end
 
   def stop!
     begin
       Marathon::App.delete self.marathon_app_name
+      self.backend_stop!
     rescue Marathon::Error::NotFoundError => e
       Rails.logger.debug e
     end
@@ -101,6 +104,7 @@ class App < ApplicationRecord
         Rails.logger.debug e
       end
     end
+
   end
 
   def suspend!
@@ -142,8 +146,8 @@ class App < ApplicationRecord
       container: self.container_hash,
       env: self.env,
       labels: self.labels,
-      fetch: self.uris.map {|u| { "uri": u }},
-      healthChecks: [ self.health_check ]
+      #fetch: self.uris.map {|u| { "uri": u }},
+      healthChecks: [ ]
     }
 
     if self.cmd.present?
@@ -160,7 +164,7 @@ class App < ApplicationRecord
       image: self.image,
       network: self.network.upcase,
       privileged: self.privileged,
-      portMappings: self.portmappings,
+      #portMappings: self.portmappings,
     },
     volumes: self.volumes,
     }

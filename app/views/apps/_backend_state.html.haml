@@ -21,3 +21,7 @@
   = link_to fa_icon(:stop), run_service_app_path(service, app)
   = link_to fa_icon('arrow-up'), scale_service_app_path(service, app), method: :put, remote: :true
 
+  = link_to fa_icon('arrow-up'), stop_service_app_path(service, app), method: :put, remote: :true
+  = link_to fa_icon('arrow-up'), start_service_app_path(service, app), method: :put, remote: :true
+  = link_to fa_icon('arrow-up'), restart_service_app_path(service, app), method: :put, remote: :true
+  = link_to fa_icon('arrow-up'), rollback_service_app_path(service, app), method: :put, remote: :true

@@ -108,7 +108,7 @@ angular.module('app', [])
       $scope.app.portmappings.push(
         {name: "web",
           containerPort: 80,
-          hostPort: 3000,
+          hostPort: 0,
           proto: "tcp"}
       );
     }
@@ -132,7 +132,7 @@ angular.module('app', [])
 
 
       if($scope.app.name == null){
-        $scope.app.name = "demo-app";
+        $scope.app.name = "god-love-cat";
       }
 
       if($scope.app.desc == null){
@@ -140,7 +140,7 @@ angular.module('app', [])
       }
 
       if($scope.app.image == null){
-        $scope.app.image = "wordpress:latest";
+        $scope.app.image = "nginx:latest";
       }
 
       if($scope.app.network == null){

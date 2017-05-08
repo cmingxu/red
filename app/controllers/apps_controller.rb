@@ -1,6 +1,7 @@
 class AppsController < ApplicationController
   before_action :set_service
   before_action :set_app, except: [:index, :new, :create]
+  before_action :set_marathon_app, only: [:start, :scale, :restart, :stop, :rollback, :change]
 
   def index
     @apps = @service.apps
@@ -36,20 +37,28 @@ class AppsController < ApplicationController
   end
 
   def run
-    @app.run!
+    @app.run
     respond_to do |format|
       format.html { redirect_to services_url, notice: 'Service template was successfully destroyed.' }
       format.json { head :ok }
     end
   end
 
+  def start
+    @app.start
+  end
+
+  def stop
+    @app.stop
+  end
+
+  def suspend
+    @app.stop
+  end
+
   def scale
     @app.scale
     set_marathon_app
-
-    respond_to do |format|
-      format.js { render }
-    end
   end
 
   def backend_state
