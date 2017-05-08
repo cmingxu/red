@@ -1,12 +1,1 @@
-%p#notice= notice
-
-%p
-  %b Hostname:
-  = @node.hostname
-%p
-  %b State:
-  = @node.state
-
-= link_to 'Edit', edit_node_path(@node)
-\|
-= link_to 'Back', nodes_path
+= render :partial => "show", locals: { node: @node }

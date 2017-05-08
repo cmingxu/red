@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
+  get 'system/index', as: :system
   get 'rbac/index', as: :rbac
-  get 'audits/index', as: :audit
 
   get 'session/new', as: :new_session
   get 'session/particles'
@@ -8,7 +8,8 @@ Rails.application.routes.draw do
   delete 'session/destroy', as: :logout
 
   get 'settings/account', as: :setting
-  get 'settings/group'
+  get 'settings/group', as: :setting_group
+  get 'settings/autit', as: :setting_audit
 
   resources :registries
   resources :images
@@ -60,7 +61,7 @@ Rails.application.routes.draw do
   put 'toggle_locale', controller: :application
   
   get 'welcome/index'
-  get 'mesos/index', as: :system
+  get 'mesos/index', as: :mesos
 
   resources :services do
     resources :apps do

@@ -38,7 +38,6 @@
             %li{class: navbar_nav_active_class(:system) }= link_to t('nav.system'), system_path
             = drop_down fa_icon(:user) + " #{current_user.display}" do
               = menu_item t('nav.setting'), setting_path
-              = menu_item t('nav.audit'), audit_path
               = menu_item t('nav.logout'), logout_path, method: :delete
               = drop_down_divider
               = menu_item fa_icon(:language) + " " + desired_language, toggle_locale_path, remote: true, method: :put
@@ -50,6 +49,19 @@
           -#= render :partial => "widgets/breadcrumb"
           = panel_item(t("nav.#{page_request_meta_info[:panel_header_and_icon][:text]}"),
             page_request_meta_info[:panel_header_and_icon][:icon]) do
-            = yield
+            - if controller.class.ancestors.include? NodesController
+              .row
+                .col-md-4.col-lg-2
+                  = render :partial => "nodes/node_left", locals: {nodes: @nodes}
+                .col-md-8.col-lg-10#node_details
+                  = yield
+            - elsif controller.class.ancestors.include? SystemController
+              .row
+                .col-md-4.col-lg-2
+                  = render :partial => "system/system_left"
+                .col-md-8.col-lg-10#system_details
+                  = yield
+            - else
+              = yield
       %footer
         %p &copy; Company 2017

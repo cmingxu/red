@@ -1,5 +1,6 @@
 class NodesController < ApplicationController
   before_action :set_node
+  before_action :load_nodes
 
   # GET /nodes
   # GET /nodes.json
@@ -70,5 +71,9 @@ class NodesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def node_params
       params.require(:node).permit(:hostname, :state)
+    end
+
+    def load_nodes
+      @nodes = Node.all
     end
 end

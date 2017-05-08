@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  owner_type: MyString
+  owner_id: 1
+  when: 2017-05-08 10:09:19
+  entity_type: MyString
+  entity_id: 1
+  enetity_desc: MyString
+  change: MyText
+
+two:
+  owner_type: MyString
+  owner_id: 1
+  when: 2017-05-08 10:09:19
+  entity_type: MyString
+  entity_id: 1
+  enetity_desc: MyString
+  change: MyText

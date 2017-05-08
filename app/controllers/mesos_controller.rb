@@ -1,4 +1,4 @@
-class MesosController < ApplicationController
+class MesosController < SystemController
   def index
     @state = mesos_state
   end

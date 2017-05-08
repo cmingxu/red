@@ -1,0 +1,16 @@
+.row
+  .col-md-12.text-right
+    = link_to fa_icon(:plus) + " " + t("group.new_group"), new_group_path, class: btn_classes, remote: true
+.row
+  .col-md-4.col-lg-2
+    .list-group.group-list
+      %a.list-group-item.group_item{href: rbac_path(), class: true ? 'active' : ''}
+        %h4.list-group-item-heading "Account"
+        .list-group-item-text
+          %span.text-muted 150 core
+          %span.text-muted 150G mem
+
+
+
+
+  .col-md-8.col-lg-10#group_detail
