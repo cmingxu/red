@@ -32,12 +32,12 @@
 
   %table.table.table-bordered.table-striped.table-hover
     %thead.text-center
-      %td= t("user.role")
-      %td= t("user.name")
-      %td= t("user.email")
-      %td= t("user.groups")
-      %td= t("common.application")
-      %td
+      %th= t("user.role")
+      %th= t("user.name")
+      %th= t("user.email")
+      %th= t("user.groups")
+      %th= t("common.service")
+      %th
 
     - group.users.each do |user|
       %tr
@@ -58,9 +58,9 @@
   
   %table.table.table-bordered.table-stripped
     %thead
-      %td= t("user.name")
-      %td= t("user.email")
-      %td= t("common.application")
+      %th= t("user.name")
+      %th= t("user.email")
+      %th= t("common.application")
 
     - group.services.each do |service|
       %tr

@@ -35,7 +35,6 @@
 class App < ApplicationRecord
   include AASM
   PROTECTED_ATTRIBUTES = %w(id created_at updated_at raw_config service_id current_version_id backend)
-  PROTECTED_ATTRIBUTES = %w(id created_at updated_at raw_config service_id current_version_id backend)
 
   attr_accessor :labels
   serialize :env, Hash

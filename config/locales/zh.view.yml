@@ -24,6 +24,16 @@ zh-CN:
     edit: "编辑"
     version: "版本"
     remove_group: "删除此组"
+    detail_info: "详情"
+    group_quota: "组配额"
+    user: "用户"
+    service: "服务"
+    new_service: "新服务"
+    owner: "创建人"
+    created: "创建时间"
+    user_count: "用户数"
+    service_count: "服务数"
+    application: "应用"
   nav:
     host: "主机"
     infra: "基础"
@@ -91,6 +101,20 @@ zh-CN:
     scheduling: "调度策略"
     gateway: "网关配置"
 
+  group:
+    new_group: "新用户组"
+    enroll_new_user: "添加用户"
+    new_group_user: "新增用户"
+    name: "组名称"
+    desc: "描述"
+
+  user:
+    role: "角色"
+    name: "别名"
+    email: "邮箱"
+    groups: "所属组"
+    new_user: "新用户"
+    group_admin: "组管理员"
 
   active_record:
     common:
