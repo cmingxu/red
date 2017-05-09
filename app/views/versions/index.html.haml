@@ -1,0 +1,25 @@
+%h1 Listing versions
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Raw config
+      %th App
+      %th
+      %th
+      %th
+
+  %tbody
+    - @versions.each do |version|
+      %tr
+        %td= version.name
+        %td= version.raw_config
+        %td= version.app_id
+        %td= link_to 'Show', version
+        %td= link_to 'Edit', edit_version_path(version)
+        %td= link_to 'Destroy', version, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Version', new_version_path

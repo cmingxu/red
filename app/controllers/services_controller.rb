@@ -2,7 +2,7 @@ class ServicesController < ApplicationController
   before_action :set_service, only: [:show, :update, :destroy]
 
   def index
-    @services = current_user.services.includes(:apps).page(params[:page])
+    @services = current_user.services.includes(:apps => [:versions]).page(params[:page])
   end
 
   def new
@@ -10,6 +10,12 @@ class ServicesController < ApplicationController
   end
 
   def show
+  end
+
+  def favorite
+    ap params
+    ap request.path
+    head :ok
   end
 
   def create

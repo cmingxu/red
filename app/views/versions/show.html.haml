@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @version.name
+%p
+  %b Raw config:
+  = @version.raw_config
+%p
+  %b App:
+  = @version.app_id
+
+= link_to 'Edit', edit_version_path(@version)
+\|
+= link_to 'Back', versions_path

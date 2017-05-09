@@ -37,6 +37,8 @@ class App < ApplicationRecord
   PROTECTED_ATTRIBUTES = %w(id created_at updated_at raw_config service_id current_version_id backend)
 
   attr_accessor :labels
+  attr_accessor :version_name
+
   serialize :env, Hash
   serialize :health_check, Hash
   serialize :portmappings, Array
@@ -48,16 +50,27 @@ class App < ApplicationRecord
   belongs_to :service
   belongs_to :user
   belongs_to :group
+  has_many :versions, dependent: :destroy
 
   validates :name, presence: true
   validates :name, uniqueness: { scope: :service_id }
+
   before_validation(on: :create) do |app|
     app.instances ||= 0
   end
 
+  before_save do
+    self.raw_config = self.marathon_hash # temp solution
+  end
+
+  after_save(on: :create) do |app|
+    app.versions.create name: self.version_name || self.name,
+      raw_config: self.raw_config
+  end
+
 
   before_destroy do |app|
-    app.stop!
+    app.stop
   end
 
   aasm :column => :state do
@@ -66,11 +79,11 @@ class App < ApplicationRecord
     state :done
 
     event :backend_run do
-      transitions :from => [:pending, :stop], :to => :running
+      transitions :from => [:pending, :done], :to => :running
     end
 
     event :backend_stop do
-      transitions :from => :running, :to => :done
+      transitions :from => [:pending, :running], :to => :done
     end
   end
 
@@ -81,7 +94,7 @@ class App < ApplicationRecord
   def run
     begin
       Marathon::App.create marathon_hash
-      #self.backend_run!
+      self.backend_run!
     rescue Marathon::Error::MarathonError => e
       puts e
       puts e.details
@@ -89,7 +102,7 @@ class App < ApplicationRecord
 
   end
 
-  def stop!
+  def stop
     begin
       Marathon::App.delete self.marathon_app_name
       self.backend_stop!
@@ -107,7 +120,7 @@ class App < ApplicationRecord
 
   end
 
-  def suspend!
+  def suspend
     marathon_app.suspend!
   end
 

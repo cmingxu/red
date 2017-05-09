@@ -15,13 +15,13 @@
     %span.text-muted= t("app.unhealthy")
     %strong= marathon_app.info[:tasksUnhealthy]
 
-- if !app.running?
-  = link_to fa_icon(:play), run_service_app_path(service, app), method: :put
-- else
-  = link_to fa_icon(:stop), run_service_app_path(service, app)
-  = link_to fa_icon('arrow-up'), scale_service_app_path(service, app), method: :put, remote: :true
 
-  = link_to fa_icon('arrow-up'), stop_service_app_path(service, app), method: :put, remote: :true
-  = link_to fa_icon('arrow-up'), start_service_app_path(service, app), method: :put, remote: :true
-  = link_to fa_icon('arrow-up'), restart_service_app_path(service, app), method: :put, remote: :true
-  = link_to fa_icon('arrow-up'), rollback_service_app_path(service, app), method: :put, remote: :true
+  %br
+    = link_to t("app.scale"), scale_service_app_path(service, app), method: :put, remote: :true, data: { prompt: {"title": t("common.scale_app"), "name": "scale_size", "value": 1, "type": "input"} }
+    = link_to t("app.stop"), stop_service_app_path(service, app), method: :put, remote: :true, data: { confirm: t("common.delete_confirm")}
+    = link_to t("app.restart"), restart_service_app_path(service, app), method: :put, remote: :true, data: { confirm: t("common.restart_confirm") }
+    = link_to t("app.rollback"), rollback_service_app_path(service, app), method: :put, remote: :true
+
+- else
+  = link_to t("app.start"), run_service_app_path(service, app), method: :put, remote: true, data: { prompt: {"title": t("common.start_app"), "name": "start_size", "value": 1, "type": "input"} }
+

@@ -34,6 +34,7 @@ zh-CN:
     user_count: "用户数"
     service_count: "服务数"
     application: "应用"
+    copy: "拷贝"
   nav:
     host: "主机"
     infra: "基础"
@@ -49,7 +50,7 @@ zh-CN:
     open_in_new_window: "新窗口打开"
   app:
     name: "应用名称"
-    description: "备注"
+    desc: "备注"
     select_image: "镜像"
     network: "网络模式"
     customized_network_name: "网络名称"
@@ -87,6 +88,12 @@ zh-CN:
       portname: "端口别名"
       timeoutseconds: "超时时间"
       consecutivefailures: "最大连续失败次数"
+    stop: "停止"
+    start: "启动"
+    restart: "重启"
+    scale: "扩缩"
+    rollback: "回滚"
+    copy: "拷贝"
   service:
     new_app: "新应用"
     new_service: "新服务"

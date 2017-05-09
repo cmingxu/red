@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :versions
   get 'system/index', as: :system
   get 'rbac/index', as: :rbac
 

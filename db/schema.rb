@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170508020919) do
+ActiveRecord::Schema.define(version: 20170509060923) do
 
   create_table "apps", force: :cascade do |t|
     t.string   "name"
@@ -144,6 +144,14 @@ ActiveRecord::Schema.define(version: 20170508020919) do
     t.string   "role"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string   "name"
+    t.text     "raw_config"
+    t.integer  "app_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

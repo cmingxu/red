@@ -1,0 +1,1 @@
+$(".app_state_<%= @app.id %>").html("<%= escape_javascript(render(partial: 'backend_state', locals: {app: @app, marathon_app: @marathon_app, service: @service })) %>");
