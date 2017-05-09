@@ -76,6 +76,7 @@ Rails.application.routes.draw do
         put :scale
 
         get :backend_state
+        get :detail
       end
     end
 

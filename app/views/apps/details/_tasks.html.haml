@@ -1,0 +1,21 @@
+= panel_item(t("common.tasks_and_containers"), "server") do
+  - if marathon_app
+    %table{class: table_classes}
+      %thead
+        %td= t("common.task_id")
+        %td= t("common.task_status")
+        %td= t("common.host")
+        %td= t("common.container_id")
+        %td= t("common.container_id")
+        %td
+
+      %tbody
+        - marathon_app.info[:tasks].each do |task|
+          %tr
+            %td= task[:id]
+            %td= task[:state]
+            %td= task[:ports]
+            %td= task[:host]
+            %td= task[:version]
+  - else
+    = render :partial => "widgets/list_place_holder" 

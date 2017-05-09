@@ -4,7 +4,8 @@
 #
 #  id         :integer          not null, primary key
 #  name       :string
-#  ower_id    :integer
+#  owner_id   :integer
+#  desc       :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

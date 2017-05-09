@@ -49,4 +49,9 @@ module ApplicationHelper
   def navbar_nav_active_class(navbar)
     page_request_meta_info[:active_navbar_item] == navbar ? 'active' : ''
   end
+
+  def need_breadcrumb
+    %w(:apps_controller, :versions_controller).include?(controller_name.to_sym)  ||
+      (controller_name.to_sym == :services && action_name.to_sym == :show)
+  end
 end

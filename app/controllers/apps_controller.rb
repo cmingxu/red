@@ -11,6 +11,10 @@ class AppsController < ApplicationController
     @app = @service.apps.new
   end
 
+  def detail
+    @app = @service.apps.find params[:id]
+  end
+
   def show
     @app = @service.apps.find params[:id]
   end

@@ -1,0 +1,19 @@
+= panel_item(t("common.versions"), "copy") do
+  %table{class: table_classes}
+    %thead
+      %td= t("common.version_name")
+      %td= t("common.owner")
+      %td= t("common.details")
+      %td= t("common.created_at")
+      %td
+
+    %tbody
+      - versions.each do |version|
+        %tr
+          %td= version.name
+          %td= version.name
+          %td= version.raw_config.truncate(100)
+          %td= l(version.created_at)
+          %td= link_to fa_icon(:copy) + t("common.copy"), "", class: 'btn btn-sm btn-primary'
+
+

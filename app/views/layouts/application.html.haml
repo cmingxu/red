@@ -49,7 +49,8 @@
       .row
         .col-lg-12
           = bootstrap_flash
-          -#= render :partial => "widgets/breadcrumb"
+          -if need_breadcrumb
+            = render :partial => "widgets/breadcrumb"
           = panel_item(t("nav.#{page_request_meta_info[:panel_header_and_icon][:text]}"),
             page_request_meta_info[:panel_header_and_icon][:icon]) do
             - if controller.class.ancestors.include? NodesController

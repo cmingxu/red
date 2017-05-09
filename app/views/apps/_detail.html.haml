@@ -1,0 +1,4 @@
+= render :partial => "apps/details/info", locals: { app: app }
+= render :partial => "apps/details/tasks", locals: { app: app, marathon_app: app.marathon_app}
+= render :partial => "apps/details/versions", locals: { versions: app.versions }
+= render :partial => "apps/details/audits", locals: { audits: app.audits }

@@ -30,9 +30,11 @@
 #  raw_config         :text
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  state              :string
 #
 
 class App < ApplicationRecord
+  class Task; attr_accessor :id, :agentId, :ip, :created_at end
   include AASM
   PROTECTED_ATTRIBUTES = %w(id created_at updated_at raw_config service_id current_version_id backend)
 
@@ -51,6 +53,7 @@ class App < ApplicationRecord
   belongs_to :user
   belongs_to :group
   has_many :versions, dependent: :destroy
+  has_many :audits, as: :entity, class_name: 'Audit'
 
   validates :name, presence: true
   validates :name, uniqueness: { scope: :service_id }
@@ -146,7 +149,10 @@ class App < ApplicationRecord
   end
 
   def marathon_app
+    begin
     Marathon::App.get self.marathon_app_name
+    rescue Marathon::Error::NotFoundError => e
+    end
   end
 
   def marathon_hash
