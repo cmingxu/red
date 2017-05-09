@@ -6,7 +6,7 @@ var authenticity_token = $('meta[name="csrf-token"]').attr('content');
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.post['Accept'] = 'application/json';
 axios.defaults.validateStatus = function (status) {
-    return status >= 200 && status < 500; // default
+  return status >= 200 && status < 500; // default
 }
 
 angular.module('app', [])
@@ -20,14 +20,18 @@ angular.module('app', [])
       if($scope.appForm.$invalid) {
         alert("not valid");
       }else{
-        axios.post(window.postPath, {
-          app: JSON.parse(angular.toJson($scope.app)),
-          authenticity_token: authenticity_token
-        }).then(function (response) {
+        bootbox.prompt("name a version", function (result) {
+          $scope.app.version_name = result;
+          axios.post(window.postPath, {
+            app: JSON.parse(angular.toJson($scope.app)),
+            authenticity_token: authenticity_token
+          }).then(function (response) {
             window.location.href = "/services";
           }, function (response) {
             console.log(response.data.message);
           });
+        }
+        );
       }
     }
 

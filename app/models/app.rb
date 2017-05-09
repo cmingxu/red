@@ -66,9 +66,9 @@ class App < ApplicationRecord
     self.raw_config = self.marathon_hash # temp solution
   end
 
-  after_save(on: :create) do |app|
-    app.versions.create name: self.version_name || self.name,
-      raw_config: self.raw_config
+  after_save do |app|
+    app.versions.create(name: self.version_name || self.name,
+                        raw_config: self.raw_config) if self.version_name.present?
   end
 
 
