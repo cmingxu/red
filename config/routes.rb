@@ -86,7 +86,8 @@ Rails.application.routes.draw do
       post :save_as_template
       put :favorite
       put :unfavorite
-      get :download_compose
+      post :download_compose
+      get :compose_chose
     end
   end
 

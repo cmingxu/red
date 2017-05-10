@@ -12,3 +12,4 @@ $(document).on 'ready page:load turbolinks:load', ->
     $("." + service_id).find('.app_state').map (appStateDom)->
       appStateDom.load appStateDom.data 'app-state-path'
 
+

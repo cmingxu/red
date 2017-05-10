@@ -36,6 +36,7 @@ zh-CN:
     application: "应用"
     copy: "拷贝"
     versions: "版本"
+    download_compose: "下载编排文件"
   nav:
     host: "主机"
     infra: "基础"

@@ -1,0 +1,26 @@
+.row
+  .col-md-4.col-lg-2
+    = render :partial => "services/service_left", locals: { service: @service }
+  .col-md-8.col-lg-10#compose_chose
+    = form_tag download_compose_service_path(@service) do
+      %table{class: table_classes}
+        %thead
+          %th= t("app.name")
+          %th= t("app.versions")
+        %tbody
+          - @apps.each do |app|
+            %tr
+              %td= app.name
+              %td
+                %label.btn.btn-sm.btn-default.btn-triangle-top-right.version-label
+                  = app.current_version.name
+                  = radio_button_tag "selected_versions[][#{app.id}]", app.current_version.id, true
+                  = fa_icon("check-square")
+
+                - (app.versions - [app.current_version]).each do |version|
+                  %label.btn.btn-sm.btn-default.version-label{class: version == app.current_version ? "btn-triangle-top-right" : "" }
+                    = version.name
+                    = radio_button_tag "selected_versions[][#{app.id}]", version.id
+
+      .actions
+        = submit_tag t("common.download_compose"), class: btn_classes, data: { confirm: t("common.confirm_downlown") }

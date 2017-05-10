@@ -64,12 +64,21 @@ class App < ApplicationRecord
     app.instances ||= 0
   end
 
-  after_save(on: [:create, :update]) do |app|
+  after_create_commit do |app|
+    if self.version_name.present?
+      v = app.versions.build(name: self.version_name || self.name,
+                          raw_config: self.raw_config) if self.version_name.present?
+      v.save
+      self.version_name = nil
+      self.update_column :current_version_id, v.id
+    end
+  end
+
+  after_update_commit do |app|
     app.versions.create(name: self.version_name || self.name,
                         raw_config: self.raw_config) if self.version_name.present?
     self.version_name = nil
   end
-
 
   before_destroy do |app|
     app.stop

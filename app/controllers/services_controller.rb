@@ -1,5 +1,5 @@
 class ServicesController < ApplicationController
-  before_action :set_service, only: [:show, :update, :destroy]
+  before_action :set_service, only: [:show, :update, :destroy, :compose_chose, :download_compose]
 
   def index
     @services = current_user.services.includes(:apps => [:versions]).page(params[:page])
@@ -12,12 +12,29 @@ class ServicesController < ApplicationController
   def show
   end
 
+  def compose_chose
+    @apps = @service.apps.order('created_at DESC').includes(:versions)
+  end
+
+  def download_compose
+    send_data @service.raw_config(params[:selected_versions].first.to_hash).to_json, :type => 'application/json; charset=UTF-8;',
+      :disposition => "attachment; filename=#{@service.name.gsub(/\s+/, '-')}_compose.json"
+  end
+
   def favorite
     head :ok
   end
 
   def create
     @service = current_user.services.new service_params
+    if @service.compose_content.present?
+      begin
+        @service.from_raw_config JSON.parse(@service.compose_content)
+      rescue
+        @service.errors.on(:compose_content, "invalid json")
+      end
+    end
+
     respond_to do |format|
       if @service.save
         flash.notice = t('notice.service_create_success')
@@ -45,6 +62,10 @@ class ServicesController < ApplicationController
   end
 
   def service_params
-    params.require(:service).permit(:name)
+    params.require(:service).permit(:name, :desc, :compose_content)
+  end
+
+  def service_params
+    params.require(:service).permit(:name, :desc, :compose_content)
   end
 end

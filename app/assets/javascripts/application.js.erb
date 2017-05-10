@@ -68,10 +68,20 @@ registerToggleableTableHandler = function () {
   })
 }
 
-$(document).on('turbolinks:load', function() {
+registerVersionLabelEvent = function() {
+  $('.version-label input[type=radio]').on('change', function () {
+    if($(this).is(':checked')) {
+      $(this).closest('td').find('.version-label').removeClass('btn-triangle-top-right');
+      $(this).parent('.version-label').addClass('btn-triangle-top-right');
+    }
+  })
+}
+
+$(document).on('ready turbolinks:load', function() {
   initPeity();
   initTooltip();
-  registerToggleableTableHandler()
+  registerToggleableTableHandler();
+  registerVersionLabelEvent();
 });
 
 function readURL(input) {
@@ -88,3 +98,16 @@ function readURL(input) {
     reader.readAsDataURL(input.files[0]);
   }
 }
+
+var openFile = function(event) {
+  var input = event.target;
+
+  var reader = new FileReader();
+  reader.onload = function(){
+    var text = reader.result;
+    var node = document.getElementById('compose_content');
+    node.innerText = text;
+  };
+  reader.readAsText(input.files[0]);
+};
+

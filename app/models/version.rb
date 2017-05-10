@@ -11,5 +11,6 @@
 #
 
 class Version < ApplicationRecord
+  validates :name, uniqueness: { scope: :app_id }
   belongs_to :app
 end

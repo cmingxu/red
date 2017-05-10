@@ -2,4 +2,4 @@
   .col-md-4.col-lg-2
     = render :partial => "services/service_left", locals: { service: @service }
   .col-md-8.col-lg-10#app_detail
-    = render :partial => "apps/detail", locals: { app: @app || @service.apps.first }
+    = render :partial => "apps/detail", locals: {service: @service, app: @app || @service.apps.first }

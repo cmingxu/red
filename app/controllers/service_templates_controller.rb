@@ -16,7 +16,8 @@ class ServiceTemplatesController < ApplicationController
   def new
     if params[:service_id]
       @service = current_user.services.find_by(id: params[:service_id])
-      @service_template = ServiceTemplate.new(raw_config: @service.try(:raw_config),
+      raw_config_params = @service.apps.reduce({}) {|p, a| p[a.id] = a.current_version.id; p}
+      @service_template = ServiceTemplate.new(raw_config: @service.try(:raw_config, raw_config_params),
                                               name: @service.try(:name),
                                               desc: @service.try(:desc),
                                               readme: "Readme")
