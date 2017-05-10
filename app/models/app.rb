@@ -67,6 +67,7 @@ class App < ApplicationRecord
   after_save(on: [:create, :update]) do |app|
     app.versions.create(name: self.version_name || self.name,
                         raw_config: self.raw_config) if self.version_name.present?
+    self.version_name = nil
   end
 
 
@@ -92,15 +93,19 @@ class App < ApplicationRecord
     self.state
   end
 
-  def run
+  def run(version = nil)
+    version ||= self.versions.last
     begin
-      Marathon::App.create marathon_hash
+      Marathon::App.create self.with_version(version).marathon_hash.merge!("instances": 0)
+      (self.current_version = version) && self.save
       self.backend_run!
     rescue Marathon::Error::MarathonError => e
       puts e
       puts e.details
+    rescue Marathon::Error::UnexpectedResponseError => e
+      puts e
+      puts e.details
     end
-
   end
 
   def stop
@@ -129,8 +134,20 @@ class App < ApplicationRecord
     marathon_app.restart!
   end
 
-  def change
-    marathon_app.change!
+  def change(version)
+    version ||= self.versions.last
+    begin
+      self.marathon_app.change! self.with_version(version).marathon_hash
+      self.current_version = version
+    rescue Marathon::Error::MarathonError => e
+      puts e
+      puts e.details
+    rescue Marathon::Error::UnexpectedResponseError => e
+      puts e
+      puts e.details
+    else
+      self.save
+    end
   end
 
   def rollback(version)
@@ -138,7 +155,15 @@ class App < ApplicationRecord
   end
 
   def scale(ins = 1)
-    marathon_app.scale! ins
+    begin
+      marathon_app.scale! ins
+    rescue Marathon::Error::MarathonError => e
+      puts e
+      puts e.details
+    rescue Marathon::Error::UnexpectedResponseError => e
+      puts e
+      puts e.details
+    end
   end
 
 
@@ -148,9 +173,15 @@ class App < ApplicationRecord
 
   def marathon_app
     begin
-    Marathon::App.get self.marathon_app_name
+      Marathon::App.get self.marathon_app_name
     rescue Marathon::Error::NotFoundError => e
     end
+  end
+
+  def with_version(version)
+    self.attributes = JSON.parse(version.raw_config)
+    self.version_name = nil
+    self
   end
 
   def marathon_hash

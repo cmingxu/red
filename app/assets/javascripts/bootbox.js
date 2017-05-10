@@ -44,27 +44,78 @@ $(document).ready(function() {
       title = message.title || "input value for key",
       name = message.name || "name",
       value = message.value || "value",
-      type = message.typpe || "input";
+      type = message.type || "input";
 
     if (!message) { return true; }
 
     if ($.rails.fire(element, 'prompt')) {
-      bootbox.prompt(title, function (result) {
-        if(result) {
-          finalResult = {};
-          finalResult[name] = result;
+      switch(type) {
+        case "input":
+          input_prompt();
+          break;
+        case "select":
+          select_prompt(parseParams(value));
+          break;
+        default:
+          input_prompt();
+          break;
+      }
+    }
 
-          callback = $.rails.fire(element,
-            'prompt:complete', [finalResult]);
-          if(callback) {
-            var oldPromptGetter = $.rails.promptGetter;
-            $.rails.promptGetter = function() { return true; };
-            element.trigger('click.rails');
-            $.rails.promptGetter = oldPromptGetter;
+    function input_prompt() {
+      bootbox.prompt({
+        onEscape: true,
+        title: title,
+        callback: function (result) {
+          if(result) {
+            finalResult = {};
+            finalResult[name] = result;
+
+            callback = $.rails.fire(element, 'prompt:complete', [finalResult]);
+            if(callback) {
+              var oldPromptGetter = $.rails.promptGetter;
+              $.rails.promptGetter = function() { return true; };
+              element.trigger('click.rails');
+              $.rails.promptGetter = oldPromptGetter;
+            }
           }
         }
       });
     }
-    return false;
-  }
+
+    function select_prompt(kv) {
+      bootbox.prompt({
+        title: title,
+        inputType: "select",
+        inputOptions: kv,
+        callback: function (result) {
+          if(result) {
+            finalResult = {};
+            finalResult[name] = result;
+
+            callback = $.rails.fire(element, 'prompt:complete', [finalResult]);
+            if(callback) {
+              var oldPromptGetter = $.rails.promptGetter;
+              $.rails.promptGetter = function() { return true; };
+              element.trigger('click.rails');
+              $.rails.promptGetter = oldPromptGetter;
+            }
+          }
+        }
+      });
+    }
+
+    function parseParams(str) {
+      return str.split('&').reduce(function (params, param) {
+        var paramSplit = param.split('=').map(function (value) {
+          return decodeURIComponent(value.replace('+', ' '));
+        });
+        params.push({text: [paramSplit[0]], value: paramSplit[1]});
+        return params;
+      }, []);
+    }
+
+  return false;
+}
 });
+

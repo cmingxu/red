@@ -1,6 +1,7 @@
 = panel_item(t("common.versions"), "copy", :versions) do
   %table{class: table_classes}
     %thead
+      %td
       %td= t("common.version_name")
       %td= t("common.details")
       %td= t("common.created_at")
@@ -9,11 +10,14 @@
     %tbody
       - versions.each do |version|
         %tr
+          %td
+            - if version == app.current_version
+              = t("common.active")
           %td= version.name
           %td= (version.raw_config || "").truncate(100)
           %td= l(version.created_at)
           %td
             = link_to fa_icon(:copy) + t("common.copy"), edit_service_app_path(service, app, version_id: version.id), class: 'btn btn-sm btn-primary'
-            = link_to fa_icon(:trash) + t("common.remove"), service_app_version_path(service, app, version), class: 'btn btn-sm btn-primary', data: { confirm: t("common.remove_confirm") }, method: :delete
+            = link_to fa_icon(:trash) + t("common.remove"), service_app_version_path(service, app, version), class: "btn btn-sm btn-primary #{version == app.current_version ? 'disabled' : ''}", data: { confirm: t("common.remove_confirm") }, method: :delete
 
 

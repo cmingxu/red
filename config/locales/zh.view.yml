@@ -95,6 +95,7 @@ zh-CN:
     scale: "扩缩"
     rollback: "回滚"
     copy: "拷贝"
+    update_version: "更新"
   service:
     new_app: "新应用"
     new_service: "新服务"

@@ -50,12 +50,10 @@
             = fa_icon("cog", class: "fa-spin fa-2x")
           %td
             %span.text-muted
-              = t('common.version')
-              \:
-              - app.versions[0..4].each do |version|
-                %strong.text-primary
-                  = link_to version.name, edit_service_app_path(service, app, version_id: version.id), data: { turbolinks: false }
-              - if app.versions.length > 4
+              = link_to raw(app.current_version.name + " " + fa_icon('check-square')), edit_service_app_path(service, app, version_id: app.current_version.id), data: { turbolinks: false }, class: 'btn btn-sm btn-default'
+              - (app.versions - [app.current_version])[0..3].each do |version|
+                = link_to version.name, edit_service_app_path(service, app, version_id: version.id), data: { turbolinks: false }, class: 'btn btn-default btn-sm'
+              - if app.versions.length > 3
                 = link_to fa_icon('angle-double-right'), detail_service_app_path(service, app, anchor: "versions")
           %td.text-center
             = drop_down_menu :default, t("common.actions") do

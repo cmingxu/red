@@ -88,6 +88,11 @@ class AppsController < ApplicationController
     @app.stop
   end
 
+  def change
+    @version = @app.versions.find params[:version_id]
+    @app.change @version
+  end
+
   def scale
     @app.scale params[:scale_size].to_i
   end
