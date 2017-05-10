@@ -13,10 +13,18 @@
 }
 
 .service_templates .template_holder .service_template_action{
+  transition: 0.5s;
+  display: none;
+}
+
+.service_templates .template_holder:hover .service_template_action{
+  display: block;
   position: absolute;
   z-index: 10;
-  opacity: 0.6;
+  opacity: 0.7;
   background-color: black;
-  bottom: 20px;
-  padding: 10px 5px;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  padding: 150px;
 }

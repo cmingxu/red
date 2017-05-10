@@ -7,6 +7,12 @@ class ServicesController < ApplicationController
 
   def new
     @service = current_user.services.new
+    if @temp = ServiceTemplate.find(params[:service_template_id])
+      hash = JSON.parse @temp.raw_config
+      @service.name = "Copy #{hash['name']}"
+      @service.desc = hash["desc"]
+      @service.compose_content = @temp.raw_config
+    end
   end
 
   def show

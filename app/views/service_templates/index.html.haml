@@ -9,8 +9,8 @@
           %small.text-muted
             = l(temp.updated_at)
 
-        .service_template_action.col-md-12
-          = link_to "发布服务", "", class: 'btn btn-danger btn-lg'
+        .service_template_action
+          = link_to "发布服务", new_service_path(service_template_id: temp.id), class: 'btn btn-primary btn-lg'
 
 
 .clearfix
