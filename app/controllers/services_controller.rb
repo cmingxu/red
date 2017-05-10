@@ -13,8 +13,6 @@ class ServicesController < ApplicationController
   end
 
   def favorite
-    ap params
-    ap request.path
     head :ok
   end
 

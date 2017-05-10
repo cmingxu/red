@@ -35,6 +35,7 @@
 
 class App < ApplicationRecord
   class Task; attr_accessor :id, :agentId, :ip, :created_at end
+
   include AASM
   PROTECTED_ATTRIBUTES = %w(id created_at updated_at raw_config service_id current_version_id backend)
 
@@ -53,6 +54,7 @@ class App < ApplicationRecord
   belongs_to :user
   belongs_to :group
   has_many :versions, dependent: :destroy
+  belongs_to :current_version, class_name: 'Version', foreign_key: :current_version_id
   has_many :audits, as: :entity, class_name: 'Audit'
 
   validates :name, presence: true
@@ -62,11 +64,7 @@ class App < ApplicationRecord
     app.instances ||= 0
   end
 
-  before_save do
-    self.raw_config = self.marathon_hash # temp solution
-  end
-
-  after_save do |app|
+  after_save(on: [:create, :update]) do |app|
     app.versions.create(name: self.version_name || self.name,
                         raw_config: self.raw_config) if self.version_name.present?
   end

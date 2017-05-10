@@ -13,7 +13,7 @@
 
 - @services.each do |service|
   .service_section
-    .text-danger.pull-right.like_icon= fa_icon(:flag, class: "fa-2x")
+    -#.text-danger.pull-right.like_icon= fa_icon(:flag, class: "fa-2x")
     %table.table.table-striped.service_table.table-bordered.table-hover.toggleable-table{class: "service_#{service.id}"}
       %tr.service_tr
         %td{colspan: 2}
@@ -52,8 +52,11 @@
             %span.text-muted
               = t('common.version')
               \:
-              - app.versions.each do |version|
-                %strong.text-primary= version.name
+              - app.versions[0..4].each do |version|
+                %strong.text-primary
+                  = link_to version.name, edit_service_app_path(service, app, version_id: version.id), data: { turbolinks: false }
+              - if app.versions.length > 4
+                = link_to fa_icon('angle-double-right'), detail_service_app_path(service, app, anchor: "versions")
           %td.text-center
             = drop_down_menu :default, t("common.actions") do
               = drop_down_menu_item t("common.copy"), new_service_app_path(service, app_id: app.id), data: { turbolinks: false }

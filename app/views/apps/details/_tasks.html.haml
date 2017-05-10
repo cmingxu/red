@@ -14,7 +14,9 @@
           %tr
             %td= task[:id]
             %td= task[:state]
-            %td= task[:ports]
+            %td
+              - if task[:ports] || task[:host] 
+                = link_to "#{task[:host]}:#{task[:ports]}", "http://#{task[:host]}:#{task[:ports].first}", target: "_blank"
             %td= task[:host]
             %td= task[:version]
   - else

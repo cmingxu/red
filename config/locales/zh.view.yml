@@ -35,6 +35,7 @@ zh-CN:
     service_count: "服务数"
     application: "应用"
     copy: "拷贝"
+    versions: "版本"
   nav:
     host: "主机"
     infra: "基础"
@@ -107,6 +108,9 @@ zh-CN:
     health_check: "健康检查"
     scheduling: "调度策略"
     gateway: "网关配置"
+    name: "服务名"
+    desc: "备注"
+    compose: "服务编排文件"
 
   group:
     new_group: "新用户组"

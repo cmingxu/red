@@ -78,6 +78,8 @@ Rails.application.routes.draw do
         get :backend_state
         get :detail
       end
+
+      resources :versions
     end
 
     member do

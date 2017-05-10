@@ -1,8 +1,8 @@
 module ApplicationHelper
-  def panel_item(title, icon, &block)
+  def panel_item(title, icon, anchor = "", &block)
     content_tag(:div, class: 'panel panel-default') do
       content_tag(:div, class: 'panel-heading') do
-         fa_icon(icon, text: title) end +
+         content_tag(:a, fa_icon(icon, text: title), name: anchor) end +
       content_tag(:div, class: 'panel-body') do
         capture(&block) if block_given?
       end

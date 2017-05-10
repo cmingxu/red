@@ -11,6 +11,13 @@ class AppsController < ApplicationController
     @app = @service.apps.new
   end
 
+  def edit
+    @version = @app.versions.find params[:version_id]
+    @app = App.new(id: @version.app_id)
+    @app.attributes = JSON.parse(@version.raw_config)
+    @persisted = true
+  end
+
   def detail
     @app = @service.apps.find params[:id]
   end
@@ -19,8 +26,24 @@ class AppsController < ApplicationController
     @app = @service.apps.find params[:id]
   end
 
+  def update
+    @app.raw_config = (JSON.parse(request.raw_post)["app"] || {}).to_json
+    respond_to do |format|
+      if @app.update app_params
+        format.html { redirect_to services_path }
+        format.json { json_success(201) }
+        format.js { head 201 }
+      else
+        format.html { render :new }
+        format.json { json_fail(422, @app.errors.full_messages.first)}
+        format.js { head 422 }
+      end
+    end
+  end
+
   def create
     @app = @service.apps.new app_params
+    @app.raw_config = (JSON.parse(request.raw_post)["app"] || {}).to_json
     respond_to do |format|
       if @app.save
         format.html { redirect_to services_path }

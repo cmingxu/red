@@ -54,9 +54,13 @@ class VersionsController < ApplicationController
   # DELETE /versions/1
   # DELETE /versions/1.json
   def destroy
-    @version.destroy
+    if @version.app.current_version == @version
+      flash.notice = t("version.current_version_been_used")
+    else
+      @version.destroy
+    end
     respond_to do |format|
-      format.html { redirect_to versions_url, notice: 'Version was successfully destroyed.' }
+      format.html { redirect_to :back, notice: 'Version was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

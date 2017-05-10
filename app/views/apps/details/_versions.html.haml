@@ -1,8 +1,7 @@
-= panel_item(t("common.versions"), "copy") do
+= panel_item(t("common.versions"), "copy", :versions) do
   %table{class: table_classes}
     %thead
       %td= t("common.version_name")
-      %td= t("common.owner")
       %td= t("common.details")
       %td= t("common.created_at")
       %td
@@ -11,9 +10,10 @@
       - versions.each do |version|
         %tr
           %td= version.name
-          %td= version.name
-          %td= version.raw_config.truncate(100)
+          %td= (version.raw_config || "").truncate(100)
           %td= l(version.created_at)
-          %td= link_to fa_icon(:copy) + t("common.copy"), "", class: 'btn btn-sm btn-primary'
+          %td
+            = link_to fa_icon(:copy) + t("common.copy"), edit_service_app_path(service, app, version_id: version.id), class: 'btn btn-sm btn-primary'
+            = link_to fa_icon(:trash) + t("common.remove"), service_app_version_path(service, app, version), class: 'btn btn-sm btn-primary', data: { confirm: t("common.remove_confirm") }, method: :delete
 
 
