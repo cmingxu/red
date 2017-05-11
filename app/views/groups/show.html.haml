@@ -11,6 +11,8 @@
     = render :partial => "groups/details/quota", locals: { group: @group }
     = render :partial => "groups/details/users", locals: { group: @group }
     = render :partial => "groups/details/services", locals: { group: @groups.first }
+
+
     .actions
       = link_to t("common.remove"), group_path(@group), method: :delete, data: { confirm: t("common.delete_confirm") }, class: 'btn btn-danger btn-lg col-md-12'
 

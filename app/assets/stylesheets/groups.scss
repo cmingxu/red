@@ -3,11 +3,18 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-.rbac .group_item {
+.groups .group_item {
   cursor: pointer;
 }
 
-.rbac .group-list{
+.groups .group-list{
   height: 1000px;
   overflow: scroll;
 }
+
+
+.groups .group-list img{
+  height: 35px;
+  width: 35px;
+}
+

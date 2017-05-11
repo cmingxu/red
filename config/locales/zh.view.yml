@@ -119,7 +119,7 @@ zh-CN:
 
   group:
     new_group: "新用户组"
-    enroll_new_user: "添加用户"
+    enroll_new_user: "加用户到组"
     new_group_user: "新增用户"
     name: "组名称"
     desc: "描述"

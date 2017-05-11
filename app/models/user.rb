@@ -20,17 +20,19 @@ class User < ApplicationRecord
   ROLE = %w(SITE_ADMIN ADMIN USER)
   attr_accessor :password, :group_admin_accessor, :site_admin_accessor
 
-  validates :email, presence: true
-  validates :email, uniqueness: true
-
   has_many :group_users, dependent: :destroy
   has_many :groups, through: :group_users
   has_many :groups_without_default, proc { where("`groups`.id != #{Group.default_group.id}") }, through: :group_users, source: :group
   has_many :admin_groups, proc { where("`group_users`.role > 0 ") }, through: :group_users, source: :group
-
   has_many :services, dependent: :destroy
 
   scope :order_by_role, -> { order("`group_users`.role ASC") }
+
+  validates :email, presence: true
+  validates :email, uniqueness: true
+
+  mount_uploader :icon, UserIconUploader
+
 
 
   def update_password(pass)

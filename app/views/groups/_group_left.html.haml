@@ -1,7 +1,9 @@
 .list-group.group-list
   - groups.each do |group|
     %a.list-group-item.group_item{href: group.is_default? ? groups_path : group_path(group), class: group.id == @group.id ? 'active' : ''}
-      %h4.list-group-item-heading= group.name
+      %h4.list-group-item-heading
+        = image_tag group.icon.thumb.try(:url) || "placeholder.png"
+        = group.name
       - if group.desc
         .list-group-item-text
           %span.text-muted= group.desc.truncate(35)

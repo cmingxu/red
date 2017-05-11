@@ -18,12 +18,12 @@
         %td{colspan: 2}
           %span.text-bigger.text-primary.toggleable-table-handle
             = "#{fa_icon(:minus)} #{service.name}".html_safe
+        %td.text-center= t("common.versions")
         %td.text-center{style: "width: 400px;"}
           %p.text-bigger= service.apps.length
           %p
             %span.text-muted= t('active_record.app.model_name')
             %span.text-primary= link_to fa_icon(:refresh), "", onclick: "", data: {service_id: "service_#{service.id}" }, class: 'service_refresh_app_state_icon'
-        %td.text-center= t("common.versions")
         %td.text-center
           = drop_down_menu :primary, t("common.actions") do
             = drop_down_menu_item t("nav.open_in_new_window"), service_path(service), target: '_blank'
@@ -48,15 +48,18 @@
               = t('common.image')
               \:
             = app.image
-          %td.text-center{class: "app_state app_state_#{app.id}", data: { 'app-state-path': backend_state_service_app_path(service, app)}}
-            = fa_icon("cog", class: "fa-spin fa-2x")
           %td
             %span.text-muted
-              = link_to raw(app.current_version.name + " " + fa_icon('check-square')), edit_service_app_path(service, app, version_id: app.current_version.id), data: { turbolinks: false }, class: 'btn btn-sm btn-default'
-              - (app.versions - [app.current_version])[0..3].each do |version|
-                = link_to version.name, edit_service_app_path(service, app, version_id: version.id), data: { turbolinks: false }, class: 'btn btn-default btn-sm'
-              - if app.versions.length > 3
-                = link_to fa_icon('angle-double-right'), detail_service_app_path(service, app, anchor: "versions")
+              = t('common.versions')
+              \:
+
+            = link_to raw(app.current_version.name + " " + fa_icon('check-square')), edit_service_app_path(service, app, version_id: app.current_version.id), data: { turbolinks: false }, class: 'btn btn-sm btn-default'
+            - (app.versions - [app.current_version])[0..3].each do |version|
+              = link_to version.name, edit_service_app_path(service, app, version_id: version.id), data: { turbolinks: false }, class: 'btn btn-default btn-sm'
+            - if app.versions.length > 3
+              = link_to fa_icon('angle-double-right'), detail_service_app_path(service, app, anchor: "versions")
+          %td.text-center{class: "app_state app_state_#{app.id}", data: { 'app-state-path': backend_state_service_app_path(service, app)}}
+            = fa_icon("cog", class: "fa-spin fa-2x")
           %td.text-center
             = drop_down_menu :default, t("common.actions") do
               = drop_down_menu_item t("common.copy"), new_service_app_path(service, app_id: app.id), data: { turbolinks: false }

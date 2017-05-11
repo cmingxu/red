@@ -11,16 +11,18 @@
 #
 
 class Group < ApplicationRecord
-  validates :name, presence: true
-  validates :name, uniqueness: true
-
+  belongs_to :owner, class_name: "User", foreign_key: :owner_id
   has_many :group_users, dependent: :destroy
   has_many :users, through: :group_users
   has_many :admin_users, proc { where("`group_users`.role = #{GroupUser.roles[:admin]}") }, through: :group_users, source: :user
   has_many :site_admins, proc { where("`group_users`.role = #{GroupUser.roles[:site_admin]}") }, through: :group_users, source: :user
   has_many :services
 
-  belongs_to :owner, class_name: "User", foreign_key: :owner_id
+  validates :name, presence: true
+  validates :name, uniqueness: true
+
+
+  mount_uploader :icon, GroupIconUploader
 
   def add_user!(user, role = :user)
     gu = self.group_users.find_or_create_by(user_id: user.id)

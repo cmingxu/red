@@ -1,6 +1,9 @@
-= simple_form_for(group) do |f|
+= simple_form_for(group, multiple: true) do |f|
   = f.input :name, label: t('group.name'), hint: "eg. 开发部，运维部"
   = f.input :desc, as: :text, label: t('group.desc'), hint: "eg. 负责线上事务"
+  
+  %label.btn.btn-default.btn-file
+    = f.input :icon, input_html: { style: "display: none;" }, label: fa_icon(:plus) + " " + t('common.upload_icon')
 
   .actions
     = f.button :submit, t("group.new_group"), class: btn_classes

@@ -65,7 +65,7 @@ class UsersController < ApplicationController
     #TODO permission check
 
     @user.leave_group! @group
-    redirect_back(fallback_location: group_path(@group))
+    redirect_to group_path(@group)
   end
 
   # DELETE /users/1
