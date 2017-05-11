@@ -1,15 +1,17 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy]
+  before_action :set_groups
 
   # GET /groups
   # GET /groups.json
   def index
-    @groups = current_user.groups.all
+    @group = current_user.groups.find_by(id: params[:group_id]) || @groups.first
   end
 
   # GET /groups/1
   # GET /groups/1.json
   def show
+    @group = current_user.groups.find params[:id]
   end
 
   # GET /groups/new
@@ -25,11 +27,10 @@ class GroupsController < ApplicationController
   # POST /groups.json
   def create
     @group = Group.new(group_params)
-    group_user = current_user.group_users.build(group: @group, role: "ADMIN")
-
+    @group.owner = current_user
     respond_to do |format|
-      if @group.save && group_user.save
-        format.html { redirect_to rbac_path(group_id: @group.id), notice: 'Group was successfully created.' }
+      if @group.save && @group.add_user!(current_user, :admin)
+        format.html { redirect_to :back, notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }
       else
         format.html { render :new }
@@ -43,7 +44,7 @@ class GroupsController < ApplicationController
   def update
     respond_to do |format|
       if @group.update(group_params)
-        format.html { redirect_to rbac_path(group_id: @group.id), notice: 'Group was successfully updated.' }
+        format.html { redirect_to :back, notice: 'Group was successfully updated.' }
         format.json { render :show, status: :ok, location: @group }
       else
         format.html { render :edit }
@@ -66,6 +67,10 @@ class GroupsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_group
       @group = Group.find(params[:id])
+    end
+
+    def set_groups
+      @groups = current_user.groups.includes(:users).order(created_at: :asc).page params[:page]
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

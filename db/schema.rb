@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 20170509060923) do
   create_table "group_users", force: :cascade do |t|
     t.integer  "group_id"
     t.integer  "user_id"
-    t.string   "role"
+    t.integer  "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -17,15 +17,16 @@
 require 'digest'
 
 class User < ApplicationRecord
-  ROLE = %w(SITE_ADMIN USER)
+  ROLE = %w(SITE_ADMIN ADMIN USER)
   attr_accessor :password, :group_admin
 
   validates :email, presence: true
   validates :email, uniqueness: true
 
-  has_many :group_users
+  has_many :group_users, dependent: :destroy
   has_many :groups, through: :group_users
-  has_many :admin_groups, proc { where("`group_users`.role = 'ADMIN'") }, through: :group_users, source: :group
+  has_many :groups_without_default, proc { where("`groups`.id != #{Group.default_group.id}") }, through: :group_users, source: :group
+  has_many :admin_groups, proc { where("`group_users`.role > 0 ") }, through: :group_users, source: :group
 
   has_many :services, dependent: :destroy
 
@@ -44,6 +45,16 @@ class User < ApplicationRecord
 
   def admin?(group)
     self.admin_groups.include? group
+  end
+
+  def join_group!(group, role = :user)
+    self.group_users.find_or_create_by(group_id: group.id).send("#{role}!")
+  end
+
+  def leave_group!(group, role = :user)
+    return false if group.is_default?
+
+    self.group_users(group: group).destroy
   end
 
   private

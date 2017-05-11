@@ -37,7 +37,7 @@
             %li{class: navbar_nav_active_class(:service_templates) }= link_to t('nav.service_templates'), service_templates_path
             %li{class: navbar_nav_active_class(:registries) }= link_to t('nav.registries'), registries_path
             %li{class: navbar_nav_active_class(:nodes) }= link_to t('nav.host'), nodes_path
-            %li{class: navbar_nav_active_class(:rbac) }= link_to t('nav.rbac'), rbac_path
+            %li{class: navbar_nav_active_class(:groups) }= link_to t('nav.groups'), groups_path
             %li{class: navbar_nav_active_class(:system) }= link_to t('nav.system'), system_path
             = drop_down fa_icon(:user) + " #{current_user.display}" do
               = menu_item t('nav.setting'), setting_path

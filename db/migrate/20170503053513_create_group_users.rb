@@ -3,7 +3,7 @@ class CreateGroupUsers < ActiveRecord::Migration[5.0]
     create_table :group_users do |t|
       t.integer :group_id
       t.integer :user_id
-      t.string :role
+      t.integer :role
 
       t.timestamps
     end

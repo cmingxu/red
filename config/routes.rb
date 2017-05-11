@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  resources :versions
   get 'system/index', as: :system
-  get 'rbac/index', as: :rbac
 
   get 'session/new', as: :new_session
   get 'session/particles'
@@ -12,12 +10,18 @@ Rails.application.routes.draw do
   get 'settings/group', as: :setting_group
   get 'settings/autit', as: :setting_audit
 
+  resources :versions
   resources :registries
   resources :images
   resources :service_templates
 
   resources :groups do
-    resources :users
+    resources :users do
+      member do
+        delete :leave
+      end
+    end
+
     member do
       put :update_quota
     end

@@ -1,0 +1,11 @@
+= panel_item t("common.group_quota"), :user do
+  = form_tag update_quota_group_path(group), class: 'form-inline' do
+    .form-group.col-md-6
+      .input-group
+        = text_field_tag "cpu", 1000, class: 'form-control', type: :number
+        .input-group-addon CORE
+    .form-group
+      .input-group
+        = text_field_tag "mem", 1000, class: 'form-control', type: :number
+        .input-group-addon M
+    = submit_tag t("common.save"), class: 'btn btn-primary btn-sm pull-right'

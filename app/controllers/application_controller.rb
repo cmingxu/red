@@ -88,8 +88,8 @@ class ApplicationController < ActionController::Base
       :service_templates
     when :registries
       :registries
-    when :rbac, :users, :groups
-      :rbac
+    when :users, :groups
+      :groups
     when :system, :mesos
       :system
     else

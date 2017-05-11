@@ -38,6 +38,8 @@ zh-CN:
     versions: "版本"
     download_compose: "下载编排文件"
     unfavorite: "取消置顶"
+    new_group: "新增用户组"
+    new_user: "新增用户"
   nav:
     host: "主机"
     infra: "基础"
@@ -48,7 +50,7 @@ zh-CN:
     registries: "镜像管理"
     setting: "设置"
     logout: "退出登录"
-    rbac: "账号&配额"
+    groups: "账号&配额"
     audit: "审计"
     open_in_new_window: "新窗口打开"
   app:
@@ -129,6 +131,9 @@ zh-CN:
     groups: "所属组"
     new_user: "新用户"
     group_admin: "组管理员"
+    site_admin: "系统管理员"
+    admin: "组管理员"
+    user: "组用户"
 
   active_record:
     common:

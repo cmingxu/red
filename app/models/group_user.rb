@@ -11,7 +11,7 @@
 #
 
 class GroupUser < ApplicationRecord
-  ROLES = %(ADMIN USER)
+  enum role: [ :site_admin, :admin, :user ]
 
   belongs_to :group
   belongs_to :user

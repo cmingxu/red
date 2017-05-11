@@ -1,3 +1,13 @@
 // Place all the styles related to the groups controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.rbac .group_item {
+  cursor: pointer;
+}
+
+.rbac .group-list{
+  height: 1000px;
+  overflow: scroll;
+}

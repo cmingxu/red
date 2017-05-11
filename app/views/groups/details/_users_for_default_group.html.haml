@@ -1,0 +1,29 @@
+= panel_item t("common.user"), :user do
+  %table.table.table-bordered.table-striped.table-hover
+    %thead.text-center
+      %th= t("user.role")
+      %th= t("user.name")
+      %th= t("user.email")
+      %th= t("user.groups")
+      %th= t("common.service")
+      %th= t("common.quota")
+      %th
+
+    - group.users.each do |user|
+      - if user.persisted?
+        %tr
+          %td= t("user.#{group.group_users(user_id: user.id).first.role}")
+          %td= user.display
+          %td= user.email
+          %td
+            - user.groups_without_default.order('created_at ASC').each do |g|
+              = link_to g.name, group_path(g)
+          %td= user.services.length
+          %td
+            20 core
+            2040 M
+          %td
+            = drop_down_menu :default, t("common.actions") do
+              = drop_down_menu_item t("common.edit"), ""
+              = drop_down_menu_item t("common.remove"), leave_group_user_path(group, user, user_id: user.id), data: { confirm: t("common.remove") } unless group.is_default?
+

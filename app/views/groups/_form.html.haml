@@ -1,4 +1,4 @@
-= simple_form_for(@group, remote: true) do |f|
+= simple_form_for(group) do |f|
   = f.input :name, label: t('group.name'), hint: "eg. 开发部，运维部"
   = f.input :desc, as: :text, label: t('group.desc'), hint: "eg. 负责线上事务"
 

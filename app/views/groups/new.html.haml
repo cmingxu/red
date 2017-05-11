@@ -1,1 +1,7 @@
-= render 'form'
+
+.row
+  .col-md-4.col-lg-2
+    = render :partial => "group_left", locals: { groups: @groups, group: Group.default_group }
+
+  .col-md-8
+    = render partial: 'form', locals: { group: @group }

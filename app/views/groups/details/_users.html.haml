@@ -1,0 +1,31 @@
+= panel_item t("common.user"), :user do
+  .btn-group.pull-right
+    = link_to fa_icon(:plus) + " " + t("group.enroll_new_user"), "", class: 'btn btn-primary btn-sm'
+    = link_to fa_icon(:plus) + " " + t("group.new_group_user"), "#newUser", class: 'btn btn-primary btn-sm', data: { toggle: 'modal' }
+
+  = modal_dialog id: "newUser", header: { show_close: true, dismiss: 'modal', title: t('user.new_user') }, body:   { content: render(:partial => "users/form", locals: { group: @group, user: @group.users.new }) }, footer: { content: '' }
+
+  %table.table.table-bordered.table-striped.table-hover
+    %thead.text-center
+      %th= t("user.role")
+      %th= t("user.name")
+      %th= t("user.email")
+      %th= t("user.groups")
+      %th= t("common.service")
+      %th
+
+    - group.users.each do |user|
+      - if user.persisted?
+        %tr
+          %td= t("user.#{group.group_users.where(user_id: user.id).first.role}")
+          %td= user.display
+          %td= user.email
+          %td
+            - user.groups_without_default.order('created_at ASC').each do |g|
+              = link_to g.name, group_path(g)
+          %td= user.services.length
+          %td
+            = drop_down_menu :default, t("common.actions") do
+              = drop_down_menu_item t("common.edit"), ""
+              = drop_down_menu_item t("common.remove"), leave_group_user_path(group, user, user_id: user.id), method: :delete, data: { confirm: t("common.remove") } unless group.is_default?
+

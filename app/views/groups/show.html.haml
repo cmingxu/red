@@ -1,0 +1,15 @@
+.row
+  .col-md-12.text-right
+    = link_to fa_icon(:plus) + " " + t("common.new_group"), new_group_path, class: 'btn btn-primary', remote: true
+
+.row
+  .col-md-4.col-lg-2
+    = render :partial => "groups/group_left", locals: { groups: @groups }
+    
+  .col-md-8.col-lg-10#group_detail
+    = render :partial => "groups/details/detail", locals: { group: @group }
+    = render :partial => "groups/details/quota", locals: { group: @group }
+    = render :partial => "groups/details/users", locals: { group: @group }
+    = render :partial => "groups/details/services", locals: { group: @groups.first }
+
+
