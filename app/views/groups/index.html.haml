@@ -3,7 +3,7 @@
     = link_to fa_icon(:plus) + " " + t("common.new_group"), new_group_path, class: 'btn btn-primary'
     = link_to fa_icon(:plus) + " " + t("group.new_group_user"), "#newUser", class: 'btn btn-primary', data: { toggle: 'modal' }
 
-  = modal_dialog id: "newUser", header: { show_close: true, dismiss: 'modal', title: t('user.new_user') }, body:   { content: render(:partial => "users/form", locals: { group: @group, user: @group.users.new }) }, footer: { content: '' }
+  = modal_dialog id: "newUser", header: { show_close: true, dismiss: 'modal', title: t('user.new_user') }, body:   { content: render(:partial => "users/form", locals: { group: @group, user: @group.users.new, siteadmin_require: true, groupadmin_require: false }) }, footer: { content: '' }
 
 
 

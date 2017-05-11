@@ -175,6 +175,31 @@ class App < ApplicationRecord
     end
   end
 
+  def cpu_total
+    self.instances * self.cpu
+  end
+
+  def cpu_used
+    self.running? ? self.instances * self.cpu : 0
+  end
+
+
+  def mem_total
+    self.instances * self.mem
+  end
+
+  def mem_used
+    self.running? ? self.instances * self.mem : 0
+  end
+
+  def disk_total
+    self.instances * self.disk
+  end
+
+  def disk_used
+    self.running? ? self.instances * self.dise : 0
+  end
+
 
   def marathon_app_name
     self.service.name + "/" + self.name

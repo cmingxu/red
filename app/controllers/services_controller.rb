@@ -41,7 +41,7 @@ class ServicesController < ApplicationController
       begin
         @service.from_raw_config JSON.parse(@service.compose_content)
       rescue
-        @service.errors.on(:compose_content, "invalid json")
+        @service.errors.add(:compose_content, "invalid json")
       end
     end
 

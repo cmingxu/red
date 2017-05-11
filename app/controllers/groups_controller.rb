@@ -28,6 +28,7 @@ class GroupsController < ApplicationController
   def create
     @group = Group.new(group_params)
     @group.owner = current_user
+
     respond_to do |format|
       if @group.save && @group.add_user!(current_user, :admin)
         format.html { redirect_to :back, notice: 'Group was successfully created.' }
@@ -58,7 +59,7 @@ class GroupsController < ApplicationController
   def destroy
     @group.destroy
     respond_to do |format|
-      format.html { redirect_to rbac_path, notice: 'Group was successfully destroyed.' }
+      format.html { redirect_to groups_path, notice: 'Group was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

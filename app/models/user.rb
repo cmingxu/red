@@ -18,7 +18,7 @@ require 'digest'
 
 class User < ApplicationRecord
   ROLE = %w(SITE_ADMIN ADMIN USER)
-  attr_accessor :password, :group_admin
+  attr_accessor :password, :group_admin_accessor, :site_admin_accessor
 
   validates :email, presence: true
   validates :email, uniqueness: true
@@ -29,6 +29,9 @@ class User < ApplicationRecord
   has_many :admin_groups, proc { where("`group_users`.role > 0 ") }, through: :group_users, source: :group
 
   has_many :services, dependent: :destroy
+
+  scope :order_by_role, -> { order("`group_users`.role ASC") }
+
 
   def update_password(pass)
     self.salt = SecureRandom.hex
@@ -47,14 +50,18 @@ class User < ApplicationRecord
     self.admin_groups.include? group
   end
 
+  def site_admin?
+    self.admin?(Group.default_group)
+  end
+
   def join_group!(group, role = :user)
     self.group_users.find_or_create_by(group_id: group.id).send("#{role}!")
   end
 
-  def leave_group!(group, role = :user)
+  def leave_group!(group)
     return false if group.is_default?
 
-    self.group_users(group: group).destroy
+    self.group_users.where(group: group).first.try(:destroy)
   end
 
   private

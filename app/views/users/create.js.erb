@@ -1,2 +1,2 @@
-$(".modal_body").html("<%= escape_javascript(render(partial: 'form', locals: { user: @user, group: @group } )) %>");
+$(".modal_body").html("<%= escape_javascript(render(partial: 'form', locals: { user: @user, group: @group, groupadmin_require: @user.group_admin_accessor, siteadmin_require: @user.site_admin_accessor } )) %>");
 

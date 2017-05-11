@@ -2,16 +2,7 @@
   - groups.each do |group|
     %a.list-group-item.group_item{href: group.is_default? ? groups_path : group_path(group), class: group.id == @group.id ? 'active' : ''}
       %h4.list-group-item-heading= group.name
-      .list-group-item-text
-        %span.text-muted= group.desc
-
-        %span.text-muted= group.owner.display
-
-        %span.text-muted= group.users.length
-
-        %span.text-muted 150 core
-        %span.text-muted 150G mem
-
-
-
-
+      - if group.desc
+        .list-group-item-text
+          %span.text-muted= group.desc.truncate(35)
+          %strong= group.owner.display

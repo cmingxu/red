@@ -31,10 +31,10 @@ class UsersController < ApplicationController
       if @user.save
         if params[:group_id]
           @target_group = Group.find_by(id: params[:group_id])
-          @target_group.add_user!(@user, @user.group_admin ? :admin : :user)
+          @target_group.add_user!(@user, @user.group_admin_accessor ? :admin : :user)
         end
 
-        Group.default_group.add_user! @user, :user
+        Group.default_group.add_user!(@user, @user.site_admin_accessor ? :site_admin : :user)
 
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
@@ -71,11 +71,18 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    @user.destroy
+    # TODO permission check
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
+      can_remove_user = !(@user.site_admin? && (Group.default_group.site_admins.length == 1))
+      if  can_remove_user || @user.destroy
+        format.html { redirect_to groups_path, notice: 'User was successfully destroyed.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to groups_path, notice: 'User was successfully destroyed.' }
+        format.json { head :no_content }
+      end
     end
+
   end
 
   private
@@ -85,11 +92,11 @@ class UsersController < ApplicationController
   end
 
   def set_group
-    @group = Group.find(params[:id])
+    @group = Group.find(params[:group_id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:email, :password)
+    params.require(:user).permit(:email, :password, :group_admin_accessor, :site_admin_accessor)
   end
 end

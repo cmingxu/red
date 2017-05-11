@@ -54,4 +54,11 @@ class Service < ApplicationRecord
 
     self
   end
+
+  %w(cpu_total cpu_used mem_total mem_used disk_total disk_used).each do |m|
+    define_method m do
+      self.apps.reduce(0){|sum, app| sum += app.send(m); sum }
+    end
+  end
+
 end

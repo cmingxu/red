@@ -3,7 +3,7 @@
     = link_to fa_icon(:plus) + " " + t("group.enroll_new_user"), "", class: 'btn btn-primary btn-sm'
     = link_to fa_icon(:plus) + " " + t("group.new_group_user"), "#newUser", class: 'btn btn-primary btn-sm', data: { toggle: 'modal' }
 
-  = modal_dialog id: "newUser", header: { show_close: true, dismiss: 'modal', title: t('user.new_user') }, body:   { content: render(:partial => "users/form", locals: { group: @group, user: @group.users.new }) }, footer: { content: '' }
+  = modal_dialog id: "newUser", header: { show_close: true, dismiss: 'modal', title: t('user.new_user') }, body:   { content: render(:partial => "users/form", locals: { group: @group, user: @group.users.new, siteadmin_require: false, groupadmin_require: true }) }, footer: { content: '' }
 
   %table.table.table-bordered.table-striped.table-hover
     %thead.text-center
@@ -14,7 +14,7 @@
       %th= t("common.service")
       %th
 
-    - group.users.each do |user|
+    - group.users.order_by_role.each do |user|
       - if user.persisted?
         %tr
           %td= t("user.#{group.group_users.where(user_id: user.id).first.role}")
@@ -27,5 +27,5 @@
           %td
             = drop_down_menu :default, t("common.actions") do
               = drop_down_menu_item t("common.edit"), ""
-              = drop_down_menu_item t("common.remove"), leave_group_user_path(group, user, user_id: user.id), method: :delete, data: { confirm: t("common.remove") } unless group.is_default?
+              = drop_down_menu_item t("common.remove"), leave_group_user_path(group, user), method: :delete, data: { confirm: t("common.remove") } unless group.is_default?
 

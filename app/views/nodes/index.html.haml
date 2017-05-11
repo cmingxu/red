@@ -1,2 +1,4 @@
+= render :partial => "widgets/list_place_holder" if @nodes.empty?
+
 = render :partial => "nodes/show", locals: { node: @node || @nodes.first }
 

@@ -1,5 +1,5 @@
 = panel_item t("common.service"), :cogs do
-  = link_to fa_icon(:plus) + " " + t("common.new_service"), "", class: 'btn btn-sm btn-primary pull-right'
+  = link_to fa_icon(:plus) + " " + t("common.new_service"), new_service_path(group_id: group.id), class: 'btn btn-sm btn-primary pull-right'
   %table.table.table-bordered.table-stripped
     %thead
       %th= t("user.name")

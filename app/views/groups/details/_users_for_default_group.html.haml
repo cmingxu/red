@@ -9,10 +9,10 @@
       %th= t("common.quota")
       %th
 
-    - group.users.each do |user|
+    - group.users.order_by_role.each do |user|
       - if user.persisted?
         %tr
-          %td= t("user.#{group.group_users(user_id: user.id).first.role}")
+          %td= t("user.#{group.group_users.where(user_id: user.id).first.role}")
           %td= user.display
           %td= user.email
           %td
@@ -24,6 +24,7 @@
             2040 M
           %td
             = drop_down_menu :default, t("common.actions") do
-              = drop_down_menu_item t("common.edit"), ""
-              = drop_down_menu_item t("common.remove"), leave_group_user_path(group, user, user_id: user.id), data: { confirm: t("common.remove") } unless group.is_default?
+              = drop_down_menu_item t("common.edit"), edit_user_path(user)
+              = drop_down_menu_item t("common.remove"), leave_group_user_path(group, user), data: { confirm: t("common.remove") }
+              = drop_down_menu_item fa_icon(:trash) + "  " + t("common.delete_user"), group_user_path(group, user), data: { confirm: t("common.remove") }, method: :delete
 
