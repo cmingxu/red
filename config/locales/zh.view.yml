@@ -28,7 +28,7 @@ zh-CN:
     group_quota: "组配额"
     user: "用户"
     service: "服务"
-    new_service: "新服务"
+    new_service: "新建服务"
     owner: "创建人"
     created: "创建时间"
     user_count: "用户数"
@@ -37,6 +37,7 @@ zh-CN:
     copy: "拷贝"
     versions: "版本"
     download_compose: "下载编排文件"
+    unfavorite: "取消置顶"
   nav:
     host: "主机"
     infra: "基础"
@@ -98,8 +99,8 @@ zh-CN:
     copy: "拷贝"
     update_version: "更新"
   service:
-    new_app: "新应用"
-    new_service: "新服务"
+    new_app: "新增应用"
+    new_service: "新增服务"
     new_service_from_universe: "从应用目录创建"
     command: "运行时"
     volumes: "存储卷"
@@ -148,6 +149,11 @@ zh-CN:
     app:
       model_name: "应用"
       name: "应用名"
+
+  service_template:
+    readme: "模板详情"
+    raw_config: "模板描述JSON"
+
 
 
 

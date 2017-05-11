@@ -3,6 +3,7 @@ class CreateServices < ActiveRecord::Migration[5.0]
     create_table :services do |t|
       t.string :name
       t.string :desc
+      t.boolean :favorite
       t.integer :group_id
       t.integer :user_id
 

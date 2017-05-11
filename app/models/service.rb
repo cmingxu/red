@@ -40,6 +40,11 @@ class Service < ApplicationRecord
     service_config_hash
   end
 
+  def toggle_favorite!
+    self.favorite = !self.favorite
+    self.save
+  end
+
   def from_raw_config(compose_hash)
     compose_hash["apps"].each_pair do |app_name, raw_config|
       app = self.apps.build raw_config

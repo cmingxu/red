@@ -25,7 +25,7 @@
 
   .actions
     = f.button :submit, t("common.save"), class: btn_classes
-    = link_to t('common.remove'), service_template_path(@service_template), method: :delete, class: btn_classes(['btn-danger']) if @service_template.persisted?
+    = link_to t('common.remove'), service_template_path(@service_template), method: :delete, class: btn_classes(['btn-danger']), data: { confirm: t("common.remove") } if @service_template.persisted?
     = link_to t('common.cancel'), service_templates_path
 
 

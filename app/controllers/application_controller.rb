@@ -82,14 +82,16 @@ class ApplicationController < ActionController::Base
     case controller_name.to_sym
     when :services, :apps
       :services
-    when :mesos
-      :mesos
     when :nodes, :containers, :images, :networks, :volumes
       :nodes
     when :service_templates
       :service_templates
     when :registries
       :registries
+    when :rbac, :users, :groups
+      :rbac
+    when :system, :mesos
+      :system
     else
       :serivces
     end

@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(version: 20170509060923) do
   create_table "services", force: :cascade do |t|
     t.string   "name"
     t.string   "desc"
+    t.boolean  "favorite"
     t.integer  "group_id"
     t.integer  "user_id"
     t.datetime "created_at", null: false
