@@ -3,10 +3,10 @@
   = f.input :password, as: :password, label: t("user.password"), hint: "", input_html: { autocomplete: 'nwe-password' }
   
   - if siteadmin_require
-    = f.input :site_admin_accessor, as: :boolean, label: t("user.site_admin"),  input_html: { checked: user.admin?(group) }
+    = f.input :site_admin_accessor, as: :boolean, label: t("user.site_admin"), checked_value: true, unchecked_value: false
 
   - if groupadmin_require
-    = f.input :group_admin_accessor, as: :boolean, label: t("user.group_admin"),  input_html: { checked: user.admin?(group) }
+    = f.input :group_admin_accessor, as: :boolean, label: t("user.group_admin"),  checked_value: true, unchecked_value: false
 
   .actions
     = f.button :submit, t('common.save'), class: btn_classes

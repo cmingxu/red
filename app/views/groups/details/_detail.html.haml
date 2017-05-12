@@ -1,23 +1,13 @@
 = panel_item t("common.detail_info"), :info do
-  .col-md-6
-    %dl.dl-horizontal
-      %dt= t("common.name")
-      %dd= group.name
-      %dt= t("common.owner")
-      %dd= group.owner.display
-      %dt= t("common.created")
-      %dd= l(group.created_at)
-      %dt= t("common.user_count")
-      %dd= group.users.length
-      %dt= t("common.service_count")
-      %dd= group.services.length
+  %dl.dl-horizontal
+    %dt= t("common.name")
+    %dd= group.name
+    %dt= t("common.owner")
+    %dd= group.owner.display
+    %dt= t("common.created")
+    %dd= l(group.created_at)
+    %dt= t("common.user_count")
+    %dd= group.users.length
+    %dt= t("common.service_count")
+    %dd= group.services.length
 
-  .col-md-6
-    = simple_form_for(group, multiple: true) do |f|
-      = f.button :submit, t("common.save"), class: 'btn btn-default btn-primary pull-right'
-      = image_tag group.icon.small.try(:url) || "placeholder.png"
-      %label.btn.btn-default.btn-file
-        = f.input :icon, input_html: { style: "display: none;" }, label: fa_icon(:plus) + " " + t('common.upload_icon')
-
-      = f.input :name, label: false
-      = f.input :desc, as: :text, label: false

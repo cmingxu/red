@@ -1,8 +1,18 @@
 module ApplicationHelper
+  def panel_table(title, icon, anchor = "", &block)
+    content_tag(:div, class: 'panel panel-default') do
+      content_tag(:div, class: 'panel-heading') do
+         content_tag(:span, title, name: anchor) end +
+
+        capture(&block) if block_given?
+    end
+  end
+
   def panel_item(title, icon, anchor = "", &block)
     content_tag(:div, class: 'panel panel-default') do
       content_tag(:div, class: 'panel-heading') do
-         content_tag(:a, fa_icon(icon, text: title), name: anchor) end +
+         content_tag(:span, title, name: anchor) end +
+
       content_tag(:div, class: 'panel-body') do
         capture(&block) if block_given?
       end
@@ -10,7 +20,7 @@ module ApplicationHelper
   end
 
   def table_classes
-    %w(table table-stripped table-hover)
+    %w(table table-bordered table-hover)
   end
 
   def btn_classes(extras = [])

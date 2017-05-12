@@ -1,10 +1,12 @@
-= panel_item t("common.service"), :cogs do
-  = link_to fa_icon(:plus) + " " + t("common.new_service"), new_service_path(group_id: group.id), class: 'btn btn-sm btn-primary pull-right'
-  %table.table.table-bordered.table-stripped
+= link_to fa_icon(:plus) + " " + t("common.new_service"), new_service_path(group_id: group.id), class: 'btn btn-sm btn-primary pull-right'
+.clearfix
+
+= panel_table t("common.service"), :cogs do
+  %table.table.table-bordered
     %thead
-      %th= t("user.name")
-      %th= t("user.email")
-      %th= t("common.application")
+      %td= t("user.name")
+      %td= t("user.email")
+      %td= t("common.application")
 
     - group.services.each do |service|
       %tr

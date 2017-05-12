@@ -1,5 +1,5 @@
-= panel_item(t("common.tasks_and_containers"), "server") do
-  - if marathon_app
+- if marathon_app
+  = panel_table(t("common.tasks_and_containers"), "server") do
     %table{class: table_classes}
       %thead
         %td= t("common.task_id")
@@ -19,5 +19,6 @@
                 = link_to "#{task[:host]}:#{task[:ports]}", "http://#{task[:host]}:#{task[:ports].first}", target: "_blank"
             %td= task[:host]
             %td= task[:version]
-  - else
-    = render :partial => "widgets/list_place_holder" 
+- else
+  = panel_item(t("common.tasks_and_containers"), "server") do
+    = render :partial => "widgets/list_place_holder"

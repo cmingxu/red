@@ -13,7 +13,7 @@
 - @services.each do |service|
   .service_section
     -#.text-danger.pull-right.like_icon= fa_icon(:flag, class: "fa-2x")
-    %table.table.table-striped.service_table.table-bordered.table-hover.toggleable-table{class: "service_#{service.id}"}
+    %table.table.service_table.table-bordered.table-hover.toggleable-table{class: "service_#{service.id}"}
       %tr.service_tr
         %td{colspan: 2}
           %span.text-bigger.text-primary.toggleable-table-handle

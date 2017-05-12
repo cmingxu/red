@@ -30,6 +30,6 @@ u = User.new email: "admin@admin.com", role: "SITE_ADMIN"
 u.update_password "admin"
 u.save
 
-group = Group.new name: "全部组", owner: User.first
+group = Group.new name: "所有用户", owner: User.first
 group.save && group.add_user!(u, :site_admin)
 

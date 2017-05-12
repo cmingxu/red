@@ -1,12 +1,12 @@
-= panel_item t("common.user"), :user do
-  .btn-group.pull-right
-    = link_to fa_icon(:plus) + " " + t("group.enroll_new_user"), "", class: 'btn btn-primary btn-sm'
-    = link_to fa_icon(:plus) + " " + t("group.new_group_user"), "#newUser", class: 'btn btn-primary btn-sm', data: { toggle: 'modal' }
-
+.btn-group.pull-right
+  = link_to fa_icon(:plus) + " " + t("group.enroll_new_user"), "", class: 'btn btn-default btn-sm'
+  = link_to fa_icon(:plus) + " " + t("group.new_group_user"), "#newUser", class: 'btn btn-primary btn-sm', data: { toggle: 'modal' }
   = modal_dialog id: "newUser", header: { show_close: true, dismiss: 'modal', title: t('user.new_user') }, body:   { content: render(:partial => "users/form", locals: { group: @group, user: @group.users.new, siteadmin_require: false, groupadmin_require: true }) }, footer: { content: '' }
+.clearfix
 
-  %table.table.table-bordered.table-striped.table-hover
-    %thead.text-center
+= panel_table t("common.user"), :user do
+  %table.table.table-bordered.table-hover
+    %thead
       %th= t("user.role")
       %th= t("user.name")
       %th= t("user.email")
@@ -18,7 +18,9 @@
       - if user.persisted?
         %tr
           %td= t("user.#{group.group_users.where(user_id: user.id).first.role}")
-          %td= user.display
+          %td
+            = image_tag user.icon.thumb.try(:url) || "user-profile.png", class: 'user-profile-thumb'
+            = user.display
           %td= user.email
           %td
             - user.groups_without_default.order('created_at ASC').each do |g|

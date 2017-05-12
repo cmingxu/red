@@ -28,7 +28,7 @@ class GroupsController < ApplicationController
         }
     ]
 }
-    @group = current_user.admin_groups.find params[:id]
+    @group = current_user.admin_groups.includes(:group_users).find params[:id]
   end
 
   # GET /groups/new
@@ -70,6 +70,21 @@ class GroupsController < ApplicationController
       end
     end
   end
+
+  %w(cpu mem disk).each do |m|
+    define_method "update_quota_#{m}" do
+      @group = Group.find params[:id]
+      @group.settings(:quota).send("#{m}=", params[:value])
+      if @group.save
+        flash.notice = t("common.user_quota_update_success")
+      else
+        flash.alert = t("common.user_quota_update_fail")
+      end
+
+      redirect_to groups_path
+    end
+  end
+
 
   # DELETE /groups/1
   # DELETE /groups/1.json

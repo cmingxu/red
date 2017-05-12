@@ -16,6 +16,7 @@
 
 require 'digest'
 
+
 class User < ApplicationRecord
   ROLE = %w(SITE_ADMIN ADMIN USER)
   attr_accessor :password, :group_admin_accessor, :site_admin_accessor
@@ -23,8 +24,14 @@ class User < ApplicationRecord
   has_many :group_users, dependent: :destroy
   has_many :groups, through: :group_users
   has_many :groups_without_default, proc { where("`groups`.id != #{Group.default_group.id}") }, through: :group_users, source: :group
-  has_many :admin_groups, proc { where("`group_users`.role > 0 ") }, through: :group_users, source: :group
+  has_many :admin_groups, proc { where("`group_users`.role < 2 ") }, through: :group_users, source: :group
   has_many :services, dependent: :destroy
+
+  has_settings do |s|
+    # mem 10G, disk 1024G
+    s.key :quota, :defaults => { :cpu => 20, :mem => 10 * 1028 , :disk => 1024  }
+  end
+
 
   scope :order_by_role, -> { order("`group_users`.role ASC") }
 

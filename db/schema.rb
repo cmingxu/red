@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 20170509060923) do
     t.string   "name"
     t.integer  "owner_id"
     t.text     "desc"
+    t.string   "icon"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

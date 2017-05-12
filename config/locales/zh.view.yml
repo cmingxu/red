@@ -40,6 +40,8 @@ zh-CN:
     unfavorite: "取消置顶"
     new_group: "新增用户组"
     new_user: "新增用户"
+    update_group: "更新组信息"
+    quota: "配额"
   nav:
     host: "主机"
     infra: "基础"

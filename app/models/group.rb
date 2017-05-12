@@ -21,12 +21,16 @@ class Group < ApplicationRecord
   validates :name, presence: true
   validates :name, uniqueness: true
 
-
   mount_uploader :icon, GroupIconUploader
+
+  has_settings do |s|
+    # mem 10G, disk 1024G
+    s.key :quota, :defaults => { :cpu => 20, :mem => 10 * 1028 , :disk => 1024  }
+  end
 
   def add_user!(user, role = :user)
     gu = self.group_users.find_or_create_by(user_id: user.id)
-    if gu.role && (GroupUser.roles[gu.role] > GroupUser.roles[role])
+    if gu.role && (GroupUser.roles[role] > GroupUser.roles[gu.role] )
       return true
     end
 

@@ -22,19 +22,39 @@ class UsersController < ApplicationController
   def edit
   end
 
+  %w(cpu mem disk).each do |m|
+    define_method "update_quota_#{m}" do
+      @user = User.find params[:id]
+      @user.settings(:quota).send("#{m}=", params[:value])
+      if @user.save
+        flash.notice = t("common.user_quota_update_success")
+      else
+        flash.alert = t("common.user_quota_update_fail")
+      end
+
+      redirect_to groups_path
+    end
+  end
+
+
   # POST /users
   # POST /users.json
   def create
     @user = User.new(user_params)
 
+    if !@user.icon.present?
+      random_icon = Dir.glob(Rails.root.join("app/assets/images/user-profile-icon/*")).shuffle.first
+      @user.icon = Pathname.new(random_icon).open
+    end
+
     respond_to do |format|
       if @user.save
         if params[:group_id]
           @target_group = Group.find_by(id: params[:group_id])
-          @target_group.add_user!(@user, @user.group_admin_accessor ? :admin : :user)
+          @target_group.add_user!(@user, @user.group_admin_accessor == "true" ? :admin : :user)
         end
 
-        Group.default_group.add_user!(@user, @user.site_admin_accessor ? :site_admin : :user)
+        Group.default_group.add_user!(@user, @user.site_admin_accessor == "true" ? :site_admin : :user)
 
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }

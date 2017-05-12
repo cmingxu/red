@@ -19,18 +19,20 @@ Rails.application.routes.draw do
     resources :users do
       member do
         delete :leave
+        patch :update_quota_cpu
+        patch :update_quota_mem
+        patch :update_quota_disk
       end
     end
 
     member do
-      put :update_quota
+      patch :update_quota_cpu
+      patch :update_quota_mem
+      patch :update_quota_disk
     end
   end
 
   resources :users do
-    member do
-      put :update_quota
-    end
   end
 
 

@@ -1,24 +1,36 @@
 = panel_item t("common.group_quota"), :user do
-  = form_tag update_quota_group_path(group), class: 'form-inline' do
-    = submit_tag  t("common.save"), class: 'btn btn-primary btn-sm pull-right'
-    .col-md-4.text-center
-      = line_chart @data, { height: 150}
-      .form-group
-        .input-group
-          = text_field_tag "cpu", 1000, class: 'form-control', type: :number
-          .input-group-addon CORE
+  .col-md-4.text-center
+    = line_chart @data, { height: 150}
+    %hr
+    .row
+      = form_tag update_quota_cpu_group_path(group), method: :patch do
+        .col-sm-7
+          .input-group
+            = text_field_tag "value", group.settings(:quota).cpu, class: 'form-control', type: :number
+            .input-group-addon CORE
+        .col-sm-4.col-sm-offset-1.text-right
+          = button_to "#", class: 'btn btn-primary col-sm-8 pull-right', type: :submit, data: { confirm: t("common.confirm") } do
+            = fa_icon :check
 
-    .col-md-4.text-center
-      = bar_chart @data, { height: 150 }
-      .form-group
+  .col-md-4.text-center
+    = bar_chart @data, { height: 150 }
+    %hr
+    .row
+      .col-sm-7
         .input-group
-          = text_field_tag "mem", 1000, class: 'form-control', type: :number
+          = text_field_tag "mem", group.settings(:quota).mem, class: 'form-control', type: :number
           .input-group-addon M
+      .col-sm-4.col-sm-offset-1.text-right
+        = link_to fa_icon(:check), "#", class: 'btn btn-primary col-sm-8 pull-right'
 
-    .col-md-4.text-center
-      = pie_chart @data, { height: 150 }
-      .form-group
+  .col-md-4.text-center
+    = pie_chart @data, { height: 150 }
+    %hr
+    .row
+      .col-sm-7
         .input-group
-          = text_field_tag "mem", 1000, class: 'form-control', type: :number
-          .input-group-addon M
+          = text_field_tag "disk", group.settings(:quota).disk, class: 'form-control', type: :number
+          .input-group-addon G
+      .col-sm-4.col-sm-offset-1.text-right
+        = link_to fa_icon(:check), "#", class: 'btn btn-primary col-sm-8 pull-right'
 

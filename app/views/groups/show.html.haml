@@ -5,13 +5,13 @@
 .row
   .col-md-4.col-lg-2
     = render :partial => "groups/group_left", locals: { groups: @groups }
-    
+
   .col-md-8.col-lg-10#group_detail
-    = render :partial => "groups/details/detail", locals: { group: @group }
     = render :partial => "groups/details/quota", locals: { group: @group }
     = render :partial => "groups/details/users", locals: { group: @group }
     = render :partial => "groups/details/services", locals: { group: @groups.first }
-
+    = render :partial => "groups/details/edit_form", locals: { group: @group }
+    = render :partial => "groups/details/detail", locals: { group: @group }
 
     .actions
       = link_to t("common.remove"), group_path(@group), method: :delete, data: { confirm: t("common.delete_confirm") }, class: 'btn btn-danger btn-lg col-md-12'
