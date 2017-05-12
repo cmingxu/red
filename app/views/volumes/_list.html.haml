@@ -1,0 +1,10 @@
+= panel_table t("common.volume"), :server do
+  %table{class: table_classes}
+    %thead
+      %tr
+        %th ID
+  
+    %tbody
+      - volumes.each do |volume|
+        %tr
+          %td= link_to volume.info["Name"], node_volume_path(node, volume.id)

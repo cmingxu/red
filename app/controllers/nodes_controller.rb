@@ -6,11 +6,15 @@ class NodesController < ApplicationController
   # GET /nodes.json
   def index
     @nodes = Node.page params[:page]
+    @containers = Docker::Container.all(all: true)
+    @volumes = Docker::Volume.all(all: true)
   end
 
   # GET /nodes/1
   # GET /nodes/1.json
   def show
+    @containers = Docker::Container.all(all: true)
+    @volumes = Docker::Volume.all(all: true)
   end
 
   # GET /nodes/new

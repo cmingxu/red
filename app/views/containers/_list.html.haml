@@ -1,0 +1,28 @@
+= panel_table t("common.containers"), :server do
+  %table.table.table-bordered
+    %thead
+      %tr
+        %th ID
+        %th 状态
+        %th 镜像
+        %th CMD
+        %th IP
+        %th 端口
+        %th 名称
+  
+    %tbody
+      - containers.each do |c|
+        - con = parse_container(c)
+        %tr
+          %td= link_to truncate(con.id, length: 12), node_container_path(node, c.id)
+          %td
+            .label.label-primary= con.state
+            = con.status
+          %td= con.image
+          %td= con.command
+          %td= con.ip
+          %td= con.port
+          %td= link_to con.name, node_container_path(node, c.id)
+
+
+

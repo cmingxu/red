@@ -56,6 +56,9 @@ $(document).ready(function() {
         case "select":
           select_prompt(parseParams(value));
           break;
+        case "choose_owner":
+          choose_owner_prompt(parseParams(value));
+          break;
         default:
           input_prompt();
           break;
@@ -79,6 +82,17 @@ $(document).ready(function() {
               $.rails.promptGetter = oldPromptGetter;
             }
           }
+        }
+      });
+    }
+
+    function choose_owner_prompt() {
+      var html = $("#owner_chooser").html();
+      var dialog = bootbox.dialog({
+        title: title,
+        message: html,
+        callback: function (res) {
+          alert(res);
         }
       });
     }
@@ -115,7 +129,7 @@ $(document).ready(function() {
       }, []);
     }
 
-  return false;
-}
+    return false;
+  }
 });
 

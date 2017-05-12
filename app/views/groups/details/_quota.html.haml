@@ -13,7 +13,7 @@
             = fa_icon :check
 
   .col-md-4.text-center
-    = bar_chart @data, { height: 150 }
+    = bar_chart sample_data, { height: 150 }
     %hr
     .row
       .col-sm-7
@@ -24,7 +24,7 @@
         = link_to fa_icon(:check), "#", class: 'btn btn-primary col-sm-8 pull-right'
 
   .col-md-4.text-center
-    = pie_chart @data, { height: 150 }
+    = pie_chart sample_data, { height: 150 }
     %hr
     .row
       .col-sm-7

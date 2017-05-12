@@ -1,1 +1,3 @@
-= render :partial => "show", locals: { node: @node }
+
+= render :partial => "containers/list", locals: { containers: @containers, node: @node || @nodes.first }
+= render :partial => "volumes/list", locals: { node: @node || @nodes.first, volumes: @volumes }

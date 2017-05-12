@@ -26,7 +26,7 @@ Faker::Config.locale = :en
 end
 
 
-u = User.new email: "admin@admin.com", role: "SITE_ADMIN"
+u = User.new email: "admin@admin.com", role: "SITE_ADMIN", icon: Rails.root.join("app/assets/images/user-profile-icon/male-1-icon.jpeg").open
 u.update_password "admin"
 u.save
 

@@ -49,6 +49,7 @@
       .row
         .col-lg-12
           = bootstrap_flash
+          = render :partial => "widgets/owner_chooser"
           -if need_breadcrumb
             = render :partial => "widgets/breadcrumb"
           = panel_item(t("nav.#{page_request_meta_info[:panel_header_and_icon][:text]}"),

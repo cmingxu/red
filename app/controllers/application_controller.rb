@@ -69,7 +69,7 @@ class ApplicationController < ActionController::Base
     }
   end
 
-  rescue_from ActiveRecord::RecordNotFound, with: :render_404
+  #rescue_from ActiveRecord::RecordNotFound, with: :render_404
   #rescue_from Exception, with: :render_404
 
   def render_404

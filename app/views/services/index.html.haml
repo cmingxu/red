@@ -1,6 +1,6 @@
 .action_bar
   .pull-left
-    = link_to fa_icon(:plus) + " " + t("service.new_service"), new_service_path, class: 'btn btn-primary'
+    = link_to fa_icon(:plus) + " " + t("service.new_service"), new_service_path, class: 'btn btn-primary', data: { prompt: { title: t("common.prompt"), name: "group_id", type: "choose_owner"} }
 
   .pull-right
     = link_to raw("<ins>我的服务 #{badge(10, :default)}</ins>") , new_service_path

@@ -1,11 +1,15 @@
-%h1 foobar
-= $zk.get path: '/mesos/json.info_0000000007'
-%hr
-= $zk.get_children path: '/mesos'
+.row.number
 
--x =  Mesos.new(leader: "http://114.55.130.152:5050").state
+.row.statistics
+  %h4 资源使用率
+  .col-md-6
+    =  line_chart sample_data, {height: 170}
+  .col-md-6
+    =  bar_chart sample_data, {height: 170}
 
-- x.each do |k,v|
-  %h1= k
-  = v
 
+.top_charts
+  .col-md-6.top_images
+    镜像TOP5
+  .col-md-6.top_audits
+    审计事件
