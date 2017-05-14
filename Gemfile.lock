@@ -10,6 +10,7 @@ GEM
   specs:
     aasm (4.12.0)
       concurrent-ruby (~> 1.0)
+    ace-rails-ap (4.1.2)
     actioncable (5.0.2)
       actionpack (= 5.0.2)
       nio4r (>= 1.2, < 3.0)
@@ -258,6 +259,7 @@ PLATFORMS
 
 DEPENDENCIES
   aasm
+  ace-rails-ap
   annotate
   awesome_print
   better_errors

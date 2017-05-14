@@ -11,7 +11,7 @@ class GroupsController < ApplicationController
   # GET /groups/1
   # GET /groups/1.json
   def show
-    @group = current_user.admin_groups.includes(:group_users).find params[:id]
+    @group = current_user.groups.includes(:group_users).find params[:id]
   end
 
   # GET /groups/new

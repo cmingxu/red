@@ -33,6 +33,8 @@ gem "font-awesome-rails"
 gem 'ransack'
 gem 'aasm'
 gem 'chartjs-ror'
+gem 'ace-rails-ap'
+
 
 
 gem 'rails-bootstrap-markdown'

@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       patch :update_quota_mem
       patch :update_quota_disk
     end
+
   end
 
   resources :users do
@@ -87,6 +88,9 @@ Rails.application.routes.draw do
       end
 
       resources :versions
+    end
+
+    resources :permissions do
     end
 
     member do

@@ -1,29 +1,22 @@
-%h1 Listing permissions
+.row
+  .col-md-4.col-lg-2
+    = render :partial => "services/service_left", locals: { service: @service }
+  .col-md-8.col-lg-10
+    = panel_table t("common.permissons"), :server do
+      %table.table
+        %tbody
+          - @permissions.each do |p|
+            %tr
+              %td
+                = image_tag p.accessor.icon.thumb.try(:url)
+                = p.accessor.display
+              %td= select_tag :access, options_for_select(Permission.accesses.keys, p.access)
+              %td= link_to fa_icon(:remove), service_permission_path(@service, p), method: :delete, data: { confirm: t("common.confirm") }
 
-%table
-  %thead
-    %tr
-      %th Resource type
-      %th Resource
-      %th Access
-      %th Accessor type
-      %th Accessor
-      %th
-      %th
-      %th
-
-  %tbody
-    - @permissions.each do |permission|
-      %tr
-        %td= permission.resource_type
-        %td= permission.resource_id
-        %td= permission.access
-        %td= permission.accessor_type
-        %td= permission.accessor_id
-        %td= link_to 'Show', permission
-        %td= link_to 'Edit', edit_permission_path(permission)
-        %td= link_to 'Destroy', permission, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Permission', new_permission_path
+    = form_tag "", class: 'form-inline' do
+      = text_field_tag :accessor, "", class: 'form-control typeahead', placeholder: 'eg. Group Name or User Name'
+      = hidden_field_tag :accessor_type, id: "accessor_type"
+      = hidden_field_tag :accessor_id, id: "accessor_id"
+      = hidden_field_tag :resource_type, @resource.class.to_s
+      = hidden_field_tag :resource_id, @resource.id
+      = submit_tag "Add Accessor", class: 'btn btn-primary'

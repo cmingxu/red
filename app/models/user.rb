@@ -53,6 +53,10 @@ class User < ApplicationRecord
     self.name || self.email
   end
 
+  def default_icon
+    :user
+  end
+
   def password_valid?(pass)
     self.encrypted_password == entrypt_password(pass)
   end

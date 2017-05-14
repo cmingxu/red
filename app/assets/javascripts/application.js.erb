@@ -17,6 +17,8 @@
 //= require bootstrap-markdown
 //= require peity/jquery.peity.min.js
 //= require Chart.min
+//= require ace-rails-ap
+//= require ./bootstrap3-typeahead.min
 
 
 //= require ./apps
@@ -78,11 +80,40 @@ registerVersionLabelEvent = function() {
   })
 }
 
+registerTypeAhead = function () {
+  $('.typeahead').typeahead({
+    source: [
+      {id: "someId1", name: "Display name 1"},
+      {id: "someId2", name: "Display name 2"}
+    ],
+    autoSelect: true
+  });
+}
+
+aceInit = function (id, data) {
+  try{
+    var editor = ace.edit(id);
+    editor.getSession().setMode("ace/mode/json");
+    editor.setTheme("ace/theme/twilight");
+    editor.getSession().setTabSize(2);
+    editor.getSession().setUseWrapMode(true);
+    var o = JSON.parse(data) // may throw if json is malformed
+    val = JSON.stringify(o, null, 4)
+    editor.setValue(val);
+    editor.resize();
+  }catch(e)
+  {
+  }
+}
+
 $(document).on('ready turbolinks:load', function() {
   initPeity();
   initTooltip();
   registerToggleableTableHandler();
   registerVersionLabelEvent();
+  registerTypeAhead();
+
+  aceInit('editor', $('#editor').val());
 });
 
 function readURL(input) {
@@ -108,6 +139,7 @@ var openFile = function(event) {
     var text = reader.result;
     var node = document.getElementById('compose_content');
     node.innerText = text;
+    aceInit('compose_content', text);
   };
   reader.readAsText(input.files[0]);
 };

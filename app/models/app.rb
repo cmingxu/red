@@ -189,7 +189,7 @@ class App < ApplicationRecord
   end
 
   def mem_used
-    self.running? ? self.instances * self.mem : 0
+    self.running? ? self.instances  * self.mem : 0
   end
 
   def disk_total

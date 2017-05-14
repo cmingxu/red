@@ -41,6 +41,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
+    @user.update_password @user.password
 
     if !@user.icon.present?
       random_icon = Dir.glob(Rails.root.join("app/assets/images/user-profile-icon/*")).shuffle.first

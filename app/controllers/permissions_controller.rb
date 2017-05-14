@@ -4,7 +4,9 @@ class PermissionsController < ApplicationController
   # GET /permissions
   # GET /permissions.json
   def index
-    @permissions = Permission.all
+    @services = current_user.readable_services
+    @resource = @service = current_user.readable_services.find params[:service_id]
+    @permissions = @service.permissions
   end
 
   # GET /permissions/1

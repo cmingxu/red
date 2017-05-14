@@ -3,9 +3,10 @@
     = link_to fa_icon(:plus) + " " + t("service.new_service"), new_service_path, class: 'btn btn-primary', data: { prompt: { title: t("common.prompt"), name: "owner", type: "choose_owner"} }, method: :get
 
   .pull-right
-    = link_to raw("<ins>我的服务 #{badge(10, :default)}</ins>") , new_service_path
-    = link_to raw("<ins>我的服务 #{badge(10, :default)}</ins>") , new_service_path
-    = link_to raw("<ins>我的服务 #{badge(10, :default)}</ins>") , new_service_path
+    = link_to raw("<ins>我的服务 #{badge(current_user.readable_services.length, :default)}</ins>") , services_path(owner_type: "User", owner_id: current_user.id)
+    - current_user.groups_without_default.each do |group|
+      = link_to raw("<ins>#{group.name} #{badge(group.readable_services.length, :default)}</ins>") , services_path(owner_type: "Group", owner_id: group.id)
+
   .clearfix
 
 = render :partial => "widgets/list_place_holder" if @services.empty?
@@ -19,8 +20,14 @@
           %span.text-bigger.text-primary.toggleable-table-handle
             = "#{fa_icon(:minus)} #{service.name}".html_safe
 
-          %span.text-muted.pull-right
-            = service.owner.display
+          %span.pull-right
+            %p.text-muted
+              = fa_icon service.owner.default_icon
+              = service.owner.display
+            %hr
+            %p.text-muted.text-right
+              = link_to fa_icon(:cogs), service_permissions_path(service)
+
         %td.text-center= t("common.versions")
         %td.text-center{style: "width: 400px;"}
           %p.text-bigger= service.apps.length
@@ -39,7 +46,7 @@
               = drop_down_menu_item fa_icon(:star) + " " + t("common.unfavorite"), favorite_service_path(service), method: :put, data: { confirm: t("common.unfavorite") }
             = drop_down_menu_item t("common.download_compose"), compose_chose_service_path(service)
             = drop_down_menu_item_sepeartor
-            = drop_down_menu_item fa_icon(:trash, class: 'text-danger') + " " + t("common.remove"), service_path(service), method: :delete
+            = drop_down_menu_item fa_icon(:trash, class: 'text-danger') + " " + t("common.remove"), service_path(service), method: :delete, data: { confirm: t("common.confirm") }
 
       - service.apps.each do |app|
         %tr.app_tr

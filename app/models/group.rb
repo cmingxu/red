@@ -51,6 +51,10 @@ class Group < ApplicationRecord
     self.name
   end
 
+  def default_icon
+    :users
+  end
+
   def is_default?
     Group.default_group == self
   end
