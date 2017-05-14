@@ -103,7 +103,7 @@ class AppsController < ApplicationController
 
   private
   def set_service
-    @service = current_user.services.find params[:service_id]
+    @service = current_user.readable_services.find params[:service_id]
   end
 
   def set_app

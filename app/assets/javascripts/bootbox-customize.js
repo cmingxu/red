@@ -93,12 +93,7 @@ $(document).ready(function() {
         message: html,
         callback: function (result) {
           if(result) {
-            finalResult = {};
-            finalResult[name] = result;
-
-            alert(JSON.stringify(result));
-
-            callback = $.rails.fire(element, 'prompt:complete', [finalResult]);
+            callback = $.rails.fire(element, 'prompt:complete', [result]);
             if(callback) {
               var oldPromptGetter = $.rails.promptGetter;
               $.rails.promptGetter = function() { return true; };

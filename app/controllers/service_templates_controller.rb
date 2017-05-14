@@ -4,7 +4,7 @@ class ServiceTemplatesController < ApplicationController
   # GET /service_templates
   # GET /service_templates.json
   def index
-    @service_templates = ServiceTemplate.order("updated_at DESC").page params[:page]
+    @service_templates = current_user.readable_service_templates.order("updated_at DESC").page params[:page]
   end
 
   # GET /service_templates/1
@@ -14,8 +14,9 @@ class ServiceTemplatesController < ApplicationController
 
   # GET /service_templates/new
   def new
+    @owner  = owner_from_request || current_user
     if params[:service_id]
-      @service = current_user.services.find_by(id: params[:service_id])
+      @service = current_user.accessible_services.find_by(id: params[:service_id])
       raw_config_params = @service.apps.reduce({}) {|p, a| p[a.id] = a.current_version.id; p}
       @service_template = ServiceTemplate.new(raw_config: @service.try(:raw_config, raw_config_params).try(:to_json) || "no content",
                                               name: @service.try(:name),
@@ -34,10 +35,16 @@ class ServiceTemplatesController < ApplicationController
   # POST /service_templates
   # POST /service_templates.json
   def create
-    @service_template = ServiceTemplate.new(service_template_params)
+    @owner  = owner_from_request || current_user
+    @service_template = @owner.service_templates.new(service_template_params)
 
     respond_to do |format|
       if @service_template.save
+        current_user.access_resource(@service_template, :admin)
+        if @owner.is_a?(Group)
+          @owner.access_resource(@service_template, :admin)
+        end
+
         format.html { redirect_to service_templates_path, notice: 'Service template was successfully created.' }
         format.json { render :edit, status: :created, location: @service_template }
       else

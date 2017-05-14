@@ -1,0 +1,29 @@
+%h1 Listing permissions
+
+%table
+  %thead
+    %tr
+      %th Resource type
+      %th Resource
+      %th Access
+      %th Accessor type
+      %th Accessor
+      %th
+      %th
+      %th
+
+  %tbody
+    - @permissions.each do |permission|
+      %tr
+        %td= permission.resource_type
+        %td= permission.resource_id
+        %td= permission.access
+        %td= permission.accessor_type
+        %td= permission.accessor_id
+        %td= link_to 'Show', permission
+        %td= link_to 'Edit', edit_permission_path(permission)
+        %td= link_to 'Destroy', permission, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Permission', new_permission_path

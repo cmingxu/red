@@ -2,11 +2,12 @@ class ServicesController < ApplicationController
   before_action :set_service, only: [:show, :update, :destroy, :compose_chose, :download_compose, :favorite]
 
   def index
-    @services = current_user.services.includes(:apps => [:versions]).page(params[:page])
+    @services = current_user.readable_services.includes(:apps => [:versions]).page(params[:page])
   end
 
   def new
-    @service = current_user.services.new
+    @owner  = owner_from_request || current_user
+    @service = @owner.services.new
     if params[:service_template_id] && (@temp = ServiceTemplate.find(params[:service_template_id]))
       begin
         hash = JSON.parse @temp.raw_config
@@ -36,7 +37,9 @@ class ServicesController < ApplicationController
   end
 
   def create
-    @service = current_user.services.new service_params
+    @owner  = owner_from_request || current_user
+    @service = @owner.services.new service_params
+
     if @service.compose_content.present?
       begin
         @service.from_raw_config JSON.parse(@service.compose_content)
@@ -47,6 +50,11 @@ class ServicesController < ApplicationController
 
     respond_to do |format|
       if @service.save
+        current_user.access_resource(@service, :admin)
+        if @owner.is_a?(Group)
+          @owner.access_resource(@service, :admin)
+        end
+
         flash.notice = t('notice.service_create_success')
         format.html { redirect_to services_path }
         format.json { head :ok }

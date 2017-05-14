@@ -11,6 +11,8 @@
 #
 
 class Group < ApplicationRecord
+  include Accessor
+
   belongs_to :owner, class_name: "User", foreign_key: :owner_id
   has_many :group_users, dependent: :destroy
   has_many :users, through: :group_users
@@ -43,6 +45,10 @@ class Group < ApplicationRecord
 
   def self.default_group
     Group.first
+  end
+
+  def display
+    self.name
   end
 
   def is_default?

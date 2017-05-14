@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Resource type:
+  = @permission.resource_type
+%p
+  %b Resource:
+  = @permission.resource_id
+%p
+  %b Access:
+  = @permission.access
+%p
+  %b Accessor type:
+  = @permission.accessor_type
+%p
+  %b Accessor:
+  = @permission.accessor_id
+
+= link_to 'Edit', edit_permission_path(@permission)
+\|
+= link_to 'Back', permissions_path

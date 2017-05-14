@@ -12,6 +12,8 @@
 #
 
 class Service < ApplicationRecord
+  include Accessible
+
   attr_accessor :compose, :compose_content
 
   belongs_to :user
@@ -38,6 +40,18 @@ class Service < ApplicationRecord
 
     service_config_hash['apps'] = config_apps
     service_config_hash
+  end
+
+  def owner
+    if self.user_id
+      return User.find self.user_id
+    end
+
+    if self.group_id
+      return Group.find self.group_id
+    end
+
+    return nil
   end
 
   def toggle_favorite!

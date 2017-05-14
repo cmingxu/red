@@ -739,7 +739,8 @@
 
     dialog.on("click", ".owner_item", function(e) {
       var res = {};
-      res[$(this).data('owner_type')] = $(this).data('owner_id') ;
+      res['owner_type'] = $(this).attr('data-owner-type');
+      res['owner_id'] = $(this).attr('data-owner-id') ;
 
       options.callback.call(this, res);
       processCallback(e, dialog, callbacks.onEscape);
@@ -773,7 +774,7 @@
     // methods, e.g. var d = bootbox.alert(); d.hide(); instead
     // of d.modal("hide");
 
-   /*
+    /*
     function BBDialog(elem) {
       this.elem = elem;
     }

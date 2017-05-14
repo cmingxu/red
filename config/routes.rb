@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :permissions
   get 'system/index', as: :system
 
   get 'session/new', as: :new_session

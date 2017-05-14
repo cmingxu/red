@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170509060923) do
+ActiveRecord::Schema.define(version: 20170514032832) do
 
   create_table "apps", force: :cascade do |t|
     t.string   "name"
@@ -85,6 +85,16 @@ ActiveRecord::Schema.define(version: 20170509060923) do
     t.string   "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "permissions", force: :cascade do |t|
+    t.string   "resource_type"
+    t.integer  "resource_id"
+    t.integer  "access"
+    t.string   "accessor_type"
+    t.integer  "accessor_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "registries", force: :cascade do |t|

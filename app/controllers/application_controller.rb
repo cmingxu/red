@@ -115,4 +115,8 @@ class ApplicationController < ActionController::Base
   end
 
 
+  def owner_from_request
+    params[:owner_type] == "group" ? current_user.groups.find(params[:owner_id]) : nil
+  end
+
 end

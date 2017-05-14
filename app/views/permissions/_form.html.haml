@@ -1,0 +1,12 @@
+= simple_form_for(@permission) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :resource_type
+    = f.input :resource_id
+    = f.input :access
+    = f.input :accessor_type
+    = f.input :accessor_id
+
+  .form-actions
+    = f.button :submit

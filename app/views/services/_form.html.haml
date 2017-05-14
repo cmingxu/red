@@ -3,6 +3,9 @@
   = form.input :desc, as: :text, label: t("service.desc"), hint: "eg. my first dataman app"
   = form.input :compose_content, as: :text, label: false, input_html: { id: "compose_content" }
 
+  = hidden_field_tag "owner_type", params[:owner_type]
+  = hidden_field_tag "owner_id", params[:owner_id]
+
   %label.btn.btn-default.btn-file
     = form.input :compose, as: :file, input_html: { style: "display: none;", onchange: 'openFile(event)' }, label: fa_icon(:plus) + " " + t('service.compose'), hint: "lanuch service with previously saved compose"
 

@@ -1,6 +1,6 @@
 .action_bar
   .pull-left
-    = link_to fa_icon(:plus) + " " + t("service.new_service"), new_service_path, class: 'btn btn-primary', data: { prompt: { title: t("common.prompt"), name: "group_id", type: "choose_owner"} }
+    = link_to fa_icon(:plus) + " " + t("service.new_service"), new_service_path, class: 'btn btn-primary', data: { prompt: { title: t("common.prompt"), name: "owner", type: "choose_owner"} }, method: :get
 
   .pull-right
     = link_to raw("<ins>我的服务 #{badge(10, :default)}</ins>") , new_service_path
@@ -18,6 +18,9 @@
         %td{colspan: 2}
           %span.text-bigger.text-primary.toggleable-table-handle
             = "#{fa_icon(:minus)} #{service.name}".html_safe
+
+          %span.text-muted.pull-right
+            = service.owner.display
         %td.text-center= t("common.versions")
         %td.text-center{style: "width: 400px;"}
           %p.text-bigger= service.apps.length
@@ -29,7 +32,7 @@
             = drop_down_menu_item t("nav.open_in_new_window"), service_path(service), target: '_blank'
             = drop_down_menu_item t("service.new_app"), new_service_app_path(service), data: { turbolinks: false }
             = drop_down_menu_item_sepeartor
-            = drop_down_menu_item fa_icon(:copy) + " " + t("common.save_as_template"), new_service_template_path(service_id: service)
+            = drop_down_menu_item fa_icon(:copy) + " " + t("common.save_as_template"), new_service_template_path(service_id: service), data: { prompt: { title: t("common.prompt"), name: "owner", type: "choose_owner"} }, method: :get
             - if service.favorite?
               = drop_down_menu_item fa_icon(:star) + " " + t("common.favorite"), favorite_service_path(service), method: :put, data: { confirm: t("common.favorite") }
             - else
