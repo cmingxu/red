@@ -48,6 +48,7 @@ class ServiceTemplatesController < ApplicationController
         format.html { redirect_to service_templates_path, notice: 'Service template was successfully created.' }
         format.json { render :edit, status: :created, location: @service_template }
       else
+        ap @service_template.errors
         format.html { render :new }
         format.json { render json: @service_template.errors, status: :unprocessable_entity }
       end

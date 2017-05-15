@@ -18,6 +18,7 @@
 //= require peity/jquery.peity.min.js
 //= require Chart.min
 //= require ace-rails-ap
+//= require js-cookie
 //= require ./bootstrap3-typeahead.min
 
 
@@ -63,12 +64,22 @@ registerToggleableTableHandler = function () {
     var li = $(this).find("i");
     if(li.hasClass("fa-plus")) {
       li.removeClass('fa-plus').addClass('fa-minus');
-      $(this).parents("table").find(".app_tr").show();
+      var table = $(this).parents("table");
+      table.find(".app_tr").show();
+      Cookies.set("active_table", table.attr('id'))
+
     }else{
       li.removeClass('fa-minus').addClass('fa-plus');
       $(this).parents("table").find(".app_tr").hide();
     }
-  })
+  });
+
+  var active_table = $("#" + Cookies.get("active_table")) || $("table.service_table:first");
+  if(active_table.length == 0) {
+    active_table = $("table.service_table:first");
+  }
+  active_table.find('.toggleable-table-handle:first').trigger("click");
+
 }
 
 registerVersionLabelEvent = function() {
@@ -80,13 +91,15 @@ registerVersionLabelEvent = function() {
   })
 }
 
-registerTypeAhead = function () {
-  $('.typeahead').typeahead({
-    source: [
-      {id: "someId1", name: "Display name 1"},
-      {id: "someId2", name: "Display name 2"}
-    ],
-    autoSelect: true
+registerListOwnerTypeAhead = function () {
+  $.get("/search/list_owner.json", function (data) {
+    $('.typeahead').typeahead({
+      source: data,
+      afterSelect: function (item) {
+        $("#accessor_type").val(item.type);
+        $("#accessor_id").val(item.id);
+      }
+    });
   });
 }
 
@@ -101,6 +114,13 @@ aceInit = function (id, data) {
     val = JSON.stringify(o, null, 4)
     editor.setValue(val);
     editor.resize();
+
+      <%#var $editor = $("#" + id);%>
+      <%#$editor.closest('form').submit(function() {%>
+        <%#var code = editor.getValue();%>
+      <%#$editor.prev('input[type=hidden]').val(code);%>
+      <%#});%>
+
   }catch(e)
   {
   }
@@ -111,9 +131,9 @@ $(document).on('ready turbolinks:load', function() {
   initTooltip();
   registerToggleableTableHandler();
   registerVersionLabelEvent();
-  registerTypeAhead();
+  registerListOwnerTypeAhead();
 
-  aceInit('editor', $('#editor').val());
+    <%#aceInit('editor', $('#editor').val());%>
 });
 
 function readURL(input) {
@@ -139,7 +159,7 @@ var openFile = function(event) {
     var text = reader.result;
     var node = document.getElementById('compose_content');
     node.innerText = text;
-    aceInit('compose_content', text);
+      <%#aceInit('compose_content', text);%>
   };
   reader.readAsText(input.files[0]);
 };

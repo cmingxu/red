@@ -42,6 +42,7 @@ zh-CN:
     new_user: "新增用户"
     update_group: "更新组信息"
     quota: "配额"
+    create_accessor: "授权"
   nav:
     host: "主机"
     infra: "基础"

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'search/owner_search'
+  get 'search/list_owner'
+
   resources :permissions
   get 'system/index', as: :system
 

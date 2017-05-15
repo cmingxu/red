@@ -4,12 +4,13 @@
 = panel_table t("common.service"), :cogs do
   %table.table.table-bordered
     %thead
-      %td= t("user.name")
-      %td= t("user.email")
+      %td= t("service.name")
+      %td= t("service.desc")
       %td= t("common.application")
 
     - group.services.each do |service|
       %tr
-        %td= service.name
-        %td= service.desc
+        %td= link_to service.name, service_path(service)
+        %td= service.desc.truncate(40)
+        %td= service.apps.length
 

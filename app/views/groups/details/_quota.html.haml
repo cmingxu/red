@@ -1,6 +1,6 @@
 = panel_item t("common.group_quota"), :user do
-  .col-md-4.text-center
-    = line_chart @data, { height: 150}
+  .col-md-4.text-center.border-right
+    = pie_chart pie_chart_helper(["CPU Used", "CPU Left"], "CPU Usage",group.cpu_used, group.settings(:quota).cpu.to_i - group.cpu_used), { height: 150 }
     %hr
     .row
       = form_tag update_quota_cpu_group_path(group), method: :patch do
@@ -9,28 +9,32 @@
             = text_field_tag "value", group.settings(:quota).cpu, class: 'form-control', type: :number
             .input-group-addon CORE
         .col-sm-4.col-sm-offset-1.text-right
-          = button_to "#", class: 'btn btn-primary col-sm-8 pull-right', type: :submit, data: { confirm: t("common.confirm") } do
+          = button_to "#", class: 'btn btn-default col-sm-8 pull-right', type: :submit, data: { confirm: t("common.confirm") } do
             = fa_icon :check
 
   .col-md-4.text-center
-    = bar_chart sample_data, { height: 150 }
+    = pie_chart pie_chart_helper(["Mem Used", "Mem Left"], "Mem Usage", group.mem_used, group.settings(:quota).mem.to_i - group.mem_used), { height: 150 }
     %hr
     .row
-      .col-sm-7
-        .input-group
-          = text_field_tag "mem", group.settings(:quota).mem, class: 'form-control', type: :number
-          .input-group-addon M
-      .col-sm-4.col-sm-offset-1.text-right
-        = link_to fa_icon(:check), "#", class: 'btn btn-primary col-sm-8 pull-right'
+      = form_tag update_quota_mem_group_path(group), method: :patch do
+        .col-sm-7
+          .input-group
+            = text_field_tag "value", group.settings(:quota).mem, class: 'form-control', type: :number
+            .input-group-addon M
+        .col-sm-4.col-sm-offset-1.text-right
+          = button_to "#", class: 'btn btn-default col-sm-8 pull-right', type: :submit, data: { confirm: t("common.confirm") } do
+            = fa_icon :check
 
-  .col-md-4.text-center
-    = pie_chart sample_data, { height: 150 }
+  .col-md-4.text-center.border-left
+    = pie_chart pie_chart_helper(["Disk Used", "Disk Left"], "Disk Usage", group.disk_used, group.settings(:quota).disk.to_i - group.disk_used), { height: 150 }
     %hr
     .row
-      .col-sm-7
-        .input-group
-          = text_field_tag "disk", group.settings(:quota).disk, class: 'form-control', type: :number
-          .input-group-addon G
-      .col-sm-4.col-sm-offset-1.text-right
-        = link_to fa_icon(:check), "#", class: 'btn btn-primary col-sm-8 pull-right'
+      = form_tag update_quota_disk_group_path(group), method: :patch do
+        .col-sm-7
+          .input-group
+            = text_field_tag "value", group.settings(:quota).disk, class: 'form-control', type: :number
+            .input-group-addon G
+        .col-sm-4.col-sm-offset-1.text-right
+          = button_to "#", class: 'btn btn-default col-sm-8 pull-right', type: :submit, data: { confirm: t("common.confirm") } do
+            = fa_icon :check
 

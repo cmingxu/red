@@ -6,6 +6,7 @@
       %table.table
         %tbody
           - @permissions.each do |p|
+            - next if !p.persisted?
             %tr
               %td
                 = image_tag p.accessor.icon.thumb.try(:url)
@@ -13,10 +14,11 @@
               %td= select_tag :access, options_for_select(Permission.accesses.keys, p.access)
               %td= link_to fa_icon(:remove), service_permission_path(@service, p), method: :delete, data: { confirm: t("common.confirm") }
 
-    = form_tag "", class: 'form-inline' do
+    = simple_form_for @permission, url: service_permissions_path(@service), class: 'form-inline' do |form|
       = text_field_tag :accessor, "", class: 'form-control typeahead', placeholder: 'eg. Group Name or User Name'
-      = hidden_field_tag :accessor_type, id: "accessor_type"
-      = hidden_field_tag :accessor_id, id: "accessor_id"
-      = hidden_field_tag :resource_type, @resource.class.to_s
-      = hidden_field_tag :resource_id, @resource.id
-      = submit_tag "Add Accessor", class: 'btn btn-primary'
+      = form.input :accessor_type, as: :hidden, input_html: { id: "accessor_type" }
+      = form.input :accessor_id, as: :hidden, input_html: { id: "accessor_id" }
+      = form.input :resource_type, as: :hidden
+      = form.input :resource_id, as: :hidden
+
+      = form.submit t("common.create_accessor"), class: 'btn btn-primary'

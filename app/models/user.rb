@@ -27,7 +27,8 @@ class User < ApplicationRecord
   has_many :groups, through: :group_users
   has_many :groups_without_default, proc { where("`groups`.id != #{Group.default_group.id}") }, through: :group_users, source: :group
   has_many :admin_groups, proc { where("`group_users`.role < 2 ") }, through: :group_users, source: :group
-  has_many :services
+  has_many :services, dependent: :destroy
+  has_many :service_templates, dependent: :destroy
 
   has_settings do |s|
     # mem 10G, disk 1024G

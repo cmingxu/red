@@ -8,7 +8,9 @@
         .caption
           %h4= temp.name
           %small.text-muted
-            = l(temp.updated_at)
+            = temp.updated_at.to_s(:short)
+            = fa_icon('dot-circle-o')
+            = temp.owner.display
           %p= temp.desc.truncate(50, seperator: "...")
 
         .service_template_action

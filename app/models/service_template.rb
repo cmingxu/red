@@ -26,4 +26,16 @@ class ServiceTemplate < ApplicationRecord
 
   belongs_to :user
   belongs_to :group
+
+  def owner
+    if self.user_id
+      return User.find self.user_id
+    end
+
+    if self.group_id
+      return Group.find self.group_id
+    end
+
+    return nil
+  end
 end

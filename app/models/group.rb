@@ -18,7 +18,8 @@ class Group < ApplicationRecord
   has_many :users, through: :group_users
   has_many :admin_users, proc { where("`group_users`.role = #{GroupUser.roles[:admin]}") }, through: :group_users, source: :user
   has_many :site_admins, proc { where("`group_users`.role = #{GroupUser.roles[:site_admin]}") }, through: :group_users, source: :user
-  has_many :services
+  has_many :services, dependent: :destroy
+  has_many :service_templates, dependent: :destroy
 
   validates :name, presence: true
   validates :name, uniqueness: true
@@ -59,7 +60,7 @@ class Group < ApplicationRecord
     Group.default_group == self
   end
 
-  %w(cpu_total cpu_used mem_total mem_used disk_total disk_used).each do |m|
+  %w(cpu_used mem_used disk_used).each do |m|
     define_method m do
       self.conditional_services.reduce(0){|sum, s| sum += s.send(m); sum }
     end

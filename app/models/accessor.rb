@@ -3,7 +3,7 @@ module Accessor
 
   included do |accessor|
     %w(service service_template).each do |resource|
-      accessor.has_many :permissions, as: :accessor
+      accessor.has_many :permissions, as: :accessor, dependent: :destroy
       accessor.has_many "accessible_#{resource.pluralize}".to_sym, through: :permissions, source: :resource, source_type: resource.classify
       accessor.has_many "adminable_#{resource.pluralize}".to_sym, -> { where("`permissions`.access=#{Permission.accesses[:admin]}") }, through: :permissions, source: :resource, source_type: resource.classify
       accessor.has_many "writable_#{resource.pluralize}".to_sym, -> { where("`permissions`.access<=#{Permission.accesses[:write]}") }, through: :permissions, source: :resource, source_type: resource.classify

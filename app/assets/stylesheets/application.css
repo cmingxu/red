@@ -151,3 +151,16 @@
 .ace_editor {
     height: 500px;
 }
+
+
+.border-right {
+    border-right: 1px solid #ddd;
+}
+.borders {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    margin: -1px;
+}
+.border-left {
+    border-left: 1px solid #ddd;
+}

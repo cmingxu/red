@@ -1,5 +1,7 @@
 class PermissionsController < ApplicationController
   before_action :set_permission, only: [:show, :edit, :update, :destroy]
+  before_action :set_resource
+  before_action :set_accessor, only: [:create]
 
   # GET /permissions
   # GET /permissions.json
@@ -7,6 +9,7 @@ class PermissionsController < ApplicationController
     @services = current_user.readable_services
     @resource = @service = current_user.readable_services.find params[:service_id]
     @permissions = @service.permissions
+    @permission = @service.permissions.build
   end
 
   # GET /permissions/1
@@ -26,11 +29,12 @@ class PermissionsController < ApplicationController
   # POST /permissions
   # POST /permissions.json
   def create
-    @permission = Permission.new(permission_params)
+    @permission = @accessor.permissions.new(permission_params)
 
     respond_to do |format|
       if @permission.save
-        format.html { redirect_to @permission, notice: 'Permission was successfully created.' }
+        @accessor.access_resource(@permission.resource, :read)
+        format.html { redirect_to service_permissions_path(@permission.resource), notice: 'Permission was successfully created.' }
         format.json { render :show, status: :created, location: @permission }
       else
         format.html { render :new }
@@ -58,12 +62,22 @@ class PermissionsController < ApplicationController
   def destroy
     @permission.destroy
     respond_to do |format|
-      format.html { redirect_to permissions_url, notice: 'Permission was successfully destroyed.' }
+      format.html { redirect_to service_permissions_path(@service), notice: 'Permission was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
+    def set_accessor
+      accessor_type = (params[:accessor_type] || permission_params[:accessor_type]).classify.constantize
+      accessor_id = (params[:accessor_id] || permission_params[:accessor_id])
+      @accessor = accessor_type.find(accessor_id)
+    end
+
+    def set_resource
+      @service = current_user.readable_services.find params[:service_id]
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_permission
       @permission = Permission.find(params[:id])
