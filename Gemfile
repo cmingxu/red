@@ -34,6 +34,8 @@ gem 'ransack'
 gem 'aasm'
 gem 'chartjs-ror'
 gem 'ace-rails-ap'
+gem 'active_record_union'
+
 
 
 

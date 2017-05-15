@@ -6,7 +6,7 @@ module Accessor
       accessor.has_many :permissions, as: :accessor, dependent: :destroy
       accessor.has_many "accessible_#{resource.pluralize}".to_sym, through: :permissions, source: :resource, source_type: resource.classify
       accessor.has_many "adminable_#{resource.pluralize}".to_sym, -> { where("`permissions`.access=#{Permission.accesses[:admin]}") }, through: :permissions, source: :resource, source_type: resource.classify
-      accessor.has_many "writable_#{resource.pluralize}".to_sym, -> { where("`permissions`.access<=#{Permission.accesses[:write]}") }, through: :permissions, source: :resource, source_type: resource.classify
+      accessor.has_many "writeable_#{resource.pluralize}".to_sym, -> { where("`permissions`.access<=#{Permission.accesses[:write]}") }, through: :permissions, source: :resource, source_type: resource.classify
       accessor.has_many "readable_#{resource.pluralize}".to_sym, -> { where("`permissions`.access<=#{Permission.accesses[:read]}") }, through: :permissions, source: :resource, source_type: resource.classify
     end
 
@@ -15,16 +15,19 @@ module Accessor
       obj.send("#{access.to_sym}!")
     end
 
+    # will be implemented in AccessorExtend for user
     def can_read?(resource)
       scope_name = resource.class.to_s.downcase.pluralize
       self.send("readable_#{scope_name}").where("`permissions`.resource_type = ? AND `permissions`.resource_id = ?",  resource.class.to_s, resource.id).exists?
     end
 
+    # will be implemented in AccessorExtend for user
     def can_write?(resource)
       scope_name = resource.class.to_s.downcase.pluralize
       self.send("writable_#{scope_name}").where("`permissions`.resource_type = ? AND `permissions`.resource_id = ?",  resource.class.to_s, resource.id).exists?
     end
 
+    # will be implemented in AccessorExtend for user
     def can_admin?(resource)
       scope_name = resource.class.to_s.downcase.pluralize
       self.send("adminable_#{scope_name}").where("`permissions`.resource_type = ? AND `permissions`.resource_id = ?",  resource.class.to_s, resource.id).exists?

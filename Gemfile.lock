@@ -34,6 +34,8 @@ GEM
       erubis (~> 2.7.0)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
+    active_record_union (1.2.0)
+      activerecord (>= 4.0)
     activejob (5.0.2)
       activesupport (= 5.0.2)
       globalid (>= 0.3.6)
@@ -260,6 +262,7 @@ PLATFORMS
 DEPENDENCIES
   aasm
   ace-rails-ap
+  active_record_union
   annotate
   awesome_print
   better_errors

@@ -2,7 +2,7 @@ class ServicesController < ApplicationController
   before_action :set_service, only: [:show, :update, :destroy, :compose_chose, :download_compose, :favorite]
 
   def index
-    @services = current_user.readable_services.includes(:apps => [:versions]).page(params[:page])
+    @services = current_user.union_readable_services.includes(:apps => [:versions])
   end
 
   def new

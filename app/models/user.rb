@@ -19,6 +19,7 @@ require 'digest'
 
 class User < ApplicationRecord
   include Accessor
+  include AccessorExtend
 
   ROLE = %w(SITE_ADMIN ADMIN USER)
   attr_accessor :password, :group_admin_accessor, :site_admin_accessor
@@ -29,6 +30,7 @@ class User < ApplicationRecord
   has_many :admin_groups, proc { where("`group_users`.role < 2 ") }, through: :group_users, source: :group
   has_many :services, dependent: :destroy
   has_many :service_templates, dependent: :destroy
+
 
   has_settings do |s|
     # mem 10G, disk 1024G

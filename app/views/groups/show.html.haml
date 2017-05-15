@@ -9,7 +9,7 @@
   .col-md-8.col-lg-10#group_detail
     = render :partial => "groups/details/quota", locals: { group: @group }
     = render :partial => "groups/details/users", locals: { group: @group }
-    = render :partial => "groups/details/services", locals: { group: @groups.first }
+    = render :partial => "groups/details/services", locals: { group: @group }
     = render :partial => "groups/details/edit_form", locals: { group: @group }
     = render :partial => "groups/details/detail", locals: { group: @group }
 

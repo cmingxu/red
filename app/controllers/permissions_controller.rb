@@ -7,7 +7,7 @@ class PermissionsController < ApplicationController
   # GET /permissions.json
   def index
     @services = current_user.readable_services
-    @resource = @service = current_user.readable_services.find params[:service_id]
+    @resource = @service = current_user.union_readable_services.find params[:service_id]
     @permissions = @service.permissions
     @permission = @service.permissions.build
   end
@@ -75,7 +75,7 @@ class PermissionsController < ApplicationController
     end
 
     def set_resource
-      @service = current_user.readable_services.find params[:service_id]
+      @service = current_user.union_readable_services.find params[:service_id]
     end
 
     # Use callbacks to share common setup or constraints between actions.
