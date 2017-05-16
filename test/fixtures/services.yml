@@ -5,6 +5,7 @@
 #  id         :integer          not null, primary key
 #  name       :string
 #  desc       :string
+#  favorite   :boolean
 #  group_id   :integer
 #  user_id    :integer
 #  created_at :datetime         not null

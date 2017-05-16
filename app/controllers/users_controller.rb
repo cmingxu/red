@@ -27,6 +27,7 @@ class UsersController < ApplicationController
       @user = User.find params[:id]
       @user.settings(:quota).send("#{m}=", params[:value])
       if @user.save
+        audit(@user, "update", @user.name + " update #{m} to #{params[:value]}" )
         flash.notice = t("common.user_quota_update_success")
       else
         flash.alert = t("common.user_quota_update_fail")
@@ -57,6 +58,8 @@ class UsersController < ApplicationController
 
         Group.default_group.add_user!(@user, @user.site_admin_accessor == "true" ? :site_admin : :user)
 
+        audit(@user, "create", @user.name)
+
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
         format.js { render :js => 'window.location.reload();' }
@@ -73,6 +76,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
+        audit(@user, "update", @user.name)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -85,6 +89,7 @@ class UsersController < ApplicationController
   def leave
     #TODO permission check
 
+    audit(@user, "destroy", @user.name + " " + @group.name)
     @user.leave_group! @group
     redirect_to group_path(@group)
   end
@@ -96,6 +101,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       can_remove_user = !(@user.site_admin? && (Group.default_group.site_admins.length == 1))
       if  can_remove_user || @user.destroy
+        audit(@user, "destroy", @user.name)
         format.html { redirect_to groups_path, notice: 'User was successfully destroyed.' }
         format.json { head :no_content }
       else

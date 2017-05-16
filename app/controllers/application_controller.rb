@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :login_required
   before_action :set_locale
 
-  helper_method :current_user, :desired_language, :page_request_meta_info
+  helper_method :current_user, :desired_language, :page_request_meta_info, :graphna_path
 
 
   def logged_in?
@@ -114,9 +114,21 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
   def owner_from_request
     params[:owner_type] == "group" ? current_user.groups.find(params[:owner_id]) : nil
+  end
+
+  def audit(entity, action, change = "")
+    a = Audit.new
+    a.entity = entity
+    a.user = current_user
+    a.change = change
+    a.action = action
+    a.save
+  end
+
+  def graphna_path
+    "http://114.55.130.152:3000/dashboard-solo/db/"
   end
 
 end

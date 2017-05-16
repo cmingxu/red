@@ -6,6 +6,7 @@
 #  name       :string
 #  owner_id   :integer
 #  desc       :text
+#  icon       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

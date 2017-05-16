@@ -1,5 +1,5 @@
-= render :partial => "widgets/list_place_holder" if @nodes.empty?
+- @state["slaves"].each do |slave|
+  = render :partial => "mesos/slave", locals: { slave: slave } if !Node.exists?(hostname: slave['hostname'])
 
 
-= render :partial => "containers/list", locals: { containers: @containers, node: @node || @nodes.first }
-= render :partial => "volumes/list", locals: { node: @node || @nodes.first, volumes: @volumes }
+

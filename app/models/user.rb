@@ -31,6 +31,8 @@ class User < ApplicationRecord
   has_many :services, dependent: :destroy
   has_many :service_templates, dependent: :destroy
 
+  has_many :audits, dependent: :destroy
+
 
   has_settings do |s|
     # mem 10G, disk 1024G

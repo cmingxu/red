@@ -20,6 +20,9 @@ class ServicesController < ApplicationController
   end
 
   def show
+    if params[:app_id]
+      @app = @service.apps.find params[:app_id]
+    end
   end
 
   def compose_chose
@@ -27,11 +30,13 @@ class ServicesController < ApplicationController
   end
 
   def download_compose
+    audit(@service, "download", @service.name)
     send_data @service.raw_config(params[:selected_versions].first.to_hash).to_json, :type => 'application/json; charset=UTF-8;',
       :disposition => "attachment; filename=#{@service.name.gsub(/\s+/, '-')}_compose.json"
   end
 
   def favorite
+    audit(@service, "favorite", @service.name)
     @service.toggle_favorite!
     redirect_to :back
   end
@@ -50,6 +55,7 @@ class ServicesController < ApplicationController
 
     respond_to do |format|
       if @service.save
+        audit(@service, "create", @service.name)
         current_user.access_resource(@service, :admin)
         if @owner.is_a?(Group)
           @owner.access_resource(@service, :admin)
@@ -67,6 +73,7 @@ class ServicesController < ApplicationController
   end
 
   def destroy
+    audit(@service, "destroy", @service.name)
     @service.destroy
     respond_to do |format|
       format.html { redirect_to services_url, notice: 'Service template was successfully destroyed.' }

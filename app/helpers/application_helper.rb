@@ -1,6 +1,6 @@
 module ApplicationHelper
-  def panel_table(title, icon, anchor = "", &block)
-    content_tag(:div, class: 'panel panel-default') do
+  def panel_table(title, icon, anchor = "", style = 'default', &block)
+    content_tag(:div, class: "panel panel-#{style}") do
       content_tag(:div, class: 'panel-heading') do
          content_tag(:span, title, name: anchor) end +
 
@@ -8,8 +8,8 @@ module ApplicationHelper
     end
   end
 
-  def panel_item(title, icon, anchor = "", &block)
-    content_tag(:div, class: 'panel panel-default') do
+  def panel_item(title, icon, anchor = "", style = 'default', &block)
+    content_tag(:div, class: "panel panel-#{style}") do
       content_tag(:div, class: 'panel-heading') do
          content_tag(:span, title, name: anchor) end +
 
@@ -95,5 +95,13 @@ module ApplicationHelper
           data: [used, total]
         }]
     }
+
   end
+
+  def graphna_panel name, panelId, interval = 5.minutes, width = 450, height = 100, refresh = 5
+    path =  graphna_path + "#{name}?refresh=#{refresh}s&orgId=1&panelId=#{panelId}&from=#{(Time.now - interval).to_i * 1000}&to=#{Time.now.to_i * 1000}&theme=light"
+
+      "<iframe src='#{path}' width='#{width}' height='#{height}' frameborder='0'> </iframe>".html_safe
+    end
+
 end

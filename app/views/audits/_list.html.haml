@@ -1,0 +1,20 @@
+%table.table.table-bordered
+  %thead
+    %th= t("common.user")
+    %th= t("audit.entity")
+    %th= t("audit.action")
+    %th= t("common.desc")
+    %th= t("common.created_at")
+
+  %tbody
+    - audits.each do |audit|
+      %tr
+        %td= audit.user.display
+        %td
+          = audit.entity_type
+          = audit.entity_id
+        %td= audit.action
+
+        %td= audit.change
+        %td= audit.created_at.to_s(:short)
+

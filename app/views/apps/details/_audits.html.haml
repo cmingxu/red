@@ -1,19 +1,2 @@
 = panel_table(t("common.audits_on_app"), "info") do
-  %table{class: table_classes}
-    %thead
-      %td= t("common.when")
-      %td= t("common.who")
-      %td= t("common.did_what")
-      %td= t("common.path")
-      %td
-
-    %tbody
-      - audits.each do |audit|
-        %tr
-          %td= audit.when
-          %td= audit.when
-          %td= audit.when
-          %td= audit.when
-
-
-
+  = render :partial => "audits/list", locals: { audits: audits }

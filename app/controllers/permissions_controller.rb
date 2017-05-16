@@ -34,6 +34,7 @@ class PermissionsController < ApplicationController
     respond_to do |format|
       if @permission.save
         @accessor.access_resource(@permission.resource, :read)
+        audit(@permission, "grant", " for #{@permission.resource.class.to_s} #{@permission.resource.id}" )
         format.html { redirect_to service_permissions_path(@permission.resource), notice: 'Permission was successfully created.' }
         format.json { render :show, status: :created, location: @permission }
       else
@@ -60,6 +61,7 @@ class PermissionsController < ApplicationController
   # DELETE /permissions/1
   # DELETE /permissions/1.json
   def destroy
+    audit(@permission, "destroy", " for #{@permission.resource.class.to_s} #{@permission.resource.id}" )
     @permission.destroy
     respond_to do |format|
       format.html { redirect_to service_permissions_path(@service), notice: 'Permission was successfully destroyed.' }

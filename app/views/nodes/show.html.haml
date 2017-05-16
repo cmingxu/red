@@ -1,3 +1,5 @@
-
+= render :partial => "nodes/chart"
 = render :partial => "containers/list", locals: { containers: @containers, node: @node || @nodes.first }
 = render :partial => "volumes/list", locals: { node: @node || @nodes.first, volumes: @volumes }
+
+= link_to t("common.delete"), node_path(@node), data: { confirm: t("common.confirm") }, method: :delete, class: 'btn btn-danger btn-lg col-md-12'

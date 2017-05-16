@@ -3,8 +3,7 @@
 # Table name: audits
 #
 #  id           :integer          not null, primary key
-#  owner_type   :string
-#  owner_id     :integer
+#  user_id      :integer
 #  when         :datetime
 #  entity_type  :string
 #  entity_id    :integer
@@ -15,6 +14,6 @@
 #
 
 class Audit < ApplicationRecord
-  belongs_to :owner, polymorphic: true
+  belongs_to :user
   belongs_to :entity, polymorphic: true
 end

@@ -30,6 +30,7 @@ class AppsController < ApplicationController
     @app.raw_config = (JSON.parse(request.raw_post)["app"] || {}).to_json
     respond_to do |format|
       if @app.update app_params
+       audit(@app, "update", @app.name)
         format.html { redirect_to services_path }
         format.json { json_success(201) }
         format.js { head 201 }
@@ -46,6 +47,7 @@ class AppsController < ApplicationController
     @app.raw_config = (JSON.parse(request.raw_post)["app"] || {}).to_json
     respond_to do |format|
       if @app.save
+       audit(@app, "create", @app.name)
         format.html { redirect_to services_path }
         format.json { json_success(201) }
       else
@@ -56,6 +58,7 @@ class AppsController < ApplicationController
   end
 
   def destroy
+    audit(@app, "destroy", @app.name)
     @app.destroy
     respond_to do |format|
       format.html { redirect_to services_url, notice: 'Service template was successfully destroyed.' }
@@ -64,6 +67,7 @@ class AppsController < ApplicationController
   end
 
   def run
+    audit(@app, "run", @app.name)
     @app.run
     @app.scale params[:start_size].to_i
     respond_to do |format|
@@ -73,27 +77,33 @@ class AppsController < ApplicationController
   end
 
   def start
+    audit(@app, "start", @app.name)
     @app.start
   end
 
   def restart
+    audit(@app, "restart", @app.name)
     @app.start
   end
 
   def stop
+    audit(@app, "stop", @app.name)
     @app.stop
   end
 
   def suspend
+    audit(@app, "suspend", @app.name)
     @app.stop
   end
 
   def change
+    audit(@app, "change", @app.name + " to version " + params[:version_id])
     @version = @app.versions.find params[:version_id]
     @app.change @version
   end
 
   def scale
+    audit(@app, "change", @app.name + " scale " + params[:scale_size])
     @app.scale params[:scale_size].to_i
   end
 

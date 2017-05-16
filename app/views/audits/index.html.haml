@@ -1,2 +1,8 @@
-%h1 Audits#index
-%p Find me in app/views/audits/index.html.haml
+.row
+  .col-md-4.col-lg-2
+    = render :partial => "settings/setting_left"
+  .col-md-8.col-lg-10
+    = panel_table t("common.audits"), :server do
+      = render :partial => "audits/list", locals: { audits: @audits }
+
+      = paginate @audits

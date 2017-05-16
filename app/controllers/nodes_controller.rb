@@ -5,6 +5,7 @@ class NodesController < ApplicationController
   # GET /nodes
   # GET /nodes.json
   def index
+    @state = mesos_state
     @nodes = Node.page params[:page]
     @containers = Docker::Container.all(all: true)
     @volumes = Docker::Volume.all(all: true)
@@ -80,4 +81,10 @@ class NodesController < ApplicationController
     def load_nodes
       @nodes = Node.all
     end
+
+  def mesos_state
+    Rails.cache.fetch("mesos-object", expires_in: 60.second) do
+      Mesos.new(leader: "http://114.55.130.152:5050").state
+    end
+  end
 end

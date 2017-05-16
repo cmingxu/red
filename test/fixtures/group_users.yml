@@ -5,7 +5,7 @@
 #  id         :integer          not null, primary key
 #  group_id   :integer
 #  user_id    :integer
-#  role       :string
+#  role       :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

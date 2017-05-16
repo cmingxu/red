@@ -12,8 +12,8 @@ Rails.application.routes.draw do
 
   get 'settings/account', as: :setting
   get 'settings/group', as: :setting_group
-  get 'settings/autit', as: :setting_audit
 
+  resources :audits, only: [:index]
   resources :versions
   resources :registries
   resources :images

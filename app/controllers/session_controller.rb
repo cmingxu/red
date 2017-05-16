@@ -18,8 +18,9 @@ class SessionController < ApplicationController
     @login_user = User.find_by(email: @user.email)
 
     if @login_user.password_valid?(@user.password)
+      audit(current_user, "login")
       session[:user_id] = @login_user.id
-      redirect_to session[:redirect_to] || root_path, notice: t("notice.login_success")
+      redirect_to root_path, notice: t("notice.login_success")
     else
       flash.alert = t("alert.password_invalid")
       render :new
@@ -27,6 +28,7 @@ class SessionController < ApplicationController
   end
 
   def destroy
+    audit(current_user, "logout")
     session[:user_id] = nil
     redirect_to new_session_path
   end

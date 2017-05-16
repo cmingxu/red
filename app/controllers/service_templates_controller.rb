@@ -40,9 +40,13 @@ class ServiceTemplatesController < ApplicationController
 
     respond_to do |format|
       if @service_template.save
+        audit(@service_template, "create", @service_template.name)
         current_user.access_resource(@service_template, :admin)
+        audit(@service_template, "grant", @service_template.name + " to user #{current_user.display} admin permission")
+
         if @owner.is_a?(Group)
           @owner.access_resource(@service_template, :admin)
+          audit(@service_template, "grant", @owner.name + " to user #{@owenr.display} admin permission")
         end
 
         format.html { redirect_to service_templates_path, notice: 'Service template was successfully created.' }
@@ -72,6 +76,7 @@ class ServiceTemplatesController < ApplicationController
   # DELETE /service_templates/1
   # DELETE /service_templates/1.json
   def destroy
+    audit(@service_template, "destroy", @service_template.name)
     @service_template.destroy
     respond_to do |format|
       format.html { redirect_to service_templates_url, notice: 'Service template was successfully destroyed.' }

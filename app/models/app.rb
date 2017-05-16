@@ -34,10 +34,12 @@
 #
 
 class App < ApplicationRecord
+  PROTECTED_ATTRIBUTES = %w(id created_at updated_at raw_config service_id current_version_id backend)
+
   class Task; attr_accessor :id, :agentId, :ip, :created_at end
 
+  include Auditable
   include AASM
-  PROTECTED_ATTRIBUTES = %w(id created_at updated_at raw_config service_id current_version_id backend)
 
   attr_accessor :labels
   attr_accessor :version_name
@@ -55,7 +57,6 @@ class App < ApplicationRecord
   belongs_to :group
   has_many :versions, dependent: :destroy
   belongs_to :current_version, class_name: 'Version', foreign_key: :current_version_id
-  has_many :audits, as: :entity, class_name: 'Audit'
 
   validates :name, presence: true
   validates :name, uniqueness: { scope: :service_id }
@@ -176,16 +177,19 @@ class App < ApplicationRecord
   end
 
   def cpu_used
-    self.running? ? self.instances * self.cpu : 0
+    0
+    #self.running? ? self.instances * self.cpu : 0
   end
 
 
   def mem_used
-    self.running? ? self.instances  * self.mem : 0
+    #self.running? ? self.instances  * self.mem : 0
+    0
   end
 
   def disk_used
-    self.running? ? self.instances * self.dise : 0
+    #self.running? ? self.instances * self.dise : 0
+    0
   end
 
 

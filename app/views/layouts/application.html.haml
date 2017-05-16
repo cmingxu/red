@@ -41,6 +41,7 @@
             %li{class: navbar_nav_active_class(:system) }= link_to t('nav.system'), system_path
             = drop_down fa_icon(:user) + " #{current_user.display}" do
               = menu_item t('nav.setting'), setting_path
+              = menu_item t('nav.audits'), audits_path if current_user.site_admin?
               = menu_item t('nav.logout'), logout_path, method: :delete
               = drop_down_divider
               = menu_item fa_icon(:language) + " " + desired_language, toggle_locale_path, remote: true, method: :put

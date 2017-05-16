@@ -9,7 +9,7 @@
             - next if !p.persisted?
             %tr
               %td
-                = image_tag p.accessor.icon.thumb.try(:url)
+                = image_tag p.accessor.try(:icon).try(:thumb).try(:url) || "placeholder.png", height: 35
                 = p.accessor.display
               %td= select_tag :access, options_for_select(Permission.accesses.keys, p.access)
               %td= link_to fa_icon(:remove), service_permission_path(@service, p), method: :delete, data: { confirm: t("common.confirm") }
