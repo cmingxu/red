@@ -86,8 +86,8 @@ class ApplicationController < ActionController::Base
       :nodes
     when :service_templates
       :service_templates
-    when :registries
-      :registries
+    when :namespaces
+      :namespaces
     when :users, :groups
       :groups
     when :system, :mesos
@@ -107,8 +107,8 @@ class ApplicationController < ActionController::Base
       {text: :nodes, icon: :cogs }
     when :service_templates
       {text: :service_templates, icon: :cogs }
-    when :registries
-      {text: :registries, icon: :cogs }
+    when :namespaces
+      {text: :namespaces, icon: :cogs }
     else
       {text: :services, icon: :cogs }
     end

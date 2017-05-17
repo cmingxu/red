@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :namespaces
   get 'search/owner_search'
   get 'search/list_owner'
 
@@ -13,9 +14,10 @@ Rails.application.routes.draw do
   get 'settings/account', as: :setting
   get 'settings/group', as: :setting_group
 
+  post 'registry/notifications', as: :notifications
+
   resources :audits, only: [:index]
   resources :versions
-  resources :registries
   resources :images
   resources :service_templates
 

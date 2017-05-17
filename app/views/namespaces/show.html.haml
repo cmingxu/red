@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @namespace.name
+%p
+  %b User:
+  = @namespace.user_id
+%p
+  %b Group:
+  = @namespace.group_id
+
+= link_to 'Edit', edit_namespace_path(@namespace)
+\|
+= link_to 'Back', namespaces_path

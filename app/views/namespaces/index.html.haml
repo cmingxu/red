@@ -1,0 +1,25 @@
+%h1 Listing namespaces
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th User
+      %th Group
+      %th
+      %th
+      %th
+
+  %tbody
+    - @namespaces.each do |namespace|
+      %tr
+        %td= namespace.name
+        %td= namespace.user_id
+        %td= namespace.group_id
+        %td= link_to 'Show', namespace
+        %td= link_to 'Edit', edit_namespace_path(namespace)
+        %td= link_to 'Destroy', namespace, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Namespace', new_namespace_path

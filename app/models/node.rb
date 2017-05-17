@@ -10,7 +10,7 @@
 #
 
 $GRAPHNA_PANEL = {
-  docker_container_cpu_load: { id: 4, interval: 5.minutes },
+  docker_container_cpu_load: { id: 4, interval: 5.minutes, query: "count_scalar(container_memory_usage_bytes{{app-name}}&start=1494927915&end=1494928815&s" },
   docker_container_cpu_core: { id: 7, interval: 5.minutes },
   docker_container_mem_load: { id: 5, interval: 5.minutes },
   docker_container_mem_used: { id: 2, interval: 5.minutes },

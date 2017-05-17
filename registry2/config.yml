@@ -1,0 +1,51 @@
+version: 0.1
+log:
+  accesslog:
+    disabled: false
+  level: debug
+  formatter: text
+  fields:
+    service: registry
+    environment: staging
+loglevel: debug # deprecated: use "log"
+storage:
+  filesystem:
+    rootdirectory: /var/lib/registry
+    maxthreads: 100
+  delete:
+    enabled: false
+  redirect:
+    disable: false
+  maintenance:
+    uploadpurging:
+      enabled: true
+      age: 168h
+      interval: 24h
+      dryrun: false
+    readonly:
+      enabled: false
+http:
+  addr: 0.0.0.0:5000
+  host: https://myregistry.com:5000
+  secret: asecretforlocaldevelopment
+  relativeurls: false
+  debug:
+    addr: localhost:5001
+  headers:
+    X-Content-Type-Options: [nosniff]
+  http2:
+    disabled: false
+notifications:
+  endpoints:
+    - name: alistener
+      disabled: false
+      url: http://094d373a.ngrok.io/registry/notifications
+      timeout: 5000ms
+      threshold: 5
+      backoff: 1s
+      ignoredmediatypes:
+        - application/octet-stream
+
+htpasswd:
+  realm: basic-realm
+  path: /auth/htpasswd

@@ -1,10 +1,10 @@
-= simple_form_for(@registry) do |f|
+= simple_form_for(@namespace) do |f|
   = f.error_notification
 
   .form-inputs
     = f.input :name
-    = f.input :hash
-    = f.input :size
+    = f.input :user_id
+    = f.input :group_id
 
   .form-actions
     = f.button :submit

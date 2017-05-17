@@ -52,7 +52,7 @@ zh-CN:
     services: "服务"
     system: "系统"
     service_templates: "应用模板"
-    registries: "镜像管理"
+    namespaces: "镜像管理"
     setting: "设置"
     logout: "退出登录"
     groups: "账号&配额"
