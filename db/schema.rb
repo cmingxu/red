@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170517030339) do
+ActiveRecord::Schema.define(version: 20170517074238) do
 
   create_table "apps", force: :cascade do |t|
     t.string   "name"
@@ -111,6 +111,28 @@ ActiveRecord::Schema.define(version: 20170517030339) do
     t.integer  "size"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "repo_tags", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "repository_id"
+    t.integer  "namespace_id"
+    t.integer  "blob_size"
+    t.string   "owner_name"
+    t.string   "digest"
+    t.string   "url"
+    t.string   "source"
+    t.integer  "user_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "repositories", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "namespace_id"
+    t.string   "latest_tag_name"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "service_templates", force: :cascade do |t|

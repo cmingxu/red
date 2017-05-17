@@ -4,8 +4,11 @@ class RegistryController < ApplicationController
 
 
   def notifications
-    ap JSON.parse(request.raw_post)
-    ap params[:events]
+    events_body = JSON.parse(request.raw_post)
+    ap events_body
+
+    Namespace.from_notifications(events_body['events']) if events_body['events'].present?
     head :ok
   end
+
 end

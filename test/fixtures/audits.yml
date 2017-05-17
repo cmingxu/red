@@ -6,9 +6,10 @@
 #  user_id      :integer
 #  when         :datetime
 #  entity_type  :string
-#  entity_id    :integer
 #  enetity_desc :string
+#  action       :string
 #  change       :text
+#  entity_id    :integer
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #

@@ -45,6 +45,7 @@ zh-CN:
     create_accessor: "授权"
     audits: "审计"
     add_new_host: "发现新节点"
+    new_namespace: "新增项目"
   nav:
     host: "主机"
     infra: "基础"
@@ -164,6 +165,13 @@ zh-CN:
   service_template:
     readme: "模板详情"
     raw_config: "模板描述JSON"
+
+  namespace:
+    name: "项目名称"
+    owner: "项目所有人"
+    repository_count: "镜像数量"
+    pull_count: "下载次数"
+
 
 
 

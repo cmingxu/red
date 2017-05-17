@@ -1,0 +1,7 @@
+.list-namespace.namespace-list
+  - namespaces.each do |namespace|
+    %a.list-group-item.group_item{href:  namespace_path(namespace)}
+      %h4.list-group-item-heading
+        = namespace.name
+        .list-group-item-text
+          = namespace.owner.display

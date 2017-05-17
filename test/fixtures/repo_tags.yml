@@ -1,0 +1,38 @@
+# == Schema Information
+#
+# Table name: repo_tags
+#
+#  id            :integer          not null, primary key
+#  name          :string
+#  repository_id :integer
+#  namespace_id  :integer
+#  blob_size     :integer
+#  owner_name    :string
+#  digest        :string
+#  url           :string
+#  source        :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  repository_id: 1
+  namespace_id: 1
+  blob_size: 1
+  owner_name: MyString
+  digest: MyString
+  url: MyString
+  source: MyString
+
+two:
+  name: MyString
+  repository_id: 1
+  namespace_id: 1
+  blob_size: 1
+  owner_name: MyString
+  digest: MyString
+  url: MyString
+  source: MyString

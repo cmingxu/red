@@ -16,7 +16,7 @@
 
 class ServiceTemplate < ApplicationRecord
   include Accessible
-  
+
   mount_uploader :icon, ServiceTemplateIconUploader
 
   validates :name, presence: true
