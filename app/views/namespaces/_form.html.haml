@@ -1,10 +1,9 @@
-= simple_form_for(@namespace) do |f|
-  = f.error_notification
+= simple_form_for(@namespace) do |form|
+  = form.input :name, label: t("namespace.name"), hint: "eg. library"
 
-  .form-inputs
-    = f.input :name
-    = f.input :user_id
-    = f.input :group_id
+  = hidden_field_tag "owner_type", params[:owner_type]
+  = hidden_field_tag "owner_id", params[:owner_id]
 
-  .form-actions
-    = f.button :submit
+  .actions
+    = form.submit t("common.submit"), class: btn_classes
+    = link_to t("common.cancel"), namespaces_path

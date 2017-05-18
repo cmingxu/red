@@ -4,18 +4,19 @@ class NamespacesController < ApplicationController
   # GET /namespaces
   # GET /namespaces.json
   def index
-    #@namespaces = current_user.readable_namespaces.order("updated_at DESC").page params[:page]
-    @namespaces = Namespace.order("updated_at DESC").page params[:page]
+    @namespaces = current_user.readable_namespaces.order("updated_at DESC").page params[:page]
   end
 
   # GET /namespaces/1
   # GET /namespaces/1.json
   def show
+    @namespaces = current_user.readable_namespaces.order("updated_at DESC").page params[:page]
   end
 
   # GET /namespaces/new
   def new
-    @namespace = Namespace.new
+    @owner  = owner_from_request || current_user
+    @namespace = @owner.namespaces.new
   end
 
   # GET /namespaces/1/edit
@@ -25,11 +26,19 @@ class NamespacesController < ApplicationController
   # POST /namespaces
   # POST /namespaces.json
   def create
-    @namespace = Namespace.new(namespace_params)
+
+    @owner  = owner_from_request || current_user
+    @namespace = @owner.namespaces.new(namespace_params)
 
     respond_to do |format|
       if @namespace.save
-        format.html { redirect_to @namespace, notice: 'Namespace was successfully created.' }
+        audit(@namespace, "create", @namespace.name)
+        current_user.access_resource(@namespace, :admin)
+        if @owner.is_a?(Group)
+          @owner.access_resource(@namespace, :admin)
+        end
+
+        format.html { redirect_to namespaces_path, notice: 'Namespace was successfully created.' }
         format.json { render :show, status: :created, location: @namespace }
       else
         format.html { render :new }
@@ -55,6 +64,7 @@ class NamespacesController < ApplicationController
   # DELETE /namespaces/1
   # DELETE /namespaces/1.json
   def destroy
+    audit(@service, "destroy", @service.name)
     @namespace.destroy
     respond_to do |format|
       format.html { redirect_to namespaces_url, notice: 'Namespace was successfully destroyed.' }

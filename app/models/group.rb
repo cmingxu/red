@@ -20,6 +20,7 @@ class Group < ApplicationRecord
   has_many :admin_users, proc { where("`group_users`.role = #{GroupUser.roles[:admin]}") }, through: :group_users, source: :user
   has_many :site_admins, proc { where("`group_users`.role = #{GroupUser.roles[:site_admin]}") }, through: :group_users, source: :user
   has_many :services, dependent: :destroy
+  has_many :namespaces, dependent: :destroy
   has_many :service_templates, dependent: :destroy
 
   validates :name, presence: true

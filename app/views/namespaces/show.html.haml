@@ -1,15 +1,20 @@
-%p#notice= notice
+.row
+  .col-md-12.text-right
+    = link_to fa_icon(:plus) + " " + t('common.new_namespace'), new_namespace_path, class: 'btn btn-primary', data: { prompt: { title: t("common.prompt"), name: "owner", type: "choose_owner"} }, method: :get
 
-%p
-  %b Name:
-  = @namespace.name
-%p
-  %b User:
-  = @namespace.user_id
-%p
-  %b Group:
-  = @namespace.group_id
+.row
+  .col-md-4.col-lg-2
+    = render :partial => "namespaces/namespace_left", locals: { namespaces: @namespaces }
+  .col-md-8.col-lg-10
+    %table.table
+      %thead
+        %th= t("namespaces.repository_name")
+        %th= t("namespaces.repo_tags")
 
-= link_to 'Edit', edit_namespace_path(@namespace)
-\|
-= link_to 'Back', namespaces_path
+      %tbody
+        - @namespace.repositories.each do |repository|
+          %tr
+            %td= repository.name
+            %td
+              - repository.repo_tags.each do |repo_tag|
+                = link_to badge(rand(100), :success) + repo_tag.name, class: 'btn btn-default'

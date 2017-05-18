@@ -30,6 +30,7 @@ class User < ApplicationRecord
   has_many :admin_groups, proc { where("`group_users`.role < 2 ") }, through: :group_users, source: :group
   has_many :services, dependent: :destroy
   has_many :service_templates, dependent: :destroy
+  has_many :namespaces, dependent: :destroy
 
   has_many :audits, dependent: :destroy
 

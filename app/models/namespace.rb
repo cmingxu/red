@@ -33,7 +33,9 @@ class Namespace < ApplicationRecord
 
     namespace_name, image_name = event['target']['repository'].split("/")
 
-    namespace = self.find_or_create_by(name: namespace_name)
+    namespace = self.find_by(name: namespace_name)
+    return if namespace.nil?
+
     repository = namespace.repositories.find_or_create_by(name: event['target']['repository'])
     repository.latest_tag_name = event['target']['tag']
     repository.save
