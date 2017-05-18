@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include Pundit
+
   attr_accessor :page_request_meta_info
   before_action :set_page_request_meta_info
 
@@ -129,6 +131,14 @@ class ApplicationController < ActionController::Base
 
   def graphna_path
     "http://114.55.130.152:3000/dashboard-solo/db/"
+  end
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  private
+  def user_not_authorized
+    flash[:alert] = "You are not authorized to perform this action."
+    redirect_to(request.referrer || root_path)
   end
 
 end

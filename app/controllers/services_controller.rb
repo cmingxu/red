@@ -2,12 +2,17 @@ class ServicesController < ApplicationController
   before_action :set_service, only: [:show, :update, :destroy, :compose_chose, :download_compose, :favorite]
 
   def index
-    @services = current_user.union_readable_services.includes(:apps => [:versions])
+    @services = policy_scope(Service).includes(:apps => [:versions])
   end
 
   def new
     @owner  = owner_from_request || current_user
     @service = @owner.services.new
+
+    if !ServicePolicy.new(current_user,  @service, @owner).create?
+      raise Pundit::NotAuthorizedError, "not allowed to create? this #{@service.inspect}"
+    end
+
     if params[:service_template_id] && (@temp = ServiceTemplate.find(params[:service_template_id]))
       begin
         hash = JSON.parse @temp.raw_config
@@ -20,6 +25,8 @@ class ServicesController < ApplicationController
   end
 
   def show
+    authorize @service
+
     if params[:app_id]
       @app = @service.apps.find params[:app_id]
     end
@@ -36,6 +43,7 @@ class ServicesController < ApplicationController
   end
 
   def favorite
+    authorize @service, :update?
     audit(@service, "favorite", @service.name)
     @service.toggle_favorite!
     redirect_to :back
@@ -44,6 +52,10 @@ class ServicesController < ApplicationController
   def create
     @owner  = owner_from_request || current_user
     @service = @owner.services.new service_params
+
+    if !ServicePolicy.new(current_user,  @service, @owner).create?
+      raise Pundit::NotAuthorizedError, "not allowed to create? this #{@service.inspect}"
+    end
 
     if @service.compose_content.present?
       begin
@@ -73,6 +85,8 @@ class ServicesController < ApplicationController
   end
 
   def destroy
+    authorize @service
+
     audit(@service, "destroy", @service.name)
     @service.destroy
     respond_to do |format|
@@ -83,7 +97,7 @@ class ServicesController < ApplicationController
 
   private
   def set_service
-    @service = Service.find(params[:id])
+    @service = policy_scope(Service).find(params[:id])
   end
 
   def service_params

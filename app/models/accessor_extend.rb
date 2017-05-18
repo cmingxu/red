@@ -15,7 +15,7 @@ module AccessorExtend
   #end
 
   included do |accessor|
-    %w(service service_template).each do |resource|
+    %w(service service_template namespace).each do |resource|
       %w(admin read write).each do |access|
         define_method "union_#{access}able_#{resource.pluralize}" do |*groups|
           groups = groups.flatten
@@ -23,7 +23,7 @@ module AccessorExtend
         end
 
         define_method "#{access}able_groups_#{resource.pluralize}_scope" do |group|
-          Service.all.joins("inner join permissions on `permissions`.resource_id = `#{resource.pluralize}`.id").
+          resource.classify.constantize.all.joins("inner join permissions on `permissions`.resource_id = `#{resource.pluralize}`.id").
             where("`permissions`.accessor_type = ?", 'Group').
             where(" `permissions`.resource_type = ?","#{resource.classify}").
             where("`permissions`.accessor_id in (?)", group.map(&:id)).

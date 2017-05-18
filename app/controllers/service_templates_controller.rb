@@ -4,17 +4,19 @@ class ServiceTemplatesController < ApplicationController
   # GET /service_templates
   # GET /service_templates.json
   def index
-    @service_templates = current_user.readable_service_templates.order("updated_at DESC").page params[:page]
+    @service_templates = policy_scope(ServiceTemplate).order("updated_at DESC").page params[:page]
   end
 
   # GET /service_templates/1
   # GET /service_templates/1.json
   def show
+    authorize @service_template
   end
 
   # GET /service_templates/new
   def new
     @owner  = owner_from_request || current_user
+
     if params[:service_id]
       @service = current_user.accessible_services.find_by(id: params[:service_id])
       raw_config_params = @service.apps.reduce({}) {|p, a| p[a.id] = a.current_version.id; p}
@@ -26,6 +28,11 @@ class ServiceTemplatesController < ApplicationController
       @service_template = ServiceTemplate.new(name: "New Service Template",
                                               readme: "Readme")
     end
+
+    if !ServiceTemplatePolicy.new(current_user,  @service_template, @owner).create?
+      raise Pundit::NotAuthorizedError, "not allowed to create? this #{@service_template.inspect}"
+    end
+
   end
 
   # GET /service_templates/1/edit
@@ -37,6 +44,10 @@ class ServiceTemplatesController < ApplicationController
   def create
     @owner  = owner_from_request || current_user
     @service_template = @owner.service_templates.new(service_template_params)
+
+    if !ServiceTemplatePolicy.new(current_user,  @service_template, @owner).create?
+      raise Pundit::NotAuthorizedError, "not allowed to create? this #{@service_template.inspect}"
+    end
 
     respond_to do |format|
       if @service_template.save
@@ -52,7 +63,6 @@ class ServiceTemplatesController < ApplicationController
         format.html { redirect_to service_templates_path, notice: 'Service template was successfully created.' }
         format.json { render :edit, status: :created, location: @service_template }
       else
-        ap @service_template.errors
         format.html { render :new }
         format.json { render json: @service_template.errors, status: :unprocessable_entity }
       end
@@ -62,6 +72,8 @@ class ServiceTemplatesController < ApplicationController
   # PATCH/PUT /service_templates/1
   # PATCH/PUT /service_templates/1.json
   def update
+    authorize @service_template
+
     respond_to do |format|
       if @service_template.update(service_template_params)
         format.html { redirect_to edit_service_template_path(@service_template), notice: 'Service template was successfully updated.' }
@@ -77,6 +89,8 @@ class ServiceTemplatesController < ApplicationController
   # DELETE /service_templates/1.json
   def destroy
     audit(@service_template, "destroy", @service_template.name)
+    authorize @service_template
+
     @service_template.destroy
     respond_to do |format|
       format.html { redirect_to service_templates_url, notice: 'Service template was successfully destroyed.' }
@@ -87,7 +101,7 @@ class ServiceTemplatesController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_service_template
-    @service_template = ServiceTemplate.find(params[:id])
+    @service_template = policy_scope(ServiceTemplate).find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
