@@ -8,7 +8,6 @@
 /.bundle
 
 # Ignore the default SQLite database.
-/db/*.sqlite3
 /db/*.sqlite3-journal
 
 # Ignore all logfiles and tempfiles.
@@ -19,4 +18,3 @@
 
 # Ignore Byebug command history file.
 .byebug_history
-public/uploads
