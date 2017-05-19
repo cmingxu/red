@@ -1,6 +1,6 @@
 .list-group.group-list
   - service.apps.each do |app|
-    %a.list-group-item.group_item{href: detail_service_app_path(service, app)}
+    %a.list-group-item.group_item{href: detail_service_app_path(service, app), class: app == current_app ? 'active' : ''}
       %h4.list-group-item-heading= app.name
       .list-group-item-text
         %span.text-muted CPU

@@ -22,6 +22,7 @@ zh-CN:
     image: "镜像"
     containers: "容器"
     edit: "编辑"
+    detail: "详情"
     version: "版本"
     remove_group: "删除此组"
     detail_info: "详情"
@@ -46,14 +47,21 @@ zh-CN:
     audits: "审计"
     add_new_host: "发现新节点"
     new_namespace: "新增项目"
+    upload_icon: "上传图片"
+    create_accessor: "增加协作者"
+    audits_on_app: "审计"
+    desc: "详情"
+    no_record_found: "没找到记录"
+    tasks_and_containers: "任务&容器"
   nav:
     host: "主机"
+    nodes: "主机"
     infra: "基础"
     account: "账号"
     services: "服务"
     system: "系统"
-    service_templates: "应用模板"
-    namespaces: "镜像管理"
+    service_templates: "应用商店"
+    namespaces: "镜像&CD"
     setting: "设置"
     logout: "退出登录"
     groups: "账号&配额"
@@ -165,12 +173,18 @@ zh-CN:
   service_template:
     readme: "模板详情"
     raw_config: "模板描述JSON"
+    name_hint: "eg. ELK应用组"
+    desc_hint: "eg. ELK应用组包含ElasticSearch, Logstash, Kibana等组件"
 
   namespace:
     name: "项目名称"
     owner: "项目所有人"
     repository_count: "镜像数量"
     pull_count: "下载次数"
+
+  audit:
+    entity: "对象"
+    action: "操作"
 
 
 

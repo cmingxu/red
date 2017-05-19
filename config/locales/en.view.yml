@@ -16,6 +16,7 @@ en:
     download_compose: "Download Spec File"
     edit: "Edit"
     version: "Ver."
+    create_accessor: "Create Collabrator"
 
   nav:
     host: "Host"

@@ -17,7 +17,7 @@
           %td= (version.raw_config || "").truncate(100)
           %td= l(version.created_at)
           %td
-            = link_to fa_icon(:copy) + t("common.copy"), edit_service_app_path(service, app, version_id: version.id), class: 'btn btn-sm btn-primary'
+            = link_to fa_icon(:copy) + t("common.copy"), edit_service_app_path(service, app, version_id: version.id), class: 'btn btn-sm btn-primary', data: { turbolinks: false }
             = link_to fa_icon(:trash) + t("common.remove"), service_app_version_path(service, app, version), class: "btn btn-sm btn-primary #{version == app.current_version ? 'disabled' : ''}", data: { confirm: t("common.remove_confirm") }, method: :delete
 
 

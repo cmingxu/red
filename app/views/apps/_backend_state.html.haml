@@ -17,12 +17,12 @@
 
 
   %br
-    = link_to t("app.scale"), scale_service_app_path(service, app), method: :put, remote: :true, data: { prompt: {"title": t("common.scale_app"), "name": "scale_size", "value": 1, "type": "input"} }, class: "#{current_user.can_write?(service) ? '' : 'disabled'}"
-    = link_to t("app.stop"), stop_service_app_path(service, app), method: :put, remote: :true, data: { confirm: t("common.delete_confirm")}, class: "#{current_user.can_write?(service) ? '' : 'disabled'}"
-    = link_to t("app.restart"), restart_service_app_path(service, app), method: :put, remote: :true, data: { confirm: t("common.restart_confirm") }, class: "#{current_user.can_write?(service) ? '' : 'disabled'}"
+    = link_to t("app.scale"), scale_service_app_path(service, app), method: :put, remote: :true, data: { prompt: {"title": t("common.scale_app"), "name": "scale_size", "value": 1, "type": "input"} }, class: "#{policy(service).update? ? '' : 'disabled'}"
+    = link_to t("app.stop"), stop_service_app_path(service, app), method: :put, remote: :true, data: { confirm: t("common.delete_confirm")}, class: "#{policy(service).update? ? '' : 'disabled'}"
+    = link_to t("app.restart"), restart_service_app_path(service, app), method: :put, remote: :true, data: { confirm: t("common.restart_confirm") }, class: "#{policy(service).update? ? '' : 'disabled'}"
     - if app.versions.length > 1
-      = link_to t("app.update_version"), change_service_app_path(service, app), method: :put, remote: true, data: { prompt: {title: t("common.update_version"), name: "version_id", value: (app.versions - [app.current_version]).reduce({}){|r, v| r[v.name] = v.id; r}.to_query, type: "select" } }, class: "#{current_user.can_write?(service) ? '' : 'disabled'}"
+      = link_to t("app.update_version"), change_service_app_path(service, app), method: :put, remote: true, data: { prompt: {title: t("common.update_version"), name: "version_id", value: (app.versions - [app.current_version]).reduce({}){|r, v| r[v.name] = v.id; r}.to_query, type: "select" } }, class: "#{policy(service).update? ? '' : 'disabled'}"
 
 - else
-  = link_to fa_icon(:play, class: "fa-2x"), run_service_app_path(service, app), method: :put, remote: true, data: { prompt: {"title": t("common.start_app"), "name": "start_size", "value": 1, "type": "input"} }, class: "#{current_user.can_write?(service) ? '' : 'disabled'}"
+  = link_to fa_icon(:play, class: "fa-2x"), run_service_app_path(service, app), method: :put, remote: true, data: { prompt: {"title": t("common.start_app"), "name": "start_size", "value": 1, "type": "input"} }, class: "#{policy(service).update? ? '' : 'disabled'}"
 

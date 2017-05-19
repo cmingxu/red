@@ -36,7 +36,7 @@ module ApplicationHelper
     content_tag(:div, class: 'dropdown') do
         content_tag(:button,  "Actions", class: "btn btn-#{style} dropdown-toggle", 'data-toggle': 'dropdown', type: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false', id: id) do
           raw(
-            display + "&nbsp;&nbsp;" + 
+            display + "&nbsp;&nbsp;" +
             content_tag(:span, "", class: 'caret')
           )
         end +
@@ -61,7 +61,7 @@ module ApplicationHelper
   end
 
   def need_breadcrumb
-    %w(:apps_controller, :versions_controller).include?(controller_name.to_sym)  ||
+    %w(:apps, :versions).include?(controller_name.to_sym)  ||
       (controller_name.to_sym == :services && action_name.to_sym == :show)
   end
 

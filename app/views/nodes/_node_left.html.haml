@@ -1,6 +1,6 @@
 .list-group.group-list
   - nodes.each do |node|
-    %a.list-group-item.group_item{href: node_path(node)}
+    %a.list-group-item.group_item.active{href: node_path(node)}
       %h4.list-group-item-heading= node.hostname
       .list-group-item-text
         %span.text-muted= node.state

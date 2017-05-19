@@ -20,6 +20,7 @@
 //= require ace-rails-ap
 //= require js-cookie
 //= require ./bootstrap3-typeahead.min
+//= require bootstrap-select
 
 
 //= require ./apps
@@ -131,6 +132,9 @@ $(document).on('ready turbolinks:load', function() {
   registerToggleableTableHandler();
   registerVersionLabelEvent();
   registerListOwnerTypeAhead();
+
+  $('select').selectpicker();
+  
 
     <%#aceInit('editor', $('#editor').val());%>
 });

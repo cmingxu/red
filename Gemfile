@@ -22,6 +22,8 @@ gem 'coffee-rails', '~> 4.2'
 gem 'therubyracer', platforms: :ruby
 gem "less-rails"
 gem "twitter-bootstrap-rails"
+gem 'bootstrap-select-rails'
+
 gem 'annotate'
 gem 'kaminari'
 gem 'carrierwave', '~> 1.0'

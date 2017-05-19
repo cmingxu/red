@@ -1,7 +1,7 @@
 .row
+  - app = (@app || @service.apps.first)
   .col-md-4.col-lg-2
-    = render :partial => "services/service_left", locals: { service: @service }
+    = render :partial => "services/service_left", locals: { service: @service, current_app: app }
   .col-md-8.col-lg-10#app_detail
-    - app = (@app || @service.apps.first)
     - if app.present?
       = render :partial => "apps/detail", locals: {service: @service, app: app  }

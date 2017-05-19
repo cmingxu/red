@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   before_action :login_required
   before_action :set_locale
 
-  helper_method :current_user, :desired_language, :page_request_meta_info, :graphna_path
+  helper_method :current_user, :desired_language, :page_request_meta_info, :graphna_path, :breadcrumb_list
 
 
   def logged_in?
@@ -111,6 +111,10 @@ class ApplicationController < ActionController::Base
       {text: :service_templates, icon: :cogs }
     when :namespaces
       {text: :namespaces, icon: :cogs }
+    when :groups, :users
+      {text: :account, icon: :users }
+    when :system, :mesos, :marathon, :swan
+      {text: :system, icon: :cogs }
     else
       {text: :services, icon: :cogs }
     end
@@ -131,6 +135,10 @@ class ApplicationController < ActionController::Base
 
   def graphna_path
     "http://114.55.130.152:3000/dashboard-solo/db/"
+  end
+
+  def breadcrumb_list
+    @breadcrumb_list || [OpenStruct.new(name: "首页", path: root_path)]
   end
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
