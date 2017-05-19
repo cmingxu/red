@@ -1,1 +1,3 @@
 = render 'form'
+
+= render :partial => "permissions/list", locals: { permissions: @service_template.permissions, permission: @service_template.permissions.new, resource: @service_template }

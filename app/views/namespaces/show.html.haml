@@ -6,6 +6,8 @@
   .col-md-4.col-lg-2
     = render :partial => "namespaces/namespace_left", locals: { namespaces: @namespaces }
   .col-md-8.col-lg-10
+    = render :partial => "permissions/list", locals: { permissions: @namespace.permissions, permission: @namespace.permissions.new, resource: @namespace }
+
     %table.table
       %thead
         %th= t("namespaces.repository_name")

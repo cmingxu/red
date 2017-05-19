@@ -14,7 +14,7 @@ class ServicePolicy < ApplicationPolicy
   end
 
   def update?
-    user.adminable_services.include? record
+    user.writeable_services.include? record
   end
 
   def create?

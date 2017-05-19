@@ -13,7 +13,6 @@
 
 - @services.each do |service|
   .service_section
-    -#.text-danger.pull-right.like_icon= fa_icon(:flag, class: "fa-2x")
     %table.table.service_table.table-bordered.table-hover.toggleable-table{class: "service_table service_#{service.id}", id: "service_#{service.id}"}
       %tr.service_tr
         %td{colspan: 2}
@@ -24,9 +23,6 @@
             %p.text-muted
               = fa_icon service.owner.default_icon
               = service.owner.display
-            %hr
-            %p.text-muted.text-right
-              = link_to fa_icon(:cogs), service_permissions_path(service)
 
         %td.text-center= t("common.versions")
         %td.text-center{style: "width: 400px;"}

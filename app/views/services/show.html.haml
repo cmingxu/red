@@ -2,6 +2,12 @@
   - app = (@app || @service.apps.first)
   .col-md-4.col-lg-2
     = render :partial => "services/service_left", locals: { service: @service, current_app: app }
-  .col-md-8.col-lg-10#app_detail
-    - if app.present?
-      = render :partial => "apps/detail", locals: {service: @service, app: app  }
+  .col-md-8.col-lg-10
+    .row
+      .col-md-6
+        = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_running_containers][:id], 5.minutes, 600, 180)
+      .col-md-6
+        = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_system_load][:id], 5.minutes, 600, 180)
+
+    = render :partial => "services/app_list", locals: { apps: @service.apps }
+    = render :partial => "permissions/list", locals: { permissions: @service.permissions, permission: @service.permissions.new, resource: @service }

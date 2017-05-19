@@ -15,7 +15,7 @@
 
         .service_template_action
           = link_to fa_icon(:copy) + " " + t("common.new_service"), new_service_path(service_template_id: temp.id), class: 'btn btn-primary col-md-6', data: { prompt: { title: t("common.prompt"), name: "owner", type: "choose_owner"} }, method: :get
-          = link_to fa_icon(:edit) + " " +  t("common.detail"), edit_service_template_path(temp), class: 'btn btn-default col-md-6'
+          = link_to fa_icon(:edit) + " " +  t("common.detail"), service_template_path(temp), class: 'btn btn-default col-md-6'
 
 
 .clearfix

@@ -115,15 +115,30 @@ aceInit = function (id, data) {
     editor.setValue(val);
     editor.resize();
 
-      <%#var $editor = $("#" + id);%>
-      <%#$editor.closest('form').submit(function() {%>
-        <%#var code = editor.getValue();%>
-      <%#$editor.prev('input[type=hidden]').val(code);%>
-      <%#});%>
+    var $editor = $("#" + id);
+    $editor.closest('form').submit(function() {
+      alert(editor.getValue());
+      var code = editor.getValue();
+      $editor.prev('input[type=hidden]').val(code);
+    });
 
   }catch(e)
   {
   }
+}
+
+function registerPermissionChange() {
+  $('.permission_change').change(function () {
+    var path = $(this).data('path');
+    $.ajax({
+      url: path,
+      method: 'PATCH',
+      data: {permission: { access: $(this).val() } },
+      success: function () {
+        window.location.reload();
+      }
+    });
+  });
 }
 
 $(document).on('ready turbolinks:load', function() {
@@ -132,11 +147,11 @@ $(document).on('ready turbolinks:load', function() {
   registerToggleableTableHandler();
   registerVersionLabelEvent();
   registerListOwnerTypeAhead();
+  registerPermissionChange();
 
   $('select').selectpicker();
-  
 
-    <%#aceInit('editor', $('#editor').val());%>
+  aceInit('editor', $('#editor').val());
 });
 
 function readURL(input) {
@@ -162,7 +177,7 @@ var openFile = function(event) {
     var text = reader.result;
     var node = document.getElementById('compose_content');
     node.innerText = text;
-      <%#aceInit('compose_content', text);%>
+    aceInit('compose_content', text);
   };
   reader.readAsText(input.files[0]);
 };

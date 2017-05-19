@@ -1,15 +1,5 @@
-.panel
-  .media
-    .media-left.media-middle
-      = image_tag @service_template.icon, height: 200
-    .media-body
-      %h4.media-heading= @service_template.name
-      %p= @service_template.desc
+.col-md-8
+  = render 'form'
 
-  .panel-body
-    .fobar{'data-provide': 'markdown-editable'}
-      = @service_template.readme
-
-
-
-
+.col-md-4
+  = render :partial => "permissions/list", locals: { permissions: @service_template.permissions, permission: @service_template.permissions.new, resource: @service_template }

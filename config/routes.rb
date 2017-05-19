@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :namespaces
   get 'search/owner_search'
   get 'search/list_owner'
 
@@ -16,9 +15,17 @@ Rails.application.routes.draw do
 
   post 'registry/notifications', as: :notifications
 
+  resources :namespaces do
+    resources :permissions do
+    end
+  end
+
   resources :audits, only: [:index]
   resources :versions
-  resources :service_templates
+  resources :service_templates do
+    resources :permissions do
+    end
+  end
 
   resources :groups do
     resources :users do

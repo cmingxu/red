@@ -53,6 +53,7 @@ zh-CN:
     desc: "详情"
     no_record_found: "没找到记录"
     tasks_and_containers: "任务&容器"
+    permissions: "协作者"
   nav:
     host: "主机"
     nodes: "主机"
