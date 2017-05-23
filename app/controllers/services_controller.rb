@@ -2,7 +2,14 @@ class ServicesController < ApplicationController
   before_action :set_service, only: [:show, :update, :destroy, :compose_chose, :download_compose, :favorite]
 
   def index
-    @services = policy_scope(Service).includes(:apps => [:versions])
+    if params[:owner_type] == "Group"
+      group = current_user.groups.find params[:owner_id]
+      @services = current_user.readable_groups_services_scope([group]).order('id desc').includes(:apps => [:versions]).page(params[:page]).per(8)
+    elsif params[:owner_type] == "User"
+      @services = current_user.services.includes(:apps => [:versions]).order('id desc').page(params[:page]).per(8)
+    else
+      @services = policy_scope(Service).includes(:apps => [:versions]).order('id desc').page(params[:page]).per(8)
+    end
   end
 
   def new

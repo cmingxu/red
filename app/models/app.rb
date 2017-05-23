@@ -57,6 +57,7 @@ class App < ApplicationRecord
   belongs_to :group
   has_many :versions, dependent: :destroy
   has_many :app_links, foreign_key: :input_app_id, dependent: :destroy
+  has_many :input_app_links, foreign_key: :output_app_id, dependent: :destroy, class_name: "AppLink"
   belongs_to :current_version, class_name: 'Version', foreign_key: :current_version_id
 
   validates :name, presence: true

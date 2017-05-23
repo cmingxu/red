@@ -1,4 +1,5 @@
   $(document).ready(function() {
+    var x = JSON.parse('<%= raw @service.graph_json %>');
     var data = {
       operators: {
         operator1: {
@@ -56,7 +57,7 @@
 
     // Apply the plugin on a standard, empty div...
     $('#chart').flowchart({
-      data: data,
+      data: x,
       canUserEditLinks: false,
       canUserMoveOperators: true
     });

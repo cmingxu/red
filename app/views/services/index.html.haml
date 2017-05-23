@@ -3,7 +3,8 @@
     = link_to fa_icon(:plus) + " " + t("service.new_service"), new_service_path, class: 'btn btn-primary', data: { prompt: { title: t("common.prompt"), name: "owner", type: "choose_owner"} }, method: :get
 
   .pull-right
-    = link_to raw("<ins>我的服务 #{badge(current_user.readable_services.length, :default)}</ins>") , services_path(owner_type: "User", owner_id: current_user.id)
+    = link_to raw("<ins>所有服务 #{badge(current_user.readable_services.length, :default)}</ins>")
+    = link_to raw("<ins>我的服务 #{badge(current_user.services.length, :default)}</ins>") , services_path(owner_type: "User", owner_id: current_user.id)
     - current_user.groups_without_default.each do |group|
       = link_to raw("<ins>#{group.name} #{badge(group.readable_services.length, :default)}</ins>") , services_path(owner_type: "Group", owner_id: group.id)
 
@@ -80,3 +81,4 @@
                 = drop_down_menu_item t("common.remove"), service_app_path(service, app), method: :delete, data: { confirm: "remove app"}
 
 
+= paginate @services

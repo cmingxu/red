@@ -3,7 +3,7 @@
   = stylesheet_link_tag "jquery-ui", :media => "all"
 
 = javascript_tag do
-  = render :partial => "services/chart.js"
+  = render :partial => "services/chart.js", locals: { service: @service } 
 
 .row
   - app = (@app || @service.apps.first)
