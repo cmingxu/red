@@ -149,7 +149,7 @@ $(document).on('ready turbolinks:load', function() {
   registerListOwnerTypeAhead();
   registerPermissionChange();
 
-  $('select').selectpicker();
+  $('select:not(.app-select)').selectpicker();
 
   aceInit('editor', $('#editor').val());
 });

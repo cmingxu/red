@@ -41,7 +41,7 @@ class App < ApplicationRecord
   include Auditable
   include AASM
 
-  attr_accessor :labels
+  attr_accessor :labels, :links
   attr_accessor :version_name
 
   serialize :env, Hash
@@ -56,10 +56,14 @@ class App < ApplicationRecord
   belongs_to :user
   belongs_to :group
   has_many :versions, dependent: :destroy
+  has_many :app_links, foreign_key: :input_app_id, dependent: :destroy
   belongs_to :current_version, class_name: 'Version', foreign_key: :current_version_id
 
   validates :name, presence: true
   validates :name, uniqueness: { scope: :service_id }
+
+
+  accepts_nested_attributes_for :app_links, allow_destroy: true
 
   before_validation(on: :create) do |app|
     app.instances ||= 0
@@ -242,5 +246,11 @@ class App < ApplicationRecord
     },
     volumes: self.volumes,
     }
+  end
+
+  def set_raw_config(post_raw = "")
+    hash = JSON.parse(post_raw)["app"] || {}
+    hash.delete("app_links")
+    self.raw_config = hash.to_json
   end
 end

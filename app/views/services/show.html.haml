@@ -1,3 +1,10 @@
+- content_for :custom_assets do
+  = javascript_include_tag 'jquery-ui-flowchart'
+  = stylesheet_link_tag "jquery-ui", :media => "all"
+
+= javascript_tag do
+  = render :partial => "services/chart.js"
+
 .row
   - app = (@app || @service.apps.first)
   .col-md-4.col-lg-2
@@ -11,3 +18,7 @@
 
     = render :partial => "services/app_list", locals: { apps: @service.apps }
     = render :partial => "permissions/list", locals: { permissions: @service.permissions, permission: @service.permissions.new, resource: @service }
+
+    .row
+      #chart{style: 'height: 400px'}
+

@@ -17,6 +17,9 @@ angular.module('app', [])
     $scope.submitted = false;
     $scope.app = window.appObj;
     $scope.appPersisted = window.appPersisted;
+    $scope.appsUnderService = window.appsUnderService;
+
+
     fillApp()
 
     $scope.submit = function () {
@@ -103,6 +106,24 @@ angular.module('app', [])
       );
     }
 
+    // links
+    $scope.removeLink = function (index) {
+      $scope.app.app_links[index]._destroy = 1;
+    }
+
+    $scope.moreLink = function () {
+      if($scope.app.app_links == null) {
+        $scope.app.app_links = [];
+      }
+
+      $scope.app.app_links.push({
+          alias: Object.keys($scope.appsUnderService)[0],
+        output_app_id: Object.values($scope.appsUnderService)[0],
+        _destroy: 0,
+        });
+    }
+
+
     // portmappings
     $scope.removePortmapping = function (index) {
       $scope.app.portmappings.splice(index, 1);
@@ -170,3 +191,15 @@ angular.module('app', [])
       }
     }
   });
+
+angular.module("selectBox", []).directive('selectBox', function() {
+ return {
+  restrict: 'E',
+  link: function() {
+   return $(window).bind("load", function() {
+    //this will make all your select elements use bootstrap-select
+    return $('select').selectpicker();
+   });
+  }
+ };
+}); 

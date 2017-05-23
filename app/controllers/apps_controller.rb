@@ -9,12 +9,14 @@ class AppsController < ApplicationController
 
   def new
     @app = @service.apps.new
+    @app_links = @app.app_links
   end
 
   def edit
     @version = @app.versions.find params[:version_id]
     @app = App.new(id: @version.app_id)
     @app.attributes = JSON.parse(@version.raw_config)
+    @app_links = @app.app_links
     @persisted = true
   end
 
@@ -27,7 +29,7 @@ class AppsController < ApplicationController
   end
 
   def update
-    @app.raw_config = (JSON.parse(request.raw_post)["app"] || {}).to_json
+    @app.set_raw_config(request.raw_post)
     respond_to do |format|
       if @app.update app_params
        audit(@app, "update", @app.name)
@@ -44,7 +46,11 @@ class AppsController < ApplicationController
 
   def create
     @app = @service.apps.new app_params
-    @app.raw_config = (JSON.parse(request.raw_post)["app"] || {}).to_json
+    @app.app_links.each do |link|
+      link.service = @service
+    end
+    
+    @app.set_raw_config(request.raw_post)
     respond_to do |format|
       if @app.save
        audit(@app, "create", @app.name)
@@ -130,7 +136,11 @@ class AppsController < ApplicationController
   end
 
   def app_params
-    params.require(:app).permit!
+    converted_params = params.require(:app).permit!
+    converted_params[:app_links_attributes] = converted_params.delete(:app_links)
+    converted_params 
+
+
 
     #env_keys = params[:app][:env].try(:keys) || []
     #health_check_keys = params[:app][:health_check].try(:keys) || []

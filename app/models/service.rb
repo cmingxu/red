@@ -20,6 +20,7 @@ class Service < ApplicationRecord
   belongs_to :user
   belongs_to :group
   has_many :apps, dependent: :destroy
+  has_many :app_links, dependent: :destroy
 
   validates :name, presence: true
   validates :name, uniqueness: { scope: :user_id, if: Proc.new {self.user_id.present?} }
@@ -39,7 +40,14 @@ class Service < ApplicationRecord
       config_apps[app.name] = JSON.parse(version.raw_config)
     end
 
-    service_config_hash['apps'] = config_apps
+    service_config_hash["apps"] = config_apps
+
+    config_links = []
+    self.app_links.each do |link|
+      config_links <<  {input_app_name: link.input_app.name, alias: link.alias, output_app_name: link.output_app.name }
+    end
+
+    service_config_hash["links"] = config_links
     service_config_hash
   end
 
@@ -65,6 +73,16 @@ class Service < ApplicationRecord
       app = self.apps.build raw_config
       app.raw_config = raw_config.to_json
       app.version_name = app.name
+    end
+
+    ap "2" * 100
+    ap compose_hash['links']
+    compose_hash["links"].each do |link|
+      input_app = self.apps.select{ |app| app.name ==  link['input_app_name'] }.first
+      output_app = self.apps.select{ |app| app.name ==  link['output_app_name'] }.first
+      if input_app && output_app
+        input_app.app_links.build output_app: output_app, alias: link['alias'], service: self
+      end
     end
 
     self

@@ -1,0 +1,26 @@
+# == Schema Information
+#
+# Table name: app_links
+#
+#  id            :integer          not null, primary key
+#  service_id    :integer
+#  alias         :string
+#  input_app_id  :integer
+#  output_app_id :integer
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  service_id: 1
+  alias: MyString
+  input_app_id: 1
+  output_app_id: 1
+
+two:
+  service_id: 1
+  alias: MyString
+  input_app_id: 1
+  output_app_id: 1

@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170517074238) do
+ActiveRecord::Schema.define(version: 20170522091716) do
+
+  create_table "app_links", force: :cascade do |t|
+    t.integer  "service_id"
+    t.string   "alias"
+    t.integer  "input_app_id"
+    t.integer  "output_app_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
 
   create_table "apps", force: :cascade do |t|
     t.string   "name"
@@ -72,14 +81,6 @@ ActiveRecord::Schema.define(version: 20170517074238) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "images", force: :cascade do |t|
-    t.string   "name"
-    t.string   "hash"
-    t.integer  "size"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "namespaces", force: :cascade do |t|
     t.string   "name"
     t.integer  "user_id"
@@ -103,14 +104,6 @@ ActiveRecord::Schema.define(version: 20170517074238) do
     t.integer  "accessor_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-  end
-
-  create_table "registries", force: :cascade do |t|
-    t.string   "name"
-    t.string   "hash"
-    t.integer  "size"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "repo_tags", force: :cascade do |t|

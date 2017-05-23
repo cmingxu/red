@@ -4,6 +4,10 @@
 
 <%= javascript_tag do %>
   var appObj = JSON.parse('<%= @app.attributes.except(*App::PROTECTED_ATTRIBUTES).to_json.html_safe%>');
+  var appLinks = JSON.parse('<%= @app_links.map{|al| al.attributes.slice("output_app_id", "alias", "id")}.to_json.html_safe%>');
+  appLinks.forEach(function(link){ link['_destroy'] = 0;})
+  appObj.app_links = appLinks;
+  var appsUnderService = JSON.parse('<%= Hash[@service.apps.select(&:persisted?).map{|a| [a.name, a.id] }].to_json.html_safe%>');
   $('#appTab a:first').tab('show');
   <% if @persisted %>
     var appPersisted = true;
@@ -51,8 +55,8 @@
               <label><input value="host" type="radio" name="network" ng-model="app.network" /><%= t("app.host") %></label>
               <label><input value="user" type="radio" name="network" ng-model="app.network" /><%= t("app.user") %></label>
               <p ng-show="appForm.network.$invalid && (appForm.network.$dirty || submitted)" class="help-block">You name is required.</p>
-          </div>
         </div>
+          </div>
 
         <div class="form-group" ng-class="{ 'has-error' : appForm.customized_network_name.$invalid && (appForm.customized_network_name.$dirty || submitted)}" ng-show="app.network != 'bridge' && app.network != 'host'">
           <label for="customized_network_name" class="col-sm-2 control-label"><%= t("app.customized_network_name") %></label>
@@ -79,7 +83,7 @@
                   <td ng-if="app.network=='bridge'"> <input type="number" class="form-control" ng-model="portmapping.containerPort" ng-required=true> </td>
                   <td ng-if="app.network=='host'"> <input type="number" class="form-control" ng-model="portmapping.hostPort" ng-required=true> </td>
                   <td>
-                    <select class='form-control' ng-model='portmapping.proto' ng-required=true>
+                    <select class='form-control app-select' ng-model='portmapping.proto' ng-required=true>
                       <option value="tcp"> TCP </option>
                       <option value="udp"> UDP </option>
                     </select>
@@ -92,6 +96,32 @@
               </tbody>
             </table>
              <p ng-show="appForm.portmappings.$invalid && (appForm.portmappings.$dirty || submitted)" class="help-block">You name is required.</p>
+          </div>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error' : appForm.app_links.$invalid && (appForm.app_links.$dirty || submitted)}" ng-show="Object.keys(appsUnderService).length != 0">
+          <label for="app_links" class="col-sm-2 control-label"><%= t("app.app_links") %></label>
+          <div class="col-sm-10">
+            <table class="table table-bordered col-md-6 col-sm-12">
+              <tr>
+                <th><%= t('app.link_output') %></td>
+                <th><%= t('app.link_alias') %></td>
+                <th></td>
+              </tr>
+              <tbody>
+                <tr ng-repeat="link in app.app_links | filter: {_destroy: 0}">
+                  <td>
+                    <select class='form-control app-select' ng-model='link.output_app_id' required="required" ng-options="v as k for (k, v) in appsUnderService" > </select>
+                  </td>
+                  <td> <input type="input" class="form-control" ng-model="link.alias"> </td>
+                  <td><a class="btn btn-default btn-sm" ng-click="removeLink($index)"><%= fa_icon(:minus)%> </a></td>
+                </tr>
+                <tr>
+                  <td colspan=5><a class="btn btn-default btn-sm" ng-click="moreLink()"><%= fa_icon(:plus)%> <%= t('app.add_link') %> </a></td>
+                </tr>
+              </tbody>
+            </table>
+             <p ng-show="appForm.app_links.$invalid && (appForm.app_links.$dirty || submitted)" class="help-block">You name is required.</p>
           </div>
         </div>
 
