@@ -7,17 +7,17 @@ class ServiceTemplatePolicy < ApplicationPolicy
     @owner = owner
   end
 
-  def update?
-    user.adminable_service_templates.include? record
-  end
-
   def create?
-    if owner.is_a?(Group)
-      return user.groups.include? owner
-    end
+    if record.persisted?
+      return user.union_writeable_service_templates.include? record
+    else
+      if owner.is_a?(Group)
+        return user.groups.include? owner
+      end
 
-    if owner.is_a?(User)
-      return owner == user
+      if owner.is_a?(User)
+        return owner == user
+      end
     end
   end
 

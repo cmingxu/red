@@ -1,8 +1,8 @@
 docker run -d -p 5000:5000 --restart=always --name registry   -v `pwd`/certs:/certs -v `pwd`/config.yml:/etc/docker/registry/config.yml -v `pwd`/auth/htpasswd:/auth/htpasswd -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt  -e REGISTRY_HTTP_TLS_KEY=/certs/domain.key -e "REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm" -e REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd registry:2
 
 # https://docs.docker.com/registry/spec/api/
-/*https://serverfault.com/questions/611120/failed-tls-handshake-does-not-contain-any-ip-sans*/
-/*https://docs.docker.com/registry/configuration/#overriding-the-entire-configuration-file*/
-/*https://github.com/docker/docker.github.io/blob/master/registry/insecure.md*/
-/*https://github.com/docker/docker.github.io/blob/master/registry/deploying.md#get-a-certificate*/
-/*https://github.com/docker/docker.github.io/blob/master/registry/deploying.md*/
+https://serverfault.com/questions/611120/failed-tls-handshake-does-not-contain-any-ip-sans
+https://docs.docker.com/registry/configuration/#overriding-the-entire-configuration-file
+https://github.com/docker/docker.github.io/blob/master/registry/insecure.md
+https://github.com/docker/docker.github.io/blob/master/registry/deploying.md#get-a-certificate
+https://github.com/docker/docker.github.io/blob/master/registry/deploying.md

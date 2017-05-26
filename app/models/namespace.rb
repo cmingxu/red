@@ -19,6 +19,8 @@ class Namespace < ApplicationRecord
 
   validates :name, uniqueness: true
   validates :name, presence: true
+  NAME_REGEXP = /\A[a-z0-9]+(?:[._\\-][a-z0-9]+)*\Z/
+  validates :name, format: { with: NAME_REGEXP }
 
   def self.from_notifications(events)
     events.each do |event|

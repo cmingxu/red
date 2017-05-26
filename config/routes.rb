@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'settings/group', as: :setting_group
 
   post 'registry/notifications', as: :notifications
+  get 'registry/token', as: :token
 
   resources :namespaces do
     resources :permissions do

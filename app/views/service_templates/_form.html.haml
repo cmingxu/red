@@ -27,8 +27,8 @@
   = hidden_field_tag "owner_id", params[:owner_id] || @service_template.owner.try(:id)
 
   .actions
-    = f.button :submit, t("common.save"), class: btn_classes(policy(@service_template).update? ? '' : 'disabled')
-    = link_to t('common.remove'), service_template_path(@service_template), method: :delete, class: btn_classes(['btn-danger', (policy(@service_template).update? ? '' : 'disabled')]), data: { confirm: t("common.remove") } if @service_template.persisted?
+    = f.button :submit, t("common.save"), class: btn_classes(ServiceTemplatePolicy.new(current_user, @service_template, @service_template.owner).create? ? '' : 'disabled')
+    = link_to t('common.remove'), service_template_path(@service_template), method: :delete, class: btn_classes(['btn-danger', (ServiceTemplatePolicy.new(current_user, @service_template, @service_template.owner).create? ? '' : 'disabled')]), data: { confirm: t("common.remove") } if @service_template.persisted?
     = link_to t('common.cancel'), service_templates_path
 
 
