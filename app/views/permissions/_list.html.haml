@@ -8,7 +8,7 @@
           %td
             = image_tag p.accessor.try(:icon).try(:thumb).try(:url) || "placeholder.png", height: 35
             = p.accessor.display
-          %td= select_tag :access, options_for_select(Permission.accesses.keys, p.access), class: 'permission_change', data: { path: send("#{resource_name}_permission_path", resource, p) }
+          %td= select_tag :access, options_for_select(permission_access(session[:locale]), p.access), class: 'permission_change', data: { path: send("#{resource_name}_permission_path", resource, p) }
           %td= link_to fa_icon(:remove), send("#{resource_name}_permission_path", resource, p), method: :delete, data: { confirm: t("common.confirm") }
 
 = simple_form_for permission, url: send("#{resource_name}_permissions_path", resource), class: 'form-inline' do |form|

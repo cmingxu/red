@@ -35,10 +35,17 @@
 
 class App < ApplicationRecord
   PROTECTED_ATTRIBUTES = %w(id created_at updated_at raw_config service_id current_version_id backend)
+  CONFIG_ATTRIBUTES = ["cpu", "mem", "disk", "cmd", "args", "priority", "runas", "constraints", "image", "network", "portmappings", "force_image", "privileged", "env", "volumes", "uris", "gateway", "health_check"]
 
   class Task; attr_accessor :id, :agentId, :ip, :created_at end
 
   include Auditable
+  include FriendlyId
+  friendly_id :slug, use: [:slugged, :finders]
+  before_save do
+    self.slug = PinYin.of_string(self.name).join('-').downcase
+  end
+
   include AASM
 
   attr_accessor :labels, :links
@@ -138,7 +145,6 @@ class App < ApplicationRecord
         Rails.logger.debug e
       end
     end
-
   end
 
   def suspend
@@ -199,7 +205,7 @@ class App < ApplicationRecord
 
 
   def marathon_app_name
-    self.service.name + "/" + self.name
+    self.service.slug + "/" + self.slug
   end
 
   def marathon_app
@@ -210,8 +216,10 @@ class App < ApplicationRecord
   end
 
   def with_version(version)
-    self.attributes = JSON.parse(version.raw_config)
-    self.version_name = nil
+    JSON.parse(version.raw_config).slice(*App::CONFIG_ATTRIBUTES).each_pair do |k, v|
+      self.send "#{k}=", v
+    end
+
     self
   end
 
@@ -254,4 +262,14 @@ class App < ApplicationRecord
     hash.delete("app_links")
     self.raw_config = hash.to_json
   end
+
+  def display locale = :en
+    case locale.to_s
+    when "en"
+      "application #{self.name}"
+    when "zh-CN"
+      "应用 #{self.name}"
+    end
+  end
+
 end

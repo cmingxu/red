@@ -13,6 +13,8 @@
 
 class Group < ApplicationRecord
   include Accessor
+  include FriendlyId
+  friendly_id :name, use: [:slugged, :finders]
 
   belongs_to :owner, class_name: "User", foreign_key: :owner_id
   has_many :group_users, dependent: :destroy

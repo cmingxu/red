@@ -2,7 +2,7 @@ module ApplicationHelper
   def panel_table(title, icon, anchor = "", style = 'default', &block)
     content_tag(:div, class: "panel panel-#{style}") do
       content_tag(:div, class: 'panel-heading') do
-         content_tag(:span, title, name: anchor) end +
+         content_tag(:span, fa_icon(icon, class: 'primary') + " " +  title, name: anchor) end +
 
         capture(&block) if block_given?
     end
@@ -11,7 +11,7 @@ module ApplicationHelper
   def panel_item(title, icon, anchor = "", style = 'default', &block)
     content_tag(:div, class: "panel panel-#{style}") do
       content_tag(:div, class: 'panel-heading') do
-         content_tag(:span, title, name: anchor) end +
+         content_tag(:span, fa_icon(icon, class: 'primary') + " " +  title, name: anchor) end +
 
       content_tag(:div, class: 'panel-body') do
         capture(&block) if block_given?

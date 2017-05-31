@@ -16,6 +16,11 @@
 
 class ServiceTemplate < ApplicationRecord
   include Accessible
+  include FriendlyId
+  friendly_id :slug, use: [:slugged, :finders]
+  before_save do
+    self.slug = PinYin.of_string(self.name).join('-').downcase
+  end
 
   mount_uploader :icon, ServiceTemplateIconUploader
 
@@ -37,5 +42,14 @@ class ServiceTemplate < ApplicationRecord
     end
 
     return nil
+  end
+
+  def display locale = :en
+    case locale.to_s
+    when "en"
+      "service template #{self.name}"
+    when "zh-CN"
+      "应用模板 #{self.name}"
+    end
   end
 end

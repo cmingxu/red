@@ -1,7 +1,10 @@
 #owner_chooser
   .well
-    %p.owner_item{data: { owner_type: "user", owner_id: current_user.id } }
+    .owner_item{data: { owner_type: "user", owner_id: current_user.id } }
       = image_tag current_user.icon.small.try(:url) || "placeholder.png"
+      .text-muted= current_user.display
+
     - current_user.groups_without_default.each do |group|
-      %p.owner_item{data: { owner_type: "group", owner_id: group.id } }
+      .owner_item{data: { owner_type: "group", owner_id: group.id } }
         = image_tag group.icon.small.try(:url) || "placeholder.png"
+        .text-muted= group.name

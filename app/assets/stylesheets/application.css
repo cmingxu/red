@@ -172,3 +172,7 @@ a.disabled {
   pointer-events: none;
 }
 
+
+.action_bar{
+  padding-bottom: 10px;
+}

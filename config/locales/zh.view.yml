@@ -54,6 +54,7 @@ zh-CN:
     no_record_found: "没找到记录"
     tasks_and_containers: "任务&容器"
     permissions: "协作者"
+    owner_chooser_prompt: "选择目标"
   nav:
     host: "主机"
     nodes: "主机"
@@ -101,6 +102,7 @@ zh-CN:
     new_uri: "增加数据地址"
     labels: "标签"
     new_label: "新标签"
+    remove_confirm: "确定删除此应用？"
     gateway:
       weight: "权重"
     health_check:
@@ -120,6 +122,11 @@ zh-CN:
     rollback: "回滚"
     copy: "拷贝"
     update_version: "更新"
+    scale_app: "扩缩应用"
+    stop_app_confirm: "确信停止此应用？"
+    restart_confirm: "重启应用？"
+    update_version: "更新到新版本"
+    start_app: "启动应用"
   service:
     new_app: "新增应用"
     new_service: "新增服务"
@@ -136,6 +143,8 @@ zh-CN:
     name: "服务名"
     desc: "备注"
     compose: "服务编排文件"
+    all_services: "所有服务"
+    my_services: "由我创建"
 
   group:
     new_group: "新用户组"
@@ -176,8 +185,8 @@ zh-CN:
       name: "应用名"
 
   service_template:
-    readme: "模板详情"
-    raw_config: "模板描述JSON"
+    readme: "模板描述"
+    raw_config: "模板内容(JSON)"
     name_hint: "eg. ELK应用组"
     desc_hint: "eg. ELK应用组包含ElasticSearch, Logstash, Kibana等组件"
 
@@ -185,6 +194,8 @@ zh-CN:
     name: "项目名称"
     owner: "项目所有人"
     repository_count: "镜像数量"
+    repository_name: "镜像名称"
+    repo_tags: "标签"
     pull_count: "下载次数"
 
   audit:

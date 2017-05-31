@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170522091716) do
+ActiveRecord::Schema.define(version: 20170531025423) do
 
   create_table "app_links", force: :cascade do |t|
     t.integer  "service_id"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20170522091716) do
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
     t.string   "state"
+    t.string   "slug"
   end
 
   create_table "audits", force: :cascade do |t|
@@ -87,6 +88,7 @@ ActiveRecord::Schema.define(version: 20170522091716) do
     t.integer  "group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "slug"
   end
 
   create_table "nodes", force: :cascade do |t|
@@ -138,6 +140,7 @@ ActiveRecord::Schema.define(version: 20170522091716) do
     t.text     "readme"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "slug"
   end
 
   create_table "services", force: :cascade do |t|
@@ -148,6 +151,7 @@ ActiveRecord::Schema.define(version: 20170522091716) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "slug"
   end
 
   create_table "settings", force: :cascade do |t|

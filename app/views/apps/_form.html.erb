@@ -4,11 +4,15 @@
 
 <%= javascript_tag do %>
   var appObj = JSON.parse('<%= @app.attributes.except(*App::PROTECTED_ATTRIBUTES).to_json.html_safe%>');
+
   var appLinks = JSON.parse('<%= @app_links.map{|al| al.attributes.slice("output_app_id", "alias", "id")}.to_json.html_safe%>');
   appLinks.forEach(function(link){ link['_destroy'] = 0;})
   appObj.app_links = appLinks;
+
   var appsUnderService = JSON.parse('<%= Hash[@service.apps.select(&:persisted?).map{|a| [a.name, a.id] }].to_json.html_safe%>');
   $('#appTab a:first').tab('show');
+
+  var locale = '<%= session[:locale] %>';
   <% if @persisted %>
     var appPersisted = true;
     var postPath = "/services/" +  "<%= @service.id %>" + "/apps/" + <%= @app.id %>;

@@ -1,17 +1,19 @@
-.row
-  .col-md-12.text-right
+.action_bar
+  .pull-left
     = link_to fa_icon(:plus) + " " + t('common.new_namespace'), new_namespace_path, class: 'btn btn-primary', data: { prompt: { title: t("common.prompt"), name: "owner", type: "choose_owner"} }, method: :get
+  .clearfix
 
 .row
   .col-md-4.col-lg-2
     = render :partial => "namespaces/namespace_left", locals: { namespaces: @namespaces }
   .col-md-8.col-lg-10
+    = render :partial => "widgets/list_place_holder" if @namespaces.empty?
     - if @namespaces.first.present?
       = render :partial => "permissions/list", locals: { permissions: @namespaces.first.permissions, permission: @namespaces.first.permissions.new, resource: @namespaces.first }
       %table.table
         %thead
-          %th= t("namespaces.repository_name")
-          %th= t("namespaces.repo_tags")
+          %th= t("namespace.repository_name")
+          %th= t("namespace.repo_tags")
 
         %tbody
           - @namespaces.first.repositories.each do |repository|

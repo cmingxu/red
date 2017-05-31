@@ -12,6 +12,8 @@
 
 class Namespace < ApplicationRecord
   include Accessible
+  include FriendlyId
+  friendly_id :name, use: [:slugged, :finders]
 
   has_many :repositories, dependent: :destroy
   belongs_to :user
@@ -20,7 +22,7 @@ class Namespace < ApplicationRecord
   validates :name, uniqueness: true
   validates :name, presence: true
   NAME_REGEXP = /\A[a-z0-9]+(?:[._\\-][a-z0-9]+)*\Z/
-  validates :name, format: { with: NAME_REGEXP }
+  validates :name, format: { with: NAME_REGEXP, message: NAME_REGEXP }
 
   def self.from_notifications(events)
     events.each do |event|
@@ -66,5 +68,14 @@ class Namespace < ApplicationRecord
     end
 
     return nil
+  end
+
+  def display locale = :en
+    case locale.to_s
+    when "en"
+      "namespace #{self.name}"
+    when "zh-CN"
+      "项目 #{self.name}"
+    end
   end
 end

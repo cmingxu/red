@@ -25,10 +25,10 @@ $(document).ready(function() {
       message: message,
       buttons: {
         cancel: {
-            label: '<i class="fa fa-times"></i> Cancel'
+            label: '<i class="fa fa-times"></i>'
         },
         confirm: {
-            label: '<i class="fa fa-check"></i> Confirm'
+            label: '<i class="fa fa-check"></i>'
         }
       },
       callback: function(confirmed) {
@@ -69,6 +69,15 @@ $(document).ready(function() {
       bootbox.prompt({
         onEscape: true,
         title: title,
+        value: value,
+        buttons: {
+          cancel: {
+            label: '<i class="fa fa-times"></i>'
+          },
+          confirm: {
+            label: '<i class="fa fa-check"></i>'
+          }
+        },
         callback: function (result) {
           if(result) {
             finalResult = {};

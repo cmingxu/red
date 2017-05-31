@@ -18,6 +18,7 @@ angular.module('app', [])
     $scope.app = window.appObj;
     $scope.appPersisted = window.appPersisted;
     $scope.appsUnderService = window.appsUnderService;
+    $scope.locale = window.locale;
 
 
     fillApp()
@@ -27,18 +28,35 @@ angular.module('app', [])
       if($scope.appForm.$invalid) {
         alert("not valid");
       }else{
-        bootbox.prompt("name a version", function (result) {
-          $scope.app.version_name = result;
-          axios[window.httpMethod](window.postPath, {
-            app: JSON.parse(angular.toJson($scope.app)),
-            authenticity_token: authenticity_token
-          }).then(function (response) {
-            window.location.href = "/services";
-          }, function (response) {
-            console.log(response.data.message);
-          });
+        var promptTitle = "name this version for application";
+        if(locale == "zh-CN") {
+          promptTitle = "版本名称";
         }
-        );
+        bootbox.prompt({
+          title: promptTitle,
+          value: "version-0001",
+          buttons: {
+            cancel: {
+              label: '<i class="fa fa-times"></i>'
+            },
+            confirm: {
+              label: '<i class="fa fa-check"></i>'
+            }
+          },
+          callback: function (result) {
+            if(result) {
+              $scope.app.version_name = result;
+              axios[window.httpMethod](window.postPath, {
+                app: JSON.parse(angular.toJson($scope.app)),
+                authenticity_token: authenticity_token
+              }).then(function (response) {
+                window.location.href = "/services";
+              }, function (response) {
+                console.log(response.data.message);
+              });
+            }
+          }
+        });
       }
     }
 
@@ -117,10 +135,10 @@ angular.module('app', [])
       }
 
       $scope.app.app_links.push({
-          alias: Object.keys($scope.appsUnderService)[0],
+        alias: Object.keys($scope.appsUnderService)[0],
         output_app_id: Object.values($scope.appsUnderService)[0],
         _destroy: 0,
-        });
+      });
     }
 
 
@@ -193,13 +211,13 @@ angular.module('app', [])
   });
 
 angular.module("selectBox", []).directive('selectBox', function() {
- return {
-  restrict: 'E',
-  link: function() {
-   return $(window).bind("load", function() {
-    //this will make all your select elements use bootstrap-select
-    return $('select').selectpicker();
-   });
-  }
- };
+  return {
+    restrict: 'E',
+    link: function() {
+      return $(window).bind("load", function() {
+        //this will make all your select elements use bootstrap-select
+        return $('select').selectpicker();
+      });
+    }
+  };
 }); 

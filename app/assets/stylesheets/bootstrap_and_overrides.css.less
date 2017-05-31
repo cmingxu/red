@@ -47,6 +47,13 @@
 
 .main{
   padding-top: 10px;
+  opacity: 1;
+  transition: opacity 0.6s;
+  -webkit-transition: opacity 0.6s;
+}
+
+.main.changing {
+    opacity: 0;
 }
 
 .navbar-nav > .active {
@@ -102,6 +109,7 @@ form{
 .owner_item{
   cursor: pointer;
   display: inline-block;
+  text-align: center;
   padding: 5px;
 }
 
@@ -117,4 +125,8 @@ form{
 
 .list-group .list-group-item.highlight{
   border-right: 4px solid red;
+}
+
+.rounded{
+  border-radius: 15px;
 }

@@ -182,3 +182,10 @@ var openFile = function(event) {
   reader.readAsText(input.files[0]);
 };
 
+$(document).on('turbolinks:before-cache', function () {
+  $('.main').addClass('changing');
+});
+
+$(document).on('turbolinks:load', function () {
+  $('.main').removeClass('changing');
+});

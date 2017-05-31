@@ -18,7 +18,7 @@ class ServiceTemplatesController < ApplicationController
     @owner  = owner_from_request || current_user
 
     if params[:service_id]
-      @service = current_user.accessible_services.find_by(id: params[:service_id])
+      @service = current_user.accessible_services.find(params[:service_id])
       raw_config_params = @service.apps.reduce({}) {|p, a| p[a.id] = a.current_version.id; p}
       @service_template = @owner.service_templates.new(raw_config: @service.try(:raw_config, raw_config_params).try(:to_json) || "no content",
                                               name: @service.try(:name),

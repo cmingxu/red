@@ -14,6 +14,11 @@
 
 class Service < ApplicationRecord
   include Accessible
+  include FriendlyId
+  friendly_id :slug, use: [:slugged, :finders]
+  before_save do
+    self.slug = PinYin.of_string(self.name).join('-').downcase
+  end
 
   attr_accessor :compose, :compose_content
 
@@ -88,7 +93,7 @@ class Service < ApplicationRecord
     operators = {}
     top = 20
     left = 200
-    
+
     self.apps.each do |app|
       config =  {
         top: top ,
@@ -135,6 +140,15 @@ class Service < ApplicationRecord
   %w(cpu_total cpu_used mem_total mem_used disk_total disk_used).each do |m|
     define_method m do
       self.apps.reduce(0){|sum, app| sum += app.send(m); sum }
+    end
+  end
+
+  def display locale = :en
+    case locale.to_s
+    when "en"
+      "service #{self.name}"
+    when "zh-CN"
+      "服务 #{self.name}"
     end
   end
 
