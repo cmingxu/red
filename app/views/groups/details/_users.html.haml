@@ -11,7 +11,6 @@
       %th= t("user.name")
       %th= t("user.email")
       %th= t("user.groups")
-      %th= t("common.service")
       %th
 
     - group.users.order_by_role.each do |user|
@@ -25,7 +24,6 @@
           %td
             - user.groups_without_default.order('created_at ASC').each do |g|
               = link_to g.name, group_path(g)
-          %td= user.services.length
           %td
             = drop_down_menu :default, t("common.actions") do
               = drop_down_menu_item t("common.edit"), ""

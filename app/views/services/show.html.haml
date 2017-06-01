@@ -3,22 +3,36 @@
   = stylesheet_link_tag "jquery-ui", :media => "all"
 
 = javascript_tag do
-  = render :partial => "services/chart.js", locals: { service: @service } 
+  = render :partial => "services/chart.js", locals: { service: @service }
 
 .row
   - app = (@app || @service.apps.first)
-  .col-md-4.col-lg-2
-    = render :partial => "services/service_left", locals: { service: @service, current_app: app }
-  .col-md-8.col-lg-10
+  .col-md-8.col-lg-12
     .row
       .col-md-6
         = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_running_containers][:id], 5.minutes, 600, 180)
       .col-md-6
         = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_system_load][:id], 5.minutes, 600, 180)
 
-    = render :partial => "services/app_list", locals: { apps: @service.apps }
-    = render :partial => "permissions/list", locals: { permissions: @service.permissions, permission: @service.permissions.new, resource: @service }
-
+    %hr
     .row
-      #chart{style: 'height: 400px'}
+      .col-md-12
+        %ul.nav.nav-tabs{role: 'tablist'}
+          %li.active{role: 'presentation'}
+            = link_to t('service.app_list'), '#app_list', role: 'tab', 'data-toggle': 'tab', 'aria-controls': 'app_list'
+          %li
+            = link_to t('service.app_chart'), '#app_chart', role: 'tab', 'data-toggle': 'tab', 'aria-controls': 'app_chart'
+        .tab-content
+          .tab-pane.active#app_list{role: 'tabpanel'}
+            = render :partial => "apps/list", locals: { apps: @service.apps }
+          .tab-pane#app_chart{role: 'tabpanel', style: "height: 600px;"}
+            #chart{style: 'height: 400px'}
+    %hr
+      .row
+        .col-md-12
+          = render :partial => "permissions/list", locals: { permissions: @service.permissions, permission: @service.permissions.new, resource: @service }
 
+    %hr
+      .row
+        .col-md-12
+          = render :partial => "audits/list", locals: { audits: @service.audits }

@@ -1,6 +1,7 @@
 class NodesController < ApplicationController
   before_action :set_node
   before_action :load_nodes
+  before_action :set_breadcrumb
 
   # GET /nodes
   # GET /nodes.json
@@ -85,6 +86,18 @@ class NodesController < ApplicationController
   def mesos_state
     Rails.cache.fetch("mesos-object", expires_in: 60.second) do
       Mesos.new(leader: "http://114.55.130.152:5050").state
+    end
+  end
+
+  def set_breadcrumb
+    @breadcrumb_list = [OpenStruct.new(name_zh_cn: "全部节点", name_en: "Nodes", path: nodes_path)]
+
+    if @node
+      @breadcrumb_list.push OpenStruct.new(name_zh_cn: @node.name, name_en: @node.name, path: service_path(@node))
+    end
+
+    if @app
+      @breadcrumb_list.push OpenStruct.new(name_zh_cn: @app.name, name_en: @app.name, path: service_app_path(@service, @app))
     end
   end
 end

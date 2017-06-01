@@ -1,6 +1,8 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy]
   before_action :set_groups
+  before_action :set_breadcrumb
+  
 
   # GET /groups
   # GET /groups.json
@@ -91,6 +93,14 @@ class GroupsController < ApplicationController
 
   def set_groups
     @groups = current_user.groups.includes(:users).order(created_at: :asc).page params[:page]
+  end
+
+  def set_breadcrumb
+    @breadcrumb_list = [OpenStruct.new(name_zh_cn: "全部组", name_en: "Groups", path: groups_path)]
+
+    if @group
+      @breadcrumb_list.push OpenStruct.new(name_zh_cn: @group.name, name_en: @group.name, path: group_path(@group))
+    end
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

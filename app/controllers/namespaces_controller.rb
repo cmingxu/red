@@ -1,5 +1,6 @@
 class NamespacesController < ApplicationController
   before_action :set_namespace, only: [:show, :edit, :update, :destroy]
+  before_action :set_breadcrumb
 
   # GET /namespaces
   # GET /namespaces.json
@@ -82,4 +83,12 @@ class NamespacesController < ApplicationController
     def namespace_params
       params.require(:namespace).permit(:name, :user_id, :group_id)
     end
+
+  def set_breadcrumb
+    @breadcrumb_list = [OpenStruct.new(name_zh_cn: "全部项目", name_en: "Namespaces", path: namespaces_path)]
+
+    if @namespace
+      @breadcrumb_list.push OpenStruct.new(name_zh_cn: @namespace.name, name_en: @namespace.name, path: namespace_path(@namespace))
+    end
+  end
 end

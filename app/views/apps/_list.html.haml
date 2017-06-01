@@ -1,0 +1,15 @@
+%table{class: table_classes}
+  %thead
+    %tr
+      %th= t('app.name')
+      %th= t('app.instances')
+      %th= t('app.resources')
+      %th= t('common.updated')
+
+  %tbody
+    - apps.each do |app|
+      %tr
+        %td= link_to app.name, service_app_path(app.service, app)
+        %td= app.instances
+        %td= app.instances
+        %td= time_ago_in_words app.updated_at

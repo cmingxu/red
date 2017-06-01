@@ -1,5 +1,5 @@
 class SearchController < ApplicationController
-  skip_before_action :login_required
+  skip_before_action :login_required, :set_breadcrumb
 
   def owner_search
     @users = User.where("email like ? OR name like ?", "%#{params[:search]}%", "%#{params[:search]}%")

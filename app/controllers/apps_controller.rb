@@ -2,6 +2,7 @@ class AppsController < ApplicationController
   before_action :set_service
   before_action :set_app, except: [:index, :new, :create]
   before_action :set_marathon_app, only: [:start, :scale, :restart, :stop, :rollback, :change, :backend_state]
+  before_action :set_breadcrumb
 
   def index
     @apps = @service.apps
@@ -26,6 +27,7 @@ class AppsController < ApplicationController
 
   def show
     @app = @service.apps.find params[:id]
+    @app_links = @app.app_links
   end
 
   def update
@@ -133,6 +135,18 @@ class AppsController < ApplicationController
     rescue Marathon::Error => e
     end
 
+  end
+
+  def set_breadcrumb
+    @breadcrumb_list = [OpenStruct.new(name_zh_cn: "全部服务", name_en: "Services", path: services_path)]
+
+    if @service
+      @breadcrumb_list.push OpenStruct.new(name_zh_cn: @service.name, name_en: @service.name, path: service_path(@service))
+    end
+
+    if @app
+      @breadcrumb_list.push OpenStruct.new(name_zh_cn: @app.name, name_en: @app.name, path: service_app_path(@service, @app))
+    end
   end
 
   def app_params

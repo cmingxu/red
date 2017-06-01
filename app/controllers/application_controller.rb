@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pundit
+  include Rails.application.routes.url_helpers
 
   attr_accessor :page_request_meta_info
   before_action :set_page_request_meta_info
@@ -138,7 +139,7 @@ class ApplicationController < ActionController::Base
   end
 
   def breadcrumb_list
-    @breadcrumb_list || [OpenStruct.new(name: "首页", path: root_path)]
+    (@breadcrumb_list || []).unshift OpenStruct.new(name_zh_cn: "首页", name_en: "Home", path: root_path)
   end
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized

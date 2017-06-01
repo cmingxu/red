@@ -47,5 +47,7 @@ en:
     service:
       model_name: "Service"
       name: "Service Name"
+  permission:
+    placeholder: 'eg. Group Name or User Name'
 
 

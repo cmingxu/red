@@ -61,8 +61,11 @@ module ApplicationHelper
   end
 
   def need_breadcrumb
-    %w(:apps, :versions).include?(controller_name.to_sym)  ||
-      (controller_name.to_sym == :services && action_name.to_sym == :show)
+    %w(apps versions).include?(controller_name.to_s)  ||
+      (controller_name.to_sym == :services && action_name.to_sym == :show) ||
+      (controller_name.to_sym == :service_templates && action_name.to_sym == :show)
+
+    true
   end
 
   def sample_data

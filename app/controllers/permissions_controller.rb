@@ -31,11 +31,11 @@ class PermissionsController < ApplicationController
 
     permission_hash = {resource_type: permission_params[:resource_type], resource_id: permission_params[:resource_id]}
     @permission = @accessor.permissions.find_or_initialize_by(permission_hash)
+
     @permission.access = @permission.access || Permission.accesses[:read]
 
     respond_to do |format|
       if @permission.save
-        @accessor.access_resource(@permission.resource, :read)
         audit(@permission, "grant", " for #{@permission.resource.class.to_s} #{@permission.resource.id}" )
         format.html { redirect_to send("#{@resource_name}_path", @permission.resource), notice: 'Permission was successfully created.' }
 
@@ -52,6 +52,10 @@ class PermissionsController < ApplicationController
   def update
     respond_to do |format|
       authorize @resource, :update?
+
+      if !PermissionPolicy.new(current_user,  @permission).update?
+        raise Pundit::NotAuthorizedError, "not allowed to create? this #{@service_template.inspect}"
+      end
 
       if @permission.update(permission_params)
         audit(@permission, "grant", " #{@permission.access} for #{@permission.resource.class.to_s} #{@permission.resource.id}" )

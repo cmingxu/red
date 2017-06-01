@@ -1,5 +1,6 @@
 class ContainersController < NodesController
   ACTIONS = %w(start stop kill restart pause resume remove)
+  before_action :set_breadcrumb
 
   def index
     @containers = Docker::Container.all(all: true)

@@ -1,5 +1,6 @@
 class ServicesController < ApplicationController
   before_action :set_service, only: [:show, :update, :destroy, :compose_chose, :download_compose, :favorite]
+  before_action :set_breadcrumb
 
   def index
     if params[:owner_type] == "Group"
@@ -113,5 +114,13 @@ class ServicesController < ApplicationController
 
   def service_params
     params.require(:service).permit(:name, :desc, :compose_content)
+  end
+
+  def set_breadcrumb
+    @breadcrumb_list = [OpenStruct.new(name_zh_cn: "全部服务", name_en: "Services", path: services_path)]
+
+    if @service
+      @breadcrumb_list.push OpenStruct.new(name_zh_cn: @service.name, name_en: @service.name, path: service_path(@service))
+    end
   end
 end

@@ -41,7 +41,7 @@ zh-CN:
     unfavorite: "取消置顶"
     new_group: "新增用户组"
     new_user: "新增用户"
-    update_group: "更新组信息"
+    update_group: "修改组信息"
     quota: "配额"
     create_accessor: "授权"
     audits: "审计"
@@ -55,6 +55,8 @@ zh-CN:
     tasks_and_containers: "任务&容器"
     permissions: "协作者"
     owner_chooser_prompt: "选择目标"
+    delete_confirm: "确定要删除"
+    updated: "最后更新"
   nav:
     host: "主机"
     nodes: "主机"
@@ -127,6 +129,8 @@ zh-CN:
     restart_confirm: "重启应用？"
     update_version: "更新到新版本"
     start_app: "启动应用"
+    instances: "实例数"
+    resources: "资源"
   service:
     new_app: "新增应用"
     new_service: "新增服务"
@@ -145,6 +149,8 @@ zh-CN:
     compose: "服务编排文件"
     all_services: "所有服务"
     my_services: "由我创建"
+    app_list: "列表"
+    app_chart: "图表"
 
   group:
     new_group: "新用户组"
@@ -202,6 +208,8 @@ zh-CN:
     entity: "对象"
     action: "操作"
 
+  permission:
+    placeholder: '用户名 或者 组名称'
 
 
 

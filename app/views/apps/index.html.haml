@@ -1,14 +1,1 @@
-%h3 所有应用
-
-%table{class: table_classes}
-  %thead
-    %tr
-      %th= t('xx')
-      %th 标签
-      %th 大小
-      %th 创建时间
-
-  %tbody
-    - @apps.each do |app|
-      %tr
-        %td= link_to app.name
+= render :partial => "apps/list", locals: { apps: @apps }

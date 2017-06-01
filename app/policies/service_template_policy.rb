@@ -21,6 +21,10 @@ class ServiceTemplatePolicy < ApplicationPolicy
     end
   end
 
+  def update?
+      user.union_writeable_service_templates.include? record
+  end
+
   def destroy?
     user.adminable_service_templates.include? record
   end

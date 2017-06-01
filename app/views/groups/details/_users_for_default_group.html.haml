@@ -46,5 +46,4 @@
             = drop_down_menu :default, t("common.actions") do
               = drop_down_menu_item t("common.edit"), edit_user_path(user)
               = drop_down_menu_item t("common.remove"), leave_group_user_path(group, user), data: { confirm: t("common.remove") }
-              = drop_down_menu_item fa_icon(:trash) + "  " + t("common.delete_user"), group_user_path(group, user), data: { confirm: t("common.remove") }, method: :delete
 

@@ -1,5 +1,6 @@
 class VersionsController < ApplicationController
   before_action :set_version, only: [:show, :edit, :update, :destroy]
+  before_action :set_breadcrumb
 
   # GET /versions
   # GET /versions.json

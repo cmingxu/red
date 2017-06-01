@@ -75,10 +75,10 @@
           %td.text-center
             = drop_down_menu :default, t("common.actions") do
               - if current_user.can_write?(service)
-                = drop_down_menu_item t("common.copy"), new_service_app_path(service, app_id: app.id), data: { turbolinks: false }
+                = drop_down_menu_item fa_icon(:copy) + " " + t("common.copy"), new_service_app_path(service, app_id: app.id), data: { turbolinks: false }
                 = drop_down_menu_item_sepeartor
               - if current_user.can_write?(service)
-                = drop_down_menu_item t("common.remove"), service_app_path(service, app), method: :delete, data: { confirm: t("app.remove_confirm")}
+                = drop_down_menu_item fa_icon(:trash) + " " + t("common.remove"), service_app_path(service, app), method: :delete, data: { confirm: t("app.remove_confirm")}
 
 
 = paginate @services

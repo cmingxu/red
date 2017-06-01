@@ -1,5 +1,6 @@
 class ServiceTemplatesController < ApplicationController
   before_action :set_service_template, only: [:show, :edit, :update, :destroy]
+  before_action :set_breadcrumb
 
   # GET /service_templates
   # GET /service_templates.json
@@ -44,6 +45,7 @@ class ServiceTemplatesController < ApplicationController
   def create
     @owner  = owner_from_request || current_user
     @service_template = @owner.service_templates.new(service_template_params)
+
 
     if !ServiceTemplatePolicy.new(current_user,  @service_template, @owner).create?
       raise Pundit::NotAuthorizedError, "not allowed to create? this #{@service_template.inspect}"
@@ -107,5 +109,13 @@ class ServiceTemplatesController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def service_template_params
     params.require(:service_template).permit(:name, :icon, :group_id, :user_id, :raw_config, :desc, :readme)
+  end
+
+  def set_breadcrumb
+    @breadcrumb_list = [OpenStruct.new(name_zh_cn: "全部模板", name_en: "Service Templates", path: service_templates_path)]
+
+    if @service_template
+      @breadcrumb_list.push OpenStruct.new(name_zh_cn: @service_template.name, name_en: @service_template.name, path: service_template_path(@service_template))
+    end
   end
 end

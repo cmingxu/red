@@ -5,6 +5,8 @@
       %label.btn.btn-default.btn-file.col-sm-12
         = f.input :icon, input_html: { style: "display: none;" }, label: fa_icon(:plus) + " " + t('common.upload_icon')
     .col-md-8
+      .form-group
+        %h4= @service_template.owner.try :display
       = f.input :name, label: false, hint: t('service_template.name_hint')
       = f.input :desc, label: false, hint: t('service_template.desc_hint')
 

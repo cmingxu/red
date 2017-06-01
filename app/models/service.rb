@@ -14,6 +14,7 @@
 
 class Service < ApplicationRecord
   include Accessible
+  include Auditable
   include FriendlyId
   friendly_id :slug, use: [:slugged, :finders]
   before_save do
