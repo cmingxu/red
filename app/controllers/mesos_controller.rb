@@ -9,4 +9,7 @@ class MesosController < SystemController
       Mesos.new(leader: "http://114.55.130.152:5050").state
     end
   end
+
+  def set_breadcrumb
+  end
 end

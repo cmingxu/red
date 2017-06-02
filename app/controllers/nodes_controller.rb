@@ -93,11 +93,11 @@ class NodesController < ApplicationController
     @breadcrumb_list = [OpenStruct.new(name_zh_cn: "全部节点", name_en: "Nodes", path: nodes_path)]
 
     if @node
-      @breadcrumb_list.push OpenStruct.new(name_zh_cn: @node.name, name_en: @node.name, path: service_path(@node))
+      @breadcrumb_list.push OpenStruct.new(name_zh_cn: @node.id, name_en: @node.id, path: service_path(@node))
     end
 
     if @app
-      @breadcrumb_list.push OpenStruct.new(name_zh_cn: @app.name, name_en: @app.name, path: service_app_path(@service, @app))
+      @breadcrumb_list.push OpenStruct.new(name_zh_cn: @app.id, name_en: @app.id, path: service_app_path(@service, @app))
     end
   end
 end
