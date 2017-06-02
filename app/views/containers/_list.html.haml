@@ -8,6 +8,7 @@
         %th CMD
         %th IP
         %th 端口
+        %th 
         %th 名称
   
     %tbody
@@ -16,12 +17,12 @@
         %tr
           %td= link_to truncate(con.id, length: 12), node_container_path(node, c.id)
           %td
-            .label.label-primary= con.state
-            = con.status
-          %td= con.image
+            = container_state_helper con.state
+          %td= truncate(con.image, length: 30)
           %td= con.command
           %td= con.ip
           %td= con.port
+          %td= con.status
           %td= link_to con.name, node_container_path(node, c.id)
 
 

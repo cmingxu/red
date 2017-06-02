@@ -101,10 +101,19 @@ module ApplicationHelper
 
   end
 
+  def info_show_helper hash, classes = []
+    classes.unshift 'dl-horizontal'
+    content_tag(:dl, class: classes.join(" ")) do
+      hash.each_pair do |k,v|
+        concat content_tag(:dt, k)
+        concat content_tag(:dd, v)
+      end
+    end
+  end
+
   def graphna_panel name, panelId, interval = 5.minutes, width = 450, height = 100, refresh = 5
     path =  graphna_path + "#{name}?refresh=#{refresh}s&orgId=1&panelId=#{panelId}&from=#{(Time.now - interval).to_i * 1000}&to=#{Time.now.to_i * 1000}&theme=light"
 
       "<iframe src='#{path}' width='#{width}' height='#{height}' frameborder='0'> </iframe>".html_safe
     end
-
 end

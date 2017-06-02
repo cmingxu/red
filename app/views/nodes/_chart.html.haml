@@ -1,4 +1,4 @@
-.row
+= panel_item t("node.statistics"), :server do
   .col-md-2
     = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_cpu_load][:id], 5.minutes, 170, 100)
   .col-md-2

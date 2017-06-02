@@ -1,4 +1,6 @@
 = render :partial => "nodes/chart"
+= render :partial => "nodes/node_info", locals: { info: info }
+= render :partial => "nodes/node_summary", locals: { info: info, volumes: volumes, networks: networks }
 = render :partial => "containers/list", locals: { containers: containers, node: node }
 = render :partial => "volumes/list", locals: { node: node, volumes: volumes }
 

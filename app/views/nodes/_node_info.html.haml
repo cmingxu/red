@@ -1,0 +1,52 @@
+= panel_item t("node.basic_info"), :server do
+  = info_show_helper info.to_hash.slice("Name", "ServerVersion", "NCPU", "MemTotal")
+  %hr
+
+  .row
+    .summary-section.col-md-6
+      .media.col-md-8
+        .media-left.text-center
+          = fa_icon(:server, class: "fa-3x")
+        .media-body
+          .media-heading
+            %p=info['Containers']
+            = t("node.containers")
+      .col-md-4
+        %p
+          %strong= info['ContainersRunning']
+          = t("container.running")
+        %p
+          %strong= info['ContainersStopped']
+          = t("container.stoppted")
+
+    .summary-section.col-md-6
+      .media.col-md-8
+        .media-left.text-center
+          = fa_icon(:cogs, class: "fa-3x")
+        .media-body
+          .media-heading
+            %p=info['Images']
+            = t("node.docker_images")
+      .col-md-4
+
+  %hr
+  .row
+    .summary-section.col-md-6
+      .media.col-md-8
+        .media-left.text-center
+          = fa_icon(:server, class: "fa-3x")
+        .media-body
+          .media-heading
+            %p= volumes.length
+            = t("node.volumes")
+      .col-md-4
+
+    .summary-section.col-md-6
+      .media.col-md-8
+        .media-left.text-center
+          = fa_icon(:server, class: "fa-3x")
+        .media-body
+          .media-heading
+            %p= networks.length
+            = t("node.networks")
+      .col-md-4

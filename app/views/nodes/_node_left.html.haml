@@ -1,12 +1,13 @@
 .list-group.group-list
-  - nodes.each do |node|
-    %a.list-group-item.group_item.active{href: node_path(node)}
-      %h4.list-group-item-heading= node.hostname
-      .list-group-item-text
-        %span.text-muted= node.state
-        %span.text-muted= node.hostname
-        %span.text-muted
-          2 core
-        %span.text-muted
-          1024 M
+  - 10.times do
+    - nodes.each do |node|
+      %a.list-group-item.group_item{href: node_path(node)}
+        %h4.list-group-item-heading= node.hostname
+        .list-group-item-text
+          %span.text-muted= node.state
+          %span.text-muted= node.hostname
+          %span.text-muted
+            2 core
+          %span.text-muted
+            1024 M
 

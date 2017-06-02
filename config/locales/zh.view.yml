@@ -211,6 +211,12 @@ zh-CN:
   permission:
     placeholder: '用户名 或者 组名称'
 
+  node:
+    docker_images: "镜像"
+    volumes: "存储卷"
+    networks: "网络"
+    containers: "容器"
+
 
 
 

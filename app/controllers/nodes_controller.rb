@@ -10,6 +10,8 @@ class NodesController < ApplicationController
     @nodes = Node.page params[:page]
     @containers = Docker::Container.all(all: true)
     @volumes = Docker::Volume.all(all: true)
+    @networks = Docker::Network.all(all: true)
+    @info = Docker::info
   end
 
   # GET /nodes/1
@@ -17,6 +19,8 @@ class NodesController < ApplicationController
   def show
     @containers = Docker::Container.all(all: true)
     @volumes = Docker::Volume.all(all: true)
+    @networks = Docker::Network.all(all: true)
+    @info = Docker::info
   end
 
   # GET /nodes/new

@@ -2,8 +2,5 @@
   = render :partial => "mesos/slave", locals: { slave: slave } if !Node.exists?(hostname: slave['hostname'])
 
 
-- node = @node || @nodes.first
-- if node
-  = render :partial => "nodes/show", locals: { containers: @containers, nodes: @nodes, volumes: @volumes, node: node }
 
 
