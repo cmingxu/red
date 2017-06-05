@@ -14,13 +14,13 @@ module ContainersHelper
 
   def container_actions
     [
-      {action: "start", display: "启动", icon: "", btn_suffix: "success"},
-      {action: "stop", display: "停止", icon: "", btn_suffix: "danger"},
+      {action: "start", display: "启动", icon: "play", btn_suffix: "success"},
+      {action: "stop", display: "停止", icon: "stop", btn_suffix: "danger"},
       {action: "kill", display: "杀死", icon: "", btn_suffix: "danger"},
-      {action: "restart", display: "重启", icon: "", btn_suffix: "primary"},
-      {action: "pause", display: "暂停", icon: "", btn_suffix: "primary"},
-      {action: "resume", display: "恢复", icon: "", btn_suffix: "primary"},
-      {action: "remove", display: "移除", icon: "", btn_suffix: "danger"},
+      {action: "restart", display: "重启", icon: "play", btn_suffix: "primary"},
+      {action: "pause", display: "暂停", icon: "pause", btn_suffix: "primary"},
+      {action: "resume", display: "恢复", icon: "start", btn_suffix: "primary"},
+      {action: "remove", display: "移除", icon: "trash", btn_suffix: "danger"},
     ]
   end
 end

@@ -8,19 +8,11 @@ class NodesController < ApplicationController
   def index
     @state = mesos_state
     @nodes = Node.page params[:page]
-    @containers = Docker::Container.all(all: true)
-    @volumes = Docker::Volume.all(all: true)
-    @networks = Docker::Network.all(all: true)
-    @info = Docker::info
   end
 
   # GET /nodes/1
   # GET /nodes/1.json
   def show
-    @containers = Docker::Container.all(all: true)
-    @volumes = Docker::Volume.all(all: true)
-    @networks = Docker::Network.all(all: true)
-    @info = Docker::info
   end
 
   # GET /nodes/new
@@ -94,7 +86,7 @@ class NodesController < ApplicationController
   end
 
   def set_breadcrumb
-    @breadcrumb_list = [OpenStruct.new(name_zh_cn: "全部节点", name_en: "Nodes", path: nodes_path)]
+    @breadcrumb_list = [OpenStruct.new(name_zh_cn: "全部主机", name_en: "Nodes", path: nodes_path)]
 
     if @node
       @breadcrumb_list.push OpenStruct.new(name_zh_cn: @node.id, name_en: @node.id, path: service_path(@node))

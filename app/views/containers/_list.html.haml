@@ -2,28 +2,25 @@
   %table.table.table-bordered
     %thead
       %tr
-        %th ID
-        %th 状态
-        %th 镜像
-        %th CMD
-        %th IP
-        %th 端口
+        %th= t("containers.state")
+        %th= t("containers.name")
+        %th= t("containers.image")
+        %th= t("containers.cmd")
+        %th= t("containers.ip")
+        %th= t("containers.port")
         %th 
-        %th 名称
   
     %tbody
-      - containers.each do |c|
+      - node.containers.each do |c|
         - con = parse_container(c)
         %tr
-          %td= link_to truncate(con.id, length: 12), node_container_path(node, c.id)
-          %td
-            = container_state_helper con.state
-          %td= truncate(con.image, length: 30)
+          %td= container_state_helper con.state
+          %td= link_to truncate(con.name, length: 30), node_container_path(node, id: con.id)
+          %td= link_to truncate(con.image, length: 30), node_images_path(node, id: con.image)
           %td= con.command
           %td= con.ip
           %td= con.port
           %td= con.status
-          %td= link_to con.name, node_container_path(node, c.id)
 
 
 

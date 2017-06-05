@@ -70,6 +70,7 @@ Rails.application.routes.draw do
         patch :remove
 
         get :stats
+        get :stats_json
         get :logs
         get :console
       end

@@ -1,12 +1,12 @@
 = panel_item('操作', :cogs) do
   .btn-group{role: 'group', 'aria-label':'...'}
     - container_actions.each do |action|
-      = link_to action[:display], send("#{action[:action]}_node_container_path", @node, @container.id), method: :patch, class: "btn btn-#{action[:btn_suffix]} btn-lg"
+      = link_to fa_icon(action[:icon]) + " " + action[:display], send("#{action[:action]}_node_container_path", @node, @container.id), method: :patch, class: "btn btn-#{action[:btn_suffix]} btn-lg", data: { confirm: t("common.confirm") }
 
 = panel_item('容器状态', :server) do
-  = link_to fa_icon("plus", text: "指标"), stats_node_container_path(@node, @container.id)
-  = link_to fa_icon("plus", text: "日志"), logs_node_container_path(@node, @container.id)
-  = link_to fa_icon("plus", text: "控制台"), console_node_container_path(@node, @container.id)
+  = link_to fa_icon("area-chart", text: "指标"), stats_node_container_path(@node, @container.id)
+  = link_to fa_icon("exclamation-circle", text: "日志"), logs_node_container_path(@node, @container.id)
+  = link_to fa_icon("terminal", text: "控制台"), console_node_container_path(@node, @container.id)
 
   %table.table
     %tr
@@ -21,7 +21,26 @@
 
 
 = panel_item('容器详情', :server) do
-  %table.table
+  %dl.dl-horizontal
+    %dt= t("node.images")
+    %dd= link_to @container.info["Image"], node_image_path(@node, id: @container.info["Image"])
+
+    %dt= t("node.cmd")
+    %dd= @container.info["Config"]["Cmd"].join
+
+    %dt= t("node.envs")
+    %dd
+      %table.table
+        %thead
+          %th ENV
+          %th VALUE
+        %tbody
+          - @container.info["Config"]["Env"].each do |env|
+            %tr
+              %td= env.split("=")[0]
+              %td= env.split("=")[1]
+
+
 
 = panel_item('容器存储', :cubes) do
   %table.table.table-stripped

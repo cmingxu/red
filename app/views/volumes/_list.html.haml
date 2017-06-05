@@ -5,6 +5,6 @@
         %th ID
   
     %tbody
-      - volumes.each do |volume|
+      - node.volumes.each do |volume|
         %tr
           %td= link_to volume.info["Name"], node_volume_path(node, volume.id)

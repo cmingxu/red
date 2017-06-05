@@ -1,52 +1,58 @@
 = panel_item t("node.basic_info"), :server do
-  = info_show_helper info.to_hash.slice("Name", "ServerVersion", "NCPU", "MemTotal")
+  = info_show_helper node.info.to_hash.slice("Name", "ServerVersion", "NCPU", "MemTotal")
   %hr
 
   .row
     .summary-section.col-md-6
-      .media.col-md-8
+      %a.media.col-md-8{href: node_containers_path(node) }
         .media-left.text-center
           = fa_icon(:server, class: "fa-3x")
         .media-body
           .media-heading
-            %p=info['Containers']
+            %p=node.info['Containers']
             = t("node.containers")
       .col-md-4
         %p
-          %strong= info['ContainersRunning']
+          %strong= node.info['ContainersRunning']
           = t("container.running")
         %p
-          %strong= info['ContainersStopped']
+          %strong= node.info['ContainersStopped']
           = t("container.stoppted")
 
     .summary-section.col-md-6
-      .media.col-md-8
+      %a.media.col-md-8{href: node_images_path(node) }
         .media-left.text-center
-          = fa_icon(:cogs, class: "fa-3x")
+          = fa_icon(:copy, class: "fa-3x")
         .media-body
           .media-heading
-            %p=info['Images']
+            %p=node.info['Images']
             = t("node.docker_images")
       .col-md-4
 
   %hr
   .row
     .summary-section.col-md-6
-      .media.col-md-8
+      %a.media.col-md-8{href: node_volumes_path(node) }
         .media-left.text-center
-          = fa_icon(:server, class: "fa-3x")
+          = fa_icon(:cubes, class: "fa-3x")
         .media-body
           .media-heading
-            %p= volumes.length
+            %p= node.volumes.length
             = t("node.volumes")
       .col-md-4
+        %p
+          %strong= node.info['ContainersRunning']
+          = t("container.running")
 
     .summary-section.col-md-6
-      .media.col-md-8
+      %a.media.col-md-8{href: node_networks_path(node) }
         .media-left.text-center
-          = fa_icon(:server, class: "fa-3x")
+          = fa_icon(:sitemap, class: "fa-3x")
         .media-body
           .media-heading
-            %p= networks.length
+            %p= node.networks.length
             = t("node.networks")
       .col-md-4
+        %p
+          %strong= node.info['ContainersRunning']
+          = t("container.running")

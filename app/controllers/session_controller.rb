@@ -2,7 +2,6 @@ class SessionController < ApplicationController
   layout "session"
 
   skip_before_action :login_required, except: :destroy
-  skip_before_action :set_breadcrumb
   before_action :required_not_login, except: [:destroy, :particles]
 
   def new
