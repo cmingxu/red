@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20170531025423) do
     t.datetime "updated_at",                                  null: false
     t.string   "state"
     t.string   "slug"
+    t.index ["service_id"], name: "index_apps_on_service_id"
   end
 
   create_table "audits", force: :cascade do |t|
@@ -63,6 +64,9 @@ ActiveRecord::Schema.define(version: 20170531025423) do
     t.integer  "entity_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.index ["entity_id"], name: "index_audits_on_entity_id"
+    t.index ["entity_type", "entity_id"], name: "index_audits_on_entity_type_and_entity_id"
+    t.index ["user_id"], name: "index_audits_on_user_id"
   end
 
   create_table "group_users", force: :cascade do |t|
@@ -71,6 +75,8 @@ ActiveRecord::Schema.define(version: 20170531025423) do
     t.integer  "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_group_users_on_group_id"
+    t.index ["user_id"], name: "index_group_users_on_user_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -81,6 +87,7 @@ ActiveRecord::Schema.define(version: 20170531025423) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "slug"
+    t.index ["owner_id"], name: "index_groups_on_owner_id"
   end
 
   create_table "namespaces", force: :cascade do |t|
@@ -89,7 +96,8 @@ ActiveRecord::Schema.define(version: 20170531025423) do
     t.integer  "group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "slug"
+    t.index ["group_id"], name: "index_namespaces_on_group_id"
+    t.index ["user_id"], name: "index_namespaces_on_user_id"
   end
 
   create_table "nodes", force: :cascade do |t|
@@ -107,6 +115,8 @@ ActiveRecord::Schema.define(version: 20170531025423) do
     t.integer  "accessor_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.index ["accessor_type", "accessor_id"], name: "index_permissions_on_accessor_type_and_accessor_id"
+    t.index ["resource_type", "resource_id"], name: "index_permissions_on_resource_type_and_resource_id"
   end
 
   create_table "repo_tags", force: :cascade do |t|
@@ -129,6 +139,7 @@ ActiveRecord::Schema.define(version: 20170531025423) do
     t.string   "latest_tag_name"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.index ["namespace_id"], name: "index_repositories_on_namespace_id"
   end
 
   create_table "service_templates", force: :cascade do |t|
@@ -142,6 +153,8 @@ ActiveRecord::Schema.define(version: 20170531025423) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "slug"
+    t.index ["group_id"], name: "index_service_templates_on_group_id"
+    t.index ["user_id"], name: "index_service_templates_on_user_id"
   end
 
   create_table "services", force: :cascade do |t|
@@ -153,6 +166,8 @@ ActiveRecord::Schema.define(version: 20170531025423) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "slug"
+    t.index ["group_id"], name: "index_services_on_group_id"
+    t.index ["user_id"], name: "index_services_on_user_id"
   end
 
   create_table "settings", force: :cascade do |t|
@@ -192,6 +207,7 @@ ActiveRecord::Schema.define(version: 20170531025423) do
     t.integer  "app_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["app_id"], name: "index_versions_on_app_id"
   end
 
 end

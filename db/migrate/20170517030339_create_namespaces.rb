@@ -7,5 +7,8 @@ class CreateNamespaces < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
+
+    add_index :namespaces, :user_id
+    add_index :namespaces, :group_id
   end
 end

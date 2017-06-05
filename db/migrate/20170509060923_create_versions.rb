@@ -7,5 +7,7 @@ class CreateVersions < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
+
+    add_index :versions, :app_id
   end
 end

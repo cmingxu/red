@@ -1,8 +1,8 @@
 class AddColumnSlugs < ActiveRecord::Migration[5.0]
   def change
-    add_column :services, :slug, :string
-    add_column :apps, :slug, :string
-    add_column :service_templates, :slug, :string
-    add_column :groups, :slug, :string
+    %w{services apps service_templates groups namespaces}.each do |table|
+      add_column table, :slug, :string
+      add_index table, :slug
+    end
   end
 end

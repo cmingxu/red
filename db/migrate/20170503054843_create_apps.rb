@@ -29,5 +29,7 @@ class CreateApps < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
+
+    add_index :apps, :service_id
   end
 end

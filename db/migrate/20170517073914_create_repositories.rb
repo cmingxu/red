@@ -7,5 +7,7 @@ class CreateRepositories < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
+
+    add_index :repositories, :namespace_id
   end
 end

@@ -11,5 +11,8 @@ class CreateServiceTemplates < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
+
+    add_index :service_templates, :group_id
+    add_index :service_templates, :user_id
   end
 end

@@ -9,5 +9,8 @@ class CreateServices < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
+
+  add_index :services, :group_id
+  add_index :services, :user_id
   end
 end

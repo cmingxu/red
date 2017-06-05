@@ -11,5 +11,9 @@ class CreateAudits < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
+
+    add_index :audits, :entity_id
+    add_index :audits, :user_id
+    add_index :audits, [:entity_type, :entity_id]
   end
 end
