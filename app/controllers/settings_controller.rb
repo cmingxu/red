@@ -4,4 +4,7 @@ class SettingsController < ApplicationController
 
   def group
   end
+
+  def third
+  end
 end

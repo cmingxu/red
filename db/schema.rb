@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170606020026) do
+ActiveRecord::Schema.define(version: 20170606080946) do
 
   create_table "app_links", force: :cascade do |t|
     t.integer  "service_id"
@@ -103,9 +103,13 @@ ActiveRecord::Schema.define(version: 20170606020026) do
   create_table "nodes", force: :cascade do |t|
     t.string   "hostname"
     t.string   "state"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.string   "slug"
+    t.integer  "cpu"
+    t.integer  "mem"
+    t.string   "docker_version"
+    t.string   "pubkey"
   end
 
   create_table "permissions", force: :cascade do |t|
@@ -180,6 +184,26 @@ ActiveRecord::Schema.define(version: 20170606020026) do
     t.datetime "updated_at"
     t.index ["target_type", "target_id", "var"], name: "index_settings_on_target_type_and_target_id_and_var", unique: true
     t.index ["target_type", "target_id"], name: "index_settings_on_target_type_and_target_id"
+  end
+
+  create_table "sites", force: :cascade do |t|
+    t.string   "docker_public_key"
+    t.text     "mesos_addrs"
+    t.text     "marathon_addrs"
+    t.string   "graphna_addr"
+    t.string   "mesos_state"
+    t.string   "marathon_state"
+    t.string   "graphna_state"
+    t.datetime "mesos_last_seen"
+    t.datetime "marathon_last_seen"
+    t.datetime "graphna_last_seen"
+    t.text     "changelog"
+    t.string   "version"
+    t.text     "feature_flags"
+    t.string   "mesos_leader_url"
+    t.string   "marathon_leader_url"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
   end
 
   create_table "tags", force: :cascade do |t|

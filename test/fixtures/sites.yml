@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  docker_public_key: MyString
+  mesos_addrs: MyText
+  marathon_addrs: MyText
+  graphna_addr: MyString
+  mesos_state: MyString
+  marathon_state: MyString
+  graphna_state: MyString
+
+two:
+  docker_public_key: MyString
+  mesos_addrs: MyText
+  marathon_addrs: MyText
+  graphna_addr: MyString
+  mesos_state: MyString
+  marathon_state: MyString
+  graphna_state: MyString

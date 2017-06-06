@@ -1,26 +1,25 @@
 .list-group.group-list
-  %a.list-group-item.group_item{href: groups_path(), class: true ? 'active' : ''}
+  %a.list-group-item.group_item{href: groups_path()}
     %h4.list-group-item-heading Account
     .list-group-item-text
       %span.text-muted 150 core
       %span.text-muted 150G mem
 
-  %a.list-group-item.group_item
-    %h4.list-group-item-heading Quota
+  %a.list-group-item.group_item{href: groups_path()}
+    %h4.list-group-item-heading Account
+    .list-group-item-text
+      %span.text-muted 150 core
+      %span.text-muted 150G mem
+
+  %a.list-group-item.group_item{href: groups_path()}
+    %h4.list-group-item-heading Security
     .list-group-item-text
       %span.text-muted 150 core
       %span.text-muted 150G mem
 
 
-  %a.list-group-item.group_item
-    %h4.list-group-item-heading Group
-    .list-group-item-text
-      %span.text-muted 150 core
-      %span.text-muted 150G mem
 
 
-  %a.list-group-item.group_item
-    %h4.list-group-item-heading{}= t('nav.audit')
-    .list-group-item-text
-      %span.text-muted 150 core
-      %span.text-muted 150G mem
+
+  %a.list-group-item.group_item{href: settings_third_path }
+    %h4.list-group-item-heading= t('nav.setting_mesos')

@@ -1,5 +1,6 @@
 class MesosController < SystemController
   before_action :set_breadcrumb
+
   def index
     @state = mesos_state
   end

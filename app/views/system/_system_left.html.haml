@@ -1,17 +1,17 @@
 .list-group.group-list
-  %a.list-group-item.group_item{href: mesos_path()}
+  %a.list-group-item.group_item{href: mesos_path(), class: controller_name.to_s == "mesos" ? 'active' : ""}
     %h4.list-group-item-heading Mesos
     .list-group-item-text
       %span.text-muted 150 core
       %span.text-muted 150G mem
 
-  %a.list-group-item.group_item{href: mesos_path()}
+  %a.list-group-item.group_item{href: marathon_path(), class: controller_name.to_s == "marathon" ? 'active' : ""}
     %h4.list-group-item-heading Marathon
     .list-group-item-text
       %span.text-muted 150 core
       %span.text-muted 150G mem
 
-  %a.list-group-item.group_item{href: mesos_path()}
+  %a.list-group-item.group_item{href: graphna_stats_path(), class: controller_name.to_s == "graphna" ? 'active' : ""}
     %h4.list-group-item-heading Graphna
     .list-group-item-text
       %span.text-muted 150 core

@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   get 'search/owner_search'
   get 'search/list_owner'
 
-  resources :permissions
   get 'system/index', as: :system
 
   get 'session/new', as: :new_session
@@ -11,10 +10,13 @@ Rails.application.routes.draw do
   delete 'session/destroy', as: :logout
 
   get 'settings/account', as: :setting
-  get 'settings/group', as: :setting_group
+  get 'settings/group', as: :settings_group
+  get 'settings/third', as: :settings_third
 
   post 'registry/notifications', as: :notifications
   get 'registry/token', as: :token
+
+  get 'welcome/index', as: :dashboard
 
   resources :namespaces do
     resources :permissions do
@@ -94,6 +96,12 @@ Rails.application.routes.draw do
 
   get 'welcome/index'
   get 'mesos/index', as: :mesos
+  get 'marathon/index', as: :marathon
+  get 'graphna/index', as: :graphna_stats
+
+  get 'mesos/ping', as: :ping_mesos
+  get 'marathon/ping', as: :ping_marathon
+  get 'graphna/ping', as: :ping_graphna_stats
 
   resources :services do
     resources :apps do

@@ -1,0 +1,2 @@
+module GraphnaHelper
+end

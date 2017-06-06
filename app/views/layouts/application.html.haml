@@ -35,6 +35,7 @@
 
         .navbar-collapse.collapse.navbar-responsive-collapse
           %ul.nav.navbar-nav.navbar-right
+            %li{class: navbar_nav_active_class(:dashboard) }= link_to fa_icon(:home) + " " + t('nav.dashboard'), dashboard_path
             %li{class: navbar_nav_active_class(:services) }= link_to fa_icon(:bars) + " " + t('nav.services'), services_path
             %li{class: navbar_nav_active_class(:service_templates) }= link_to t('nav.service_templates'), service_templates_path
             %li{class: navbar_nav_active_class(:namespaces) }= link_to t('nav.namespaces'), namespaces_path
