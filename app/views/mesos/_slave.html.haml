@@ -14,4 +14,4 @@
   = simple_form_for Node.new(hostname: slave['hostname']) do |form|
     = form.input :hostname, as: :hidden
   
-    = form.submit t("common.add_new_host"), class: 'btn btn-danger btn-lg', data: { confirm: t("common.confirm") }
+    = form.submit t("common.add_new_host"), class: 'btn btn-danger btn-lg', data: { confirm: t("host.add_host_confirm") }

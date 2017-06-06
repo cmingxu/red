@@ -1,0 +1,25 @@
+= panel_table t("common.networks"), :server do
+
+  %table.table
+    %thead
+      %tr
+        %th= t("node.network_name")
+        %th ID
+        %th= t("node.network_scope")
+        %th= t("node.network_driver")
+        %th= t("node.network_ipam_driver")
+        %th= t("node.network_ipam_subnet")
+        %th= t("node.network_ipam_gateway")
+  
+    %tbody
+      - node.networks.each do |network|
+        %tr
+          %td= link_to network.info["Name"], node_network_path(@node, id:  network.id)
+          %td= link_to truncate(network.info['id'], length: 30), node_network_path(@node, id: network.id)
+          %td= network.info["Scope"]
+          %td= network.info["Driver"]
+          %td= network.info["IPAM"]["Driver"]
+          %td= network.info["IPAM"]["Config"].first.try :fetch, "Subnet"
+          %td= network.info["IPAM"]["Config"].first.try :fetch, "Gateway"
+  
+  

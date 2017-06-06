@@ -10,6 +10,17 @@
 #
 
 class Node < ApplicationRecord
+  include FriendlyId
+  friendly_id :hostname, use: [:slugged, :finders]
+
+  before_save do
+    self.slug = self.hostname.gsub(".", "-")
+  end
+
+  def display
+    self.slug
+  end
+
   def info
     @info ||= Docker::info
   end

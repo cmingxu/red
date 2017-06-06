@@ -16,7 +16,7 @@
         %tr
           %td= container_state_helper con.state
           %td= link_to truncate(con.name, length: 30), node_container_path(node, id: con.id)
-          %td= link_to truncate(con.image, length: 30), node_images_path(node, id: con.image)
+          %td= link_to truncate(con.image, length: 30), node_image_path(node, id: con.image)
           %td= con.command
           %td= con.ip
           %td= con.port

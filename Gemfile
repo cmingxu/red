@@ -67,6 +67,8 @@ gem 'docker_registry2'
 
 gem 'ledermann-rails-settings'
 
+gem 'adminlte-rails'
+
 
 
 # Use Redis adapter to run Action Cable in production

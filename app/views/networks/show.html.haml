@@ -1,2 +1,45 @@
-%h1 Networks#show
-%p Find me in app/views/networks/show.html.haml
+= panel_item t("node.network_detail"), :server do
+  %dl.dl-horizontal
+    %dt= t("node.network_name")
+    %dd= @network.info["Name"]
+
+    %dt ID
+    %dd
+      = @network.info['id']
+      = link_to fa_icon('trash') + t("node.delete_network"), node_network_path(@node, id: @network.info['id']), class: 'btn btn-danger', method: :delete, data: { confirm: t("node.delete_network" ) }
+
+    %dt= t("node.network_driver")
+    %dd= @network.info['Driver']
+
+    %dt= t("node.network_scope")
+    %dd= @network.info['Scope']
+
+    %dt= t("node.network_ipam_driver")
+    %dd= @network.info["IPAM"]['Driver']
+
+    %dt= t("node.network_ipam_subnet")
+    %dd= @network.info["IPAM"]["Config"].first.try :fetch, "Subnet"
+
+    %dt= t("node.network_ipam_gateway")
+    %dd= @network.info["IPAM"]["Config"].first.try :fetch, "Gateway"
+
+
+= panel_table t("common.connected_containers"), :server do
+
+  %table.table
+    %thead
+      %tr
+        %th= t("node.container_name")
+        %th IPv4
+        %th IPv6
+        %th= t("node.macaddr")
+        %th
+
+    %tbody
+      - @network.info["Containers"].each_pair  do |id, container|
+        %tr
+          %td= link_to container["Name"], node_container_path(@node, id:  id)
+          %td= container['IPv4Address']
+          %td= container['IPv6Address']
+          %td= container['MacAddress']
+          %td= link_to t("node.leave_from_network"), leave_from_network_node_network_path(@node, id: id), method: :delete, data: { confirm: t("node.leave_from_network") }, class: 'btn btn-danger'

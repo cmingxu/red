@@ -45,7 +45,7 @@ zh-CN:
     quota: "配额"
     create_accessor: "授权"
     audits: "审计"
-    add_new_host: "发现新节点"
+    add_new_host: "发现新主机"
     new_namespace: "新增项目"
     upload_icon: "上传图片"
     create_accessor: "增加协作者"
@@ -57,6 +57,7 @@ zh-CN:
     owner_chooser_prompt: "选择目标"
     delete_confirm: "确定要删除"
     updated: "最后更新"
+    quota_change_confirm: "确认修改配额?"
   nav:
     host: "主机"
     nodes: "主机"
@@ -217,6 +218,14 @@ zh-CN:
     volumes: "存储卷"
     networks: "网络"
     containers: "容器"
+    name_a_tag: "新标签"
+    image_tag: "标签"
+    image_registry: "仓库"
+    tag_submit: "提交"
+    image_tags: "标签"
+
+  host:
+    add_host_confirm: "确认增加新主机？"
 
 
 

@@ -1,10 +1,17 @@
-= panel_table t("common.volume"), :server do
-  %table{class: table_classes}
+= panel_table t("common.volumes"), :server do
+
+  %table.table
     %thead
       %tr
-        %th ID
+        %th= t("node.volume_name")
+        %th= t("node.volume_driver")
+        %th= t("node.volume_mountpoint")
   
     %tbody
       - node.volumes.each do |volume|
         %tr
-          %td= link_to volume.info["Name"], node_volume_path(node, volume.id)
+          %td= volume.info["Name"]
+          %td= volume.info["Driver"]
+          %td= volume.info["Mountpoint"]
+  
+  

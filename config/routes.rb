@@ -75,8 +75,18 @@ Rails.application.routes.draw do
         get :console
       end
     end
-    resources :images, only: [:index, :show]
-    resources :networks, only: [:index, :show]
+    resources :images, only: [:index, :show] do
+      member do
+        patch :push
+        patch :pull
+        post  :tag
+      end
+    end
+    resources :networks, only: [:index, :show] do
+      member do
+        delete :leave_from_network
+      end
+    end
     resources :volumes, only: [:index, :show]
   end
 

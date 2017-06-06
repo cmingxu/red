@@ -13,6 +13,7 @@
  *= require_tree .
  *= require font-awesome
  *= require bootstrap-markdown.min
+ *= require admin-lte
  *= require_self
  */
 
