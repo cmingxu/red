@@ -51,6 +51,7 @@
           %ul.sidebar-menu.tree{data: { widget: 'tree' }}
             %li.header
             = sidebar_li_helper :dashboard, :home, t("nav.dashboard"), dashboard_path, false, {"red": "new"}
+            = sidebar_li_helper :service_templates, :copy, t("nav.service_templates"), service_templates_path
             = sidebar_li_helper :services, :bars, t("nav.services"), services_path
             = sidebar_li_helper :namespaces, :copy, t("nav.namespaces"), namespaces_path, false, {"green": "4"}
             = sidebar_li_helper :hosts, :server, t("nav.nodes"), nodes_path
@@ -58,9 +59,12 @@
             %li.header= t("nav.setting")
             = sidebar_li_helper :system, :cogs, t("nav.system"), system_path, true do
               %ul.treeview-menu
-                = sidebar_li_helper :mesos, :server, t("nav.mesos"), mesos_path
-                = sidebar_li_helper :marathon, :server, t("nav.marathon"), marathon_path
-                = sidebar_li_helper :graphna, :server, t("nav.graphna"), graphna_stats_path
+                = sidebar_li_helper :mesos, 'circle-thin', t("nav.mesos"), mesos_path
+                = sidebar_li_helper :marathon, 'circle-thin', t("nav.marathon"), marathon_path
+                = sidebar_li_helper :graphna, 'circle-thin', t("nav.graphna"), graphna_stats_path
+
+            = sidebar_li_helper :audits, :users, t("nav.audits"), audits_path
+            = sidebar_li_helper :setting, :cogs, t("nav.setting"), setting_path
 
       .content-wrapper
         .content-header
@@ -70,7 +74,7 @@
               %small= page_request_meta_info[:panel_header_and_icon][:text_small]
           - if need_breadcrumb
             = render :partial => "widgets/breadcrumb"
-            
+
         .content
           = bootstrap_flash
           = render :partial => "widgets/owner_chooser"

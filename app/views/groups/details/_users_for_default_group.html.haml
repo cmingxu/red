@@ -1,49 +1,51 @@
-= link_to fa_icon(:plus) + " " + t("group.new_group_user"), "#newUser", class: 'btn btn-primary btn-sm pull-right', data: { toggle: 'modal' }
-= modal_dialog id: "newUser", header: { show_close: true, dismiss: 'modal', title: t('user.new_user') }, body:   { content: render(:partial => "users/form", locals: { group: @group, user: @group.users.new, siteadmin_require: true, groupadmin_require: false }) }, footer: { content: '' }
-.clearfix
+= box_helper "warning" do
+  = box_header_helper t("common.user") do
+    .box-tools.pull-right
+      = link_to fa_icon(:plus) + " " + t("group.new_group_user"), "#newUser", class: danger_btn_helper, data: { toggle: 'modal' }
+      = modal_dialog id: "newUser", header: { show_close: true, dismiss: 'modal', title: t('user.new_user') }, body:   { content: render(:partial => "users/form", locals: { group: @group, user: @group.users.new, siteadmin_require: true, groupadmin_require: false }) }, footer: { content: '' }
 
-= panel_table t("common.user"), :user do
-  %table.table.table-bordered.table-hover
-    %thead
-      %th= t("user.name")
-      %th= t("user.email")
-      %th= t("user.groups")
-      %th= t("common.service")
-      %th= t("common.quota")
-      %th
+  = box_body_helper do
+    %table.table
+      %thead
+        %th= t("user.name")
+        %th= t("user.email")
+        %th= t("user.groups")
+        %th= t("common.service")
+        %th= t("common.quota")
+        %th
 
-    - group.users.order_by_role.each do |user|
-      - if user.persisted?
-        %tr
-          %td
-            = image_tag user.icon.thumb.try(:url) || "user-profile.png", class: 'user-profile-thumb'
-            = user.display
-            - if user.site_admin?
-              = fa_icon('user-circle')
+      - group.users.order_by_role.each do |user|
+        - if user.persisted?
+          %tr
+            %td
+              = image_tag user.icon.thumb.try(:url) || "user-profile.png", class: 'user-profile-thumb'
+              = user.display
+              - if user.site_admin?
+                = fa_icon('user-circle')
 
-          %td= user.email
-          %td
-            - user.groups_without_default.order('created_at ASC').each do |g|
-              = link_to g.name, group_path(g)
-          %td= user.services.length
-          %td
-            %span
-              = link_to update_quota_cpu_group_user_path(group,user), class: 'btn btn-default btn-sm', method: :patch, data: {prompt: {title: t("common.update_quota_cpu"), name: "value", "value": user.settings(:quota).cpu} } do
-                = fa_icon(:edit)
-                %strong= user.settings(:quota).cpu
-                core
-            %span
-              = link_to update_quota_mem_group_user_path(group,user), class: 'btn btn-default btn-sm', method: :patch, data: {prompt: {title: t("common.update_quota_mem"), name: "value", "value": user.settings(:quota).mem} } do
-                = fa_icon(:edit)
-                %strong= user.settings(:quota).mem
-                M
-            %span
-              = link_to update_quota_disk_group_user_path(group,user), class: 'btn btn-default btn-sm', method: :patch, data: {prompt: {title: t("common.update_quota_disk"), name: "value", "value": user.settings(:quota).disk} } do
-                = fa_icon(:edit)
-                %strong= user.settings(:quota).disk
-                G
-          %td
-            = drop_down_menu :default, t("common.actions") do
-              = drop_down_menu_item t("common.edit"), edit_user_path(user)
-              = drop_down_menu_item t("common.remove"), leave_group_user_path(group, user), data: { confirm: t("common.remove") }
+            %td= user.email
+            %td
+              - user.groups_without_default.order('created_at ASC').each do |g|
+                = link_to g.name, group_path(g)
+            %td= user.services.length
+            %td
+              %span
+                = link_to update_quota_cpu_group_user_path(group,user), class: 'btn btn-default btn-sm', method: :patch, data: {prompt: {title: t("common.update_quota_cpu"), name: "value", "value": user.settings(:quota).cpu} } do
+                  = fa_icon(:edit)
+                  %strong= user.settings(:quota).cpu
+                  core
+              %span
+                = link_to update_quota_mem_group_user_path(group,user), class: 'btn btn-default btn-sm', method: :patch, data: {prompt: {title: t("common.update_quota_mem"), name: "value", "value": user.settings(:quota).mem} } do
+                  = fa_icon(:edit)
+                  %strong= user.settings(:quota).mem
+                  M
+              %span
+                = link_to update_quota_disk_group_user_path(group,user), class: 'btn btn-default btn-sm', method: :patch, data: {prompt: {title: t("common.update_quota_disk"), name: "value", "value": user.settings(:quota).disk} } do
+                  = fa_icon(:edit)
+                  %strong= user.settings(:quota).disk
+                  G
+            %td
+              = drop_down_menu :default, t("common.actions") do
+                = drop_down_menu_item t("common.edit"), edit_user_path(user)
+                = drop_down_menu_item t("common.remove"), leave_group_user_path(group, user), data: { confirm: t("common.remove") }
 
