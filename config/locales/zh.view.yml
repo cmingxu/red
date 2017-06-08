@@ -134,6 +134,7 @@ zh-CN:
     start_app: "启动应用"
     instances: "实例数"
     resources: "资源"
+    app_form_title: "编辑应用"
   service:
     new_app: "新增应用"
     new_service: "新增服务"

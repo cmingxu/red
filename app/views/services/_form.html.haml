@@ -1,16 +1,19 @@
+= box_helper "green" do
+  = simple_form_for @service do |form|
+    = box_header_helper "", :server do
+      .box-tools.pull-right
+        = form.submit t("common.submit"), class: 'btn btn-danger btn-flat btn-sm'
+        = link_to t("common.cancel"), services_path, class: 'btn btn-default btn-flat btn-sm'
 
-= simple_form_for @service do |form|
-  = form.input :name, label: t("service.name"), hint: "eg. Wordpress"
-  = form.input :desc, as: :text, label: t("service.desc"), hint: "eg. my first dataman app"
-  = form.input :compose_content, as: :text, label: false, input_html: { id: "compose_content" }
+    = box_body_helper do
+      = form.input :name, label: t("service.name"), hint: "eg. Wordpress"
+      = form.input :desc, as: :text, label: t("service.desc"), hint: "eg. my first dataman app"
+      = form.input :compose_content, as: :text, label: false, input_html: { id: "compose_content" }
 
-  = hidden_field_tag "owner_type", params[:owner_type]
-  = hidden_field_tag "owner_id", params[:owner_id]
+      = hidden_field_tag "owner_type", params[:owner_type]
+      = hidden_field_tag "owner_id", params[:owner_id]
 
-  %label.btn.btn-default.btn-file
-    = form.input :compose, as: :file, input_html: { style: "display: none;", onchange: 'openFile(event)' }, label: fa_icon(:plus) + " " + t('service.compose'), hint: "lanuch service with previously saved compose"
+      %label.btn.btn-default.btn-file
+        = form.input :compose, as: :file, input_html: { style: "display: none;", onchange: 'openFile(event)' }, label: fa_icon(:plus) + " " + t('service.compose'), hint: "lanuch service with previously saved compose"
 
 
-  .actions
-    = form.submit t("common.submit"), class: btn_classes
-    = link_to t("common.cancel"), services_path

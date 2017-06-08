@@ -19,59 +19,76 @@
       = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"
     = yield :custom_assets
 
-  %body{class: controller_name}
-    .turbolinks-progress-bar.text-center
-      %p
-        %i.fa.fa-cog.fa-spin.fa-4x.fa-fw
-    .navbar-inverse.navbar-default.navbar-static-top.dark-bg
-      .container-fluid
-        %button.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse")
-          %span.icon-bar
-          %span.icon-bar
-          %span.icon-bar
-        %a.navbar-brand(href="/")
-          %h3 Shipyard
-          -#= image_tag "logo-shurenyun-ico2.svg"
+  %body{class: [controller_name, "skin-blue", "sidebar-mini"].join(" ") }
+    .wrapper{style: 'min-height: 960px'}
+      %header.main-header
+        %a.logo{href: root_path}
+          %span.logo-mini
 
-        .navbar-collapse.collapse.navbar-responsive-collapse
-          %ul.nav.navbar-nav.navbar-right
-            %li{class: navbar_nav_active_class(:dashboard) }= link_to fa_icon(:home) + " " + t('nav.dashboard'), dashboard_path
-            %li{class: navbar_nav_active_class(:services) }= link_to fa_icon(:bars) + " " + t('nav.services'), services_path
-            %li{class: navbar_nav_active_class(:service_templates) }= link_to t('nav.service_templates'), service_templates_path
-            %li{class: navbar_nav_active_class(:namespaces) }= link_to t('nav.namespaces'), namespaces_path
-            %li{class: navbar_nav_active_class(:nodes) }= link_to t('nav.host'), nodes_path
-            %li{class: navbar_nav_active_class(:groups) }= link_to t('nav.groups'), groups_path
-            %li{class: navbar_nav_active_class(:system) }= link_to t('nav.system'), system_path
-            = drop_down fa_icon(:user) + " #{current_user.display}" do
-              = menu_item t('nav.setting'), setting_path
-              = menu_item t('nav.audits'), audits_path if current_user.site_admin?
-              = menu_item t('nav.logout'), logout_path, method: :delete
-              = drop_down_divider
-              = menu_item fa_icon(:language) + " " + desired_language, toggle_locale_path, remote: true, method: :put
+          %span.logo-lg
+            = image_tag "logo-shurenyun-ico2.svg", height: 28
+            -#= "Ship Yard"
+        %nav.navbar.navbar-static-top
+          .container-fluid
+            %button.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse")
+              %span.icon-bar
+              %span.icon-bar
+              %span.icon-bar
 
-    .container-fluid.main
-      .row
-        .col-lg-12
+            .navbar-collapse.collapse.navbar-responsive-collapse
+              %ul.nav.navbar-nav.navbar-right
+                %li{class: navbar_nav_active_class(:system) }= link_to t('nav.system'), system_path
+                = drop_down fa_icon(:user) + " #{current_user.display}" do
+                  = menu_item t('nav.setting'), setting_path
+                  = menu_item t('nav.audits'), audits_path if current_user.site_admin?
+                  = menu_item t('nav.logout'), logout_path, method: :delete
+                  = drop_down_divider
+                  = menu_item fa_icon(:language) + " " + desired_language, toggle_locale_path, remote: true, method: :put
+
+
+      %aside.main-sidebar
+        %section.sidebar
+          %ul.sidebar-menu.tree{data: { widget: 'tree' }}
+            %li.header
+            = sidebar_li_helper :dashboard, :home, t("nav.dashboard"), dashboard_path, false, {"red": "new"}
+            = sidebar_li_helper :services, :bars, t("nav.services"), services_path
+            = sidebar_li_helper :namespaces, :copy, t("nav.namespaces"), namespaces_path, false, {"green": "4"}
+            = sidebar_li_helper :hosts, :server, t("nav.nodes"), nodes_path
+            = sidebar_li_helper :groups, :users, t("nav.groups"), groups_path
+            %li.header= t("nav.setting")
+            = sidebar_li_helper :system, :cogs, t("nav.system"), system_path, true do
+              %ul.treeview-menu
+                = sidebar_li_helper :mesos, :server, t("nav.mesos"), mesos_path
+                = sidebar_li_helper :marathon, :server, t("nav.marathon"), marathon_path
+                = sidebar_li_helper :graphna, :server, t("nav.graphna"), graphna_stats_path
+
+      .content-wrapper
+        .content-header
+          - if page_request_meta_info[:panel_header_and_icon][:text]
+            %h1
+              = t("nav.#{page_request_meta_info[:panel_header_and_icon][:text]}")
+              %small= page_request_meta_info[:panel_header_and_icon][:text_small]
+          - if need_breadcrumb
+            = render :partial => "widgets/breadcrumb"
+            
+        .content
           = bootstrap_flash
           = render :partial => "widgets/owner_chooser"
 
-          -if need_breadcrumb
-            = render :partial => "widgets/breadcrumb"
-          = panel_item(t("nav.#{page_request_meta_info[:panel_header_and_icon][:text]}"),
-            page_request_meta_info[:panel_header_and_icon][:icon]) do
-            - if controller.class.ancestors.include? NodesController
-              .row
-                .col-md-4.col-lg-2
-                  = render :partial => "nodes/node_left", locals: {nodes: @nodes}
-                .col-md-8.col-lg-10#node_details
-                  = yield
-            - elsif controller.class.ancestors.include? SystemController
-              .row
-                .col-md-4.col-lg-2
-                  = render :partial => "system/system_left"
-                .col-md-8.col-lg-10#system_details
-                  = yield
-            - else
-              = yield
-      %footer
+          - if controller.class.ancestors.include? NodesController
+            .row
+              .col-md-4.col-lg-2
+                = render :partial => "nodes/node_left", locals: {nodes: @nodes}
+              .col-md-8.col-lg-10#node_details
+                = yield
+          - elsif controller.class.ancestors.include? SystemController
+            .row
+              .col-md-4.col-lg-2
+                = render :partial => "system/system_left"
+              .col-md-8.col-lg-10#system_details
+                = yield
+          - else
+            = yield
+
+      %footer.main-footer
         %p &copy; Company 2017

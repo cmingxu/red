@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def io_icon icon, classes = ""
+    content_tag(:i, " ", class: "ion ion-#{icon}")
+  end
+
   def panel_table(title, icon, anchor = "", style = 'default', &block)
     content_tag(:div, class: "panel panel-#{style}") do
       content_tag(:div, class: 'panel-heading') do
@@ -34,7 +38,7 @@ module ApplicationHelper
   def drop_down_menu(style = :danger, display = "Actions", &block)
     id = SecureRandom.hex(10)
     content_tag(:div, class: 'dropdown') do
-        content_tag(:button,  "Actions", class: "btn btn-#{style} dropdown-toggle", 'data-toggle': 'dropdown', type: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false', id: id) do
+        content_tag(:button,  "Actions", class: "btn btn-#{style} dropdown-toggle btn-sm btn-flat", 'data-toggle': 'dropdown', type: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false', id: id) do
           raw(
             display + "&nbsp;&nbsp;" +
             content_tag(:span, "", class: 'caret')
@@ -56,8 +60,12 @@ module ApplicationHelper
     content_tag(:li, "", class: 'divider', role: 'seperator')
   end
 
+  def sidebar_li_active?(navbar)
+    page_request_meta_info[:active_navbar_item].to_s == navbar.to_s
+  end
+
   def navbar_nav_active_class(navbar)
-    page_request_meta_info[:active_navbar_item] == navbar ? 'active' : ''
+    page_request_meta_info[:active_navbar_item].to_s == navbar.to_s ? 'active' : ''
   end
 
   def need_breadcrumb
@@ -107,6 +115,47 @@ module ApplicationHelper
       hash.each_pair do |k,v|
         concat content_tag(:dt, k)
         concat content_tag(:dd, v)
+      end
+    end
+  end
+
+  def box_helper color = "default", &block
+    content_tag :div, class: "box box-#{color}" do
+      capture &block if block_given?
+    end
+  end
+
+  def box_header_helper title = "", icon = "cogs", &block
+    content_tag :div, class: "box-header with-border" do
+      concat content_tag(:h4, fa_icon(icon) + " " +title, class: 'box-title')
+      concat(capture &block) if block_given?
+    end
+  end
+
+  def box_body_helper &block
+    content_tag :div, class: "box-body" do
+      capture &block if block_given?
+    end
+  end
+
+  def sidebar_li_helper id, icon, text, link, is_tree = false, extra_labels = {}, &block
+    classes = []
+    classes.push("tree") if is_tree
+    classes.push("menu-open") if is_tree
+    classes.push("active") if is_tree
+    classes.push("active") if sidebar_li_active?(id)
+
+    content_tag(:li, class: classes.join(" ")) do
+      content_tag(:a, href: link, data: { turbolinks: false }) do
+        concat(fa_icon(icon))
+        concat(content_tag(:span, text))
+        concat(content_tag(:span, class: "pull-right-container") {
+          concat(fa_icon('angle-left', class: 'pull-right')) if is_tree
+          extra_labels.each_pair do |color, value|
+            concat(content_tag(:small, value, class: "label bg-#{color}"))
+          end
+        })
+        concat(capture(&block)) if block_given?
       end
     end
   end

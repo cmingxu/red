@@ -1,12 +1,11 @@
-.action_bar
-  .pull-left
-    = link_to fa_icon(:plus) + " " + t('common.new_namespace'), new_namespace_path, class: 'btn btn-primary', data: { prompt: { title: t("common.new_namespace"), name: "owner", type: "choose_owner"} }, method: :get
-  .clearfix
+= box_helper "success" do
+  = box_header_helper "", :server do
+    .box-tools.pull-right
+      = link_to fa_icon(:plus) + " " + t('common.new_namespace'), new_namespace_path, class: 'btn btn-primary btn-danger btn-sm btn-flat', data: { prompt: { title: t("common.new_namespace"), name: "owner", type: "choose_owner"} }, method: :get
 
-.row
-  .col-md-4.col-lg-2
+
+  = box_body_helper do
     = render :partial => "namespaces/namespace_left", locals: { namespaces: @namespaces }
-  .col-md-8.col-lg-10
     = render :partial => "widgets/list_place_holder" if @namespaces.empty?
     - if @namespaces.first.present?
       = render :partial => "permissions/list", locals: { permissions: @namespaces.first.permissions, permission: @namespaces.first.permissions.new, resource: @namespaces.first }

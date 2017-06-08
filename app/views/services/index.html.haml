@@ -1,84 +1,82 @@
-.action_bar
-  .pull-left
-    = link_to fa_icon(:plus) + " " + t("service.new_service"), new_service_path, class: 'btn btn-primary', data: { prompt: { title: t("common.owner_chooser_prompt"), name: "owner", type: "choose_owner"} }, method: :get
+= box_helper "success" do
+  = box_header_helper "", :server do
+    .box-tools.pull-right
+      = link_to raw("#{t('service.all_services')} #{badge(current_user.readable_services.length)}"), services_path, class: 'btn btn-sm btn-default btn-flat'
+      = link_to raw("#{t('service.my_services')} #{badge(current_user.services.length)}") , services_path(owner_type: "User", owner_id: current_user.id), class: 'btn btn-sm btn-default btn-flat'
+      - current_user.groups_without_default.each do |group|
+        = link_to raw("#{group.name} #{badge(group.readable_services.length, :green)}") , services_path(owner_type: "Group", owner_id: group.id), class: 'btn btn-sm btn-default btn-flat'
+      = link_to fa_icon(:plus) + " " + t("service.new_service"), new_service_path, class: 'btn btn-danger btn-sm btn-flat', data: { prompt: { title: t("common.owner_chooser_prompt"), name: "owner", type: "choose_owner"} }, method: :get
 
-  .pull-right
-    = link_to raw("#{t('service.all_services')} #{badge(current_user.readable_services.length)}"), services_path, class: 'btn btn-sm btn-success rounded'
-    = link_to raw("#{t('service.my_services')} #{badge(current_user.services.length)}") , services_path(owner_type: "User", owner_id: current_user.id), class: 'btn btn-sm btn-success rounded'
-    - current_user.groups_without_default.each do |group|
-      = link_to raw("#{group.name} #{badge(group.readable_services.length, :default)}") , services_path(owner_type: "Group", owner_id: group.id), class: 'btn btn-sm btn-success rounded'
+  = box_body_helper do
+    = render :partial => "widgets/list_place_holder" if @services.empty?
 
-  .clearfix
-
-= render :partial => "widgets/list_place_holder" if @services.empty?
-
-- @services.each do |service|
-  .service_section
-    %table.table.service_table.table-bordered.table-hover.toggleable-table{class: "service_table service_#{service.id}", id: "service_#{service.id}"}
-      %tr.service_tr
-        %td{colspan: 2}
-          %span.text-bigger.text-primary.toggleable-table-handle
-            = "#{fa_icon(:plus)} #{service.name}".html_safe
-
-          %span.pull-right
-            %p.text-muted
-              = fa_icon service.owner.default_icon
-              = service.owner.display
-
-        %td.text-center= t("common.versions")
-        %td.text-center{style: "width: 400px;"}
-          %p.text-bigger= service.apps.length
-          %p
-            %span.text-muted= t('active_record.app.model_name')
-            %span.text-primary= link_to fa_icon(:refresh), "", onclick: "", data: {service_id: "service_#{service.id}" }, class: 'service_refresh_app_state_icon'
-        %td.text-center
-          = drop_down_menu :primary, t("common.actions") do
-            = drop_down_menu_item t("nav.open_in_new_window"), service_path(service), target: '_blank'
-            - if policy(service).update?
-              = drop_down_menu_item t("service.new_app"), new_service_app_path(service), data: { turbolinks: false }
-
-            = drop_down_menu_item_sepeartor
-            = drop_down_menu_item fa_icon(:copy) + " " + t("common.save_as_template"), new_service_template_path(service_id: service), data: { prompt: { title: t("common.owner_chooser_prompt"), name: "owner", type: "choose_owner"} }, method: :get
-            - if policy(service).update?
-              - if service.favorite?
-                = drop_down_menu_item fa_icon(:star) + " " + t("common.favorite"), favorite_service_path(service), method: :put, data: { confirm: t("common.favorite") }
-              - else
-                = drop_down_menu_item fa_icon(:star) + " " + t("common.unfavorite"), favorite_service_path(service), method: :put, data: { confirm: t("common.unfavorite") }
-
-            = drop_down_menu_item t("common.download_compose"), compose_chose_service_path(service)
-            = drop_down_menu_item_sepeartor
-            - if policy(service).destroy?
-              = drop_down_menu_item fa_icon(:trash, class: 'text-danger') + " " + t("common.remove"), service_path(service), method: :delete, data: { confirm: t("common.confirm") }
-
-      - service.apps.each do |app|
-        %tr.app_tr{style: 'display: none;'}
-          %td
-            %strong
-              = link_to app.name, service_path(service, app_id: app.id)
-          %td
-            %span.text-muted
-              = t('common.image')
-              \:
-            = app.image
-          %td
-            %span.text-muted
-              = t('common.versions')
-              \:
-
-            = link_to raw(app.current_version.name + " " + fa_icon('check-square')), edit_service_app_path(service, app, version_id: app.current_version.id), data: { turbolinks: false }, class: 'btn btn-sm btn-default'
-            - (app.versions - [app.current_version])[0..3].each do |version|
-              = link_to version.name, edit_service_app_path(service, app, version_id: version.id), data: { turbolinks: false }, class: 'btn btn-default btn-sm'
-            - if app.versions.length > 3
-              = link_to fa_icon('angle-double-right'), detail_service_app_path(service, app, anchor: "versions")
-          %td.text-center{class: "app_state app_state_#{app.id}", data: { 'app-state-path': backend_state_service_app_path(service, app)}}
-            = fa_icon("cog", class: "fa-spin fa-2x")
-          %td.text-center
-            = drop_down_menu :default, t("common.actions") do
-              - if current_user.can_write?(service)
-                = drop_down_menu_item fa_icon(:copy) + " " + t("common.copy"), new_service_app_path(service, app_id: app.id), data: { turbolinks: false }
+    - @services.each do |service|
+      .service_section
+        %table.table.service_table.table-bordered.table-hover.toggleable-table{class: "service_table service_#{service.id}", id: "service_#{service.id}"}
+          %tr.service_tr
+            %td{colspan: 2}
+              %span.text-bigger.text-primary.toggleable-table-handle
+                = "#{fa_icon(:plus)} #{service.name}".html_safe
+    
+              %span.pull-right
+                %p.text-muted
+                  = fa_icon service.owner.default_icon
+                  = service.owner.display
+    
+            %td.text-center= t("common.versions")
+            %td.text-center{style: "width: 400px;"}
+              %p.text-bigger= service.apps.length
+              %p
+                %span.text-muted= t('active_record.app.model_name')
+                %span.text-primary= link_to fa_icon(:refresh), "", onclick: "", data: {service_id: "service_#{service.id}" }, class: 'service_refresh_app_state_icon'
+            %td.text-center
+              = drop_down_menu :default, t("common.actions") do
+                = drop_down_menu_item t("nav.open_in_new_window"), service_path(service), target: '_blank'
+                - if policy(service).update?
+                  = drop_down_menu_item t("service.new_app"), new_service_app_path(service), data: { turbolinks: false }
+    
                 = drop_down_menu_item_sepeartor
-              - if current_user.can_write?(service)
-                = drop_down_menu_item fa_icon(:trash) + " " + t("common.remove"), service_app_path(service, app), method: :delete, data: { confirm: t("app.remove_confirm")}
-
-
-= paginate @services
+                = drop_down_menu_item fa_icon(:copy) + " " + t("common.save_as_template"), new_service_template_path(service_id: service), data: { prompt: { title: t("common.owner_chooser_prompt"), name: "owner", type: "choose_owner"} }, method: :get
+                - if policy(service).update?
+                  - if service.favorite?
+                    = drop_down_menu_item fa_icon(:star) + " " + t("common.favorite"), favorite_service_path(service), method: :put, data: { confirm: t("common.favorite") }
+                  - else
+                    = drop_down_menu_item fa_icon(:star) + " " + t("common.unfavorite"), favorite_service_path(service), method: :put, data: { confirm: t("common.unfavorite") }
+    
+                = drop_down_menu_item t("common.download_compose"), compose_chose_service_path(service)
+                = drop_down_menu_item_sepeartor
+                - if policy(service).destroy?
+                  = drop_down_menu_item fa_icon(:trash, class: 'text-danger') + " " + t("common.remove"), service_path(service), method: :delete, data: { confirm: t("common.confirm") }
+    
+          - service.apps.each do |app|
+            %tr.app_tr{style: 'display: none;'}
+              %td
+                %strong
+                  = link_to app.name, service_path(service, app_id: app.id)
+              %td
+                %span.text-muted
+                  = t('common.image')
+                  \:
+                = app.image
+              %td
+                %span.text-muted
+                  = t('common.versions')
+                  \:
+    
+                = link_to raw(app.current_version.name + " " + fa_icon('check-square')), edit_service_app_path(service, app, version_id: app.current_version.id), data: { turbolinks: false }, class: 'btn btn-sm btn-default'
+                - (app.versions - [app.current_version])[0..3].each do |version|
+                  = link_to version.name, edit_service_app_path(service, app, version_id: version.id), data: { turbolinks: false }, class: 'btn btn-default btn-sm'
+                - if app.versions.length > 3
+                  = link_to fa_icon('angle-double-right'), detail_service_app_path(service, app, anchor: "versions")
+              %td.text-center{class: "app_state app_state_#{app.id}", data: { 'app-state-path': backend_state_service_app_path(service, app)}}
+                = fa_icon("cog", class: "fa-spin fa-2x")
+              %td.text-center
+                = drop_down_menu :default, t("common.actions") do
+                  - if current_user.can_write?(service)
+                    = drop_down_menu_item fa_icon(:copy) + " " + t("common.copy"), new_service_app_path(service, app_id: app.id), data: { turbolinks: false }
+                    = drop_down_menu_item_sepeartor
+                  - if current_user.can_write?(service)
+                    = drop_down_menu_item fa_icon(:trash) + " " + t("common.remove"), service_app_path(service, app), method: :delete, data: { confirm: t("app.remove_confirm")}
+    
+    
+    = paginate @services

@@ -1,8 +1,4 @@
 .row
-  .col-md-12.text-right
-    = link_to fa_icon(:plus) + " " + t("common.new_group"), new_group_path, class: 'btn btn-primary'
-
-.row
   .col-md-4.col-lg-2
     = render :partial => "groups/group_left", locals: { groups: @groups }
 

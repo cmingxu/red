@@ -5,6 +5,7 @@
     "angularjs": "1.6.4",
     "axios": "latest",
     "peity": "latest",
-    "particles.js": "latest"
+    "particles.js": "latest",
+    "adminlte": "latest"
   }
 }

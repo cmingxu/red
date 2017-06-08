@@ -1,9 +1,13 @@
-= simple_form_for(@namespace) do |form|
-  = form.input :name, label: t("namespace.name"), hint: "eg. library"
+= box_helper "green" do
+  = simple_form_for(@namespace) do |form|
+    = box_header_helper "", :server do
+      .box-tools.pull-right
+        = form.submit t("common.submit"), class: 'btn btn-danger btn-sm btn-flat'
+        = link_to t("common.cancel"), namespaces_path, class: 'btn btn-success btn-sm btn-flat'
 
-  = hidden_field_tag "owner_type", params[:owner_type]
-  = hidden_field_tag "owner_id", params[:owner_id]
+    = box_body_helper do
+      = form.input :name, label: t("namespace.name"), hint: "eg. library"
 
-  .actions
-    = form.submit t("common.submit"), class: btn_classes
-    = link_to t("common.cancel"), namespaces_path
+      = hidden_field_tag "owner_type", params[:owner_type]
+      = hidden_field_tag "owner_id", params[:owner_id]
+

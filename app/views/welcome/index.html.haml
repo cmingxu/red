@@ -1,7 +1,20 @@
 .row.number
 
+.row
+  .col-md-3
+    = render :partial => "widgets/info_widget", locals: {color: :green, num: 3, what: "CPU", icon: :server, link:  nodes_path}
+
+  .col-md-3
+    = render :partial => "widgets/info_widget", locals: {color: :red, num: 3, what: "CPU", icon: :server, link:  nodes_path}
+
+  .col-md-3
+    = render :partial => "widgets/info_widget", locals: {color: :warning, num: 3, what: "CPU", icon: :server, link:  nodes_path}
+
+  .col-md-3
+    = render :partial => "widgets/info_widget", locals: {color: :warning, num: 3, what: "CPU", icon: :copy, link:  nodes_path}
+
+
 .row.statistics
-  %h4 资源使用率
   .col-md-6
     =  line_chart sample_data, {height: 170}
   .col-md-6
@@ -13,3 +26,4 @@
     镜像TOP5
   .col-md-6.top_audits
     审计事件
+
