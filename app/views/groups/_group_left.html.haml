@@ -1,10 +1,15 @@
-.list-group.group-list
-  - groups.each do |group|
-    %a.list-group-item.group_item{href: group.is_default? ? groups_path : group_path(group), class: group.id == @group.id ? 'active' : ''}
-      %h4.list-group-item-heading
-        = image_tag group.icon.thumb.try(:url) || "placeholder.png"
-        = group.name
-      - if group.desc
-        .list-group-item-text
-          %span.text-muted= group.desc.truncate(35)
-          %strong= group.owner.display
+= link_to fa_icon(:plus) + " " + t("common.new_group"), new_group_path, class: 'btn btn-danger btn-block margin-bottom'
+= box_helper "solid" do
+  = box_header_helper t("group.all_groups"), "" do
+    .box-tools.pull-right
+      = button_tag class: 'btn btn-box-tool', data: { widget: 'collapse' } do
+        = fa_icon(:plus)
+
+  = box_body_helper do
+    %ul.nav.nav-pills.nav-stacked
+      - groups.each do |group|
+        %li{class: group == @group ? 'active' : ''}
+          %a{href: group.is_default? ? groups_path : group_path(group), class: group.id == @group.id ? 'active' : '' }
+            = image_tag group.icon.thumb.try(:url) || "placeholder.png", height: 30
+            = group.name
+            %small.label.label-primary.pull-right= group.owner.display

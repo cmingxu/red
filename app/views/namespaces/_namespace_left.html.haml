@@ -1,7 +1,14 @@
-.list-namespace.namespace-list
-  - namespaces.each do |namespace|
-    %a.list-group-item.group_item{href:  namespace_path(namespace)}
-      %h4.list-group-item-heading
-        = namespace.name
-      .list-group-item-text
-        %span.text-muted= namespace.owner.display
+= box_helper "solid" do
+  = box_header_helper t("namespace.all_namespaces"), "" do
+    .box-tools.pull-right
+      = button_tag class: 'btn btn-box-tool', data: { widget: 'collapse' } do
+        = fa_icon(:plus)
+
+  = box_body_helper do
+    %ul.nav.nav-pills.nav-stacked
+      - namespaces.each do |namespace|
+        %li{class: namespace == @namespace ? 'active' : ''}
+          %a{href: namespace_path(namespace) }
+            = fa_icon("inbox")
+            = namespace.name
+            %small.label.label-primary.pull-right= namespace.repositories.count

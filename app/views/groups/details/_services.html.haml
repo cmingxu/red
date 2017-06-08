@@ -1,15 +1,15 @@
-.clearfix
+= box_helper "danger" do
+  = box_header_helper t("common.service")
+  = box_body_helper do
+    %table.table
+      %thead
+        %td= t("service.name")
+        %td= t("service.desc")
+        %td= t("common.application")
 
-= panel_table t("common.service"), :cogs do
-  %table.table.table-bordered
-    %thead
-      %td= t("service.name")
-      %td= t("service.desc")
-      %td= t("common.application")
-
-    - group.services.each do |service|
-      %tr
-        %td= link_to service.name, service_path(service)
-        %td= service.desc.truncate(40)
-        %td= service.apps.length
+      - group.services.each do |service|
+        %tr
+          %td= link_to service.name, service_path(service)
+          %td= service.desc.truncate(40)
+          %td= service.apps.length
 

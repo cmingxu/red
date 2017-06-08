@@ -162,6 +162,7 @@ zh-CN:
     new_group_user: "新增用户"
     name: "组名称"
     desc: "描述"
+    all_groups: "全部组"
 
   user:
     role: "角色"
@@ -207,6 +208,8 @@ zh-CN:
     repository_name: "镜像名称"
     repo_tags: "标签"
     pull_count: "下载次数"
+    repositories: "镜像"
+    all_namespaces: "项目列表"
 
   audit:
     entity: "对象"

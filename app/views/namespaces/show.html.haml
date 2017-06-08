@@ -1,22 +1,27 @@
 .row
-  .col-md-12.text-right
-    = link_to fa_icon(:plus) + " " + t('common.new_namespace'), new_namespace_path, class: 'btn btn-primary', data: { prompt: { title: t("common.prompt"), name: "owner", type: "choose_owner"} }, method: :get
-
-.row
-  .col-md-4.col-lg-2
+  .col-md-3
+    = link_to fa_icon(:plus) + " " + t('common.new_namespace'), new_namespace_path, class: 'btn btn-primary btn-danger btn-sm btn-block margin-bottom', data: { prompt: { title: t("common.new_namespace"), name: "owner", type: "choose_owner"} }, method: :get
     = render :partial => "namespaces/namespace_left", locals: { namespaces: @namespaces }
-  .col-md-8.col-lg-10
+  .col-md-9
+    = box_helper "warning" do
+      = box_header_helper t("namespace.repositories"), :server
+      = box_body_helper do
+        = render :partial => "widgets/list_place_holder" if @namespaces.empty?
+        - if @namespace.present?
+          %table.table
+            %thead
+              %th= t("namespace.repository_name")
+              %th= t("namespace.repo_tags")
+
+            %tbody
+              - @namespace.repositories.each do |repository|
+                %tr
+                  %td= repository.name
+                  %td
+                    - repository.repo_tags.each do |repo_tag|
+                      = link_to badge(rand(100), :success) + repo_tag.name, class: 'btn btn-default'
+
+      .margin-bottom
+
     = render :partial => "permissions/list", locals: { permissions: @namespace.permissions, permission: @namespace.permissions.new, resource: @namespace }
 
-    %table.table
-      %thead
-        %th= t("namespace.repository_name")
-        %th= t("namespace.repo_tags")
-
-      %tbody
-        - @namespace.repositories.each do |repository|
-          %tr
-            %td= repository.name
-            %td
-              - repository.repo_tags.each do |repo_tag|
-                = link_to badge(rand(100), :success) + repo_tag.name, class: 'btn btn-default'

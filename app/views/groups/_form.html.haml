@@ -1,9 +1,11 @@
-= simple_form_for(group, multiple: true) do |f|
-  = f.input :name, label: t('group.name'), hint: "eg. 开发部，运维部"
-  = f.input :desc, as: :text, label: t('group.desc'), hint: "eg. 负责线上事务"
-  
-  %label.btn.btn-default.btn-file
-    = f.input :icon, input_html: { style: "display: none;" }, label: fa_icon(:plus) + " " + t('common.upload_icon')
+= box_helper "green" do
+  = simple_form_for(@group) do |f|
+    = box_header_helper "", :server do
+      .box-tools.pull-right
+        = f.button :submit, t("group.new_group"), class: danger_btn_helper
 
-  .actions
-    = f.button :submit, t("group.new_group"), class: btn_classes
+    = box_body_helper do
+      = f.input :name, label: t('group.name'), hint: "eg. 开发部，运维部"
+      = f.input :desc, as: :text, label: t('group.desc'), hint: "eg. 负责线上事务"
+      %label.btn.btn-default.btn-file
+        = f.input :icon, input_html: { style: "display: none;" }, label: fa_icon(:plus) + " " + t('common.upload_icon')

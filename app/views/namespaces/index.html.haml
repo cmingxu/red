@@ -1,24 +1,27 @@
-= box_helper "success" do
-  = box_header_helper "", :server do
-    .box-tools.pull-right
-      = link_to fa_icon(:plus) + " " + t('common.new_namespace'), new_namespace_path, class: 'btn btn-primary btn-danger btn-sm btn-flat', data: { prompt: { title: t("common.new_namespace"), name: "owner", type: "choose_owner"} }, method: :get
-
-
-  = box_body_helper do
+.row
+  .col-md-3
+    = link_to fa_icon(:plus) + " " + t('common.new_namespace'), new_namespace_path, class: 'btn btn-primary btn-danger btn-sm btn-block margin-bottom', data: { prompt: { title: t("common.new_namespace"), name: "owner", type: "choose_owner"} }, method: :get
     = render :partial => "namespaces/namespace_left", locals: { namespaces: @namespaces }
-    = render :partial => "widgets/list_place_holder" if @namespaces.empty?
-    - if @namespaces.first.present?
-      = render :partial => "permissions/list", locals: { permissions: @namespaces.first.permissions, permission: @namespaces.first.permissions.new, resource: @namespaces.first }
-      %table.table
-        %thead
-          %th= t("namespace.repository_name")
-          %th= t("namespace.repo_tags")
+  .col-md-9
+    = box_helper "warning" do
+      = box_header_helper t("namespace.repositories"), :server
+      = box_body_helper do
+        = render :partial => "widgets/list_place_holder" if @namespaces.empty?
+        - if @namespaces.first.present?
+          %table.table
+            %thead
+              %th= t("namespace.repository_name")
+              %th= t("namespace.repo_tags")
 
-        %tbody
-          - @namespaces.first.repositories.each do |repository|
-            %tr
-              %td= repository.name
-              %td
-                - repository.repo_tags.each do |repo_tag|
-                  = link_to badge(rand(100), :success) + repo_tag.name, class: 'btn btn-default'
+            %tbody
+              - @namespaces.first.repositories.each do |repository|
+                %tr
+                  %td= repository.name
+                  %td
+                    - repository.repo_tags.each do |repo_tag|
+                      = link_to badge(rand(100), :success) + repo_tag.name, class: 'btn btn-default'
+
+      .margin-bottom
+
+    = render :partial => "permissions/list", locals: { permissions: @namespaces.first.permissions, permission: @namespaces.first.permissions.new, resource: @namespaces.first }
 

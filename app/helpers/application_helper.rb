@@ -160,6 +160,14 @@ module ApplicationHelper
     end
   end
 
+  def danger_btn_helper
+    "btn btn-danger btn-sm btn-flat"
+  end
+
+  def success_btn_helper
+    "btn btn-success btn-sm btn-flat"
+  end
+
   def graphna_panel name, panelId, interval = 5.minutes, width = 450, height = 100, refresh = 5
     path =  graphna_path + "#{name}?refresh=#{refresh}s&orgId=1&panelId=#{panelId}&from=#{(Time.now - interval).to_i * 1000}&to=#{Time.now.to_i * 1000}&theme=light"
 
