@@ -63,7 +63,7 @@ zh-CN:
     nodes: "主机"
     infra: "基础"
     account: "账号"
-    services: "服务"
+    services: "服务&应用"
     system: "系统"
     service_templates: "应用商店"
     namespaces: "镜像&CD"

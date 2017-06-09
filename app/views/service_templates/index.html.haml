@@ -1,22 +1,21 @@
-= render :partial => "widgets/list_place_holder" if @service_templates.empty?
-
-- @service_templates.each do |temp|
-  .template_holder.col-md-3.col-lg-2.text-center
-    %a.template_holder{href: edit_service_template_path(temp)}
-      .thumbnail
-        = image_tag(temp.icon.try(:small).try(:url) || "placeholder.png", class: "card-image-top", height: 200, style: 'height: 200px;')
-        .caption
-          %h4= temp.name
-          %small.text-muted
-            = temp.updated_at.to_s(:short)
-            = fa_icon('dot-circle-o')
-            = temp.owner.display
-          %p= temp.desc.truncate(50, seperator: "...")
-
-        .service_template_action
-          = link_to fa_icon(:copy) + " " + t("common.new_service"), new_service_path(service_template_id: temp.id), class: 'btn btn-primary col-md-6', data: { prompt: { title: t("common.prompt"), name: "owner", type: "choose_owner"} }, method: :get
-          = link_to fa_icon(:edit) + " " +  t("common.detail"), service_template_path(temp), class: 'btn btn-default col-md-6'
-
-
-.clearfix
-= paginate @service_templates
+= box_helper "success" do
+  = box_header_helper "", :server do
+    .box-tools.pull-right
+      = paginate @service_templates
+  = box_body_helper do
+    = render :partial => "widgets/list_place_holder" if @service_templates.empty?
+    - @service_templates.each do |temp|
+      .template_holder.col-md-3.col-lg-2.text-center
+        %a.template_holder{href: edit_service_template_path(temp)}
+          .thumbnail
+            = image_tag(temp.icon.try(:small).try(:url) || "placeholder.png", class: "card-image-top", height: 200, style: 'height: 200px;')
+            .caption
+              %h4= temp.name
+              %small.text-muted
+                = temp.updated_at.to_s(:short)
+                = fa_icon('dot-circle-o')
+                = temp.owner.display
+              %p= temp.desc.truncate(50, seperator: "...")
+            .service_template_action
+              = link_to fa_icon(:copy) + " " + t("common.new_service"), new_service_path(service_template_id: temp.id), class: 'btn btn-sm btn-success btn-flat col-md-6', data: { prompt: { title: t("common.prompt"), name: "owner", type: "choose_owner"} }, method: :get
+              = link_to fa_icon(:edit) + " " +  t("common.detail"), service_template_path(temp), class: 'btn btn-default btn-sm btn-flat'

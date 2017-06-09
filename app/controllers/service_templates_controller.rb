@@ -78,7 +78,7 @@ class ServiceTemplatesController < ApplicationController
 
     respond_to do |format|
       if @service_template.update(service_template_params)
-        format.html { redirect_to edit_service_template_path(@service_template), notice: 'Service template was successfully updated.' }
+        format.html { redirect_to service_template_path(@service_template), notice: 'Service template was successfully updated.' }
         format.json { render :show, status: :ok, location: @service_template }
       else
         format.html { render :edit }

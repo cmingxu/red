@@ -51,8 +51,8 @@
           %ul.sidebar-menu.tree{data: { widget: 'tree' }}
             %li.header
             = sidebar_li_helper :dashboard, :home, t("nav.dashboard"), dashboard_path, false, {"red": "new"}
-            = sidebar_li_helper :service_templates, :copy, t("nav.service_templates"), service_templates_path
             = sidebar_li_helper :services, :bars, t("nav.services"), services_path
+            = sidebar_li_helper :service_templates, :copy, t("nav.service_templates"), service_templates_path
             = sidebar_li_helper :namespaces, :copy, t("nav.namespaces"), namespaces_path, false, {"green": "4"}
             = sidebar_li_helper :hosts, :server, t("nav.nodes"), nodes_path
             = sidebar_li_helper :groups, :users, t("nav.groups"), groups_path

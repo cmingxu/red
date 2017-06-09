@@ -160,8 +160,8 @@ module ApplicationHelper
     end
   end
 
-  def danger_btn_helper
-    "btn btn-danger btn-sm btn-flat"
+  def danger_btn_helper defaults = []
+    "btn btn-danger btn-sm btn-flat" + " " + defaults.join(" ")
   end
 
   def success_btn_helper
