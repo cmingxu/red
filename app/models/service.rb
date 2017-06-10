@@ -18,7 +18,7 @@ class Service < ApplicationRecord
   include FriendlyId
   friendly_id :slug, use: [:slugged, :finders]
   before_save do
-    self.slug = PinYin.of_string(self.name).join('-').downcase
+    self.slug = PinYin.of_string(self.name.gsub(/[-_@\s]/, " ")).join('-').downcase
   end
 
   attr_accessor :compose, :compose_content

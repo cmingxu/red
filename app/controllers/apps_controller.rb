@@ -91,7 +91,7 @@ class AppsController < ApplicationController
 
   def restart
     audit(@app, "restart", @app.name)
-    @app.start
+    @app.restart
   end
 
   def stop

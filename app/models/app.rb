@@ -37,13 +37,16 @@ class App < ApplicationRecord
   PROTECTED_ATTRIBUTES = %w(id created_at updated_at raw_config service_id current_version_id backend)
   CONFIG_ATTRIBUTES = ["cpu", "mem", "disk", "cmd", "args", "priority", "runas", "constraints", "image", "network", "portmappings", "force_image", "privileged", "env", "volumes", "uris", "gateway", "health_check"]
 
+  MARATHON = "marathon"
+  SWAN = "swan"
+
   class Task; attr_accessor :id, :agentId, :ip, :created_at end
 
   include Auditable
   include FriendlyId
   friendly_id :slug, use: [:slugged, :finders]
   before_save do
-    self.slug = PinYin.of_string(self.name).join('-').downcase
+    self.slug = PinYin.of_string(self.name.gsub(/[-_@\s]/, " ")).join('-').downcase
   end
 
   include AASM
@@ -115,77 +118,12 @@ class App < ApplicationRecord
     self.state
   end
 
-  def run(version = nil)
-    version ||= self.versions.last
-    begin
-      Marathon::App.create self.with_version(version).marathon_hash.merge!("instances": 0)
-      (self.current_version = version) && self.save
-      self.backend_run!
-    rescue Marathon::Error::MarathonError => e
-      puts e
-      puts e.details
-    rescue Marathon::Error::UnexpectedResponseError => e
-      puts e
-      puts e.details
-    end
+  before_save do
+    self.backend = MARATHON
   end
 
-  def stop
-    begin
-      Marathon::App.delete self.marathon_app_name
-      self.backend_stop!
-    rescue Marathon::Error::NotFoundError => e
-      Rails.logger.debug e
-    end
+  delegate :marathon_app_name, :run, :stop, :marathon_app, :suspend, :restart, :change, :rollback, :scale, :marathon_hash, :container_hash, to: :backend_instance
 
-    if self.service.apps.running.present?
-      begin
-        Marathon::Group.delete self.service.name
-      rescue Marathon::Error::NotFoundError => e
-        Rails.logger.debug e
-      end
-    end
-  end
-
-  def suspend
-    marathon_app.suspend!
-  end
-
-  def restart
-    marathon_app.restart!
-  end
-
-  def change(version)
-    version ||= self.versions.last
-    begin
-      self.marathon_app.change! self.with_version(version).marathon_hash
-      self.current_version = version
-    rescue Marathon::Error::MarathonError => e
-      puts e
-      puts e.details
-    rescue Marathon::Error::UnexpectedResponseError => e
-      puts e
-      puts e.details
-    else
-      self.save
-    end
-  end
-
-  def rollback(version)
-    marathon_app.roll_back! version
-  end
-
-  def scale(ins = 1)
-    begin
-      marathon_app.scale! ins
-    rescue Marathon::Error::MarathonError => e
-      puts e
-      puts e.details
-    rescue Marathon::Error::UnexpectedResponseError => e
-      puts e
-      puts e.details
-    end
-  end
 
   def cpu_used
     0
@@ -203,15 +141,12 @@ class App < ApplicationRecord
     0
   end
 
-
-  def marathon_app_name
-    self.service.slug + "/" + self.slug
-  end
-
-  def marathon_app
-    begin
-      Marathon::App.get self.marathon_app_name
-    rescue Marathon::Error::NotFoundError => e
+  def backend_instance
+    case self.backend
+    when MARATHON
+      Backend::Marathon.new self
+    when SWAN
+      Backend::Swan.new self
     end
   end
 
@@ -221,40 +156,6 @@ class App < ApplicationRecord
     end
 
     self
-  end
-
-  def marathon_hash
-    marathon_hash = {
-      id: self.marathon_app_name,
-      cpus: self.cpu.to_f,
-      mem: self.mem,
-      instances: self.instances,
-      #executor: "",
-      container: self.container_hash,
-      env: self.env,
-      labels: self.labels,
-      #fetch: self.uris.map {|u| { "uri": u }},
-      healthChecks: [ ]
-    }
-
-    if self.cmd.present?
-      marathon_hash[:cmd] = self.cmd
-    end
-
-    marathon_hash
-  end
-
-  def container_hash
-    {
-      type: "DOCKER",
-      docker: {
-      image: self.image,
-      network: self.network.upcase,
-      privileged: self.privileged,
-      #portMappings: self.portmappings,
-    },
-    volumes: self.volumes,
-    }
   end
 
   def set_raw_config(post_raw = "")
