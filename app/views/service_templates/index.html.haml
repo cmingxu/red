@@ -17,5 +17,5 @@
                 = temp.owner.display
               %p= temp.desc.truncate(50, seperator: "...")
             .service_template_action
-              = link_to fa_icon(:copy) + " " + t("common.new_service"), new_service_path(service_template_id: temp.id), class: 'btn btn-sm btn-success btn-flat col-md-6', data: { prompt: { title: t("common.prompt"), name: "owner", type: "choose_owner"} }, method: :get
+              = link_to fa_icon(:copy) + " " + t("common.new_service"), new_service_path(service_template_id: temp.id), class: 'btn btn-sm btn-danger btn-flat col-md-6', data: { prompt: { title: t("common.prompt"), name: "owner", type: "choose_owner"} }, method: :get
               = link_to fa_icon(:edit) + " " +  t("common.detail"), service_template_path(temp), class: 'btn btn-default btn-sm btn-flat'

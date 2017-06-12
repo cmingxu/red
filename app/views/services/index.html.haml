@@ -1,5 +1,5 @@
 = box_helper "success" do
-  = box_header_helper "", :server do
+  = box_header_helper t('nav.services'), :bars do
     .box-tools.pull-right
       = link_to raw("#{t('service.all_services')} #{badge(current_user.readable_services.length)}"), services_path, class: 'btn btn-sm btn-default btn-flat'
       = link_to raw("#{t('service.my_services')} #{badge(current_user.services.length)}") , services_path(owner_type: "User", owner_id: current_user.id), class: 'btn btn-sm btn-default btn-flat'
