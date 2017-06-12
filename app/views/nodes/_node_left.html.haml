@@ -1,13 +1,15 @@
-.list-group.group-list
-  - 10.times do
-    - nodes.each do |node|
-      %a.list-group-item.group_item{href: node_path(node)}
-        %h4.list-group-item-heading= node.hostname
-        .list-group-item-text
-          %span.text-muted= node.state
-          %span.text-muted= node.hostname
-          %span.text-muted
-            2 core
-          %span.text-muted
-            1024 M
+= box_helper "solid" do
+  = box_header_helper t("node.all_nodes"), "" do
+    .box-tools.pull-right
+      = button_tag class: 'btn btn-box-tool', data: { widget: 'collapse' } do
+        = fa_icon(:plus)
 
+  = box_body_helper do
+    %ul.nav.nav-pills.nav-stacked
+      - 10.times do
+        - nodes.each do |node|
+          %li{class: node == @node ? 'active' : ''}
+            %a{href: node_path(node) }
+              = fa_icon("inbox")
+              = node.hostname
+              %small.label.label-primary.pull-right 1

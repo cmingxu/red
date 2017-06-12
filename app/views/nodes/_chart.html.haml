@@ -1,36 +1,17 @@
-= panel_item t("node.statistics"), :server do
-  .col-md-2
-    = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_cpu_load][:id], 5.minutes, 170, 100)
-  .col-md-2
-    = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_cpu_core][:id], 5.minutes, 170, 100)
-  .col-md-2
-    = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_mem_load][:id], 5.minutes, 170, 100)
+= box_helper "warning" do
+  = box_header_helper t("common.statistics"), :server
+  = box_body_helper do
+    .col-md-2
+      = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_cpu_load][:id], 5.minutes, 170, 100)
+    .col-md-2
+      = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_cpu_core][:id], 5.minutes, 170, 100)
+    .col-md-2
+      = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_mem_load][:id], 5.minutes, 170, 100)
 
-  .col-md-2
-    = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_mem_used][:id], 5.minutes, 170, 100)
-  .col-md-2
-    = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_disk_load][:id], 5.minutes, 170, 100)
-  .col-md-2
-    = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_disk_used][:id], 5.minutes, 170, 100)
+    .col-md-2
+      = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_mem_used][:id], 5.minutes, 170, 100)
+    .col-md-2
+      = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_disk_load][:id], 5.minutes, 170, 100)
+    .col-md-2
+      = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_disk_used][:id], 5.minutes, 170, 100)
 
--#.row
-  -#.col-md-6
-    -#= graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_running_containers][:id], 5.minutes, 600, 180)
-  -#.col-md-6
-    -#= graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_system_load][:id], 5.minutes, 600, 180)
-
--#.row
-  -#.col-md-12
-    -#= graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_container_cpu_usage][:id], 5.minutes, 1450, 300)
--#.row
-  -#.col-md-12
-    -#= graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_container_mem_usage][:id], 5.minutes, 1450, 300)
--#.row
-  -#.col-md-12
-    -#= graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_cached_mem_usaged][:id], 5.minutes, 1450,300)
--#.row
-  -#.col-md-12
-    -#= graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_network_input][:id], 5.minutes, 1450, 300)
--#.row
-  -#.col-md-12
-    -#= graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_network_output][:id], 5.minutes, 1450, 300)

@@ -16,7 +16,9 @@
         .col-md-6
           = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_system_load][:id], 5.minutes, 600, 180)
 
-    %hr
+= box_helper "warning" do
+  = box_header_helper "", :server
+  = box_body_helper do
     .row
       .col-md-12
         %ul.nav.nav-tabs{role: 'tablist'}
@@ -29,12 +31,6 @@
             = render :partial => "apps/list", locals: { apps: @service.apps }
           .tab-pane#app_chart{role: 'tabpanel', style: "height: 600px;"}
             #chart{style: 'height: 400px'}
-    %hr
-      .row
-        .col-md-12
-          = render :partial => "permissions/list", locals: { permissions: @service.permissions, permission: @service.permissions.new, resource: @service }
+= render :partial => "permissions/list", locals: { permissions: @service.permissions, permission: @service.permissions.new, resource: @service }
 
-    %hr
-      .row
-        .col-md-12
-          = render :partial => "audits/list", locals: { audits: @service.audits }
+= render :partial => "audits/list", locals: { audits: @service.audits }

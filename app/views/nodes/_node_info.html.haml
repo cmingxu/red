@@ -1,58 +1,64 @@
-= panel_item t("node.basic_info"), :server do
-  = info_show_helper node.info.to_hash.slice("Name", "ServerVersion", "NCPU", "MemTotal")
-  %hr
+= box_helper "warning" do
+  = box_header_helper t("node.basic_info"), :server
+  = box_body_helper do
+    = info_show_helper node.info.to_hash.slice("Name", "ServerVersion", "NCPU", "MemTotal")
 
-  .row
-    .summary-section.col-md-6
-      %a.media.col-md-8{href: node_containers_path(node) }
-        .media-left.text-center
-          = fa_icon(:server, class: "fa-3x")
-        .media-body
-          .media-heading
-            %p=node.info['Containers']
-            = t("node.containers")
-      .col-md-4
-        %p
-          %strong= node.info['ContainersRunning']
-          = t("container.running")
-        %p
-          %strong= node.info['ContainersStopped']
-          = t("container.stoppted")
+= box_helper "warning" do
+  = box_header_helper t("node.basic_info"), :server
+  = box_body_helper do
 
-    .summary-section.col-md-6
-      %a.media.col-md-8{href: node_images_path(node) }
-        .media-left.text-center
-          = fa_icon(:copy, class: "fa-3x")
-        .media-body
-          .media-heading
-            %p=node.info['Images']
-            = t("node.docker_images")
-      .col-md-4
+    .row
+      .summary-section.col-md-6
+        %a.media.col-md-8{href: node_containers_path(node) }
+          .media-left.text-center
+            = fa_icon(:server, class: "fa-3x")
+          .media-body
+            .media-heading
+              %p=node.info['Containers']
+              = t("node.containers")
+        .col-md-4
+          %p
+            %strong= node.info['ContainersRunning']
+            = t("container.running")
+          %p
+            %strong= node.info['ContainersStopped']
+            = t("container.stoppted")
 
-  %hr
-  .row
-    .summary-section.col-md-6
-      %a.media.col-md-8{href: node_volumes_path(node) }
-        .media-left.text-center
-          = fa_icon(:cubes, class: "fa-3x")
-        .media-body
-          .media-heading
-            %p= node.volumes.length
-            = t("node.volumes")
-      .col-md-4
-        %p
-          %strong= node.info['ContainersRunning']
-          = t("container.running")
+      .summary-section.col-md-6
+        %a.media.col-md-8{href: node_images_path(node) }
+          .media-left.text-center
+            = fa_icon(:copy, class: "fa-3x")
+          .media-body
+            .media-heading
+              %p=node.info['Images']
+              = t("node.docker_images")
+        .col-md-4
 
-    .summary-section.col-md-6
-      %a.media.col-md-8{href: node_networks_path(node) }
-        .media-left.text-center
-          = fa_icon(:sitemap, class: "fa-3x")
-        .media-body
-          .media-heading
-            %p= node.networks.length
-            = t("node.networks")
-      .col-md-4
-        %p
-          %strong= node.info['ContainersRunning']
-          = t("container.running")
+    %hr
+
+    .row
+      .summary-section.col-md-6
+        %a.media.col-md-8{href: node_volumes_path(node) }
+          .media-left.text-center
+            = fa_icon(:cubes, class: "fa-3x")
+          .media-body
+            .media-heading
+              %p= node.volumes.length
+              = t("node.volumes")
+        .col-md-4
+          %p
+            %strong= node.info['ContainersRunning']
+            = t("container.running")
+
+      .summary-section.col-md-6
+        %a.media.col-md-8{href: node_networks_path(node) }
+          .media-left.text-center
+            = fa_icon(:sitemap, class: "fa-3x")
+          .media-body
+            .media-heading
+              %p= node.networks.length
+              = t("node.networks")
+        .col-md-4
+          %p
+            %strong= node.info['ContainersRunning']
+            = t("container.running")

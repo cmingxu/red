@@ -1,26 +1,28 @@
-= panel_table t("common.containers"), :server do
-  %table.table.table-bordered
-    %thead
-      %tr
-        %th= t("containers.state")
-        %th= t("containers.name")
-        %th= t("containers.image")
-        %th= t("containers.cmd")
-        %th= t("containers.ip")
-        %th= t("containers.port")
-        %th 
-  
-    %tbody
-      - node.containers.each do |c|
-        - con = parse_container(c)
+= box_helper "warning" do
+  = box_header_helper t("common.containers"), :server
+  = box_body_helper do
+    %table.table.table-bordered
+      %thead
         %tr
-          %td= container_state_helper con.state
-          %td= link_to truncate(con.name, length: 30), node_container_path(node, id: con.id)
-          %td= link_to truncate(con.image, length: 30), node_image_path(node, id: con.image)
-          %td= con.command
-          %td= con.ip
-          %td= con.port
-          %td= con.status
+          %th= t("containers.state")
+          %th= t("containers.name")
+          %th= t("containers.image")
+          %th= t("containers.cmd")
+          %th= t("containers.ip")
+          %th= t("containers.port")
+          %th 
+    
+      %tbody
+        - node.containers.each do |c|
+          - con = parse_container(c)
+          %tr
+            %td= container_state_helper con.state
+            %td= link_to truncate(con.name, length: 30), node_container_path(node, id: con.id)
+            %td= link_to truncate(con.image, length: 30), node_image_path(node, id: con.image)
+            %td= con.command
+            %td= con.ip
+            %td= con.port
+            %td= con.status
 
 
 

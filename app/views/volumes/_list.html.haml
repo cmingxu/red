@@ -1,17 +1,18 @@
-= panel_table t("common.volumes"), :server do
-
-  %table.table
-    %thead
-      %tr
-        %th= t("node.volume_name")
-        %th= t("node.volume_driver")
-        %th= t("node.volume_mountpoint")
-  
-    %tbody
-      - node.volumes.each do |volume|
+= box_helper "warning" do
+  = box_header_helper t("common.volumes"), :server
+  = box_body_helper do
+    %table.table
+      %thead
         %tr
-          %td= volume.info["Name"]
-          %td= volume.info["Driver"]
-          %td= volume.info["Mountpoint"]
+          %th= t("node.volume_name")
+          %th= t("node.volume_driver")
+          %th= t("node.volume_mountpoint")
+    
+      %tbody
+        - node.volumes.each do |volume|
+          %tr
+            %td= volume.info["Name"]
+            %td= volume.info["Driver"]
+            %td= volume.info["Mountpoint"]
   
   

@@ -81,9 +81,9 @@
 
           - if controller.class.ancestors.include? NodesController
             .row
-              .col-md-4.col-lg-2
+              .col-md-3
                 = render :partial => "nodes/node_left", locals: {nodes: @nodes}
-              .col-md-8.col-lg-10#node_details
+              .col-md-9#node_details
                 = yield
           - elsif controller.class.ancestors.include? SystemController
             .row
