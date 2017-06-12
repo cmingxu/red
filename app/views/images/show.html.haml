@@ -1,74 +1,82 @@
-= panel_item t("node.image_tags"), :server do
-  .btn-group{role: "group"}
-    - @image.info["RepoTags"].each do |tag|
-      .btn.btn-default= tag
-      = link_to fa_icon('arrow-up'), push_node_image_path(@node, id: @image.info['id'], tag: tag), class: 'btn btn-primary', method: :patch, data: { confirm: t("node.push_image") }
-      = link_to fa_icon('arrow-down'), push_node_image_path(@node, id: @image.info['id'], tag: tag), class: 'btn btn-primary', method: :patch, data: { confirm: t("node.pull_image") }
-      = link_to fa_icon('trash'), node_image_path(@node, id: @image.info['id'], tag: tag), class: 'btn btn-danger', method: :delete, data: { confirm: t("node.delete_image") }
+= box_helper "default" do
+  = box_header_helper t("image.image_tags")
+  = box_body_helper do
+    .btn-group{role: "group"}
+      - @image.info["RepoTags"].each do |tag|
+        .btn.btn-default= tag
+        = link_to fa_icon('arrow-up'), push_node_image_path(@node, id: @image.info['id'], tag: tag), class: 'btn btn-primary', method: :patch, data: { confirm: t("node.push_image") }
+        = link_to fa_icon('arrow-down'), push_node_image_path(@node, id: @image.info['id'], tag: tag), class: 'btn btn-primary', method: :patch, data: { confirm: t("node.pull_image") }
+        = link_to fa_icon('trash'), node_image_path(@node, id: @image.info['id'], tag: tag), class: 'btn btn-danger', method: :delete, data: { confirm: t("node.delete_image") }
 
-= panel_item t("node.name_a_tag"), :server do
+= box_helper "success" do
   = form_tag tag_node_image_path(@node, id: @image.info['id']), class: 'form-inline' do
-    .control-group.col-md-6
-      = label_tag t("node.image_tag")
-      = text_field_tag "tag", "", class: "form-control"
+    = box_header_helper t("node.name_a_image"), "server" do
+      .box-tools.pull-right
+        = submit_tag t("node.tag_submit"), class: 'btn btn-danger btn-sm btn-flat'
+    = box_body_helper do
+      .control-group.col-md-6
+        = label_tag t("node.image_tag")
+        = text_field_tag "tag", "", class: "form-control"
 
-    .control-group.col-md-6
-      = label_tag t("node.image_registry")
-      = text_field_tag "registry", "", class: 'form-control'
-
-    %hr
-    .form-action
-      = submit_tag t("node.tag_submit"), class: 'btn btn-primary'
-
-= panel_item t("node.image_detail"), :server do
-  %dl.dl-horizontal
-    %dt ID
-    %dd
-      = @image.info['id']
-      = link_to fa_icon('trash') + t("node.delete_image"), node_image_path(@node, id: @image.info['id']), class: 'btn btn-danger', method: :delete, data: { confirm: t("node.delete_image" ) }
-
-    %dt= t("node.image_size")
-    %dd= number_to_human_size @image.info["Size"]
-
-    %dt= t("node.created")
-    %dd= @image.info["Created"]
-
-    %dt= t("node.build")
-    %dd
-      = @image.info["DockerVersion"]
-      = @image.info["Os"]
-      = @image.info["Architecture"]
-
-    %dt= t("node.author")
-    %dd= @image.info["Author"]
+      .control-group.col-md-6
+        = label_tag t("node.image_registry")
+        = text_field_tag "registry", "", class: 'form-control'
 
 
-= panel_item t("node.dockerfiles_details"), :server do
-  %dl.dl-horizontal
-    %dt CMD
-    %dd
-      = @image.info["Config"]['Cmd']
+
+= box_helper "success" do
+  = box_header_helper t("node.image_detail"), "server" do
+    .box-tools.pull-right
+      = link_to t("node.delete_image"), node_image_path(@node, id: @image.info['id']), class: 'btn btn-danger btn-sm btn-flat', method: :delete, data: { confirm: t("node.delete_image" ) }
+  = box_body_helper do
+    %dl.dl-horizontal
+      %dt ID
+      %dd= @image.info['id']
+
+      %dt= t("node.image_size")
+      %dd= number_to_human_size @image.info["Size"]
+
+      %dt= t("node.created")
+      %dd= @image.info["Created"]
+
+      %dt= t("node.build")
+      %dd
+        = @image.info["DockerVersion"]
+        = @image.info["Os"]
+        = @image.info["Architecture"]
+
+      %dt= t("node.author")
+      %dd= @image.info["Author"]
 
 
-    %dt ENTRYPOINT
-    %dd
-      = @image.info["Config"]['Entrypoint']
+= box_helper "success" do
+  = box_header_helper t("node.dockerfiles_details"), :cogs
+  = box_body_helper do
+    %dl.dl-horizontal
+      %dt CMD
+      %dd
+        = @image.info["Config"]['Cmd']
 
-    %dt EXPOSE
-    %dd
-      - @image.info["Config"]["ExposedPorts"].keys.each do |k|
-        %label.label.label-default= k
 
-    %dt VOLUME
-    %dd
+      %dt ENTRYPOINT
+      %dd
+        = @image.info["Config"]['Entrypoint']
 
-      - (@image.info["Config"]["Volumes"] || {}).keys.each do |k|
-        %label.label.label-default= k
+      %dt EXPOSE
+      %dd
+        - @image.info["Config"]["ExposedPorts"].keys.each do |k|
+          %label.label.label-default= k
 
-    %dt ENV
-    %dd
-      %table.table
-        - @image.info["Config"]["Env"].each do |k|
-          %tr
-            %td= k.split("=")[0]
-            %td= k.split("=")[1]
+      %dt VOLUME
+      %dd
+
+        - (@image.info["Config"]["Volumes"] || {}).keys.each do |k|
+          %label.label.label-default= k
+
+      %dt ENV
+      %dd
+        %table.table
+          - @image.info["Config"]["Env"].each do |k|
+            %tr
+              %td= k.split("=")[0]
+              %td= k.split("=")[1]

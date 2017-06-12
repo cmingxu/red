@@ -1,21 +1,27 @@
-= panel_table(t("system.mesos_slaves"), :server) do
-  %table.table
-    %thead
-      %td= t("system.component")
-      %td= t("system.health")
-      %td= t("system.last_seen")
-    %tbody
-      %tr
-        %td Mesos
-        %td 健康
-        %td 1 小时以前
+= box_helper "success" do
+  = box_header_helper t("system.mesos_slaves"), "server" do
+    .box-tools.pull-right
+      = button_tag class: 'btn btn-box-tool', data: { widget: 'collapse' } do
+        = fa_icon(:plus)
 
-      %tr
-        %td Mesos
-        %td 健康
-        %td 1 小时以前
+  = box_body_helper do
+    %table.table
+      %thead
+        %td= t("system.component")
+        %td= t("system.health")
+        %td= t("system.last_seen")
+      %tbody
+        %tr
+          %td Mesos
+          %td 健康
+          %td 1 小时以前
 
-      %tr
-        %td Mesos
-        %td 健康
-        %td 1 小时以前
+        %tr
+          %td Mesos
+          %td 健康
+          %td 1 小时以前
+
+        %tr
+          %td Mesos
+          %td 健康
+          %td 1 小时以前

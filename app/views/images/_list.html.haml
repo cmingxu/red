@@ -1,21 +1,23 @@
-= panel_table t("common.images"), :server do
-  %table.table.table-bordered
-    %thead
-      %tr
-        %th ID
-        %th= t("image.tags")
-        %th= t("image.size")
-        %th= t("image.created")
-  
-    %tbody
-      - node.images.each do |image|
+= box_helper "warning" do
+  = box_header_helper t("node.all_images")
+  = box_body_helper do
+    %table.table
+      %thead
         %tr
-          %td= link_to truncate(image.info['id'], length: 30), node_image_path(node, id: image.info['id'])
-          %td
-            - image.info['RepoTags'].each do |tag|
-              %label.label.label-primary= tag
-          %td= number_to_human_size image.info['Size']
-          %td= Time.at image.info['Created']
+          %th ID
+          %th= t("image.tags")
+          %th= t("image.size")
+          %th= t("image.created")
+    
+      %tbody
+        - node.images.each do |image|
+          %tr
+            %td= link_to truncate(image.info['id'], length: 30), node_image_path(node, id: image.info['id'])
+            %td
+              - image.info['RepoTags'].each do |tag|
+                %label.label.label-primary= tag
+            %td= number_to_human_size image.info['Size']
+            %td= Time.at image.info['Created']
 
 
 

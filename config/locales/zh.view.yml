@@ -58,6 +58,7 @@ zh-CN:
     delete_confirm: "确定要删除"
     updated: "最后更新"
     quota_change_confirm: "确认修改配额?"
+    statistics: "统计"
   nav:
     host: "主机"
     nodes: "主机"
@@ -228,10 +229,42 @@ zh-CN:
     image_registry: "仓库"
     tag_submit: "提交"
     image_tags: "标签"
+    basic_info: "详情"
+    volume_name: "名称"
+    volume_driver: "驱动"
+    volume_mountpoint: "挂载点"
+    network_name: "名称"
+    network_scope: "Scope"
+    network_ipam_driver: "IPAM驱动"
+    network_ipam_subnet: "IPAM子网"
+    network_ipam_gateway: "IPAM网关"
+    network_detail: "详情"
+    connected_containers: "容器"
+    container_name: "名称"
+    macaddr: "Mac地址"
+    delete_network: "删除网络"
+    leave_from_network: "离开网络"
+    name_a_image: "新标签"
+    image_detail: "详情"
+    delete_image: "删除镜像"
+    dockerfiles_details: "Dockerfile"
 
   host:
     add_host_confirm: "确认增加新主机？"
 
+  container:
+    state: "状态"
+    name: "名称"
+    image: "镜像"
+    cmd: "CMD"
+    ip: "IP"
+    port: "端口"
+
+  image:
+    image_tags: "标签"
+
+  system:
+    mesos_slaves: "Mesos主机"
 
 
 

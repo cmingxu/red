@@ -1,5 +1,6 @@
 = box_helper "warning" do
-  = box_header_helper "", :server
+  = box_header_helper "", :server do
+    .box-tools.pull-right
   = box_body_helper do
     %table.table.table-bordered
       %thead
@@ -21,3 +22,4 @@
             %td= audit.change
             %td= audit.created_at.to_s(:short)
 
+    = paginate audits

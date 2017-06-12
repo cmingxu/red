@@ -1,18 +1,27 @@
-.list-group.group-list
-  %a.list-group-item.group_item{href: mesos_path(), class: controller_name.to_s == "mesos" ? 'active' : ""}
-    %h4.list-group-item-heading Mesos
-    .list-group-item-text
-      %span.text-muted 150 core
-      %span.text-muted 150G mem
+= box_helper "solid" do
+  = box_header_helper t("system.all_components"), "" do
+    .box-tools.pull-right
+      = button_tag class: 'btn btn-box-tool', data: { widget: 'collapse' } do
+        = fa_icon(:plus)
 
-  %a.list-group-item.group_item{href: marathon_path(), class: controller_name.to_s == "marathon" ? 'active' : ""}
-    %h4.list-group-item-heading Marathon
-    .list-group-item-text
-      %span.text-muted 150 core
-      %span.text-muted 150G mem
+  = box_body_helper do
+    %ul.nav.nav-pills.nav-stacked
+      %li
+        %a{href: mesos_path(), class: controller_name.to_s == "mesos" ? 'active' : ""}
+          = fa_icon("inbox")
+          Mesos
 
-  %a.list-group-item.group_item{href: graphna_stats_path(), class: controller_name.to_s == "graphna" ? 'active' : ""}
-    %h4.list-group-item-heading Graphna
-    .list-group-item-text
-      %span.text-muted 150 core
-      %span.text-muted 150G mem
+      %li
+        %a{href: marathon_path(), class: controller_name.to_s == "marathon" ? 'active' : "" }
+          = fa_icon("inbox")
+          Marathon
+
+      %li
+        %a{href: graphna_stats_path(), class: controller_name.to_s == "graphna" ? 'active' : "" }
+          = fa_icon("inbox")
+          Graphna
+
+      %li
+        %a{href: graphna_stats_path(), class: controller_name.to_s == "graphna" ? 'active' : "" }
+          = fa_icon("inbox")
+          Registry
