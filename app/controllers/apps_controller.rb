@@ -1,7 +1,7 @@
 class AppsController < ApplicationController
   before_action :set_service
   before_action :set_app, except: [:index, :new, :create]
-  before_action :set_marathon_app, only: [:start, :scale, :restart, :stop, :rollback, :change, :backend_state]
+  before_action :set_marathon_app, only: [:start, :scale, :restart, :stop, :rollback, :change, :marathon_app_state]
   before_action :set_breadcrumb
 
   def index
@@ -115,7 +115,7 @@ class AppsController < ApplicationController
     @app.scale params[:scale_size].to_i
   end
 
-  def backend_state
+  def marathon_app_state
     render layout: false
   end
 
@@ -129,11 +129,21 @@ class AppsController < ApplicationController
   end
 
   def set_marathon_app
-    begin
-      @marathon_app = Marathon::App.get @app.marathon_app_name
-    rescue Marathon::Error::NotFoundError
-    rescue Marathon::Error => e
+    case Site.default.backend_option
+    when "marathon"
+      begin
+        @marathon_app = Marathon::App.get @app.marathon_app_name
+      rescue Marathon::Error::NotFoundError
+      rescue Marathon::Error => e
+      end
+    when "swan"
+      begin
+        @swan_app = Swan::App.get @app.swan_app_name
+      rescue Swan::Error::NotFoundError
+      rescue Swan::Error => e
+      end
     end
+
 
   end
 

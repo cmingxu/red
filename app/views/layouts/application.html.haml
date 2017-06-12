@@ -49,7 +49,7 @@
       %aside.main-sidebar
         %section.sidebar
           %ul.sidebar-menu.tree{data: { widget: 'tree' }}
-            %li.header
+            %li.header= t("nav.features")
             = sidebar_li_helper :dashboard, :home, t("nav.dashboard"), dashboard_path, false, {"red": "new"}
             = sidebar_li_helper :services, :bars, t("nav.services"), services_path
             = sidebar_li_helper :service_templates, :copy, t("nav.service_templates"), service_templates_path

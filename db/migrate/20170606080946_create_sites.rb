@@ -17,8 +17,15 @@ class CreateSites < ActiveRecord::Migration[5.0]
 
       t.text :feature_flags
 
+      t.string :marathon_username
+      t.string :marathon_password
+      t.string :backend_option # swan / marathon + mesos / k8s
+      t.string :swan_addrs
+
+
       t.string :mesos_leader_url
       t.string :marathon_leader_url
+      t.string :swan_leader_url
 
       t.timestamps
     end

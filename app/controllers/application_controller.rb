@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
 
   attr_accessor :page_request_meta_info
   before_action :set_page_request_meta_info
+  before_action :set_backend
 
   protect_from_forgery with: :exception
   before_action :login_required
@@ -134,8 +135,21 @@ class ApplicationController < ActionController::Base
     a.save
   end
 
+  def set_backend
+    case Site.default.backend_option
+    when "swan"
+      require 'swan'
+      Swan.url = Site.default.swan_addrs
+    when "marathon"
+      require 'marathon'
+      Marathon.options = {:username => Site.default.marathon_username, :password => Site.default.marathon_password}
+      Marathon.url = Site.default.marathon_addrs
+    when "k8s"
+    end
+  end
+
   def graphna_path
-    "http://114.55.130.152:3000/dashboard-solo/db/"
+    Site.default.graphna_addr + "/dashboard-solo/db/"
   end
 
   def breadcrumb_list

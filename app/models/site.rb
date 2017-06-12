@@ -3,7 +3,10 @@ class Site < ApplicationRecord
 
   def self.default
     if !self.first
-      self.create
+      self.create swan_addrs: "http://localhost:9999",
+        marathon_addrs: "http://localhost:8080",
+        mesos_addrs: "localhost:5050"
+
     end
 
     self.first

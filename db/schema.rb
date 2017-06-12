@@ -96,6 +96,7 @@ ActiveRecord::Schema.define(version: 20170606080946) do
     t.integer  "group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "slug"
     t.index ["group_id"], name: "index_namespaces_on_group_id"
     t.index ["user_id"], name: "index_namespaces_on_user_id"
   end
@@ -200,8 +201,13 @@ ActiveRecord::Schema.define(version: 20170606080946) do
     t.text     "changelog"
     t.string   "version"
     t.text     "feature_flags"
+    t.string   "marathon_username"
+    t.string   "marathon_password"
+    t.string   "backend_option"
+    t.string   "swan_addrs"
     t.string   "mesos_leader_url"
     t.string   "marathon_leader_url"
+    t.string   "swan_leader_url"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
   end

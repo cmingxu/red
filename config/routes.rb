@@ -114,7 +114,8 @@ Rails.application.routes.draw do
         put :rollback
         put :scale
 
-        get :backend_state
+        get :marathon_app_state
+        get :swan_app_state
         get :detail
       end
 

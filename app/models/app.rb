@@ -122,7 +122,7 @@ class App < ApplicationRecord
     self.backend = MARATHON
   end
 
-  delegate :marathon_app_name, :run, :stop, :marathon_app, :suspend, :restart, :change, :rollback, :scale, :marathon_hash, :container_hash, to: :backend_instance
+  delegate :swan_app_name, :marathon_app_name, :run, :stop, :marathon_app, :suspend, :restart, :change, :rollback, :scale, :marathon_hash, :container_hash, to: :backend_instance
 
 
   def cpu_used
@@ -142,7 +142,7 @@ class App < ApplicationRecord
   end
 
   def backend_instance
-    case self.backend
+    case Site.default.backend_option
     when MARATHON
       Backend::Marathon.new self
     when SWAN

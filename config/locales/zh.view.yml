@@ -76,6 +76,7 @@ zh-CN:
     new_namespace: "新项目"
     open_in_new_window: "新窗口打开"
     dashboard: "仪表盘"
+    features: "功能"
   app:
     name: "应用名称"
     desc: "备注"
