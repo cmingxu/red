@@ -12,4 +12,4 @@
           %a{href: group.is_default? ? groups_path : group_path(group), class: group.id == @group.id ? 'active' : '' }
             = image_tag group.icon.thumb.try(:url) || "placeholder.png", height: 30
             = group.name
-            %small.label.label-primary.pull-right= group.owner.display
+            %small.label.label-primary.pull-right= group.users.count

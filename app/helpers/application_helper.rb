@@ -138,7 +138,7 @@ module ApplicationHelper
     end
   end
 
-  def sidebar_li_helper id, icon, text, link, is_tree = false, extra_labels = {}, &block
+  def sidebar_li_helper id, icon, text, link, is_tree = false, extra_labels = {}, icon_class = "default", &block
     classes = []
     classes.push("tree") if is_tree
     classes.push("menu-open") if is_tree
@@ -147,7 +147,7 @@ module ApplicationHelper
 
     content_tag(:li, class: classes.join(" ")) do
       content_tag(:a, href: link, data: { turbolinks: false }) do
-        concat(fa_icon(icon))
+        concat(fa_icon(icon, class: icon_class))
         concat(content_tag(:span, text))
         concat(content_tag(:span, class: "pull-right-container") {
           concat(fa_icon('angle-left', class: 'pull-right')) if is_tree

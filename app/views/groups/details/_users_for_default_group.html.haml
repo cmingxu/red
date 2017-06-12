@@ -30,18 +30,18 @@
             %td= user.services.length
             %td
               %span
-                = link_to update_quota_cpu_group_user_path(group,user), class: 'btn btn-default btn-sm', method: :patch, data: {prompt: {title: t("common.update_quota_cpu"), name: "value", "value": user.settings(:quota).cpu} } do
-                  = fa_icon(:edit)
+                = link_to update_quota_cpu_group_user_path(group,user), class: 'btn btn-default btn-sm btn-flat', method: :patch, data: {prompt: {title: t("common.update_quota_cpu"), name: "value", "value": user.settings(:quota).cpu} } do
+                  = fa_icon(:edit, class: 'text-green')
                   %strong= user.settings(:quota).cpu
                   core
               %span
-                = link_to update_quota_mem_group_user_path(group,user), class: 'btn btn-default btn-sm', method: :patch, data: {prompt: {title: t("common.update_quota_mem"), name: "value", "value": user.settings(:quota).mem} } do
-                  = fa_icon(:edit)
+                = link_to update_quota_mem_group_user_path(group,user), class: 'btn btn-default btn-sm btn-flat', method: :patch, data: {prompt: {title: t("common.update_quota_mem"), name: "value", "value": user.settings(:quota).mem} } do
+                  = fa_icon(:edit, class: 'text-green')
                   %strong= user.settings(:quota).mem
                   M
               %span
-                = link_to update_quota_disk_group_user_path(group,user), class: 'btn btn-default btn-sm', method: :patch, data: {prompt: {title: t("common.update_quota_disk"), name: "value", "value": user.settings(:quota).disk} } do
-                  = fa_icon(:edit)
+                = link_to update_quota_disk_group_user_path(group,user), class: 'btn btn-default btn-sm btn-flat', method: :patch, data: {prompt: {title: t("common.update_quota_disk"), name: "value", "value": user.settings(:quota).disk} } do
+                  = fa_icon(:edit, class: 'text-green')
                   %strong= user.settings(:quota).disk
                   G
             %td

@@ -59,11 +59,11 @@
             %li.header= t("nav.setting")
             = sidebar_li_helper :system, :cogs, t("nav.system"), system_path, true do
               %ul.treeview-menu
-                = sidebar_li_helper :mesos, 'circle-thin', t("nav.mesos"), mesos_path
-                = sidebar_li_helper :marathon, 'circle', t("nav.marathon"), marathon_path
-                = sidebar_li_helper :graphna, 'square', t("nav.graphna"), graphna_stats_path
-                = sidebar_li_helper :graphna, 'square', t("nav.promethus"), graphna_stats_path
-                = sidebar_li_helper :graphna, 'square', t("nav.registry"), graphna_stats_path
+                = sidebar_li_helper :mesos, 'circle-thin', t("nav.mesos"), mesos_path, false, {}, "text-red"
+                = sidebar_li_helper :marathon, 'circle', t("nav.marathon"), marathon_path, false, {}, "text-blue"
+                = sidebar_li_helper :graphna, 'square', t("nav.graphna"), graphna_stats_path, false, {}, "text-green"
+                = sidebar_li_helper :graphna, 'square', t("nav.promethus"), graphna_stats_path, false, {}, "text-white"
+                = sidebar_li_helper :graphna, 'square', t("nav.registry"), graphna_stats_path, false, {}, "text-orange"
 
             = sidebar_li_helper :audits, :users, t("nav.audits"), audits_path
             = sidebar_li_helper :setting, :cogs, t("nav.setting"), setting_path
