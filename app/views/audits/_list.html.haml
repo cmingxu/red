@@ -5,21 +5,25 @@
     %table.table.table-bordered
       %thead
         %th= t("common.user")
-        %th= t("audit.entity")
-        %th= t("audit.action")
-        %th= t("common.desc")
         %th= t("common.created_at")
-    
+        %th= t("audit.action")
+        %th= t("audit.entity")
+        %th= t("common.desc")
       %tbody
         - audits.each do |audit|
           %tr
-            %td= audit.user.display
             %td
-              = audit.entity_type
-              = audit.entity_id
-            %td= audit.action
+              = link_to audit.user.display, audits_path(q: {user_id_eq: audit.user_id })
+            %td
+              = audit.created_at.to_s(:short)
+              (
+              = time_ago_in_words audit.created_at
+              )
+            %td
+              = audit_action(session[:locale])[audit.action.to_sym] || audit.action
+            %td
+              = link_to audit.entity.display, audits_path(q: {entity_type_eq: audit.entity_type, entity_id_eq: audit.entity_id})
     
             %td= audit.change
-            %td= audit.created_at.to_s(:short)
 
     = paginate audits

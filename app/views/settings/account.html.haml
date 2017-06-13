@@ -2,8 +2,23 @@
   .col-md-3
     = render :partial => "settings/setting_left"
   .col-md-9
-    = simple_form_for current_user, url: user_path(current_user) do |form|
-      = form.input :name, label: t("active_record.common.name")
+    = box_helper "warning" do
+      = simple_form_for current_user, url: user_path(current_user) do |form|
+        = box_header_helper "", :copy do
+          .box-tools.pull-right
+            = form.submit t("common.update_btn"), class: danger_btn_helper
+        = box_body_helper do
+          = form.input :name, label: t("active_record.common.name")
 
-      = form.submit t("common.update_btn"), class: btn_classes
+    = box_helper "danger" do
+      = simple_form_for current_user, url: user_path(current_user) do |form|
+        = box_header_helper "", :copy do
+          .box-tools.pull-right
+            = form.submit t("common.update_btn"), class: danger_btn_helper
+        = box_body_helper do
+          = form.input :old_password, label: t("active_record.common.old_password")
+
+          = form.input :password, label: t("active_record.common.new_password")
+
+          = form.input :password_confirmation, label: t("active_record.common.password_confirmation")
 

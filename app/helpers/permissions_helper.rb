@@ -1,5 +1,4 @@
 module PermissionsHelper
-
   def permission_access(locale = :en)
     case locale.to_s
     when 'en'

@@ -1,0 +1,8 @@
+= box_helper "success" do
+  = simple_form_for Site.default, url: "" do |form|
+    = box_header_helper "" do
+      .box-tools.pull-right
+        = form.submit t("common.update_btn"), class: danger_btn_helper
+
+    = box_body_helper do
+      = form.input :mesos_addrs, label: t("system.mesos_addrs")
