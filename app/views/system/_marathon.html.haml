@@ -1,8 +1,10 @@
 = box_helper "success" do
   = simple_form_for Site.default, url: "" do |form|
-    = box_header_helper "" do
+    = box_header_helper t("system.marathon_config"), :cog do
       .box-tools.pull-right
         = form.submit t("common.update_btn"), class: danger_btn_helper
 
     = box_body_helper do
       = form.input :marathon_addrs, label: t("system.marathon_addrs")
+      = form.input :marathon_username, label: t("system.marathon_username")
+      = form.input :marathon_password, label: t("system.marathon_password")

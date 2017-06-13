@@ -216,6 +216,8 @@ zh-CN:
   audit:
     entity: "对象"
     action: "操作"
+    desc: "描述"
+    audit: "审计"
 
   permission:
     placeholder: '用户名 或者 组名称'
@@ -266,6 +268,16 @@ zh-CN:
 
   system:
     mesos_slaves: "Mesos主机"
+    marathon_addrs: "Marathon地址"
+    marathon_username: "Marathon用户名"
+    marathon_password: "Marathon密码"
+    swan_addrs: "Swan地址"
+    graphna_addr: "Graphna地址"
+    graphna_config: "Graphna配置"
+    swan_config: "Swan配置"
+    mesos_config: "Mesos配置"
+    mesos_addrs: "Mesos地址"
+    marathon_config: "Marathon配置"
 
 
 

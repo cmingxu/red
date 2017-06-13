@@ -12,6 +12,9 @@ module AuditsHelper
         "stop": "Stop",
         "restart": "Restart",
         "scale": "Scale",
+        "grant": "Grant",
+        "login": "Login",
+        "logout": "Logout",
       }
     when 'zh-CN'
       {
@@ -24,6 +27,9 @@ module AuditsHelper
         "stop": "停止",
         "restart": "重启",
         "scale": "扩缩",
+        "grant": "授权",
+        "login": "登录",
+        "logout": "登出",
       }
     end
   end

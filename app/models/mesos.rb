@@ -1,6 +1,7 @@
 class Mesos
   include HTTParty
   attr_accessor :uri
+
   def initialize(opts = {})
     opts.symbolize_keys!
     @uri = opts[:leader]

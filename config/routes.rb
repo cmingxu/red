@@ -97,6 +97,7 @@ Rails.application.routes.draw do
   get 'welcome/index'
   get 'mesos/index', as: :mesos
   get 'marathon/index', as: :marathon
+  get 'swan/index', as: :swan
   get 'graphna/index', as: :graphna_stats
 
   get 'mesos/ping', as: :ping_mesos

@@ -24,4 +24,33 @@ class Site < ApplicationRecord
     leader = Mesos.new(leader: "http://114.55.130.152:5050").state['leader']
     self.update_column :mesos_leader_url, "http://" +  leader.split("@")[1] + "/"
   end
+
+  def mesos_ping(mesos_addrs)
+    begin
+      { result: Mesos.new(leader: mesos_addrs).master_health.response.is_a?(Net::HTTPOK), message: "" }
+    rescue Exception => e
+      { result: false, message: e.message }
+    end
+  end
+
+  def marathon_ping marathon_addrs, marathon_username, marathon_password
+    begin
+      require 'marathon'
+      Marathon.options = {:username => marathon_username, :password => marathon_password}
+      Marathon.url = marathon_addrs
+      { result: Marathon.ping == "pong", message: ""}
+    rescue Exception => e
+      { result: false, message:  e.message }
+    end
+  end
+
+  def swan_ping swan_addrs
+    begin
+      require 'swan'
+      Swan.url = swan_addrs
+      { result: Swan.ping == "pong", message: ""}
+    rescue Exception => e
+      { result: false, message:  e.message }
+    end
+  end
 end

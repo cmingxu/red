@@ -18,7 +18,7 @@
         - if user.persisted?
           %tr
             %td
-              = image_tag user.icon.thumb.try(:url) || "user-profile.png", class: 'user-profile-thumb'
+              = image_tag user.icon.thumb.try(:url) || "user-profile.png", class: 'user-profile-thumb', height: 25
               = user.display
               - if user.site_admin?
                 = fa_icon('user-circle')

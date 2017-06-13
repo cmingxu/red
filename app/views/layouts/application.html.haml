@@ -60,7 +60,14 @@
             = sidebar_li_helper :system, :gears, t("nav.system"), system_path, true do
               %ul.treeview-menu
                 = sidebar_li_helper :mesos, 'circle-thin', t("nav.mesos"), mesos_path, false, {}, "text-red"
-                = sidebar_li_helper :marathon, 'circle', t("nav.marathon"), marathon_path, false, {}, "text-blue"
+                - if Site.default.backend_option == "marathon"
+                  = sidebar_li_helper :marathon, 'circle', t("nav.marathon"), marathon_path, false, {}, "text-blue"
+
+                - if Site.default.backend_option == "swan"
+                  = sidebar_li_helper :swan, 'circle', t("nav.swan"), swan_path, false, {}, "text-blue"
+
+                - if Site.default.backend_option == "k8s"
+                  = sidebar_li_helper :marathon, 'circle', t("nav.marathon"), marathon_path, false, {}, "text-blue"
                 = sidebar_li_helper :graphna, 'square', t("nav.graphna"), graphna_stats_path, false, {}, "text-green"
                 = sidebar_li_helper :graphna, 'square', t("nav.promethus"), graphna_stats_path, false, {}, "text-white"
                 = sidebar_li_helper :graphna, 'square', t("nav.registry"), graphna_stats_path, false, {}, "text-orange"

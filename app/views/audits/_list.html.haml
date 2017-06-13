@@ -1,5 +1,5 @@
 = box_helper "warning" do
-  = box_header_helper "", :server do
+  = box_header_helper t("audit.audit"), :camera do
     .box-tools.pull-right
   = box_body_helper do
     %table.table.table-bordered
@@ -8,7 +8,7 @@
         %th= t("common.created_at")
         %th= t("audit.action")
         %th= t("audit.entity")
-        %th= t("common.desc")
+        %th= t("audit.desc")
       %tbody
         - audits.each do |audit|
           %tr
