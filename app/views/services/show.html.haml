@@ -33,4 +33,4 @@
             #chart{style: 'height: 400px'}
 = render :partial => "permissions/list", locals: { permissions: @service.permissions, permission: @service.permissions.new, resource: @service }
 
-= render :partial => "audits/list", locals: { audits: @service.audits }
+= render :partial => "audits/list", locals: { audits: @service.audits.page(params[:audit_page] || 1) }

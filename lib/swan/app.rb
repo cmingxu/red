@@ -205,23 +205,26 @@ class Swan::App < Swan::Base
 
     alias :create :start
 
-    # Restart the application with id.
-    # ++id++: Application's id.
-    # ++force++: If the app is affected by a running deployment, then the update operation will fail.
-    #            The current deployment can be overridden by setting the `force` query parameter.
-    def restart(id, force = false)
-      Swan.singleton.apps.restart(id, force)
+    def update(id, hash)
+      Swan.singleton.apps.update(id, hash)
     end
 
-    # Change parameters of a running application. The new application parameters apply only to subsequently
-    # created tasks. Currently running tasks are restarted, while maintaining the minimumHealthCapacity.
-    # ++id++: Application's id.
-    # ++hash++: A subset of app's attributes.
-    # ++force++: If the app is affected by a running deployment, then the update operation will fail.
-    #            The current deployment can be overridden by setting the `force` query parameter.
-    def change(id, hash, force = false)
-      Swan.singleton.apps.change(id, hash, force)
+    def scale_up(id, instances)
+      Swan.singleton.apps.scale_up(id, hash)
     end
+
+    def scale_down(id, instances)
+      Swan.singleton.apps.scale_down(id, hash)
+    end
+
+    def proceed(id, instances)
+      Swan.singleton.apps.proceed(id, hash)
+    end
+
+    def rollback(id)
+      Swan.singleton.apps.proceed(id, hash)
+    end
+
 
     # List the versions of the application with id.
     # ++id++: Application id

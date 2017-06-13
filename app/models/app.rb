@@ -122,7 +122,7 @@ class App < ApplicationRecord
     self.backend = MARATHON
   end
 
-  delegate :swan_app_name, :marathon_app_name, :run, :stop, :marathon_app, :suspend, :restart, :change, :rollback, :scale, :marathon_hash, :container_hash, to: :backend_instance
+  delegate :swan_app_name, :marathon_app_name, :run, :stop, :marathon_app, :suspend, :restart, :change, :rollback, :scale, :marathon_hash, :container_hash, :swan_hash, to: :backend_instance
 
 
   def cpu_used

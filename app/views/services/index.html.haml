@@ -12,24 +12,25 @@
 
     - @services.each do |service|
       .service_section
-        %table.table.service_table.table-bordered.table-hover.toggleable-table{class: "service_table service_#{service.id}", id: "service_#{service.id}"}
+        %table.table.service_table.table-bordered.toggleable-table{class: "service_table service_#{service.id}", id: "service_#{service.id}"}
           %tr.service_tr
             %td{colspan: 2}
               %span.text-bigger.text-primary.toggleable-table-handle
                 = "#{fa_icon(:plus)} #{service.name}".html_safe
     
               %span.pull-right
-                %p.text-muted
-                  = fa_icon service.owner.default_icon
-                  = service.owner.display
+                %p
+                  %span.text-muted
+                    = fa_icon service.owner.default_icon
+                  %span
+                    = service.owner.display
     
-            %td.text-center= t("common.versions")
-            %td.text-center{style: "width: 400px;"}
-              %p.text-bigger= service.apps.length
+            %td.text-center
               %p
+                %span.text-bigger= service.apps.length
                 %span.text-muted= t('active_record.app.model_name')
                 %span.text-primary= link_to fa_icon(:refresh), "", onclick: "", data: {service_id: "service_#{service.id}" }, class: 'service_refresh_app_state_icon'
-            %td.text-center
+            %td.text-center{colspan: "3"}
               = drop_down_menu :default, t("common.actions") do
                 = drop_down_menu_item t("nav.open_in_new_window"), service_path(service), target: '_blank'
                 - if policy(service).update?
@@ -62,6 +63,7 @@
                 %span.text-muted
                   = t('common.versions')
                   \:
+                  %br
     
                 = link_to raw(app.current_version.name + " " + fa_icon('check-square')), edit_service_app_path(service, app, version_id: app.current_version.id), data: { turbolinks: false }, class: 'btn btn-sm btn-default'
                 - (app.versions - [app.current_version])[0..3].each do |version|
