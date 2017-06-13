@@ -1,7 +1,7 @@
 .row
-  .col-md-4.col-lg-2
+  .col-md-3
     = render :partial => "settings/setting_left"
-  .col-md-8.col-lg-10#group_detail
+  .col-md-9
     = simple_form_for current_user, url: user_path(current_user) do |form|
       = form.input :name, label: t("active_record.common.name")
 

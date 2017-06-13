@@ -1,10 +1,31 @@
-%aside.main-sidebar
-  %section.sidebar
-    %ul.sidebar-menu
-      %li
-        = link_to 'Group', groups_path
-      %li
-        = link_to 'Group', groups_path
-      %li
-        = link_to 'Group', groups_path
+= box_helper "success" do
+  = box_header_helper t("group.all_groups"), "" do
+    .box-tools.pull-right
+      = button_tag class: 'btn btn-box-tool', data: { widget: 'collapse' } do
+        = fa_icon(:plus)
 
+  = box_body_helper do
+    %ul.nav.nav-pills.nav-stacked
+      %li{class:  ''}
+        %a{href: groups_path }
+          = image_tag  "placeholder.png", height: 30
+          Foobar
+          %small.label.label-primary.pull-right 1
+
+      %li{class:  ''}
+        %a{href: groups_path }
+          = image_tag  "placeholder.png", height: 30
+          Foobar
+          %small.label.label-primary.pull-right 1
+
+      %li{class:  ''}
+        %a{href: groups_path }
+          = image_tag  "placeholder.png", height: 30
+          Foobar
+          %small.label.label-primary.pull-right 1
+
+      %li{class:  ''}
+        %a{href: groups_path }
+          = image_tag  "placeholder.png", height: 30
+          Foobar
+          %small.label.label-primary.pull-right 1
