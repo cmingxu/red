@@ -44,6 +44,8 @@ gem 'ace-rails-ap'
 gem 'active_record_union'
 
 gem 'pundit'
+gem 'base32'
+gem 'jwt'
 
 
 

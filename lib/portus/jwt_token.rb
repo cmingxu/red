@@ -1,3 +1,5 @@
+require 'base32'
+
 module Portus
   # This class implements the JSON Web Token as expected by the registry. Read
   # the `spec` for more information:
@@ -29,7 +31,7 @@ module Portus
     # specification.
     def claim
       @claim ||= {}.tap do |hash|
-        hash[:iss]    = "machine_fqdnvalue"
+        hash[:iss]    = "red"
         hash[:sub]    = @account
         hash[:aud]    = @service
         hash[:iat]    = issued_at

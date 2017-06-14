@@ -8,6 +8,7 @@ module Portus
   class AuthScope
     # The given resource was not found.
     class ResourceNotFound < StandardError; end
+    class NamespaceNotSupport < StandardError; end
 
     attr_accessor :resource, :actions, :resource_type, :resource_name
 

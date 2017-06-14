@@ -12,10 +12,30 @@ class RegistryController < ApplicationController
     head :ok
   end
 
+  def login_from_authorization authorization
+    username, password = Base64.decode64(authorization).split(":")
+
+    @login_user = User.find_by(email: username)
+    return false if @login_user.nil?
+    return false if !@login_user.password_valid?(password)
+
+    return true
+  end
+
   # Returns the token that the docker client should use in order to perform
   # operation into the private registry.
   def token
-    ap request.path
+    if request.headers["Authorization"].present?
+      if !login_from_authorization(request.headers['Authorization'].split(" ")[1])
+        response.set_header('WWW-Authenticate', "Basic realm=\"red\"")
+        render json: {"errors":[{"code":"UNAUTHORIZED"}]} , status: 401
+        return
+      end
+    else
+      render json: {}, status: 401
+      return
+    end
+
     token = Portus::JwtToken.new(params[:account], params[:service], authorize_scopes)
     logger.tagged("jwt_token", "claim") { logger.debug token.claim }
     render json: token.encoded_hash
