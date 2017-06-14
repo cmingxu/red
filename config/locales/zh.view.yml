@@ -280,6 +280,10 @@ zh-CN:
     mesos_config: "Mesos配置"
     mesos_addrs: "Mesos地址"
     marathon_config: "Marathon配置"
+    marathon_apps: "应用列表"
+    marathon_detail: "详情"
+    marathon_running_instances: "实例"
+    marathon_health: '健康状况'
 
 
 

@@ -1,34 +1,39 @@
 = link_to fa_icon("copy"), Site.default.marathon_leader_url + "info", target: "_blank"
-= panel_item t("system.marathon_info"), :server do
-  = info_show_helper @info.to_hash
+= box_helper "success" do
+  = box_header_helper t("system.marathon_detail"), "server"
+  = box_body_helper do
+    = info_show_helper @info.to_hash
 
 
-= panel_table t("system.marathon_info"), :server do
-  %table.table
-    %thead
-      %th ID
-      %th CPU
-      %th Mem
-      %th Disk
-      %th Running Instances
-      %th Health
 
-    %tbody
-      - @apps.each do |app|
-        %tr
-          %td= app.info[:id]
-          %td= app.info[:cpus]
-          %td= app.info[:mem]
-          %td= app.info[:disk]
-          %td= app.info[:instances]
+= box_helper "success" do
+  = box_header_helper t("system.marathon_apps"), "server"
+  = box_body_helper do
+    %table.table
+      %thead
+        %th ID
+        %th CPU
+        %th Mem
+        %th Disk
+        %th= t('system.marathon_running_instances')
+        %th= t('system.marathon_health')
 
-      - @groups.each do |group|
-        - group[:apps].each do |app|
+      %tbody
+        - @apps.each do |app|
           %tr
-            %td
-              = group[:id]
-              = app[:id]
-            %td= app[:cpus]
-            %td= app[:mem]
-            %td= app[:disk]
-            %td= app[:instances]
+            %td= app.info[:id]
+            %td= app.info[:cpus]
+            %td= app.info[:mem]
+            %td= app.info[:disk]
+            %td= app.info[:instances]
+
+        - @groups.each do |group|
+          - group[:apps].each do |app|
+            %tr
+              %td
+                = group[:id]
+                = app[:id]
+              %td= app[:cpus]
+              %td= app[:mem]
+              %td= app[:disk]
+              %td= app[:instances]
