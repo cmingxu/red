@@ -106,11 +106,11 @@ class App < ApplicationRecord
     state :done
 
     event :backend_run do
-      transitions :from => [:pending, :done], :to => :running
+      transitions :from => [:pending, :done, :running], :to => :running
     end
 
     event :backend_stop do
-      transitions :from => [:pending, :running], :to => :done
+      transitions :from => [:pending, :running, :done], :to => :done
     end
   end
 
@@ -122,7 +122,7 @@ class App < ApplicationRecord
     self.backend = MARATHON
   end
 
-  delegate :swan_app_name, :marathon_app_name, :run, :stop, :marathon_app, :suspend, :restart, :change, :rollback, :scale, :marathon_hash, :container_hash, :swan_hash, to: :backend_instance
+  delegate :swan_app_name, :swan_app, :scale_up, :scale_down, :marathon_app_name, :run, :stop, :marathon_app, :suspend, :restart, :change, :rollback, :scale, :marathon_hash, :container_hash, :swan_hash, to: :backend_instance
 
 
   def cpu_used

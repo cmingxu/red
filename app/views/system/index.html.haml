@@ -28,6 +28,9 @@
 
 
 = render :partial => "system/mesos"
-= render :partial => "system/marathon"
-= render :partial => "system/swan"
+- if Site.default.backend_option == "marathon"
+  = render :partial => "system/marathon"
+
+- if Site.default.backend_option == "swan"
+  = render :partial => "system/swan"
 = render :partial => "system/graphna"

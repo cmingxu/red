@@ -11,10 +11,17 @@
           = fa_icon("inbox")
           Mesos
 
-      %li
-        %a{href: marathon_path(), class: controller_name.to_s == "marathon" ? 'active' : "" }
-          = fa_icon("inbox")
-          Marathon
+      - if Site.default.backend_option == "marathon"
+        %li
+          %a{href: marathon_path(), class: controller_name.to_s == "marathon" ? 'active' : "" }
+            = fa_icon("inbox")
+            Marathon
+
+      - if Site.default.backend_option == "swan"
+        %li
+          %a{href: swan_path(), class: controller_name.to_s == "swan" ? 'active' : "" }
+            = fa_icon("inbox")
+            Swan
 
       %li
         %a{href: graphna_stats_path(), class: controller_name.to_s == "graphna" ? 'active' : "" }

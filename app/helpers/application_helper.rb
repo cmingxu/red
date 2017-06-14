@@ -120,7 +120,7 @@ module ApplicationHelper
   end
 
   def box_helper color = "default", &block
-    content_tag :div, class: "box box-#{color}" do
+    content_tag :div, class: "box box-#{color}", style: 'position: relative;' do
       capture &block if block_given?
     end
   end

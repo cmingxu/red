@@ -6,7 +6,7 @@ module Backend
     end
 
     def swan_app_name
-      (self.app.service.slug + "." + self.app.slug).gsub(/\d+/, "")
+      (self.app.service.name + self.app.name).gsub(/[^\w]+|\d+/, "") + "-" + self.app.service.owner.display.gsub(/[^\w]+|\d+/, "") + "-aliyun"
     end
 
     def run(version = nil)
@@ -34,7 +34,7 @@ module Backend
 
       if self.app.service.apps.running.present?
         begin
-          ::Swan::Group.delete self.app.service.name
+          ::Swan::App.delete self.app.service.name
         rescue ::Swan::Error::NotFoundError => e
           Rails.logger.debug e
         end
@@ -45,6 +45,8 @@ module Backend
       begin
         ::Swan::App.get self.app.swan_app_name
       rescue ::Swan::Error::NotFoundError => e
+          Rails.logger.debug e
+          false
       end
     end
 
@@ -81,7 +83,7 @@ module Backend
 
     def scale_down(ins = 1)
       begin
-        swan_app.scale_down! ins
+        swan_app.scale_down ins
       rescue ::Swan::Error::SwanError => e
         puts e
         puts e.details
@@ -94,7 +96,7 @@ module Backend
 
     def scale_up(ins = 1)
       begin
-        swan_app.scale_up! ins
+        swan_app.scale_up ins
       rescue ::Swan::Error::SwanError => e
         puts e
         puts e.details
@@ -106,9 +108,9 @@ module Backend
 
     def swan_hash
       swan_hash = {
-        appName: self.app.swan_app_name,
+        appName: (self.app.service.name + self.app.name).gsub(/[^\w]+|\d+/, ""),
         appVersion: self.app.current_version.name,
-        runAs: self.app.service.owner.display,
+        runAs: self.app.service.owner.display.gsub(/[^\w]+|\d+/, ""),
         prioriry: 100,
         instances: 1,
         cpus: self.app.cpu.to_f,

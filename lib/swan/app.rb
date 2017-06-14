@@ -210,19 +210,19 @@ class Swan::App < Swan::Base
     end
 
     def scale_up(id, instances)
-      Swan.singleton.apps.scale_up(id, hash)
+      Swan.singleton.apps.scale_up(id, instances)
     end
 
     def scale_down(id, instances)
-      Swan.singleton.apps.scale_down(id, hash)
+      Swan.singleton.apps.scale_down(id, instances)
     end
 
     def proceed(id, instances)
-      Swan.singleton.apps.proceed(id, hash)
+      Swan.singleton.apps.proceed(id, instances)
     end
 
     def rollback(id)
-      Swan.singleton.apps.proceed(id, hash)
+      Swan.singleton.apps.rollback(id)
     end
 
 
@@ -269,11 +269,11 @@ class Swan::Apps
   end
 
   def scale_up(id, instances)
-    @connection.patch("/v_beta/apps/#{id}/scale_up", {instances: instances})
+    @connection.patch("/v_beta/apps/#{id}/scale-up", nil, :body => {instances: instances})
   end
 
   def scale_down(id, instances)
-    @connection.patch("/v_beta/apps/#{id}/scale_down", {instances: instances})
+    @connection.patch("/v_beta/apps/#{id}/scale-down", nil, :body => {instances: instances})
   end
 
   def update(id, hash)
@@ -281,11 +281,11 @@ class Swan::Apps
   end
 
   def proceed(id, instances)
-    @connection.patch("/v_beta/apps/#{id}/proceed", {instances: instances} )
+    @connection.patch("/v_beta/apps/#{id}/proceed", nil, :body => {instances: instances} )
   end
 
   def rollback(id)
-    @connection.patch("/v_beta/apps/#{id}/rollback", {instances: instances} )
+    @connection.patch("/v_beta/apps/#{id}/rollback", nil, :body => {} )
   end
 
 

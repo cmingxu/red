@@ -1,0 +1,3 @@
+<% if Site.default.backend_option == "swan" %>
+  $(".app_state_<%= @app.id %>").html("<%= escape_javascript(render(partial: 'swan_app_state', locals: {app: @app, swan_app: @app.swan_app, service: @service })) %>");
+<% end %>

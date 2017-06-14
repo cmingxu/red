@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   get 'search/list_owner'
 
   get 'system/index', as: :system
+  patch 'system/update_marathon_config', as: :update_marathon_config
+  patch 'system/update_mesos_config', as: :update_mesos_config
+  patch 'system/update_swan_config', as: :update_swan_config
+  patch 'system/update_graphna', as: :update_graphna_config
 
   get 'session/new', as: :new_session
   get 'session/particles'
@@ -114,9 +118,10 @@ Rails.application.routes.draw do
         put :change
         put :rollback
         put :scale
+        put :swan_scale_up
+        put :swan_scale_down
 
-        get :marathon_app_state
-        get :swan_app_state
+        get :backend_state
         get :detail
       end
 

@@ -39,7 +39,7 @@ class Swan::Connection
   end
 
   # Delegate all HTTP methods to the #request.
-  [:get, :put, :post, :delete].each do |method|
+  [:get, :put, :post, :delete, :patch].each do |method|
     define_method(method) { |*args, &block| request(method, *args) }
   end
 
@@ -78,7 +78,7 @@ class Swan::Connection
   # ++request++: hash containing :url and optional :query
   def build_url(request)
     url = URI.escape(request[:url])
-    if request[:query].size > 0
+    if request[:query].present?
       url += '?' + query_params(request[:query])
     end
     url

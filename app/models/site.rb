@@ -21,8 +21,11 @@ class Site < ApplicationRecord
   end
 
   def fetch_and_set_mesos_leader
-    leader = Mesos.new(leader: "http://114.55.130.152:5050").state['leader']
+    leader = Mesos.new(leader: self.mesos_addrs).state['leader']
     self.update_column :mesos_leader_url, "http://" +  leader.split("@")[1] + "/"
+  end
+
+  def fetch_and_set_swan_leader
   end
 
   def mesos_ping(mesos_addrs)
@@ -38,7 +41,9 @@ class Site < ApplicationRecord
       require 'marathon'
       Marathon.options = {:username => marathon_username, :password => marathon_password}
       Marathon.url = marathon_addrs
-      { result: Marathon.ping == "pong", message: ""}
+      Marathon.ping == "pong"
+    rescue JSON::ParserError => e
+      { result: true, message:  e.message }
     rescue Exception => e
       { result: false, message:  e.message }
     end

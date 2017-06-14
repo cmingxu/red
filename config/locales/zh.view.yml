@@ -126,6 +126,8 @@ zh-CN:
     start: "启动"
     restart: "重启"
     scale: "扩缩"
+    scale_up: "扩展"
+    scale_down: "扩缩"
     rollback: "回滚"
     copy: "拷贝"
     update_version: "更新"

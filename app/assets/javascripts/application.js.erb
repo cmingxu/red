@@ -22,6 +22,7 @@
 //= require ./bootstrap3-typeahead.min
 //= require bootstrap-select
 //= require adminlte/dist/js/app.min.js
+//= require remarkable-bootstrap-notify/dist/bootstrap-notify.min.js
 
 
 //= require ./apps
@@ -190,3 +191,14 @@ $(document).on('turbolinks:before-cache', function () {
 $(document).on('turbolinks:load', function () {
   $('.main').removeClass('changing');
 });
+
+String.prototype.escape = function() {
+    var tagsToReplace = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;'
+    };
+    return this.replace(/[&<>]/g, function(tag) {
+        return tagsToReplace[tag] || tag;
+    });
+};

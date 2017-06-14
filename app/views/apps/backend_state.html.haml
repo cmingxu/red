@@ -1,5 +1,5 @@
 - case Site.default.backend_option
 - when "marathon"
-  = render :partial => "marathon_app_state", locals: { marathon_app: @marathon_app }
+  = render :partial => "marathon_app_state", locals: { app: @app, service: @service, marathon_app: @app.marathon_app }
 - when "swan"
-  = render :partial => "swan_app_state", locals: { swan_app: @swan_app }
+  = render :partial => "swan_app_state", locals: { app: @app, service: @service, swan_app: @app.swan_app }

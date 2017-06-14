@@ -51,7 +51,7 @@ class AppsController < ApplicationController
     @app.app_links.each do |link|
       link.service = @service
     end
-    
+
     @app.set_raw_config(request.raw_post)
     respond_to do |format|
       if @app.save
@@ -69,7 +69,7 @@ class AppsController < ApplicationController
     audit(@app, "destroy", @app.name)
     @app.destroy
     respond_to do |format|
-      format.html { redirect_to services_url, notice: 'Service template was successfully destroyed.' }
+      format.html { redirect_to services_url, notice: '' }
       format.json { head :no_content }
     end
   end
@@ -77,9 +77,9 @@ class AppsController < ApplicationController
   def run
     audit(@app, "run", @app.name)
     @app.run
-    @app.scale params[:start_size].to_i
+    #@app.scale params[:start_size].to_i
     respond_to do |format|
-      format.html { redirect_to services_url, notice: 'Service template was successfully destroyed.' }
+      format.html { redirect_to services_url, notice: '' }
       format.json { head :ok }
     end
   end
@@ -115,7 +115,17 @@ class AppsController < ApplicationController
     @app.scale params[:scale_size].to_i
   end
 
-  def marathon_app_state
+  def swan_scale_up
+    audit(@app, "change", @app.name + " scale " + params[:scale_size])
+    Swan::App.scale_up @app.swan_app_name, params[:scale_size].to_i
+  end
+
+  def swan_scale_down
+    audit(@app, "change", @app.name + " scale " + params[:scale_size])
+    Swan::App.scale_down @app.swan_app_name, params[:scale_size].to_i
+  end
+
+  def backend_state
     render layout: false
   end
 

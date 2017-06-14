@@ -6,6 +6,7 @@
     "axios": "latest",
     "peity": "latest",
     "particles.js": "latest",
-    "adminlte": "latest"
+    "adminlte": "latest",
+    "remarkable-bootstrap-notify": "latest"
   }
 }

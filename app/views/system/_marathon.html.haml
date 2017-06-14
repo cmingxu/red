@@ -1,5 +1,5 @@
 = box_helper "success" do
-  = simple_form_for Site.default, url: "" do |form|
+  = simple_form_for Site.default, url: update_marathon_config_path, remote: true do |form|
     = box_header_helper t("system.marathon_config"), :cog do
       .box-tools.pull-right
         = form.submit t("common.update_btn"), class: danger_btn_helper

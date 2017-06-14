@@ -1,1 +1,7 @@
-$(".app_state_<%= @app.id %>").html("<%= escape_javascript(render(partial: 'backend_state', locals: {app: @app, marathon_app: @marathon_app, service: @service })) %>");
+<% if Site.default.backend_option == "marathon" %>
+  $(".app_state_<%= @app.id %>").html("<%= escape_javascript(render(partial: 'marathon_app_state', locals: {app: @app, marathon_app: @app.marathon_app, service: @service })) %>");
+<% end %>
+
+<% if Site.default.backend_option == "swan" %>
+  $(".app_state_<%= @app.id %>").html("<%= escape_javascript(render(partial: 'swan_app_state', locals: {app: @app, swan_app: @app.swan_app, service: @service })) %>");
+<% end %>

@@ -1,4 +1,4 @@
-class SwanController < ApplicationController
+class SwanController < SystemController
   def index
   end
 end
