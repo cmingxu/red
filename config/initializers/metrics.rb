@@ -13,5 +13,7 @@ $GRAPHNA_PANEL = {
   docker_container_cached_mem_usaged: { id: 12, interval: 1.minutes },
   docker_container_network_input: { id: 13, interval: 1.minutes },
   docker_container_network_output: { id: 14, interval: 1.minutes },
+  docker_host_cpu_usage: { id: 5, interval: 1.minutes },
+  docker_host_mem_usage: { id: 6, interval: 1.minutes },
 }
 

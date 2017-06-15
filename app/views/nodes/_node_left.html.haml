@@ -6,10 +6,9 @@
 
   = box_body_helper do
     %ul.nav.nav-pills.nav-stacked
-      - 10.times do
-        - nodes.each do |node|
-          %li{class: node == @node ? 'active' : ''}
-            %a{href: node_path(node) }
-              = fa_icon("inbox")
-              = node.hostname
-              %small.label.label-primary.pull-right 1
+      - nodes.each do |node|
+        %li{class: node == @node ? 'active' : ''}
+          %a{href: node_path(node) }
+            = fa_icon("inbox")
+            = node.hostname
+            %small.label.label-primary.pull-right 1

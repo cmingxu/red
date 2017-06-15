@@ -3,7 +3,7 @@
     = box_header_helper "", :server do
       .box-tools.pull-right
         = f.button :submit, t("common.save"), class: danger_btn_helper([ServiceTemplatePolicy.new(current_user, @service_template, @service_template.owner).create? ? '' : 'disabled'])
-        = link_to t('common.remove'), service_template_path(@service_template), method: :delete, class: danger_btn_helper([(['btn-danger', (ServiceTemplatePolicy.new(current_user, @service_template, @service_template.owner).create? ? '' : 'disabled')]), data: { confirm: t("common.remove") }]) if @service_template.persisted?
+        = link_to t('common.remove'), service_template_path(@service_template), method: :delete, class: danger_btn_helper([([(ServiceTemplatePolicy.new(current_user, @service_template, @service_template.owner).create? ? '' : 'disabled')]), data: { confirm: t("common.remove") }]) if @service_template.persisted?
         = link_to t('common.cancel'), service_templates_path, class: success_btn_helper
   
     = box_body_helper do

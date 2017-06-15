@@ -1,8 +1,12 @@
 .small-box{class: "bg-#{color}"}
   .inner
     %h3= num
-    %p= what
+    %p
+      - if session[:locale].to_s == "en"
+        = what_en
+      - else
+        = what_cn
   .icon
-    = raw io_icon(icon)
+    = raw fa_icon(icon)
 
   = link_to raw("more info" + fa_icon("arrow-circle-right")), link, class: 'small-box-footer'
