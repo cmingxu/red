@@ -65,19 +65,19 @@ class NodesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_node
-      @node = Node.find(params[:node_id] || params[:id]) if params[:id] or params[:node_id]
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_node
+    @node = Node.find(params[:node_id] || params[:id]) if params[:id] or params[:node_id]
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def node_params
-      params.require(:node).permit(:hostname, :state)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def node_params
+    params.require(:node).permit(:hostname, :state)
+  end
 
-    def load_nodes
-      @nodes = Node.all
-    end
+  def load_nodes
+    @nodes = Node.all
+  end
 
   def mesos_state
     Rails.cache.fetch("mesos-object", expires_in: 60.second) do
@@ -89,11 +89,7 @@ class NodesController < ApplicationController
     @breadcrumb_list = [OpenStruct.new(name_zh_cn: "全部主机", name_en: "Nodes", path: nodes_path)]
 
     if @node
-      @breadcrumb_list.push OpenStruct.new(name_zh_cn: @node.id, name_en: @node.id, path: service_path(@node))
-    end
-
-    if @app
-      @breadcrumb_list.push OpenStruct.new(name_zh_cn: @app.id, name_en: @app.id, path: service_app_path(@service, @app))
+      @breadcrumb_list.push OpenStruct.new(name_zh_cn: @node.hostname, name_en: @node.hostname, path: node_path(@node))
     end
   end
 end
