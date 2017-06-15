@@ -2,7 +2,7 @@
   = simple_form_for(group, multiple: true, class: "form-horizontal") do |f|
     = box_header_helper t("common.detail_info") do
       .box-tools.pull-right
-        = f.button :submit, t("common.update_group"), class: success_btn_helper, data: { confirm: t("common.confirm") }
+        = f.button :submit, t("common.update_group"), class: danger_btn_helper, data: { confirm: t("common.confirm") }
 
     = box_body_helper do
       = image_tag group.icon.small.try(:url) || "placeholder.png"

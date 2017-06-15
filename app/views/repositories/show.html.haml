@@ -6,22 +6,19 @@
     = box_helper "warning" do
       = box_header_helper t("namespace.repositories"), :server
       = box_body_helper do
-        = render :partial => "widgets/list_place_holder" if @namespaces.empty?
-        - if @namespace.present?
+        = render :partial => "widgets/list_place_holder" if @repo_tags.empty?
+        - if @repo_tags.present?
           %table.table
             %thead
               %th= t("namespace.repository_name")
               %th= t("namespace.repo_tags")
 
             %tbody
-              - @namespace.repositories.each do |repository|
+              - @repo_tags.each do |tag|
                 %tr
-                  %td= link_to repository.name, namespace_repository_path(@namespace, repository)
+                  %td= tag.name
                   %td
-                    - repository.repo_tags.each do |repo_tag|
-                      = link_to repo_tag.name, "", class: 'btn btn-flat btn-sm btn-warning'
 
-      .margin-bottom
 
-    = render :partial => "permissions/list", locals: { permissions: @namespace.permissions, permission: @namespace.permissions.new, resource: @namespace }
+
 

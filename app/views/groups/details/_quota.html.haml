@@ -14,7 +14,7 @@
                 = text_field_tag "value", group.settings(:quota).cpu, class: 'form-control', type: :number
                 .input-group-addon CORE
             .col-sm-4.col-sm-offset-1.text-right
-              = button_to "#", class: 'btn btn-default col-sm-8 pull-right', type: :submit, data: { confirm: t("common.quota_change_confirm") } do
+              = button_to "#", class: 'btn btn-default col-sm-8 pull-right btn-flat', type: :submit, data: { confirm: t("common.quota_change_confirm") } do
                 = fa_icon :check
 
       .col-md-4.text-center
@@ -27,7 +27,7 @@
                 = text_field_tag "value", group.settings(:quota).mem, class: 'form-control', type: :number
                 .input-group-addon M
             .col-sm-4.col-sm-offset-1.text-right
-              = button_to "#", class: 'btn btn-default col-sm-8 pull-right', type: :submit, data: { confirm: t("common.quota_change_confirm") } do
+              = button_to "#", class: 'btn btn-default col-sm-8 pull-right btn-flat', type: :submit, data: { confirm: t("common.quota_change_confirm") } do
                 = fa_icon :check
 
       .col-md-4.text-center.border-left
@@ -40,6 +40,6 @@
                 = text_field_tag "value", group.settings(:quota).disk, class: 'form-control', type: :number
                 .input-group-addon G
             .col-sm-4.col-sm-offset-1.text-right
-              = button_to "#", class: 'btn btn-default col-sm-8 pull-right', type: :submit, data: { confirm: t("common.quota_change_confirm") } do
+              = button_to "#", class: 'btn btn-default col-sm-8 pull-right btn-flat', type: :submit, data: { confirm: t("common.quota_change_confirm") } do
                 = fa_icon :check
 

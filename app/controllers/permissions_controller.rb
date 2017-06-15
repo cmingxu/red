@@ -53,10 +53,6 @@ class PermissionsController < ApplicationController
     respond_to do |format|
       authorize @resource, :update?
 
-      if !PermissionPolicy.new(current_user,  @permission).update?
-        raise Pundit::NotAuthorizedError, "not allowed to create? this #{@service_template.inspect}"
-      end
-
       if @permission.update(permission_params)
         audit(@permission, "grant", " #{@permission.access} for #{@permission.resource.class.to_s} #{@permission.resource.id}" )
         format.html { redirect_to send("#{@resource_name}_path", @permission.resource), notice: 'Permission was successfully updated.' }

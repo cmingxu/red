@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy, :leave]
-  before_action :set_group, only: [:leave]
+  before_action :set_group, only: [:leave, :create]
 
   # GET /users
   # GET /users.json
@@ -51,11 +51,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        if params[:group_id]
-          @target_group = Group.find_by(id: params[:group_id])
-          @target_group.add_user!(@user, @user.group_admin_accessor == "true" ? :admin : :user)
-        end
-
+        @group.add_user!(@user, @user.group_admin_accessor == "true" ? :admin : :user)
         Group.default_group.add_user!(@user, @user.site_admin_accessor == "true" ? :site_admin : :user)
 
         audit(@user, "create", @user.name)

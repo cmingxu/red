@@ -19,6 +19,7 @@
 
     = simple_form_for permission, url: send("#{resource_name}_permissions_path", resource) do |form|
       = form.input :accessor_type, as: :hidden, input_html: { id: "accessor_type" }
+      = form.input :accessor_id, as: :hidden, input_html: { id: "accessor_id" }
       = form.input :resource_type, as: :hidden
       = form.input :resource_id, as: :hidden
 

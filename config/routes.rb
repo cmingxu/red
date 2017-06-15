@@ -25,6 +25,8 @@ Rails.application.routes.draw do
   resources :namespaces do
     resources :permissions do
     end
+
+    resources :repositories
   end
 
   resources :audits, only: [:index]

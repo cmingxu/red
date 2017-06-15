@@ -7,8 +7,16 @@ class NamespacePolicy < ApplicationPolicy
     @owner = owner
   end
 
+  def pull?
+    user.can_read? record
+  end
+
+  def push?
+    user.can_admin? record
+  end
+
   def update?
-    user.adminable_namespaces.include? record
+    user.can_admin? record
   end
 
   def create?

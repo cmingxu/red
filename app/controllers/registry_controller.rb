@@ -15,9 +15,9 @@ class RegistryController < ApplicationController
   def login_from_authorization authorization
     username, password = Base64.decode64(authorization).split(":")
 
-    @login_user = User.find_by(email: username)
-    return false if @login_user.nil?
-    return false if !@login_user.password_valid?(password)
+    @current_user = User.find_by(email: username)
+    return false if @current_user.nil?
+    return false if !@current_user.password_valid?(password)
 
     return true
   end
@@ -71,7 +71,8 @@ class RegistryController < ApplicationController
         #     scope gets removed from `auth_scope.actions`.
         begin
           authorize auth_scope.resource, "#{action}?".to_sym
-        rescue NoMethodError, Pundit::NotAuthorizedError, Portus::AuthScope::ResourceNotFound
+        rescue Portus::AuthScope::NamespaceNotSupport, NoMethodError, Pundit::NotAuthorizedError, Portus::AuthScope::ResourceNotFound => e
+          logger.debug e
           logger.debug "action #{action} not handled/authorized, removing from actions"
           auth_scope.actions.delete_if { |a| match_action(action, a) }
         end

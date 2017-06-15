@@ -7,6 +7,6 @@ class PermissionPolicy < ApplicationPolicy
   end
 
   def update?
-    return false if record.accessor == current_user
+    self.user.can_admin? record
   end
 end

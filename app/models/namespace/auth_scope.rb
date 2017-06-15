@@ -3,19 +3,13 @@ class Namespace::AuthScope < Portus::AuthScope
   attr_accessor :resource, :actions, :resource_type, :resource_name
 
   def resource
-    ap actions
-    ap resource_type
-    ap resource_name
     if !resource_name.include?("/")
       raise NamespaceNotSupport, "Invalid namespace name" 
     end
     namespace_name, image_name = resource_name.split("/")
-    ap namespace_name
-    ap image_name
     found_resource = Namespace.find_by name: namespace_name
     raise ResourceNotFound, "Cannot find namespace #{namespace_name}" if found_resource.nil?
 
-    ap found_resource
     found_resource
   end
 
