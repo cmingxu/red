@@ -5,19 +5,18 @@
         = f.button :submit, t("common.save"), class: danger_btn_helper([ServiceTemplatePolicy.new(current_user, @service_template, @service_template.owner).create? ? '' : 'disabled'])
         = link_to t('common.remove'), service_template_path(@service_template), method: :delete, class: danger_btn_helper([([(ServiceTemplatePolicy.new(current_user, @service_template, @service_template.owner).create? ? '' : 'disabled')]), data: { confirm: t("common.remove") }]) if @service_template.persisted?
         = link_to t('common.cancel'), service_templates_path, class: success_btn_helper
-  
+
     = box_body_helper do
       .row
         .col-md-4
           %p= image_tag  @service_template.icon.small.try(:url) || "placeholder.png", height: 200
-          %label.btn.btn-default.btn-file.col-sm-12
+          %label.btn.btn-default.btn-flat.col-sm-12
             = f.input :icon, input_html: { style: "display: none;" }, label: fa_icon(:plus) + " " + t('common.upload_icon')
         .col-md-8
           .form-group
             %h4= @service_template.owner.try :display
           = f.input :name, label: false, hint: t('service_template.name_hint')
           = f.input :desc, label: false, hint: t('service_template.desc_hint')
-  
       %hr
       .form_section
         %ul.nav.nav-tabs{role: 'tablist'}
@@ -28,12 +27,8 @@
         .tab-content
           .tab-pane.active#readme{role: 'tabpanel'}
             = f.input :readme, as: :text, label: false, input_html: {'data-provide': 'markdown-editable', style: 'height: 400px;'}
-  
           .tab-pane#raw_config{role: 'tabpanel'}
             = f.input :raw_config, as: :text, label: false, input_html: {style: "height: 400px;", id: 'editor'}
-  
-  
       = hidden_field_tag "owner_type", params[:owner_type] || @service_template.owner.try(:class).try(:to_s)
       = hidden_field_tag "owner_id", params[:owner_id] || @service_template.owner.try(:id)
-  
 

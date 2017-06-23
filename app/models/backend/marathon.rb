@@ -101,13 +101,16 @@ module Backend
         id: self.app.marathon_app_name,
         cpus: self.app.cpu.to_f,
         mem: self.app.mem,
+        disk: self.app.disk,
         instances: self.app.instances,
-        #executor: "",
         container: self.app.container_hash,
         env: self.app.env,
         labels: self.app.labels,
-        #fetch: self.app.uris.map {|u| { "uri": u }},
-        healthChecks: [ ]
+        fetch: self.app.uris.map {|u| { "uri": u }},
+        constraints: self.app.constraints,
+        cmd: self.app.cmd,
+        healthChecks: [
+          self.app.health_check ]
       }
 
       if self.app.cmd.present?
@@ -122,9 +125,10 @@ module Backend
         type: "DOCKER",
         docker: {
           image: self.app.image,
-          network: self.app.network.upcase,
+          network: "BRIDGE",
           privileged: self.app.privileged,
-          #portMappings: self.app.portmappings,
+          portMappings: self.app.portmappings,
+          parameters: self.app.parameters,
         },
         volumes: self.app.volumes,
       }

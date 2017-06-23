@@ -10,6 +10,7 @@
   appObj.app_links = appLinks;
 
   var appsUnderService = JSON.parse('<%= Hash[@service.apps.select(&:persisted?).map{|a| [a.name, a.id] }].to_json.html_safe%>');
+  var webservicesUnderApp = JSON.parse('<%= Hash[@service.apps.select(&:persisted?).map{|a| [a.id, Hash[a.portmappings.pluck("name", "servicePort")]] }].to_json.html_safe%>');
   $('#appTab a:first').tab('show');
 
   var locale = '<%= session[:locale] %>';
@@ -61,23 +62,40 @@
               </div>
             </div>
 
+            <div class="form-group" ng-class="{ 'has-error' : appForm.cpu.$invalid && (appForm.cpu.$dirty || submitted)}" >
+              <label for="cpu" class="col-sm-2 control-label"><%= t("active_record.common.cpu") %></label>
+              <div class="col-sm-10">
+                <input type="float" name="cpu" class="form-control" id="cpu" ng-model="app.cpu" ng-required="true">
+                <p ng-show="appForm.cpu.$invalid && (appForm.cpu.$dirty || submitted)" class="help-block">You name is required.</p>
+              </div>
+            </div>
+            
+            <div class="form-group" ng-class="{ 'has-error' : appForm.mem.$invalid && (appForm.mem.$dirty || submitted)}" >
+              <label for="mem" class="col-sm-2 control-label"><%= t("active_record.common.mem") %></label>
+              <div class="col-sm-10">
+                <input type="number" name="mem" class="form-control" id="mem" ng-model="app.mem" ng-required="true">
+                <p ng-show="appForm.mem.$invalid && (appForm.mem.$dirty || submitted)" class="help-block">You name is required.</p>
+              </div>
+            </div>
+
+            <div class="form-group" ng-class="{ 'has-error' : appForm.disk.$invalid && (appForm.disk.$dirty || submitted)}" >
+              <label for="disk" class="col-sm-2 control-label"><%= t("active_record.common.disk") %></label>
+              <div class="col-sm-10">
+                <input type="number" name="disk" class="form-control" id="disk" ng-model="app.disk" ng-required="true">
+                <p ng-show="appForm.disk.$invalid && (appForm.disk.$dirty || submitted)" class="help-block">disk is required.</p>
+              </div>
+            </div>
+            
+
+            <!--
             <div class="form-group" ng-class="{ 'has-error' : appForm.network.$invalid && (appForm.network.$dirty || submitted)}" >
               <label for="network" class="col-sm-2 control-label"><%= t("app.network") %></label>
               <div class="col-sm-10">
                 <label><input value="bridge" type="radio" name="network" ng-model="app.network" /><%= t("app.bridge") %></label>
                 <label><input value="host" type="radio" name="network" ng-model="app.network" /><%= t("app.host") %></label>
-                <label><input value="user" type="radio" name="network" ng-model="app.network" /><%= t("app.user") %></label>
-                <p ng-show="appForm.network.$invalid && (appForm.network.$dirty || submitted)" class="help-block">You name is required.</p>
               </div>
             </div>
-
-            <div class="form-group" ng-class="{ 'has-error' : appForm.customized_network_name.$invalid && (appForm.customized_network_name.$dirty || submitted)}" ng-show="app.network != 'bridge' && app.network != 'host'">
-              <label for="customized_network_name" class="col-sm-2 control-label"><%= t("app.customized_network_name") %></label>
-              <div class="col-sm-10">
-                <input type="input" name="customized_network_name" class="form-control" id="customized_network_name" ng-model="app.customized_network_name" ng-required="app.network != 'bridge' && app.network != 'host'">
-                <p ng-show="appForm.customized_network_name.$invalid && (appForm.customized_network_name.$dirty || submitted)" class="help-block">You name is required.</p>
-              </div>
-            </div>
+            -->
 
             <div class="form-group" ng-class="{ 'has-error' : appForm.portmappings.$invalid && (appForm.portmappings.$dirty || submitted)}" ng-show="app.network == 'bridge' || app.network == 'host'">
               <label for="portmappings" class="col-sm-2 control-label"><%= t("app.portmappings") %></label>
@@ -85,23 +103,23 @@
                 <table class="table table-bordered col-md-6 col-sm-12">
                   <tr>
                     <th><%= t('app.port_name') %></td>
-                    <th ng-if="app.network=='bridge'"><%= t('app.container_port') %></td>
-                    <th ng-if="app.network=='host'"><%= t('app.host_port') %></td>
+                    <th><%= t('app.container_port') %></td>
+                    <th><%= t('app.service_port') %></td>
                     <th><%= t('app.proto') %></td>
                     <th></td>
                   </tr>
                   <tbody>
                     <tr  ng-repeat="portmapping in app.portmappings">
                       <td> <input type="input" class="form-control" ng-model="portmapping.name" ng-required=true> </td>
-                      <td ng-if="app.network=='bridge'"> <input type="number" class="form-control" ng-model="portmapping.containerPort" ng-required=true> </td>
-                      <td ng-if="app.network=='host'"> <input type="number" class="form-control" ng-model="portmapping.hostPort" ng-required=true> </td>
+                      <td> <input type="number" class="form-control" ng-model="portmapping.containerPort" ng-required=true> </td>
+                      <td> <input type="number" class="form-control" ng-model="portmapping.servicePort" ng-required=true> </td>
                       <td>
                         <select class='form-control app-select' ng-model='portmapping.proto' ng-required=true>
                           <option value="tcp"> TCP </option>
                           <option value="udp"> UDP </option>
                         </select>
                       </td>
-                      <td><a class="btn btn-default btn-sm" ng-click="removePortmapping($index)"><%= fa_icon(:minus)%> </a></td>
+                      <td><a class="btn btn-default btn-sm" ng-click="removePortmapping($index)" ng-if="$index != 0"><%= fa_icon(:minus)%> </a></td>
                     </tr>
                     <tr>
                       <td colspan=5><a class="btn btn-default btn-sm" ng-click="morePortmapping()"><%= fa_icon(:plus)%> <%= t('app.add_portmapping') %> </a></td>
@@ -117,16 +135,23 @@
               <div class="col-sm-10">
                 <table class="table table-bordered col-md-6 col-sm-12">
                   <tr>
-                    <th><%= t('app.link_output') %></td>
                     <th><%= t('app.link_alias') %></td>
+                    <th><%= t('app.link_output') %></td>
+                    <th><%= t('app.link_output_service') %></td>
+                    <th><%= t('app.accessible_through') %></td>
                     <th></td>
                   </tr>
                   <tbody>
                     <tr ng-repeat="link in app.app_links | filter: {_destroy: 0}">
+                      <td> <input type="input" class="form-control" ng-model="link.alias"> </td>
                       <td>
                         <select class='form-control app-select' ng-model='link.output_app_id' required="required" ng-options="v as k for (k, v) in appsUnderService" > </select>
                       </td>
-                      <td> <input type="input" class="form-control" ng-model="link.alias"> </td>
+                      <td>
+                        <select class='form-control app-select' ng-model='link.output_service' required="required" ng-options="name as name for (name, serviceName) in webservicesUnderApp[link.output_app_id]" > </select>
+                      </td>
+                      <td>
+                      </td>
                       <td><a class="btn btn-default btn-sm" ng-click="removeLink($index)"><%= fa_icon(:minus)%> </a></td>
                     </tr>
                     <tr>
@@ -148,12 +173,9 @@
               <li role="presentation" class="active"><a href="#command" aria-controls="command" role="tab" data-toggle="tab"><%= t('service.command') %></a></li>
               <li role="presentation"><a href="#volumes" aria-controls="volumes" role="tab" data-toggle="tab"><%= t('service.volumes') %></a></li>
               <li role="presentation"><a href="#uri" aria-controls="uri" role="tab" data-toggle="tab"><%= t('service.uri') %></a></li>
-              <li role="presentation"><a href="#networking" aria-controls="networking" role="tab" data-toggle="tab"><%= t('service.networking') %></a></li>
               <li role="presentation"><a href="#labels" aria-controls="labels" role="tab" data-toggle="tab"><%= t('service.labels') %></a></li>
-              <li role="presentation"><a href="#security" aria-controls="security" role="tab" data-toggle="tab"><%= t('service.security') %></a></li>
               <li role="presentation"><a href="#health_check" aria-controls="health_check" role="tab" data-toggle="tab"><%= t('service.health_check') %></a></li>
               <li role="presentation"><a href="#scheduling" aria-controls="scheduling" role="tab" data-toggle="tab"><%= t('service.scheduling') %></a></li>
-              <li role="presentation"><a href="#gateway" aria-controls="gateway" role="tab" data-toggle="tab" ng-if="supportGateway()"><%= t('service.gateway') %></a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -170,16 +192,8 @@
                 <%= render partial: 'apps/form/uri' %>
               </div>
 
-              <div role="tabpanel" class="tab-pane" id="networking">
-                <%= render partial: 'apps/form/networking' %>
-              </div>
-
               <div role="tabpanel" class="tab-pane" id="labels">
                 <%= render partial: 'apps/form/labels' %>
-              </div>
-
-              <div role="tabpanel" class="tab-pane" id="security">
-                <%= render partial: 'apps/form/security' %>
               </div>
 
               <div role="tabpanel" class="tab-pane" id="health_check">
@@ -188,10 +202,6 @@
 
               <div role="tabpanel" class="tab-pane" id="scheduling">
                 <%= render partial: 'apps/form/scheduling' %>
-              </div>
-
-              <div role="tabpanel" class="tab-pane" id="gateway" ng-if="supportGateway()">
-                <%= render partial: 'apps/form/gateway' %>
               </div>
             </div>
           </div>

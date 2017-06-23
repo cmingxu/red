@@ -1,5 +1,9 @@
-= panel_item(t("nodes.container_stdout_logs"), :info) do
-  .well= raw @container.logs(stdout: 1).gsub("\n", "<br>")
+= box_helper "success" do
+  = box_header_helper t("node.container_stdout_logs"), "info"
+  = box_body_helper do
+    .well= raw @container.logs(stdout: 1).gsub("\n", "<br>")
 
-= panel_item(t("nodes.container_stderr_logs"), :info) do
-  .well= @container.logs(stderr: 1).gsub("\n", "<br>")
+= box_helper "danger" do
+  = box_header_helper t("node.container_stderr_logs"), "info"
+  = box_body_helper do
+    .well= @container.logs(stderr: 1).gsub("\n", "<br>")

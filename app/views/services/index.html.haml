@@ -26,11 +26,13 @@
                     = service.owner.display
     
             %td.text-center
+              Versions
+            %td.text-center
               %p
                 %span.text-bigger= service.apps.length
                 %span.text-muted= t('active_record.app.model_name')
                 %span.text-primary= link_to fa_icon(:refresh), "", onclick: "", data: {service_id: "service_#{service.id}" }, class: 'service_refresh_app_state_icon'
-            %td.text-center{colspan: "2"}
+            %td.text-center
               = drop_down_menu :default, t("common.actions") do
                 = drop_down_menu_item t("nav.open_in_new_window"), service_path(service), target: '_blank'
                 - if policy(service).update?
@@ -65,9 +67,9 @@
                   \:
                   %br
     
-                = link_to raw(app.current_version.name + " " + fa_icon('check-square')), edit_service_app_path(service, app, version_id: app.current_version.id), data: { turbolinks: false }, class: 'btn btn-sm btn-default'
+                = link_to raw(app.current_version.name + " " + fa_icon('check-square')), edit_service_app_path(service, app, version_id: app.current_version.id), data: { turbolinks: false }, class: 'btn btn-sm btn-warning btn-flat'
                 - (app.versions - [app.current_version])[0..3].each do |version|
-                  = link_to version.name, edit_service_app_path(service, app, version_id: version.id), data: { turbolinks: false }, class: 'btn btn-default btn-sm'
+                  = link_to version.name, edit_service_app_path(service, app, version_id: version.id), data: { turbolinks: false }, class: 'btn btn-warning btn-flat btn-sm'
                 - if app.versions.length > 3
                   = link_to fa_icon('angle-double-right'), detail_service_app_path(service, app, anchor: "versions")
               %td.text-center{class: "app_state app_state_#{app.id}", data: { 'app-state-path': backend_state_service_app_path(service, app)}}

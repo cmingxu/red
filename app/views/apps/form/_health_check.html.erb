@@ -1,12 +1,44 @@
 <div class="form-group" ng-class="{ 'has-error' : appForm.health_check_protocol.$invalid && (appForm.health_check_protocol.$dirty || submitted)}">
   <label for="health_check_protocol" class="col-sm-2 control-label"><%= t("app.health_check.protocol") %></label>
   <div class="col-sm-10">
-    <input type="input" name="health_check_protocol" class="form-control" id="health_check_protocol" ng-model="app.health_check.protocol">
-     <p ng-show="appForm.health_check_protocol.$invalid && (appForm.health_check_protocol.$dirty || submitted)" class="help-block">You name is required.</p>
+    <select class='form-control app-select' ng-model='app.health_check.protocol'>
+      <option value="HTTP"> HTTP </option>
+      <option value="HTTPS"> HTTPS </option>
+      <option value="TCP"> TCP </option>
+      <option value="COMMAND"> COMMAND </option>
+      <option value="MESOS_HTTP"> MESOS_HTTP </option>
+      <option value="MESOS_HTTPS"> MESOS_HTTPS </option>
+      <option value="MESOS_TCP"> MESOS_TCP </option>
+    </select>
+</div>
+  </div>
+
+<div class="form-group" ng-class="{ 'has-error' : appForm.health_check_path.$invalid && (appForm.health_check_path.$dirty || submitted)}" ng-if='needPathOption()'>
+  <label for="health_check_path" class="col-sm-2 control-label"><%= t("app.health_check.path") %></label>
+  <div class="col-sm-10">
+    <input type="input" name="health_check_path" class="form-control" id="health_check_path" ng-model="app.health_check.path">
+    <p ng-show="appForm.health_check_path.$invalid && (appForm.health_check_path.$dirty || submitted)" class="help-block">path is required.</p>
   </div>
 </div>
 
-<%- %w(path delaySeconds gracePeriodSeconds intervalSeconds portName timeoutSeconds consecutiveFailures).each do |col| %>
+<div class="form-group" ng-class="{ 'has-error' : appForm.health_check_portindex.$invalid && (appForm.health_check_portindex.$dirty || submitted)}" ng-if='app.health_check.protocol != "COMMAND"'>
+  <label for="health_check_portindex" class="col-sm-2 control-label"><%= t("app.health_check.portindex") %></label>
+  <div class="col-sm-10">
+    <select class='form-control app-select' ng-model='app.health_check.portindex'>
+      <option ng-repeat='portmapping in app.portmappings' value='$index'>{{portmapping.name}}</option>
+    </select>
+  </div>
+</div>
+
+<div class="form-group" ng-class="{ 'has-error' : appForm.health_check_value.$invalid && (appForm.health_check_value.$dirty || submitted)}" ng-if='app.health_check.protocol == "COMMAND"'>
+  <label for="health_check_value" class="col-sm-2 control-label"><%= t("app.health_check.value") %></label>
+  <div class="col-sm-10">
+    <input type="input" name="health_check_command_value" class="form-control" id="health_check_command_value" ng-model="app.health_check.command.value">
+    <p ng-show="appForm.health_check_command_value.$invalid && (appForm.health_check_command_value.$dirty || submitted)" class="help-block">value is required.</p>
+  </div>
+</div>
+
+<%- %w(gracePeriodSeconds intervalSeconds timeoutSeconds consecutiveFailures).each do |col| %>
   <div class="form-group" ng-class="{ 'has-error' : appForm.health_check_<%= col.downcase %>.$invalid && (appForm.health_check_<%= col.downcase %>.$dirty || submitted)}">
     <label for="health_check_<%= col.downcase %>" class="col-sm-2 control-label"><%= t("app.health_check.#{col.downcase}") %></label>
     <div class="col-sm-10">

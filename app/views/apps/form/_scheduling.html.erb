@@ -1,0 +1,29 @@
+<div class="form-group" ng-class="{ 'has-error' : appForm.constraints.$invalid && (appForm.constraints.$dirty || submitted)}">
+  <label for="labels" class="col-sm-2 control-label"><%= t("app.constraints") %></label>
+  <div class="col-sm-10">
+    <table class="table table-bordered">
+      <tr>
+        <th><%= t('app.constraint_value1') %></td>
+        <th><%= t('app.constraint_key') %></td>
+        <th><%= t('app.constraint_value2') %></td>
+        <th></td>
+      </tr>
+      <tbody>
+        <tr  ng-repeat="constraint in app.constraints">
+          <td> <input type="input" class="form-control" name="constraints" ng-model="constraint[0]" ng-required=true> </td>
+          <td>
+            <select name="constraint-operator" class='form-control app-select' ng-model="constraint[1]">
+              <option ng-repeat="operator in constraint_operators" value={{operator}}>{{operator}}</option>
+            </select>
+          </td>
+          <td> <input type="input" class="form-control" name="constraints" ng-model="constraint[2]" ng-if="constraint[1]!='UNIQUE'"> 
+          </td>
+          <td><a class="btn btn-default btn-sm" ng-click="removeConstraint($index)"><%= fa_icon(:minus)%> </a></td>
+        </tr>
+        <tr>
+          <td colspan=5><a class="btn btn-default btn-sm" ng-click="moreConstraint()"><%= fa_icon(:plus)%> <%= t('app.new_constraint') %> </a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -35,7 +35,7 @@
 
 class App < ApplicationRecord
   PROTECTED_ATTRIBUTES = %w(id created_at updated_at raw_config service_id current_version_id backend)
-  CONFIG_ATTRIBUTES = ["cpu", "mem", "disk", "cmd", "args", "priority", "runas", "constraints", "image", "network", "portmappings", "force_image", "privileged", "env", "volumes", "uris", "gateway", "health_check"]
+  CONFIG_ATTRIBUTES = ["cpu", "mem", "disk", "cmd", "args", "priority", "runas", "constraints", "parameters", "image", "network", "portmappings", "force_image", "privileged", "env", "volumes", "uris", "gateway", "health_check"]
 
   MARATHON = "marathon"
   SWAN = "swan"
@@ -51,15 +51,17 @@ class App < ApplicationRecord
 
   include AASM
 
-  attr_accessor :labels, :links
+  attr_accessor :links
   attr_accessor :version_name
 
   serialize :env, Hash
   serialize :health_check, Hash
   serialize :portmappings, Array
-  serialize :labels, Array
+  serialize :parameters, Array
+  serialize :labels, Hash
   serialize :volumes, Array
   serialize :uris, Array
+  serialize :constraints, Array
   serialize :gateway, Hash
 
   belongs_to :service

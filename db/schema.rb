@@ -10,15 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170606080946) do
+ActiveRecord::Schema.define(version: 20170623074145) do
 
   create_table "app_links", force: :cascade do |t|
     t.integer  "service_id"
     t.string   "alias"
     t.integer  "input_app_id"
     t.integer  "output_app_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "output_service"
   end
 
   create_table "apps", force: :cascade do |t|
@@ -51,6 +52,8 @@ ActiveRecord::Schema.define(version: 20170606080946) do
     t.datetime "updated_at",                                  null: false
     t.string   "state"
     t.string   "slug"
+    t.text     "parameters"
+    t.text     "labels"
     t.index ["service_id"], name: "index_apps_on_service_id"
   end
 

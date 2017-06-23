@@ -18,15 +18,16 @@ angular.module('app', [])
     $scope.app = window.appObj;
     $scope.appPersisted = window.appPersisted;
     $scope.appsUnderService = window.appsUnderService;
+    $scope.webservicesUnderApp = window.webservicesUnderApp;
     $scope.locale = window.locale;
+    $scope.constraint_operators = ["UNIQUE", "LIKE", "UNLIKE", "CLUSTER", "GROUP_BY", "MAX_PER"];
 
-
-    fillApp()
+    fillApp();
 
     $scope.submit = function () {
       $scope.submitted = true;
       if($scope.appForm.$invalid) {
-        alert("not valid");
+        alert("form invalid");
       }else{
         var promptTitle = "name this version for application";
         if(locale == "zh-CN") {
@@ -65,6 +66,16 @@ angular.module('app', [])
         $scope.app.network == "host";
     }
 
+    $scope.needPathOption = function () {
+      var protocolList = ["HTTP", "HTTPS", "MESOS_HTTP", "MESOS_HTTPS"];
+      return protocolList.indexOf($scope.app.health_check.protocol) >= 0;
+    }
+
+    $scope.needChoosePort = function () {
+      var protocolList = ["HTTP", "HTTPS", "TCP", "MESOS_HTTP", "MESOS_HTTPS", "MESOS_TCP"];
+      return protocolList.indexOf($scope.app.health_check.protocol) >= 0;
+    }
+
     // envs
     $scope.removeEnv = function (key) {
       delete $scope.app.env[key];
@@ -77,6 +88,21 @@ angular.module('app', [])
 
       $scope.app.env["KEY" + Object.keys($scope.app.env).length] = "VALUE";
     }
+
+    // parameters
+    $scope.removeParameter = function (index) {
+      delete $scope.app.parameters.splice(index, 1);
+    }
+
+    $scope.moreParameter = function () {
+      if(angular.isUndefined($scope.app.parameters) || $scope.app.parameters == null) {
+        $scope.app.parameters = [];
+      }
+
+      $scope.app.parameters.push({"key": "hostname", "value": "hostname"});
+    }
+
+
 
     // uri
     $scope.removeUris = function (index) {
@@ -134,13 +160,24 @@ angular.module('app', [])
         $scope.app.app_links = [];
       }
 
+      var firstAppId = Object.values($scope.appsUnderService)[0];
+      var firstAppName = Object.keys($scope.appsUnderService)[0];
+
       $scope.app.app_links.push({
-        alias: Object.keys($scope.appsUnderService)[0],
-        output_app_id: Object.values($scope.appsUnderService)[0],
+        alias: firstAppName,
+        output_app_id: firstAppId,
+        output_service: Object.keys(webservicesUnderApp[firstAppId])[0],
         _destroy: 0,
       });
     }
 
+    $scope.moreConstraint = function (index) {
+      $scope.app.constraints.push(["hostname", "LIKE", ".*"]);
+    }
+
+    $scope.removeConstraint = function (index) {
+      $scope.app.constraints.splice(index, 1);
+    };
 
     // portmappings
     $scope.removePortmapping = function (index) {
@@ -148,7 +185,7 @@ angular.module('app', [])
     }
 
     $scope.morePortmapping = function () {
-      if($scope.app.portmappings == null) {
+      if(angular.isUndefined($scope.app.portmappings) || $scope.app.portmappings == null) {
         $scope.app.portmappings = [];
       }
 
@@ -156,6 +193,7 @@ angular.module('app', [])
         {name: "web",
           containerPort: 80,
           hostPort: 0,
+          servicePort: 0,
           proto: "tcp"}
       );
     }
@@ -170,16 +208,15 @@ angular.module('app', [])
       }
 
       if($scope.app.disk == null){
-        $scope.app.disk = 0;
+        $scope.app.disk = 128;
       }
 
       if($scope.app.cmd == null){
         $scope.app.cmd = "";
       }
 
-
       if($scope.app.name == null){
-        $scope.app.name = "god-love-cat";
+        $scope.app.name = "barfoo";
       }
 
       if($scope.app.desc == null){
@@ -193,6 +230,18 @@ angular.module('app', [])
       if($scope.app.network == null){
         $scope.app.network = "bridge";
       }
+
+      if(angular.isUndefined($scope.app.portmappings) || $scope.app.portmappings == null) {
+        $scope.app.portmappings = [];
+      }
+
+      $scope.app.portmappings.push(
+        {name: "web",
+          containerPort: 80,
+          hostPort: 0,
+          servicePort: 0,
+          proto: "tcp"}
+      );
 
       if($scope.app.health_check == null || Object.getOwnPropertyNames($scope.health_check || {}).length == 0){
         $scope.app.health_check = {
@@ -220,4 +269,4 @@ angular.module("selectBox", []).directive('selectBox', function() {
       });
     }
   };
-}); 
+});

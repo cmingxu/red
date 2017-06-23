@@ -172,7 +172,7 @@ class AppsController < ApplicationController
   def app_params
     converted_params = params.require(:app).permit!
     converted_params[:app_links_attributes] = converted_params.delete(:app_links)
-    converted_params 
+    converted_params
 
 
 
