@@ -32,3 +32,8 @@
         %a{href: graphna_stats_path(), class: controller_name.to_s == "graphna" ? 'active' : "" }
           = fa_icon("inbox")
           Registry
+          
+      %li
+        %a{href: system_info_path, class: controller_name.to_s == "system" && action_name.to_s == "info" ? 'active' : "" }
+          = fa_icon("cogs")
+          = t("system.info")

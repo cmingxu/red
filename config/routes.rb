@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'search/list_owner'
 
   get 'system/index', as: :system
+  get 'system/info', as: :system_info
   patch 'system/update_marathon_config', as: :update_marathon_config
   patch 'system/update_mesos_config', as: :update_mesos_config
   patch 'system/update_swan_config', as: :update_swan_config

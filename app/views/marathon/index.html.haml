@@ -1,9 +1,10 @@
-= link_to fa_icon("copy"), Site.default.marathon_leader_url + "info", target: "_blank"
+
 = box_helper "success" do
-  = box_header_helper t("system.marathon_detail"), "server"
+  = box_header_helper t("system.marathon_detail"), "server" do
+    .box-tools.pull-right
+      = link_to fa_icon("copy"), Site.default.marathon_leader_url + "info", target: "_blank"
   = box_body_helper do
     = info_show_helper @info.to_hash
-
 
 
 = box_helper "success" do
@@ -27,13 +28,3 @@
             %td= app.info[:disk]
             %td= app.info[:instances]
 
-        - @groups.each do |group|
-          - group[:apps].each do |app|
-            %tr
-              %td
-                = group[:id]
-                = app[:id]
-              %td= app[:cpus]
-              %td= app[:mem]
-              %td= app[:disk]
-              %td= app[:instances]

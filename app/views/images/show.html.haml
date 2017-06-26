@@ -12,7 +12,7 @@
   = form_tag tag_node_image_path(@node, id: @image.info['id']), class: 'form-inline' do
     = box_header_helper t("node.name_a_image"), "server" do
       .box-tools.pull-right
-        = submit_tag t("node.tag_submit"), class: 'btn btn-danger btn-sm btn-flat'
+        = submit_tag t("node.tag_submit"), class: primary_btn_helper
     = box_body_helper do
       .control-group.col-md-6
         = label_tag t("node.image_tag")
@@ -27,7 +27,7 @@
 = box_helper "success" do
   = box_header_helper t("node.image_detail"), "server" do
     .box-tools.pull-right
-      = link_to t("node.delete_image"), node_image_path(@node, id: @image.info['id']), class: 'btn btn-danger btn-sm btn-flat', method: :delete, data: { confirm: t("node.delete_image" ) }
+      = link_to fa_icon(:trash) + " " +t("node.delete_image"), node_image_path(@node, id: @image.info['id']), class: danger_btn_helper, method: :delete, data: { confirm: t("node.delete_image" ) }
   = box_body_helper do
     %dl.dl-horizontal
       %dt ID

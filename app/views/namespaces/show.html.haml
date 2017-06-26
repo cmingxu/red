@@ -1,6 +1,5 @@
 .row
   .col-md-3
-    = link_to fa_icon(:plus) + " " + t('common.new_namespace'), new_namespace_path, class: 'btn btn-primary btn-danger btn-sm btn-block margin-bottom', data: { prompt: { title: t("common.new_namespace"), name: "owner", type: "choose_owner"} }, method: :get
     = render :partial => "namespaces/namespace_left", locals: { namespaces: @namespaces }
   .col-md-9
     = box_helper "warning" do

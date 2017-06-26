@@ -1,17 +1,19 @@
-= panel_item slave['hostname'], :server, '', :danger do
-  %dl.dl-horizontal
-    %dt= t('common.id')
-    %dd= slave['id']
-    %dt= t('common.hostname')
-    %dd= slave['hostname']
-    %dt= t('common.registertime')
-    %dd= slave['registered_time']
-    %dt= t('common.resource')
-    %dd= slave['resource']
-    %dt= t('common.state')
-    %dd= slave['active']
+= box_helper "warning" do
+  = box_header_helper slave['hostname'], :server
+  = box_body_helper do
+    %dl.dl-horizontal
+      %dt= t('common.id')
+      %dd= slave['id']
+      %dt= t('common.hostname')
+      %dd= slave['hostname']
+      %dt= t('common.registertime')
+      %dd= slave['registered_time']
+      %dt= t('common.resource')
+      %dd= slave['resource']
+      %dt= t('common.state')
+      %dd= slave['active']
 
-  = simple_form_for Node.new(hostname: slave['hostname']) do |form|
-    = form.input :hostname, as: :hidden
-  
-    = form.submit t("common.add_new_host"), class: 'btn btn-danger btn-lg', data: { confirm: t("host.add_host_confirm") }
+    = simple_form_for Node.new(hostname: slave['hostname']) do |form|
+      = form.input :hostname, as: :hidden
+
+      = form.submit t("common.add_new_host"), class: 'btn btn-primary btn-flat', data: { confirm: t("host.add_host_confirm") }

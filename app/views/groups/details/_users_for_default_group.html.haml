@@ -1,7 +1,7 @@
 = box_helper "warning" do
   = box_header_helper t("common.user") do
     .box-tools.pull-right
-      = link_to fa_icon(:plus) + " " + t("group.new_group_user"), "#newUser", class: danger_btn_helper, data: { toggle: 'modal' }
+      = link_to fa_icon(:plus) + " " + t("group.new_group_user"), "#newUser", class: primary_btn_helper, data: { toggle: 'modal' }
       = modal_dialog id: "newUser", header: { show_close: true, dismiss: 'modal', title: t('user.new_user') }, body:   { content: render(:partial => "users/form", locals: { group: @group, user: @group.users.new, siteadmin_require: true, groupadmin_require: false }) }, footer: { content: '' }
 
   = box_body_helper do

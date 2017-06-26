@@ -1,9 +1,9 @@
 = box_helper "green" do
   = simple_form_for(@namespace) do |form|
-    = box_header_helper "", :server do
+    = box_header_helper t("namespace.new_namespace"), :server do
       .box-tools.pull-right
-        = form.submit t("common.submit"), class: 'btn btn-danger btn-sm btn-flat'
-        = link_to t("common.cancel"), namespaces_path, class: 'btn btn-success btn-sm btn-flat'
+        = form.submit t("common.submit"), class: primary_btn_helper
+        = link_to t("common.cancel"), namespaces_path, class: success_btn_helper
 
     = box_body_helper do
       = form.input :name, label: t("namespace.name"), hint: "eg. library"

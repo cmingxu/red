@@ -2,6 +2,9 @@ class SystemController < ApplicationController
   def index
   end
 
+  def info
+  end
+
   def update_mesos_config
     ret = Site.default.mesos_ping params[:site][:mesos_addrs]
     if ret[:result]

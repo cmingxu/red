@@ -45,7 +45,7 @@ zh-CN:
     quota: "配额"
     create_accessor: "授权"
     audits: "审计"
-    add_new_host: "发现新主机"
+    add_new_host: "添加到主机列表"
     new_namespace: "新增镜像库"
     upload_icon: "上传图片"
     create_accessor: "增加权限"
@@ -225,9 +225,10 @@ zh-CN:
     repo_tags: "标签"
     pull_count: "下载次数"
     repositories: "镜像"
-    all_namespaces: "镜像库列表"
+    all_namespaces: "全部镜像仓库"
     repo_size: "大小"
     path: "地址"
+    new_namespace: "新镜像仓库"
 
   audit:
     entity: "对象"
