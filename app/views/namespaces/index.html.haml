@@ -19,7 +19,7 @@
                   %td= repository.name
                   %td
                     - repository.repo_tags.each do |repo_tag|
-                      = link_to badge(rand(100), :success) + repo_tag.name, class: 'btn btn-default'
+                      = link_to repo_tag.name, "", class: 'btn btn-flat btn-sm btn-warning'
 
       .margin-bottom
 

@@ -55,7 +55,7 @@
             %tr.app_tr{style: 'display: none;'}
               %td
                 %strong
-                  = link_to app.name, service_path(service, app_id: app.id)
+                  = link_to app.name, service_app_path(service, app), data: { turbolinks: false }
               %td
                 %span.text-muted
                   = t('common.image')
@@ -66,7 +66,7 @@
                   = t('common.versions')
                   \:
                   %br
-    
+
                 = link_to raw(app.current_version.name + " " + fa_icon('check-square')), edit_service_app_path(service, app, version_id: app.current_version.id), data: { turbolinks: false }, class: 'btn btn-sm btn-warning btn-flat'
                 - (app.versions - [app.current_version])[0..3].each do |version|
                   = link_to version.name, edit_service_app_path(service, app, version_id: version.id), data: { turbolinks: false }, class: 'btn btn-warning btn-flat btn-sm'

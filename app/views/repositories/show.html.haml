@@ -4,21 +4,31 @@
     = render :partial => "namespaces/namespace_left", locals: { namespaces: @namespaces }
   .col-md-9
     = box_helper "warning" do
-      = box_header_helper t("namespace.repositories"), :server
+      = box_header_helper t("namespace.repositories") + @repository.name, :server
       = box_body_helper do
         = render :partial => "widgets/list_place_holder" if @repo_tags.empty?
         - if @repo_tags.present?
           %table.table
             %thead
-              %th= t("namespace.repository_name")
               %th= t("namespace.repo_tags")
+              %th= t("namespace.repo_size")
+              %th= t("namespace.path")
 
             %tbody
-              - @repo_tags.each do |tag|
-                %tr
-                  %td= tag.name
-                  %td
+              .form
+                - @repo_tags.each do |tag|
+                  %tr
+                    %td= tag.name
+                    %td= tag.blob_size
+                    %td
+                      .input-group
+                        - id =  "copy_#{tag.repository.name.gsub('/', '')}_#{tag.name}"
+                        = text_field_tag "",  Site.default.registry_domain + "/" + tag.repository.name + ":" + tag.name, id: id, class: 'form-control'
+                        %span.btn.input-group-addon{data: { 'clipboard-target': id }}
+                          = fa_icon(:copy)
 
 
+      .margin-bottom
+    = render :partial => "permissions/list", locals: { permissions: @namespace.permissions, permission: @namespaces.first.permissions.new, resource: @namespaces.first }
 
 

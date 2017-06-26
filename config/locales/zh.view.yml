@@ -226,6 +226,8 @@ zh-CN:
     pull_count: "下载次数"
     repositories: "镜像"
     all_namespaces: "镜像库列表"
+    repo_size: "大小"
+    path: "地址"
 
   audit:
     entity: "对象"
@@ -298,6 +300,7 @@ zh-CN:
     graphna_config: "Graphna配置"
     swan_config: "Swan配置"
     mesos_config: "Mesos配置"
+    registry_domain: "镜像仓库Domain"
     mesos_addrs: "Mesos地址"
     marathon_config: "Marathon配置"
     marathon_apps: "应用列表"

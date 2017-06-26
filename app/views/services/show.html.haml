@@ -6,7 +6,7 @@
   = render :partial => "services/chart.js", locals: { service: @service }
 
 = box_helper "warning" do
-  = box_header_helper "", :server
+  = box_header_helper t("common.statistics"), :server
   = box_body_helper do
     - app = (@app || @service.apps.first)
     .col-md-8.col-lg-12
@@ -17,7 +17,7 @@
           = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_system_load][:id], 5.minutes, 600, 180)
 
 = box_helper "warning" do
-  = box_header_helper "", :server
+  = box_header_helper t('nav.apps'), :server
   = box_body_helper do
     .row
       .col-md-12
@@ -31,6 +31,10 @@
             = render :partial => "apps/list", locals: { apps: @service.apps }
           .tab-pane#app_chart{role: 'tabpanel', style: "height: 600px;"}
             #chart{style: 'height: 400px'}
-= render :partial => "permissions/list", locals: { permissions: @service.permissions, permission: @service.permissions.new, resource: @service }
 
+
+
+
+
+= render :partial => "permissions/list", locals: { permissions: @service.permissions, permission: @service.permissions.new, resource: @service }
 = render :partial => "audits/list", locals: { audits: @service.audits.page(params[:audit_page] || 1) }

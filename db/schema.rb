@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170623074145) do
+ActiveRecord::Schema.define(version: 20170626054341) do
 
   create_table "app_links", force: :cascade do |t|
     t.integer  "service_id"
@@ -213,6 +213,7 @@ ActiveRecord::Schema.define(version: 20170623074145) do
     t.string   "swan_leader_url"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.string   "registry_domain"
   end
 
   create_table "tags", force: :cascade do |t|

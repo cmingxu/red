@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   patch 'system/update_marathon_config', as: :update_marathon_config
   patch 'system/update_mesos_config', as: :update_mesos_config
   patch 'system/update_swan_config', as: :update_swan_config
+  patch 'system/update_registry_domain_config', as: :update_registry_domain_config
   patch 'system/update_graphna', as: :update_graphna_config
 
   get 'session/new', as: :new_session

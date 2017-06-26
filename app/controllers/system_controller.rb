@@ -13,6 +13,11 @@ class SystemController < ApplicationController
     end
   end
 
+  def update_registry_domain_config
+    Site.default.update_attributes registry_domain: params[:site][:registry_domain]
+    render js: "$.notify('registry_domain update successfully')"
+  end
+
   def update_marathon_config
     ret = Site.default.marathon_ping(params[:site][:marathon_addrs],
                                      params[:site][:marathon_username],

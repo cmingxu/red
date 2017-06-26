@@ -164,6 +164,7 @@
                         <select class='form-control app-select' ng-model='link.output_service' required="required" ng-options="name as name for (name, serviceName) in webservicesUnderApp[link.output_app_id]" > </select>
                       </td>
                       <td>
+                        {{link.alias}}:{{webservicesUnderApp[link.output_app_id][link.output_service]}}
                       </td>
                       <td><a class="btn btn-default btn-sm" ng-click="removeLink($index)"><%= fa_icon(:minus)%> </a></td>
                     </tr>

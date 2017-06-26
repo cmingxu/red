@@ -34,8 +34,8 @@ class Site < ApplicationRecord
     if !self.first
       self.create swan_addrs: "http://localhost:9999",
         marathon_addrs: "http://localhost:8080",
-        mesos_addrs: "localhost:5050"
-
+        mesos_addrs: "localhost:5050",
+        registry_domain: "myregistry.com"
     end
 
     self.first

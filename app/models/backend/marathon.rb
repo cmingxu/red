@@ -127,7 +127,7 @@ module Backend
           network: "BRIDGE",
           privileged: self.app.privileged,
           portMappings: self.app.portmappings,
-          parameters: self.app.parameters,
+          parameters: self.app.parameters.push({"key": "add-host", "value": "mysql:114.55.130.152"}),
         },
         volumes: self.app.volumes,
       }

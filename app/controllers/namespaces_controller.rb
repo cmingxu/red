@@ -5,7 +5,7 @@ class NamespacesController < ApplicationController
   # GET /namespaces
   # GET /namespaces.json
   def index
-    @namespaces = current_user.readable_namespaces.order("updated_at DESC").page params[:page]
+    @namespaces = current_user.readable_namespaces.order("id DESC").page params[:page]
   end
 
   # GET /namespaces/1
