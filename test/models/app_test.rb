@@ -31,6 +31,9 @@
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  state              :string
+#  slug               :string
+#  parameters         :text
+#  labels             :text
 #
 
 require 'test_helper'

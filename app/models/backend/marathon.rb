@@ -108,7 +108,6 @@ module Backend
         labels: self.app.labels,
         fetch: self.app.uris.map {|u| { "uri": u }},
         constraints: self.app.constraints,
-        cmd: self.app.cmd,
         healthChecks: [
           self.app.health_check ]
       }

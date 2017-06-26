@@ -42,14 +42,15 @@
               <label for="name" class="col-sm-2 control-label"><%= t("app.name") %></label>
               <div class="col-sm-10">
                 <input type="input" name="name" class="form-control" id="name" ng-model="app.name" ng-required="true" ng-disabled="appPersisted">
-                <p ng-show="appForm.name.$invalid && (appForm.name.$dirty || submitted)" class="help-block">You name is required.</p>
+                <p ng-show="appForm.name.$invalid && (appForm.name.$dirty || submitted)" class="help-block">required.</p>
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" ng-class="{ 'has-error' : appForm.desc.$invalid && (appForm.desc.$dirty || submitted)}" >
               <label for="desc" class="col-sm-2 control-label"><%= t("app.desc") %></label>
               <div class="col-sm-10">
-                <input type="input" name="desc" class="form-control" id="desc" ng-model="app.desc">
+                <input type="input" name="desc" class="form-control" id="desc" ng-model="app.desc" ng-required="true" >
+                <p ng-show="appForm.desc.$invalid && (appForm.desc.$dirty || submitted)" class="help-block">required</p>
               </div>
             </div>
 
@@ -57,8 +58,8 @@
             <div class="form-group" ng-class="{ 'has-error' : appForm.image.$invalid && (appForm.image.$dirty || submitted)}" >
               <label for="image" class="col-sm-2 control-label"><%= t("app.select_image") %></label>
               <div class="col-sm-10">
-                <input type="input" name="image" class="form-control" id="image" ng-model="app.image">
-                <p ng-show="appForm.image.$invalid && (appForm.image.$dirty || submitted)" class="help-block">You name is required.</p>
+                <input type="input" name="image" class="form-control" id="image" ng-model="app.image" ng-required='true'>
+                <p ng-show="appForm.image.$invalid && (appForm.image.$dirty || submitted)" class="help-block">required</p>
               </div>
             </div>
 
@@ -66,7 +67,7 @@
               <label for="cpu" class="col-sm-2 control-label"><%= t("active_record.common.cpu") %></label>
               <div class="col-sm-10">
                 <input type="float" name="cpu" class="form-control" id="cpu" ng-model="app.cpu" ng-required="true">
-                <p ng-show="appForm.cpu.$invalid && (appForm.cpu.$dirty || submitted)" class="help-block">You name is required.</p>
+                <p ng-show="appForm.cpu.$invalid && (appForm.cpu.$dirty || submitted)" class="help-block">required</p>
               </div>
             </div>
             
@@ -74,7 +75,7 @@
               <label for="mem" class="col-sm-2 control-label"><%= t("active_record.common.mem") %></label>
               <div class="col-sm-10">
                 <input type="number" name="mem" class="form-control" id="mem" ng-model="app.mem" ng-required="true">
-                <p ng-show="appForm.mem.$invalid && (appForm.mem.$dirty || submitted)" class="help-block">You name is required.</p>
+                <p ng-show="appForm.mem.$invalid && (appForm.mem.$dirty || submitted)" class="help-block">required</p>
               </div>
             </div>
 
@@ -82,7 +83,7 @@
               <label for="disk" class="col-sm-2 control-label"><%= t("active_record.common.disk") %></label>
               <div class="col-sm-10">
                 <input type="number" name="disk" class="form-control" id="disk" ng-model="app.disk" ng-required="true">
-                <p ng-show="appForm.disk.$invalid && (appForm.disk.$dirty || submitted)" class="help-block">disk is required.</p>
+                <p ng-show="appForm.disk.$invalid && (appForm.disk.$dirty || submitted)" class="help-block">required</p>
               </div>
             </div>
             
@@ -97,7 +98,7 @@
             </div>
             -->
 
-            <div class="form-group" ng-class="{ 'has-error' : appForm.portmappings.$invalid && (appForm.portmappings.$dirty || submitted)}" ng-show="app.network == 'bridge' || app.network == 'host'">
+            <div class="form-group" ng-class="{ 'has-error' : portMappingHasError() }" ng-show="app.network == 'bridge' || app.network == 'host'">
               <label for="portmappings" class="col-sm-2 control-label"><%= t("app.portmappings") %></label>
               <div class="col-sm-10">
                 <table class="table table-bordered col-md-6 col-sm-12">
@@ -110,9 +111,18 @@
                   </tr>
                   <tbody>
                     <tr  ng-repeat="portmapping in app.portmappings">
-                      <td> <input type="input" class="form-control" ng-model="portmapping.name" ng-required=true> </td>
-                      <td> <input type="number" class="form-control" ng-model="portmapping.containerPort" ng-required=true> </td>
-                      <td> <input type="number" class="form-control" ng-model="portmapping.servicePort" ng-required=true> </td>
+                      <td>
+                        <input type="input" class="form-control" name="portmapping_{{$index}}_name" ng-model="portmapping.name" ng-required=true>
+                        <p ng-show="appForm.portmapping_{{$index}}_name.$invalid && (appForm.portmapping_{{$index}}_name.$dirty || submitted)" class="help-block">required</p>
+                      </td>
+                      <td>
+                        <input type="number" class="form-control"  name="portmapping_{{$index}}_containerPort"  ng-model="portmapping.containerPort" ng-required=true>
+                        <p ng-show="appForm.portmapping_{{$index}}_containerPort.$invalid && (appForm.portmapping_{{$index}}_containerPort.$dirty || submitted)" class="help-block">required</p>
+                      </td>
+                      <td>
+                        <input type="number" class="form-control" name="portmapping_{{$index}}_servicePort" ng-model="portmapping.servicePort" ng-required=true>
+                        <p ng-show="appForm.portmapping_{{$index}}_servicePort.$invalid && (appForm.portmapping_{{$index}}_servicePort.$dirty || submitted)" class="help-block">required</p>
+                      </td>
                       <td>
                         <select class='form-control app-select' ng-model='portmapping.proto' ng-required=true>
                           <option value="tcp"> TCP </option>
@@ -130,7 +140,7 @@
               </div>
             </div>
 
-            <div class="form-group" ng-class="{ 'has-error' : appForm.app_links.$invalid && (appForm.app_links.$dirty || submitted)}" ng-show="Object.keys(appsUnderService).length != 0">
+            <div class="form-group" ng-class="{ 'has-error' : false }" ng-show="Object.keys(appsUnderService).length != 0">
               <label for="app_links" class="col-sm-2 control-label"><%= t("app.app_links") %></label>
               <div class="col-sm-10">
                 <table class="table table-bordered col-md-6 col-sm-12">
@@ -143,7 +153,10 @@
                   </tr>
                   <tbody>
                     <tr ng-repeat="link in app.app_links | filter: {_destroy: 0}">
-                      <td> <input type="input" class="form-control" ng-model="link.alias"> </td>
+                      <td>
+                        <input type="input" class="form-control" name="appForm.app_links_{{$index}}_alias" ng-model="link.alias" ng-required=true>
+                        <p ng-show="appForm.app_links_{{$index}}_alias.$invalid && (appForm.app_links_{{$index}}_alias.$dirty || submitted)" class="help-block">required</p>
+                      </td>
                       <td>
                         <select class='form-control app-select' ng-model='link.output_app_id' required="required" ng-options="v as k for (k, v) in appsUnderService" > </select>
                       </td>
@@ -159,7 +172,6 @@
                     </tr>
                   </tbody>
                 </table>
-                <p ng-show="appForm.app_links.$invalid && (appForm.app_links.$dirty || submitted)" class="help-block">You name is required.</p>
               </div>
             </div>
 
@@ -214,3 +226,4 @@
   </div>
 </div>
 
+                      <td> <input type="input" class="form-control" ng-model="link.alias"> </td>

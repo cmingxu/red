@@ -1,6 +1,6 @@
 = box_helper "green" do
   = simple_form_for(@group) do |f|
-    = box_header_helper "", :server do
+    = box_header_helper t('nav.groups'), :server do
       .box-tools.pull-right
         = f.button :submit, t("group.new_group"), class: danger_btn_helper
 

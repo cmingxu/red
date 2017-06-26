@@ -7,7 +7,7 @@ WORKDIR /app
 
 #RUN chown -R nobody:nogroup /app
 #USER nobody
-RUN bundle install 
+RUN bundle install
 
 ENV RAILS_ENV development
 

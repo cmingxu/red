@@ -2,11 +2,16 @@
 #
 # Table name: nodes
 #
-#  id         :integer          not null, primary key
-#  hostname   :string
-#  state      :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id             :integer          not null, primary key
+#  hostname       :string
+#  state          :string
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  slug           :string
+#  cpu            :integer
+#  mem            :integer
+#  docker_version :string
+#  pubkey         :string
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

@@ -55,7 +55,7 @@ class AppsController < ApplicationController
     @app.set_raw_config(request.raw_post)
     respond_to do |format|
       if @app.save
-       audit(@app, "create", @app.name)
+        audit(@app, "create", @app.name)
         format.html { redirect_to services_path }
         format.json { json_success(201) }
       else
@@ -77,7 +77,7 @@ class AppsController < ApplicationController
   def run
     audit(@app, "run", @app.name)
     @app.run
-    #@app.scale params[:start_size].to_i
+    @app.scale params[:start_size].to_i
     respond_to do |format|
       format.html { redirect_to services_url, notice: '' }
       format.json { head :ok }

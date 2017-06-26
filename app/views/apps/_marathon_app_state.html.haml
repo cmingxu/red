@@ -15,7 +15,6 @@
     %span.text-muted= t("app.unhealthy")
     %strong= marathon_app.info[:tasksUnhealthy]
 
-
   %br
     = link_to t("app.scale"), scale_service_app_path(service, app), method: :put, remote: :true, data: { prompt: {"title": t("app.scale_app"), "name": "scale_size", "value": 1, "type": "input"} }, class: "#{policy(service).update? ? '' : 'disabled'}"
     = link_to t("app.stop"), stop_service_app_path(service, app), method: :put, remote: :true, data: { confirm: t("app.stop_app_confirm")}, class: "#{policy(service).update? ? '' : 'disabled'}"

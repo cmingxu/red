@@ -77,15 +77,17 @@
 
       .content-wrapper
         .content-header
+          = bootstrap_flash
           - if page_request_meta_info[:panel_header_and_icon][:text]
-            %h1
-              = t("nav.#{page_request_meta_info[:panel_header_and_icon][:text]}")
-              %small= page_request_meta_info[:panel_header_and_icon][:text_small]
+            %h1 
+              &nbsp;
+
+              -#= t("nav.#{page_request_meta_info[:panel_header_and_icon][:text]}")
+              -#%small= page_request_meta_info[:panel_header_and_icon][:text_small]
           - if need_breadcrumb
             = render :partial => "widgets/breadcrumb"
 
         .content
-          = bootstrap_flash
           = render :partial => "widgets/owner_chooser"
 
           - if controller.class.ancestors.include? NodesController

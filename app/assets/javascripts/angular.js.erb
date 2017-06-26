@@ -48,18 +48,67 @@ angular.module('app', [])
             if(result) {
               $scope.app.version_name = result;
               axios[window.httpMethod](window.postPath, {
-                app: JSON.parse(angular.toJson($scope.app)),
+                app: JSON.parse(angular.toJson($scope.reformatApp($scope.app))),
                 authenticity_token: authenticity_token
               }).then(function (response) {
-                window.location.href = "/services";
-              }, function (response) {
-                console.log(response.data.message);
+                if(response.status < 300){
+                  window.location.href = "/services";
+                }else{
+                  $.notify(response.data.message, {type: 'danger'});
+                }
+              }).catch(function(err) {
+                $.notify(err, {type: 'danger'});
               });
             }
           }
         });
       }
     }
+
+    $scope.reformatApp = function (app) {
+      var formattedApp = angular.copy(app);
+      var portNameIndex = 0;
+      for (var i = 0;  i < app.portmappings.length;  i++) {
+        if(app.health_check.portName == app.portmappings[i].name) {
+          portNameIndex = i;
+          break;
+        }
+      }
+      formattedApp.health_check.portIndex = portNameIndex;
+      delete formattedApp.health_check.portName;
+
+      switch (formattedApp.health_check.protocol) {
+        case 'COMMAND':
+          var value = formattedApp.health_check.value;
+          formattedApp.command = {"value": value};
+          delete formattedApp.health_check.path;
+          delete formattedApp.health_check.value;
+          break;
+        case 'TCP':
+          delete formattedApp.health_check.path;
+          delete formattedApp.health_check.value;
+          break;
+        case 'MESOS_TCP':
+          delete formattedApp.health_check.path;
+          delete formattedApp.health_check.value;
+          break;
+        case 'HTTP':
+          delete formattedApp.health_check.value
+          break;
+        case 'MESOS_HTTP':
+          delete formattedApp.health_check.value
+          break;
+        case 'HTTPS':
+          delete formattedApp.health_check.value
+          break;
+        case 'MESOS_HTTPS':
+          delete formattedApp.health_check.value
+          break;
+        default:
+      }
+
+    return formattedApp;
+  }
 
     $scope.supportGateway = function () {
       return $scope.app.network == "bridge" ||
@@ -103,7 +152,6 @@ angular.module('app', [])
     }
 
 
-
     // uri
     $scope.removeUris = function (index) {
       $scope.app.uris.splice(index, 1);
@@ -116,7 +164,6 @@ angular.module('app', [])
 
       $scope.app.uris.push("http://baidu.com/foobar" + $scope.app.uris.length + ".tar.gz");
     }
-
 
     // labels
     $scope.removeLabel = function (key) {
@@ -196,6 +243,37 @@ angular.module('app', [])
           servicePort: 0,
           proto: "tcp"}
       );
+    }
+
+    $scope.portMappingHasError = function(portmappings) {
+      for(var i = 0; i < $scope.app.portmappings.length; i ++) {
+        mapping = $scope.app.portmappings[i];
+        if(mapping.name == null || mapping.name == "") {
+          return false;
+        }
+
+        if(mapping.containerPort == null || mapping.containerPort == "") {
+          return false;
+        }
+
+        if(mapping.servicePort == null || mapping.servicePort == "") {
+          return false;
+        }
+
+        if(mapping.hostPort == null || mapping.hostPort == "") {
+          return false;
+        }
+      }
+    }
+
+    $scope.appLinkHasError = function() {
+      for(var i = 0; i < $scope.app.app_links.length; i ++) {
+        link = $scope.app.app_links[i];
+        if(link.alias == null || link.alias == "") {
+          return false;
+        }
+      }
+      return true;
     }
 
     function fillApp() {

@@ -31,25 +31,26 @@
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  state              :string
+#  slug               :string
+#  parameters         :text
+#  labels             :text
 #
 
 class App < ApplicationRecord
   PROTECTED_ATTRIBUTES = %w(id created_at updated_at raw_config service_id current_version_id backend)
   CONFIG_ATTRIBUTES = ["cpu", "mem", "disk", "cmd", "args", "priority", "runas", "constraints", "parameters", "image", "network", "portmappings", "force_image", "privileged", "env", "volumes", "uris", "gateway", "health_check"]
-
   MARATHON = "marathon"
   SWAN = "swan"
 
   class Task; attr_accessor :id, :agentId, :ip, :created_at end
 
   include Auditable
+  include AASM
   include FriendlyId
   friendly_id :slug, use: [:slugged, :finders]
   before_save do
     self.slug = PinYin.of_string(self.name.gsub(/[-_@\s]/, " ")).join('-').downcase
   end
-
-  include AASM
 
   attr_accessor :links
   attr_accessor :version_name
@@ -72,7 +73,7 @@ class App < ApplicationRecord
   has_many :input_app_links, foreign_key: :output_app_id, dependent: :destroy, class_name: "AppLink"
   belongs_to :current_version, class_name: 'Version', foreign_key: :current_version_id
 
-  validates :name, presence: true
+  validates :name, :desc, :cpu, :mem, :disk, :image, presence: true
   validates :name, uniqueness: { scope: :service_id }
 
 
@@ -128,19 +129,16 @@ class App < ApplicationRecord
 
 
   def cpu_used
-    0
-    #self.running? ? self.instances * self.cpu : 0
+    self.running? ? self.instances * self.cpu : 0
   end
 
 
   def mem_used
-    #self.running? ? self.instances  * self.mem : 0
-    0
+    self.running? ? self.instances  * self.mem : 0
   end
 
   def disk_used
-    #self.running? ? self.instances * self.dise : 0
-    0
+    self.running? ? self.instances * self.disk : 0
   end
 
   def backend_instance
