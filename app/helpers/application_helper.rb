@@ -177,4 +177,5 @@ module ApplicationHelper
 
       "<iframe src='#{path}' width='#{width}' height='#{height}' frameborder='0'> </iframe>".html_safe
     end
+
 end

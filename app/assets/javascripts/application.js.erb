@@ -143,6 +143,18 @@ function registerPermissionChange() {
   });
 }
 
+function registerSearchInputAnimation() {
+  $('.search-input').on('focus', function () {
+    var form = $(this).closest('form');
+    form.removeClass('col-md-2').addClass('col-md-4');
+  });
+
+  $('.search-input').on('blur', function () {
+    var form = $(this).closest('form');
+    form.removeClass('col-md-4').addClass('col-md-2');
+  });
+}
+
 $(document).on('ready turbolinks:load', function() {
   initPeity();
   initTooltip();
@@ -150,6 +162,8 @@ $(document).on('ready turbolinks:load', function() {
   registerVersionLabelEvent();
   registerListOwnerTypeAhead();
   registerPermissionChange();
+
+  registerSearchInputAnimation();
 
   $('select:not(.app-select)').selectpicker();
 
@@ -202,3 +216,6 @@ String.prototype.escape = function() {
         return tagsToReplace[tag] || tag;
     });
 };
+
+
+

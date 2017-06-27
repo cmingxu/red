@@ -5,7 +5,8 @@ class ServiceTemplatesController < ApplicationController
   # GET /service_templates
   # GET /service_templates.json
   def index
-    @service_templates = policy_scope(ServiceTemplate).order("updated_at DESC").page params[:page]
+    @q = policy_scope(ServiceTemplate).ransack params[:q]
+    @service_templates = @q.result.order("updated_at DESC").page params[:page]
   end
 
   # GET /service_templates/1

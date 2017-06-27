@@ -1,0 +1,7 @@
+= search_form_for q, class: 'col-md-2 pull-right' do |f|
+  .input-group
+    = f.search_field search_condition, placeholder: t("common.search_hint"), class: 'form-control search-input'
+    %span.input-group-btn
+      = button_tag :search, id: 'search-btn', class: 'btn btn-flat btn-primary' do
+        = fa_icon(:search)
+

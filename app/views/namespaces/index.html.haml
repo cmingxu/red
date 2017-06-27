@@ -3,9 +3,10 @@
     = render :partial => "namespaces/namespace_left", locals: { namespaces: @namespaces }
   .col-md-9
     = box_helper "warning" do
-      = box_header_helper t("namespace.repositories"), :server
+      = box_header_helper t("namespace.repositories"), :server do
+        = render :partial => "widgets/search_form", locals: { q: @q, search_condition: :name_cont }
+
       = box_body_helper do
-        = render :partial => "widgets/list_place_holder" if @namespaces.empty?
         - if @namespaces.first.present?
           %table.table
             %thead

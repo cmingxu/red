@@ -1,7 +1,7 @@
 = box_helper "success" do
   = box_header_helper t("nav.service_templates"), :server do
     .box-tools.pull-right
-      = paginate @service_templates
+      = render :partial => "widgets/search_form", locals: { q: @q, search_condition: :name_or_desc_cont }
   = box_body_helper do
     = render :partial => "widgets/list_place_holder" if @service_templates.empty?
     - @service_templates.each do |temp|
@@ -19,3 +19,4 @@
             .service_template_action
               = link_to fa_icon(:copy) + " " + t("common.new_service"), new_service_path(service_template_id: temp.id), class: 'btn btn-sm btn-danger btn-flat col-md-6', data: { prompt: { title: t("common.prompt"), name: "owner", type: "choose_owner"} }, method: :get
               = link_to fa_icon(:edit) + " " +  t("common.detail"), service_template_path(temp), class: 'btn btn-default btn-sm btn-flat', data: { turbolinks: false }
+      = paginate @service_templates

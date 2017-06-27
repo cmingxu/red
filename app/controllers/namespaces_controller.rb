@@ -5,6 +5,7 @@ class NamespacesController < ApplicationController
   # GET /namespaces
   # GET /namespaces.json
   def index
+    @q = current_user.readable_namespaces.ransack(params[:q])
     @namespaces = current_user.readable_namespaces.order("id DESC").page params[:page]
   end
 

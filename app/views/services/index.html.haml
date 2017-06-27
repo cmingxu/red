@@ -49,7 +49,7 @@
                 = drop_down_menu_item t("common.download_compose"), compose_chose_service_path(service)
                 = drop_down_menu_item_sepeartor
                 - if policy(service).destroy?
-                  = drop_down_menu_item fa_icon(:trash, class: 'text-danger') + " " + t("common.remove"), service_path(service), method: :delete, data: { confirm: t("common.confirm") }
+                  = drop_down_menu_item fa_icon(:trash, class: 'text-danger') + " " + t("common.remove"), service_path(service), method: :delete, data: { confirm: t("service.remove_service_confirm") }
     
           - service.apps.each do |app|
             %tr.app_tr{style: 'display: none;'}
@@ -67,7 +67,7 @@
                   \:
                   %br
 
-                = link_to raw(app.current_version.name + " " + fa_icon('check-square')), edit_service_app_path(service, app, version_id: app.current_version.id), data: { turbolinks: false }, class: 'btn btn-sm btn-warning btn-flat'
+                = link_to raw(app.current_version.name + " " + fa_icon('check-square')), edit_service_app_path(service, app, version_id: app.current_version.id), data: { turbolinks: false }, class: 'label label-warning'
                 - (app.versions - [app.current_version])[0..3].each do |version|
                   = link_to version.name, edit_service_app_path(service, app, version_id: version.id), data: { turbolinks: false }, class: 'btn btn-warning btn-flat btn-sm'
                 - if app.versions.length > 3
