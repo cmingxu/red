@@ -120,17 +120,22 @@ module Backend
     end
 
     def container_hash
-      {
+      spec = {
         type: "DOCKER",
         docker: {
           image: self.app.image,
           network: "BRIDGE",
           privileged: self.app.privileged,
           portMappings: self.app.portmappings,
-          parameters: self.app.parameters.push({"key": "add-host", "value": "mysql:114.55.130.152"}),
+          parameters: (self.app.parameters || []).push({"key": "add-host", "value": "mysql:114.55.130.152"}),
         },
         volumes: self.app.volumes,
       }
+
+      spec[:docker][:parameters].push({"key": "label", "value": "service_name=#{self.app.service.slug}" })
+      spec[:docker][:parameters].push({"key": "label", "value": "app_name=#{self.app.slug}" })
+
+      spec
     end
 
   end
