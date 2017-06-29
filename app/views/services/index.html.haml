@@ -69,7 +69,7 @@
 
                 = link_to raw(app.current_version.name + " " + fa_icon('check-square')), edit_service_app_path(service, app, version_id: app.current_version.id), data: { turbolinks: false }, class: 'label label-warning'
                 - (app.versions - [app.current_version])[0..3].each do |version|
-                  = link_to version.name, edit_service_app_path(service, app, version_id: version.id), data: { turbolinks: false }, class: 'btn btn-warning btn-flat btn-sm'
+                  = link_to version.name, edit_service_app_path(service, app, version_id: version.id), data: { turbolinks: false }, class: 'label label-warning'
                 - if app.versions.length > 3
                   = link_to fa_icon('angle-double-right'), detail_service_app_path(service, app, anchor: "versions")
               %td.text-center{class: "app_state app_state_#{app.id}", data: { 'app-state-path': backend_state_service_app_path(service, app)}}

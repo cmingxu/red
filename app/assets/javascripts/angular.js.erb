@@ -107,6 +107,8 @@ angular.module('app', [])
         default:
       }
 
+      
+
     return formattedApp;
   }
 
@@ -126,21 +128,21 @@ angular.module('app', [])
     }
 
     // envs
-    $scope.removeEnv = function (key) {
-      delete $scope.app.env[key];
+    $scope.removeEnv = function (index) {
+      $scope.app.env.splice(index, 1);
     }
 
     $scope.moreEnv = function () {
-      if($scope.app.env == null || Object.getOwnPropertyNames($scope.app.env || {}).length == 0) {
-        $scope.app.env = {};
+      if($scope.app.env == null || angular.isUndefined($scope.app.env) ) {
+        $scope.app.env = [];
       }
 
-      $scope.app.env["KEY" + Object.keys($scope.app.env).length] = "VALUE";
+      $scope.app.env.push({"key": "KEY", "value": "VALUE"});
     }
 
     // parameters
     $scope.removeParameter = function (index) {
-      delete $scope.app.parameters.splice(index, 1);
+      $scope.app.parameters.splice(index, 1);
     }
 
     $scope.moreParameter = function () {
@@ -166,8 +168,8 @@ angular.module('app', [])
     }
 
     // labels
-    $scope.removeLabel = function (key) {
-      delete $scope.app.labels[key];
+    $scope.removeLabel = function (index) {
+      $scope.app.labels.splice(index, 1);
     }
 
     $scope.moreLabels = function () {
@@ -175,7 +177,7 @@ angular.module('app', [])
         $scope.app.labels = {};
       }
 
-      $scope.app.labels["key-" + Object.keys($scope.app.labels).length] = "value";
+      $scope.app.labels.push({"key": "KEY", "value": "VALUE"});
     }
 
     // volumes

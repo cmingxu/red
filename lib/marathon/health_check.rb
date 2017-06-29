@@ -19,7 +19,7 @@ class Marathon::HealthCheck < Marathon::Base
   # ++hash++: Hash returned by API.
   def initialize(hash)
     super(Marathon::Util.merge_keywordized_hash(DEFAULTS, hash), ACCESSORS)
-    Marathon::Util.validate_choice(:protocol, protocol, %w[HTTP TCP COMMAND])
+    Marathon::Util.validate_choice(:protocol, protocol, %w[HTTP TCP COMMAND MESOS_HTTP MESOS_HTTPS MESOS_TCP HTTPS])
   end
 
   def to_s

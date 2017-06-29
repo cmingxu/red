@@ -155,6 +155,18 @@ function registerSearchInputAnimation() {
   });
 }
 
+function setMainContentWidth() {
+  if(window.location.href.indexOf("welcome/index") > 0){// in dashboard page
+    $.ajax({url: "/set_main_content_width",
+      method: 'PUT',
+      data: { width: $('.statistics').width()},
+      success: function () {
+        // do nothing
+      }
+    });
+  }
+}
+
 $(document).on('ready turbolinks:load', function() {
   initPeity();
   initTooltip();
@@ -164,6 +176,7 @@ $(document).on('ready turbolinks:load', function() {
   registerPermissionChange();
 
   registerSearchInputAnimation();
+  setMainContentWidth();
 
   $('select:not(.app-select)').selectpicker();
 

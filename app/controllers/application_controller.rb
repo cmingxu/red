@@ -60,6 +60,11 @@ class ApplicationController < ActionController::Base
     I18n.locale = session[:locale] || :en
   end
 
+  def set_main_content_width
+    session[:width] = params[:width]
+    head :ok
+  end
+
   def toggle_locale
     I18n.locale = (session[:locale] == "zh-CN" ? "en" : "zh-CN")
     session[:locale] = I18n.locale

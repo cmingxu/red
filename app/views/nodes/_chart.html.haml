@@ -2,16 +2,16 @@
   = box_header_helper t("common.statistics"), :server
   = box_body_helper do
     .col-md-2
-      = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_cpu_load][:id], 5.minutes, 170, 100)
+      = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_cpu_load][:id], 5.minutes, main_content_width/6, 100)
     .col-md-2
-      = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_cpu_core][:id], 5.minutes, 170, 100)
+      = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_cpu_core][:id], 5.minutes, main_content_width/6, 100)
     .col-md-2
-      = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_mem_load][:id], 5.minutes, 170, 100)
+      = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_mem_load][:id], 5.minutes, main_content_width/6, 100)
 
     .col-md-2
-      = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_mem_used][:id], 5.minutes, 170, 100)
+      = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_mem_used][:id], 5.minutes, main_content_width/6, 100)
     .col-md-2
-      = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_disk_load][:id], 5.minutes, 170, 100)
+      = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_disk_load][:id], 5.minutes, main_content_width/6, 100)
     .col-md-2
-      = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_disk_used][:id], 5.minutes, 170, 100)
+      = graphna_panel("docker-containers", $GRAPHNA_PANEL[:docker_container_disk_used][:id], 5.minutes, main_content_width/6, 100)
 

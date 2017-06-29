@@ -24,10 +24,10 @@
         <th></td>
       </tr>
       <tbody>
-        <tr  ng-repeat="(k, v) in app.env">
-          <td> <input type="input" class="form-control" name="env" ng-model="k" ng-required=true> </td>
-          <td> <input type="input" class="form-control" name="env" ng-model="v" ng-required=true> </td>
-          <td><a class="btn btn-default btn-sm" ng-click="removeEnv(k)"><%= fa_icon(:minus)%> </a></td>
+        <tr  ng-repeat="envPair in app.env">
+          <td> <input type="input" class="form-control" name="env" ng-model="envPair.key" ng-required=true> </td>
+          <td> <input type="input" class="form-control" name="env" ng-model="envPair.value" ng-required=true> </td>
+          <td><a class="btn btn-default btn-sm" ng-click="removeEnv($index)"><%= fa_icon(:minus)%> </a></td>
         </tr>
         <tr>
           <td colspan=5><a class="btn btn-default btn-sm" ng-click="moreEnv()"><%= fa_icon(:plus)%> <%= t('app.new_env') %> </a></td>

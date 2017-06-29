@@ -55,11 +55,11 @@ class App < ApplicationRecord
   attr_accessor :links
   attr_accessor :version_name
 
-  serialize :env, Hash
+  serialize :env, Array
   serialize :health_check, Hash
   serialize :portmappings, Array
   serialize :parameters, Array
-  serialize :labels, Hash
+  serialize :labels, Array
   serialize :volumes, Array
   serialize :uris, Array
   serialize :constraints, Array

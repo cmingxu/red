@@ -104,8 +104,8 @@ module Backend
         disk: self.app.disk,
         instances: self.app.instances,
         container: self.app.container_hash,
-        env: self.app.env,
-        labels: self.app.labels,
+        env: Hash[self.app.env.map{|item| [item["key"], item["value"]]}],
+        labels: Hash[self.app.labels.map{|item| [item["key"], item["value"]]}],
         fetch: self.app.uris.map {|u| { "uri": u }},
         constraints: self.app.constraints,
         healthChecks: [
@@ -114,6 +114,12 @@ module Backend
 
       if self.app.cmd.present?
         marathon_hash[:cmd] = self.app.cmd
+      end
+
+      # need set BAMBOO_TCP_PORT
+      tcp_portmapping = marathon_hash[:container][:docker][:portMappings].find{|map| map["proto"] == "tcp"}
+      if tcp_portmapping
+        marathon_hash[:env]["BAMBOO_TCP_PORT"] = tcp_portmapping["servicePort"].to_s
       end
 
       marathon_hash

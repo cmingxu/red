@@ -28,7 +28,7 @@
 
 .row.statistics
   .col-md-12
-    = graphna_panel("docker-host", $GRAPHNA_PANEL[:docker_host_cpu_usage][:id], 5.minutes, 1200, 200)
+    = graphna_panel("docker-host", $GRAPHNA_PANEL[:docker_host_cpu_usage][:id], 5.minutes)
   .col-md-12
-    = graphna_panel("docker-host", $GRAPHNA_PANEL[:docker_host_mem_usage][:id], 5.minutes, 1200, 200)
+    = graphna_panel("docker-host", $GRAPHNA_PANEL[:docker_host_mem_usage][:id], 5.minutes)
 

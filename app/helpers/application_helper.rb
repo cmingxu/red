@@ -172,10 +172,22 @@ module ApplicationHelper
     "btn btn-success btn-sm btn-flat"
   end
 
-  def graphna_panel name, panelId, interval = 5.minutes, width = 450, height = 100, refresh = 5
+  def graphna_panel name, panelId, interval = 5.minutes, refresh = 5, width = 1200, height = 150
+    width ||= main_content_width
     path =  graphna_path + "#{name}?refresh=#{refresh}s&orgId=1&panelId=#{panelId}&from=#{(Time.now - interval).to_i * 1000}&to=#{Time.now.to_i * 1000}&theme=light"
 
       "<iframe src='#{path}' width='#{width}' height='#{height}' frameborder='0'> </iframe>".html_safe
     end
 
+  def docker_containers_graphna_panel panelId, service_name="All", app_name="All", interval = 5.minutes,  refresh = 5
+    width = session[:width] || 1200
+    height = 150
+    path =  graphna_path + "docker-containers?refresh=#{refresh}s&orgId=1&panelId=#{panelId}&from=#{(Time.now - interval).to_i * 1000}&to=#{Time.now.to_i * 1000}&theme=light&var-service_name=#{service_name}&var-app_name=#{app_name}"
+
+      "<iframe src='#{path}' width='#{width}' height='#{height}' frameborder='0'> </iframe>".html_safe
+    end
+ 
+  def main_content_width
+    session[:width].to_i || 1200
+  end
 end

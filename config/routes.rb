@@ -101,6 +101,7 @@ Rails.application.routes.draw do
   end
 
   put 'toggle_locale', controller: :application
+  put 'set_main_content_width', controller: :application
 
   get 'welcome/index'
   get 'mesos/index', as: :mesos

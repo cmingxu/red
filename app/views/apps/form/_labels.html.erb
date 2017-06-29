@@ -8,10 +8,10 @@
         <th></td>
       </tr>
       <tbody>
-        <tr  ng-repeat="(k, v) in app.labels">
-          <td> <input type="input" class="form-control" name="labels" ng-model="k" ng-required=true> </td>
-          <td> <input type="input" class="form-control" name="labels" ng-model="v" ng-required=true> </td>
-          <td><a class="btn btn-default btn-sm" ng-click="removeLabel(k)"><%= fa_icon(:minus)%> </a></td>
+        <tr  ng-repeat="labelPair in app.labels">
+          <td> <input type="input" class="form-control" name="labels" ng-model="labelPair.key" ng-required=true> </td>
+          <td> <input type="input" class="form-control" name="labels" ng-model="labelPair.value" ng-required=true> </td>
+          <td><a class="btn btn-default btn-sm" ng-click="removeLabel($index)"><%= fa_icon(:minus)%> </a></td>
         </tr>
         <tr>
           <td colspan=5><a class="btn btn-default btn-sm" ng-click="moreLabels()"><%= fa_icon(:plus)%> <%= t('app.new_label') %> </a></td>
