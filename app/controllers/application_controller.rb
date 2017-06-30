@@ -62,6 +62,8 @@ class ApplicationController < ActionController::Base
 
   def set_main_content_width
     session[:width] = params[:width]
+    puts "width"
+    puts session[:width]
     head :ok
   end
 

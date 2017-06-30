@@ -3,7 +3,6 @@
     = render :partial => "group_left", locals: { groups: @groups }
 
   .col-md-9
-    = render :partial => "groups/details/quota", locals: { group: @groups.first }
     = render :partial => "groups/details/users_for_default_group", locals: { group: @groups.first }
     = render :partial => "groups/details/edit_form", locals: { group: @groups.first }
     = render :partial => "groups/details/detail", locals: { group: @groups.first }

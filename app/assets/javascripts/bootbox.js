@@ -44,7 +44,8 @@
       "</div>",
     header:
       "<div class='modal-header'>" +
-        "<h4 class='modal-title'></h4>" +
+        //"<h4 class='modal-title'></h4>" +
+        "<i class='fa fa-info' style='color:red;'>&nbsp;</i>" +
       "</div>",
     footer:
       "<div class='modal-footer'></div>",

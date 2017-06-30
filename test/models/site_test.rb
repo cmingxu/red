@@ -25,6 +25,7 @@
 #  swan_leader_url     :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
+#  registry_domain     :string
 #
 
 require 'test_helper'

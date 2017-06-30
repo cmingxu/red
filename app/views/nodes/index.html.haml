@@ -2,5 +2,55 @@
   = render :partial => "mesos/slave", locals: { slave: slave } if !Node.exists?(hostname: slave['hostname'])
 
 
+.row
+  .col-md-3
+    = render :partial => "widgets/info_widget", locals: {color: :green, num: Node.count, what_cn: "主机", what_en: "Host", icon: :cloud, link:  nodes_path}
+
+  .col-md-3
+    = render :partial => "widgets/info_widget", locals: {color: :red, num: Node.sum(&:cpu), what_en: "CPU", what_cn: "CPU", icon: :server, link:  nodes_path}
+
+  .col-md-3
+    = render :partial => "widgets/info_widget", locals: {color: :blue, num: Node.sum(&:mem), what_en: "Mem", what_cn: "Mem", icon: :server, link:  nodes_path}
+
+  .col-md-3
+    = render :partial => "widgets/info_widget", locals: {color: :red, num: Node.sum(&:mem), what_en: "Mem", what_cn: "Mem", icon: :server, link:  nodes_path}
+
+
+.row.statistics.margin-bottom
+  .col-md-12
+    = graphna_panel("docker-host", $GRAPHNA_PANEL[:docker_host_cpu_usage][:id], 5.minutes)
+  .col-md-12
+    = graphna_panel("docker-host", $GRAPHNA_PANEL[:docker_host_mem_usage][:id], 5.minutes)
+
+= box_helper "success" do
+  = box_header_helper t("node.all_nodes"), :server do
+    .box-tools.pull-right
+      = render :partial => "widgets/search_form", locals: { q: @q, search_condition: :hostname_or_slug_cont }
+  = box_body_helper do
+    = render :partial => "widgets/list_place_holder" if @nodes.empty?
+    - if @nodes.present?
+      %table.table
+        %thead
+          %th ID
+          %th= t("node.hostname")
+          %th= t("node.state")
+          %th= t("node.cpu")
+          %th= t("node.mem")
+          %th= t("node.docker_version")
+          %th= t("node.created_at")
+        %tbody
+          - @nodes.each do |node|
+            %tr
+              %td
+                \#
+                = node.id
+              %td= node.hostname
+              %td= node.state
+              %td= node.cpu
+              %td= node.mem
+              %td= node.docker_version
+              %td= node.created_at
+
+        = paginate @nodes
 
 

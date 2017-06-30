@@ -77,7 +77,8 @@
 
       .content-wrapper
         .content-header
-          = bootstrap_flash
+          .margin-bottom
+            = bootstrap_flash
           - if page_request_meta_info[:panel_header_and_icon][:text]
             %h1 
               &nbsp;

@@ -1,8 +1,5 @@
-= box_helper "solid" do
-  = box_header_helper t("node.all_nodes"), "" do
-    .box-tools.pull-right
-      = button_tag class: 'btn btn-box-tool', data: { widget: 'collapse' } do
-        = fa_icon(:plus)
+= box_helper "success" do
+  = box_header_helper t("node.all_nodes"), :server
 
   = box_body_helper do
     %ul.nav.nav-pills.nav-stacked
@@ -12,3 +9,15 @@
             = fa_icon("inbox")
             = node.hostname
             %small.label.label-primary.pull-right 1
+
+        %li
+          %a{href: node_path(node) }
+            = fa_icon("inbox")
+            = node.hostname
+            %small.label.label-primary.pull-right
+
+        %li
+          %a{href: node_path(node) }
+            = fa_icon("inbox")
+            = node.hostname
+            %small.label.label-primary.pull-right

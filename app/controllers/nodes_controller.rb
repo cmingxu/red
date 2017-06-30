@@ -7,7 +7,8 @@ class NodesController < ApplicationController
   # GET /nodes.json
   def index
     @state = mesos_state
-    @nodes = Node.page params[:page]
+    @q = Node.ransack params[:q]
+    @nodes = @q.result.order('id asc').page params[:page]
   end
 
   # GET /nodes/1

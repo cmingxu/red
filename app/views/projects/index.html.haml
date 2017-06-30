@@ -1,0 +1,29 @@
+%h1 Listing projects
+
+%table
+  %thead
+    %tr
+      %th Namespace
+      %th Dockerfile
+      %th User
+      %th Group
+      %th Version format
+      %th
+      %th
+      %th
+
+  %tbody
+    - @projects.each do |project|
+      %tr
+        %td= project.namespace_id
+        %td= project.dockerfile
+        %td= project.user_id
+        %td= project.group_id
+        %td= project.version_format
+        %td= link_to 'Show', project
+        %td= link_to 'Edit', edit_project_path(project)
+        %td= link_to 'Destroy', project, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Project', new_project_path

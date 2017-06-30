@@ -32,7 +32,7 @@
         <div class="box-header with-border">
           <h4 class="box-title"><%= fa_icon(:copy) %> <%= t("app.app_form_title") %> </h4>
           <div class="box-tools pull-right">
-            <button type="submit" class="btn btn-sm btn-danger btn-flat"><%= t('common.save') %></button>
+            <button type="submit" class="<%= primary_btn_helper %>"><%= t('common.save') %></button>
             <%= link_to t("common.cancel"), services_path, class: 'btn btn-sm btn-success btn-flat' %>
           </div>
         </div>

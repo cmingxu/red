@@ -1,0 +1,27 @@
+%h1 Listing builds
+
+%table
+  %thead
+    %tr
+      %th Project
+      %th Serial num
+      %th Version name
+      %th Build status
+      %th
+      %th
+      %th
+
+  %tbody
+    - @builds.each do |build|
+      %tr
+        %td= build.project_id
+        %td= build.serial_num
+        %td= build.version_name
+        %td= build.build_status
+        %td= link_to 'Show', build
+        %td= link_to 'Edit', edit_build_path(build)
+        %td= link_to 'Destroy', build, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Build', new_build_path

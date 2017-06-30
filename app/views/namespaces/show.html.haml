@@ -3,7 +3,8 @@
     = render :partial => "namespaces/namespace_left", locals: { namespaces: @namespaces }
   .col-md-9
     = box_helper "warning" do
-      = box_header_helper t("namespace.repositories"), :server
+      = box_header_helper t("namespace.repositories"), :server do
+        = render :partial => "widgets/search_form", locals: { q: @qrepo, search_condition: :name_cont, url: namespace_path(@namespace) }
       = box_body_helper do
         = render :partial => "widgets/list_place_holder" if @namespaces.empty?
         - if @namespace.present?
@@ -13,14 +14,12 @@
               %th= t("namespace.repo_tags")
 
             %tbody
-              - @namespace.repositories.each do |repository|
+              - @repositories.each do |repository|
                 %tr
                   %td= link_to repository.name, namespace_repository_path(@namespace, repository)
                   %td
                     - repository.repo_tags.each do |repo_tag|
                       = link_to repo_tag.name, "", class: 'btn btn-flat btn-sm btn-warning'
-
       .margin-bottom
 
     = render :partial => "permissions/list", locals: { permissions: @namespace.permissions, permission: @namespace.permissions.new, resource: @namespace }
-

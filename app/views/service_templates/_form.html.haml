@@ -1,16 +1,15 @@
 = box_helper "success" do
   = simple_form_for(@service_template, multiple: true) do |f|
-    = box_header_helper "", :server do
+    = box_header_helper @service_template.name, :server do
       .box-tools.pull-right
-        = f.button :submit, t("common.save"), class: danger_btn_helper([ServiceTemplatePolicy.new(current_user, @service_template, @service_template.owner).create? ? '' : 'disabled'])
+        = f.button :submit, t("common.save"), class: primary_btn_helper([ServiceTemplatePolicy.new(current_user, @service_template, @service_template.owner).create? ? '' : 'disabled'])
         = link_to t('common.remove'), service_template_path(@service_template), method: :delete, class: danger_btn_helper([([(ServiceTemplatePolicy.new(current_user, @service_template, @service_template.owner).create? ? '' : 'disabled')]), data: { confirm: t("common.remove") }]) if @service_template.persisted?
-        = link_to t('common.cancel'), service_templates_path, class: success_btn_helper
 
     = box_body_helper do
       .row
         .col-md-4
           %p= image_tag  @service_template.icon.small.try(:url) || "placeholder.png", height: 200
-          %label.btn.btn-default.btn-flat.col-sm-12
+          %label.btn.btn-primary.btn-flat.col-sm-12.btn-file
             = f.input :icon, input_html: { style: "display: none;" }, label: fa_icon(:plus) + " " + t('common.upload_icon')
         .col-md-8
           .form-group
@@ -29,6 +28,7 @@
             = f.input :readme, as: :text, label: false, input_html: {'data-provide': 'markdown-editable', style: 'height: 400px;'}
           .tab-pane#raw_config{role: 'tabpanel'}
             = f.input :raw_config, as: :text, label: false, input_html: {style: "height: 400px;", id: 'editor'}
+            
       = hidden_field_tag "owner_type", params[:owner_type] || @service_template.owner.try(:class).try(:to_s)
       = hidden_field_tag "owner_id", params[:owner_id] || @service_template.owner.try(:id)
 

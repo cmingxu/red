@@ -1,9 +1,6 @@
 = link_to fa_icon(:plus) + " " + t("common.new_group"), new_group_path, class: 'btn btn-primary btn-flat btn-block margin-bottom'
-= box_helper "solid" do
-  = box_header_helper t("group.all_groups"), "" do
-    .box-tools.pull-right
-      = button_tag class: 'btn btn-box-tool', data: { widget: 'collapse' } do
-        = fa_icon(:plus)
+= box_helper "success" do
+  = box_header_helper t("group.all_groups"), ""
 
   = box_body_helper do
     %ul.nav.nav-pills.nav-stacked

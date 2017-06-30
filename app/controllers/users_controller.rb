@@ -13,6 +13,19 @@ class UsersController < ApplicationController
   def show
   end
 
+  def docker_auth_file
+    require 'tempfile'
+    file = Tempfile.new('docker/config.json')
+    puts file.path      # => A unique filename in the OS's temp directory,
+    file.write(@user.docker_auth)
+    file.close
+
+    respond_to do |format|
+      format.tar.gz do
+      end
+    end
+  end
+
   # GET /users/new
   def new
     @user = User.new

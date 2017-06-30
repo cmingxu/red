@@ -1,9 +1,6 @@
 = link_to fa_icon(:plus) + " " + t('common.new_namespace'), new_namespace_path, class: primary_btn_helper(['btn-block', 'margin-bottom']), data: { prompt: { title: t("common.new_namespace"), name: "owner", type: "choose_owner"} }, method: :get
 = box_helper "solid" do
-  = box_header_helper t("namespace.all_namespaces"), "" do
-    .box-tools.pull-right
-      = button_tag class: 'btn btn-box-tool', data: { widget: 'collapse' } do
-        = fa_icon(:plus)
+  = box_header_helper t("namespace.all_namespaces"), :cogs
 
   = box_body_helper do
     %ul.nav.nav-pills.nav-stacked

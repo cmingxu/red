@@ -1,0 +1,12 @@
+= simple_form_for(@project) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :namespace_id
+    = f.input :dockerfile
+    = f.input :user_id
+    = f.input :group_id
+    = f.input :version_format
+
+  .form-actions
+    = f.button :submit

@@ -1,19 +1,24 @@
 = box_helper "green" do
   = simple_form_for @service do |form|
-    = box_header_helper "", :server do
+    = box_header_helper t('common.new_service') , :server do
       .box-tools.pull-right
-        = form.submit t("common.submit"), class: 'btn btn-danger btn-flat btn-sm'
+        = form.submit t("common.submit"), class: primary_btn_helper
         = link_to t("common.cancel"), services_path, class: 'btn btn-default btn-flat btn-sm'
 
+    = hidden_field_tag "owner_type", params[:owner_type]
+    = hidden_field_tag "owner_id", params[:owner_id]
     = box_body_helper do
       = form.input :name, label: t("service.name"), hint: "eg. Wordpress"
-      = form.input :desc, as: :text, label: t("service.desc"), hint: "eg. my first dataman app"
-      = form.input :compose_content, as: :text, label: false, input_html: { id: "compose_content" }
+      = form.input :desc, label: t("service.desc"), hint: "eg. my first dataman app"
+      .row
+        .col-md-12.margin-bottom.text-red
+          = fa_icon("info") + "    " + t("common.choose_from_file_notice")
+      .row.read_from_compose
+        .col-md-6
+          %label.btn.btn-primary.btn-file.btn-flat
+            = form.input :compose, as: :file, input_html: { style: "display: none;", onchange: 'openFile(event)' }, label: fa_icon(:upload, class: "x2") + " " +  t('service.compose')
+          = text_area_tag "ace_editor_dom", "", id: "ace_editor_dom", class: 'form-control'
+          = form.input :compose_content, as: :text, label: false, input_html: { style: 'display: none;', id: 'editor_real_input' }
 
-      = hidden_field_tag "owner_type", params[:owner_type]
-      = hidden_field_tag "owner_id", params[:owner_id]
-
-      %label.btn.btn-default.btn-file
-        = form.input :compose, as: :file, input_html: { style: "display: none;", onchange: 'openFile(event)' }, label: fa_icon(:plus) + " " + t('service.compose'), hint: "lanuch service with previously saved compose"
 
 

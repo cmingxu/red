@@ -1,9 +1,10 @@
 .row
-  .col-md-4.col-lg-2
+  .col-md-3
     = render :partial => "services/service_left", locals: { service: @service }
-  .col-md-8.col-lg-10#compose_chose
+
+  .col-md-9#compose_chose
     = form_tag download_compose_service_path(@service) do
-      %table{class: table_classes}
+      %table.table
         %thead
           %th= t("app.name")
           %th= t("app.versions")
@@ -23,4 +24,4 @@
                     = radio_button_tag "selected_versions[][#{app.id}]", version.id
 
       .actions
-        = submit_tag t("common.download_compose"), class: btn_classes, data: { confirm: t("common.confirm_downlown") }
+        = submit_tag t("common.download_compose"), class: primary_btn_helper, data: { confirm: t("common.confirm_download") }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170626054341) do
+ActiveRecord::Schema.define(version: 20170630033056) do
 
   create_table "app_links", force: :cascade do |t|
     t.integer  "service_id"
@@ -72,6 +72,15 @@ ActiveRecord::Schema.define(version: 20170626054341) do
     t.index ["user_id"], name: "index_audits_on_user_id"
   end
 
+  create_table "builds", force: :cascade do |t|
+    t.integer  "project_id"
+    t.integer  "serial_num"
+    t.string   "version_name"
+    t.string   "build_status"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
   create_table "group_users", force: :cascade do |t|
     t.integer  "group_id"
     t.integer  "user_id"
@@ -126,6 +135,16 @@ ActiveRecord::Schema.define(version: 20170626054341) do
     t.datetime "updated_at",    null: false
     t.index ["accessor_type", "accessor_id"], name: "index_permissions_on_accessor_type_and_accessor_id"
     t.index ["resource_type", "resource_id"], name: "index_permissions_on_resource_type_and_resource_id"
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.integer  "namespace_id"
+    t.text     "dockerfile"
+    t.integer  "user_id"
+    t.integer  "group_id"
+    t.string   "version_format"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "repo_tags", force: :cascade do |t|
@@ -234,6 +253,7 @@ ActiveRecord::Schema.define(version: 20170626054341) do
     t.string   "role"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.string   "auth"
   end
 
   create_table "versions", force: :cascade do |t|

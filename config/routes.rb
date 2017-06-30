@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :builds
+  resources :projects
   get 'search/owner_search'
   get 'search/list_owner'
 

@@ -13,6 +13,8 @@ class NamespacesController < ApplicationController
   # GET /namespaces/1.json
   def show
     @namespaces = current_user.readable_namespaces.order("updated_at DESC").page params[:page]
+    @qrepo = @namespace.repositories.ransack params[:q]
+    @repositories = @qrepo.result.order('id desc')
   end
 
   # GET /namespaces/new

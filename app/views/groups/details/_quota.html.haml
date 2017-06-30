@@ -5,7 +5,7 @@
   = box_body_helper do
     .row
       .col-md-4.text-center.border-right
-        = pie_chart pie_chart_helper(["CPU Used", "CPU Left"], "CPU Usage",group.cpu_used, group.settings(:quota).cpu.to_i - group.cpu_used), { height: 150 }
+        = doughnut_chart chart_opts_helper(["CPU Used", "CPU Left"], "CPU Usage", group.cpu_used, group.settings(:quota).cpu.to_i - group.cpu_used, ["blue", "green"]), { height: 150 }
         %hr
         .row
           = form_tag update_quota_cpu_group_path(group), method: :patch do
@@ -18,7 +18,7 @@
                 = fa_icon :check
 
       .col-md-4.text-center
-        = pie_chart pie_chart_helper(["Mem Used", "Mem Left"], "Mem Usage", group.mem_used, group.settings(:quota).mem.to_i - group.mem_used), { height: 150 }
+        = doughnut_chart chart_opts_helper(["Mem Used", "Mem Left"], "Mem Usage", group.mem_used, group.settings(:quota).mem.to_i - group.mem_used , ["yellow", "orange"]), { height: 150 }
         %hr
         .row
           = form_tag update_quota_mem_group_path(group), method: :patch do
@@ -31,7 +31,7 @@
                 = fa_icon :check
 
       .col-md-4.text-center.border-left
-        = pie_chart pie_chart_helper(["Disk Used", "Disk Left"], "Disk Usage", group.disk_used, group.settings(:quota).disk.to_i - group.disk_used), { height: 150 }
+        = doughnut_chart chart_opts_helper(["Disk Used", "Disk Left"], "Disk Usage", group.disk_used, group.settings(:quota).disk.to_i - group.disk_used), { height: 150 }
         %hr
         .row
           = form_tag update_quota_disk_group_path(group), method: :patch do

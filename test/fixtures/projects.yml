@@ -1,0 +1,29 @@
+# == Schema Information
+#
+# Table name: projects
+#
+#  id             :integer          not null, primary key
+#  namespace_id   :integer
+#  dockerfile     :text
+#  user_id        :integer
+#  group_id       :integer
+#  version_format :string
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  namespace_id: 1
+  dockerfile: MyText
+  user_id: 1
+  group_id: 1
+  version_format: MyString
+
+two:
+  namespace_id: 1
+  dockerfile: MyText
+  user_id: 1
+  group_id: 1
+  version_format: MyString

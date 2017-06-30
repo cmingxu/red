@@ -1,0 +1,11 @@
+= simple_form_for(@build) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :project_id
+    = f.input :serial_num
+    = f.input :version_name
+    = f.input :build_status
+
+  .form-actions
+    = f.button :submit

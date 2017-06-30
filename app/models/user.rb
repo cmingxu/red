@@ -12,10 +12,11 @@
 #  role               :string
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  auth               :string
 #
 
 require 'digest'
-
+require 'base64'
 
 class User < ApplicationRecord
   include Accessor
@@ -46,11 +47,12 @@ class User < ApplicationRecord
 
   mount_uploader :icon, UserIconUploader
 
-
-
   def update_password(pass)
     self.salt = SecureRandom.hex
     self.encrypted_password = entrypt_password(pass)
+    self.auth = Base64.encode64 "#{self.email}:#{pass}"
+
+    self
   end
 
   def display
@@ -81,6 +83,16 @@ class User < ApplicationRecord
     return false if group.is_default?
 
     self.group_users.where(group: group).first.try(:destroy)
+  end
+
+  def docker_auth(registry = "myregistry.com:5000")
+    {
+      auths: {
+        registry: {
+          auth: self.auth
+        }
+      }
+    }
   end
 
   private

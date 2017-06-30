@@ -29,7 +29,7 @@ zh-CN:
     group_quota: "组配额"
     user: "用户"
     service: "服务"
-    new_service: "新建服务"
+    new_service: "新服务"
     owner: "创建人"
     created: "创建时间"
     user_count: "用户数"
@@ -54,12 +54,15 @@ zh-CN:
     no_record_found: "没找到记录"
     tasks_and_containers: "任务&容器"
     permissions: "权限设置"
+    permission_delete_confirm: "删除此项将取消当前用户的所有权限"
     owner_chooser_prompt: "选择目标"
     delete_confirm: "确定要删除"
     updated: "最后更新"
     quota_change_confirm: "确认修改配额?"
     statistics: "统计"
     search_hint: "搜索..."
+    confirm_download: "下载并且保存当前选中的编排文件"
+    choose_from_file_notice: "也可从文件上传Compose内容"
   nav:
     host: "主机"
     nodes: "主机管理"
@@ -152,6 +155,7 @@ zh-CN:
     parameters: "Docker参数"
     privileged: "Privileged"
     new_parameter: "新Docker参数"
+    versions: "候选版本"
   service:
     new_app: "新增应用"
     new_service: "新增服务"
@@ -167,7 +171,7 @@ zh-CN:
     gateway: "网关配置"
     name: "服务名"
     desc: "备注"
-    compose: "服务编排文件"
+    compose: "从编排文件读取"
     all_services: "所有服务"
     my_services: "由我创建"
     app_list: "列表"
@@ -181,6 +185,7 @@ zh-CN:
     name: "组名称"
     desc: "描述"
     all_groups: "全部组"
+    change_group_confirm: "点击确认之后组信息将被修改"
 
   user:
     role: "角色"
@@ -227,7 +232,7 @@ zh-CN:
     repo_tags: "标签"
     pull_count: "下载次数"
     repositories: "镜像"
-    all_namespaces: "全部镜像仓库"
+    all_namespaces: "镜像仓库"
     repo_size: "大小"
     path: "地址"
     new_namespace: "新镜像仓库"
@@ -273,6 +278,7 @@ zh-CN:
     all_nodes: "全部主机"
     container_stderr_logs: "错误输出"
     container_stdout_logs: "标准输出"
+    delete_confirm: "移除主机后可重新发现"
 
   host:
     add_host_confirm: "确认增加新主机？"

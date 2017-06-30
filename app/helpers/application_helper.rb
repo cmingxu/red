@@ -95,18 +95,17 @@ module ApplicationHelper
     }
   end
 
-  def pie_chart_helper(labels, label, used, total)
+  def chart_opts_helper(labels, label, used, total, colors = ["yellow", "red"])
     {
       labels: labels,
       datasets: [
         {
           label: label,
-          backgroundColor: ["#FF6384", "#36A2EB"],
+          backgroundColor: colors,
           borderColor: ["white"],
           data: [used, total]
         }]
     }
-
   end
 
   def info_show_helper hash, classes = []
@@ -127,7 +126,7 @@ module ApplicationHelper
 
   def box_header_helper title = "", icon = "cogs", &block
     content_tag :div, class: "box-header with-border" do
-      concat content_tag(:h4, fa_icon(icon) + " " +title, class: 'box-title')
+      concat content_tag(:h4, fa_icon(icon) + "       " + title, class: 'box-title')
       concat(capture &block) if block_given?
     end
   end
@@ -172,8 +171,8 @@ module ApplicationHelper
     "btn btn-success btn-sm btn-flat"
   end
 
-  def graphna_panel name, panelId, interval = 5.minutes, refresh = 5, width = 1200, height = 150
-    width ||= main_content_width
+  def graphna_panel name, panelId, interval = 5.minutes, refresh = 5, width = nil, height = nil
+    width = width || main_content_width
     path =  graphna_path + "#{name}?refresh=#{refresh}s&orgId=1&panelId=#{panelId}&from=#{(Time.now - interval).to_i * 1000}&to=#{Time.now.to_i * 1000}&theme=light"
 
       "<iframe src='#{path}' width='#{width}' height='#{height}' frameborder='0'> </iframe>".html_safe

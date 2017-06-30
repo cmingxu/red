@@ -1,11 +1,13 @@
-.list-group.group-list
-  - service.apps.each do |app|
-    %a.list-group-item.group_item{href: detail_service_app_path(service, app), class: app == @app ? 'active' : ''}
-      %h4.list-group-item-heading= app.name
-      .list-group-item-text
-        %span.text-muted CPU
-        %strong= app.cpu_used
+= link_to fa_icon(:plus) + " " + t("service.new_service"), new_service_path, class: primary_btn_helper(['btn-block', 'margin-bottom']), data: { prompt: { title: t("common.owner_chooser_prompt"), name: "owner", type: "choose_owner"} }, method: :get
 
-        %span.text-muted MEM
-        %strong= app.mem_used
+= box_helper "warning" do
+  = box_header_helper t("service.all_services"), :copy
 
+  = box_body_helper do
+    %ul.nav.nav-pills.nav-stacked
+      - current_user.readable_services.each do |service|
+        %li{class: service == @service ? 'active' : ''}
+          %a{href: service_path(service) }
+            = fa_icon("inbox")
+            = service.name
+            %small.label.label-primary.pull-right= service.apps.count

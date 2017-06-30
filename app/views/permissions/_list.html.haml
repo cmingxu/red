@@ -1,9 +1,6 @@
 - resource_name = resource.class.to_s.tableize.singularize.downcase
 = box_helper "success" do
-  = box_header_helper t("common.permissions"), :server do
-    .box-tools.pull-right
-      = button_tag class: 'btn btn-box-tool', data: { widget: 'collapse' } do
-        = fa_icon(:plus)
+  = box_header_helper t("common.permissions"), :users
 
   = box_body_helper do
     %table.table
@@ -15,7 +12,7 @@
               = image_tag p.accessor.try(:icon).try(:thumb).try(:url) || "placeholder.png", height: 35
               = p.accessor.display
             %td= select_tag :access, options_for_select(permission_access(session[:locale]), p.access), class: 'permission_change', data: { path: send("#{resource_name}_permission_path", resource, p) }
-            %td= link_to fa_icon(:remove), send("#{resource_name}_permission_path", resource, p), method: :delete, data: { confirm: t("common.delete_confirm") }
+            %td= link_to fa_icon(:remove), send("#{resource_name}_permission_path", resource, p), method: :delete, data: { confirm: t("common.permission_delete_confirm") }
 
     = simple_form_for permission, url: send("#{resource_name}_permissions_path", resource) do |form|
       = form.input :accessor_type, as: :hidden, input_html: { id: "accessor_type" }

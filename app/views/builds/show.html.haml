@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Project:
+  = @build.project_id
+%p
+  %b Serial num:
+  = @build.serial_num
+%p
+  %b Version name:
+  = @build.version_name
+%p
+  %b Build status:
+  = @build.build_status
+
+= link_to 'Edit', edit_build_path(@build)
+\|
+= link_to 'Back', builds_path

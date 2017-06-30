@@ -105,6 +105,7 @@ registerListOwnerTypeAhead = function () {
   });
 }
 
+window.editor = null;
 aceInit = function (id, data) {
   try{
     var editor = ace.edit(id);
@@ -112,25 +113,28 @@ aceInit = function (id, data) {
     editor.setTheme("ace/theme/twilight");
     editor.getSession().setTabSize(2);
     editor.getSession().setUseWrapMode(true);
+    window.editor = editor;
+    editor.getSession().on('change', function(e) {
+      var code = editor.getValue();
+      $('#editor_real_input').val(code);
+    });
+
     var o = JSON.parse(data) // may throw if json is malformed
     val = JSON.stringify(o, null, 4)
     editor.setValue(val);
-    editor.resize();
 
-    var $editor = $("#" + id);
-    $editor.closest('form').submit(function() {
-      alert(editor.getValue());
-      var code = editor.getValue();
-      $editor.prev('input[type=hidden]').val(code);
-    });
 
   }catch(e)
   {
+    console.log(e);
   }
 }
 
 function registerPermissionChange() {
   $('.permission_change').change(function () {
+    if(!confirm("点击确定权限修改生效!")){
+      return;
+    }
     var path = $(this).data('path');
     $.ajax({
       url: path,
@@ -180,7 +184,13 @@ $(document).on('ready turbolinks:load', function() {
 
   $('select:not(.app-select)').selectpicker();
 
-  <%#aceInit('editor', $('#editor').val());%>
+  if($("#editor").length) {
+    aceInit('editor', $('#editor').val());
+  }
+
+  if($("#ace_editor_dom").length) {
+    aceInit('ace_editor_dom', "");
+  }
 });
 
 function readURL(input) {
@@ -204,9 +214,11 @@ var openFile = function(event) {
   var reader = new FileReader();
   reader.onload = function(){
     var text = reader.result;
-    var node = document.getElementById('compose_content');
-    node.innerText = text;
-    aceInit('compose_content', text);
+    if(window.editor != null && window.editor.setValue) {
+      var o = JSON.parse(text) // may throw if json is malformed
+      val = JSON.stringify(o, null, 4)
+      window.editor.setValue(val);
+    }
   };
   reader.readAsText(input.files[0]);
 };
@@ -220,14 +232,14 @@ $(document).on('turbolinks:load', function () {
 });
 
 String.prototype.escape = function() {
-    var tagsToReplace = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;'
-    };
-    return this.replace(/[&<>]/g, function(tag) {
-        return tagsToReplace[tag] || tag;
-    });
+  var tagsToReplace = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;'
+  };
+  return this.replace(/[&<>]/g, function(tag) {
+    return tagsToReplace[tag] || tag;
+  });
 };
 
 

@@ -38,6 +38,10 @@
   background: white;
   cursor: inherit;
   display: block;
+}  
+
+.btn-file .form-group{
+  margin-bottom: 0px!important;
 }
 
 .icon_holder{
@@ -56,4 +60,14 @@
 
 .search-input{
   transition: 2s;
+}
+
+.ace_editor{
+  position: absolute;
+  height: 400px;
+}
+
+.box-header .box-title {
+  font-size: 14px;
+  font-weight: 500;
 }

@@ -1,4 +1,5 @@
-= search_form_for q, class: 'col-md-2 pull-right' do |f|
+- url = local_assigns[:url].nil? ? nil : url
+= search_form_for q, url: url, class: 'col-md-2 pull-right' do |f|
   .input-group
     = f.search_field search_condition, placeholder: t("common.search_hint"), class: 'form-control search-input'
     %span.input-group-btn
