@@ -26,12 +26,23 @@
                     = service.owner.display
     
             %td.text-center
-              Versions
+              = t("service.versions")
             %td.text-center
               %p
                 %span.text-bigger= service.apps.length
                 %span.text-muted= t('active_record.app.model_name')
                 %span.text-primary= link_to fa_icon(:refresh), "", onclick: "", data: {service_id: "service_#{service.id}" }, class: 'service_refresh_app_state_icon'
+
+            %td.text-center
+              %span.text-bigger= service.cpu_total
+              %span.text-muted= t('active_record.common.cpu')
+              \/
+              %span.text-bigger= service.mem_total
+              %span.text-muted= t('active_record.common.mem')
+              \/
+              %span.text-bigger= service.disk_total 
+              %span.text-muted= t('active_record.common.disk')
+
             %td.text-center
               = drop_down_menu :default, t("common.actions") do
                 = drop_down_menu_item t("nav.open_in_new_window"), service_path(service), target: '_blank'
@@ -74,6 +85,14 @@
                   = link_to fa_icon('angle-double-right'), detail_service_app_path(service, app, anchor: "versions")
               %td.text-center{class: "app_state app_state_#{app.id}", data: { 'app-state-path': backend_state_service_app_path(service, app)}}
                 = fa_icon("cog", class: "fa-spin fa-2x")
+
+              %td.text-center
+                %span.text-bigger= app.cpu_total
+                \/
+                %span.text-bigger= app.mem_total
+                \/
+                %span.text-bigger= app.disk_total
+
               %td.text-center
                 = drop_down_menu :default, t("common.actions") do
                   - if current_user.can_write?(service)

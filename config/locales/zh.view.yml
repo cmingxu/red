@@ -177,6 +177,7 @@ zh-CN:
     app_list: "列表"
     app_chart: "图表"
     remove_service_confirm: "点击确定将彻底删除此服务以及所属应用！"
+    versions: "版本"
 
   group:
     new_group: "新用户组"
@@ -206,6 +207,9 @@ zh-CN:
       mem: "内存"
       disk: "磁盘"
       state: "状态"
+      old_password: "旧密码"
+      new_password: "新密码"
+      password_confirmation: "确认密码"
     service:
       model_name: "服务"
       name: "服务名"
@@ -217,6 +221,7 @@ zh-CN:
     app:
       model_name: "应用"
       name: "应用名"
+      resources: "资源"
 
   service_template:
     readme: "模板描述"
@@ -316,6 +321,10 @@ zh-CN:
     marathon_detail: "详情"
     marathon_running_instances: "实例"
     marathon_health: '健康状况'
+
+  setting:
+    change_password: "修改密码"
+    change_basic: '基本信息'
 
 
 

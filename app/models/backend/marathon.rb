@@ -86,6 +86,7 @@ module Backend
 
     def scale(ins = 1)
       begin
+        self.app.update_attribute :instances, ins
         marathon_app.scale! ins
       rescue ::Marathon::Error::MarathonError => e
         puts e

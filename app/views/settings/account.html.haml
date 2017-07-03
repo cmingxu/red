@@ -4,7 +4,7 @@
   .col-md-9
     = box_helper "warning" do
       = simple_form_for current_user, url: user_path(current_user) do |form|
-        = box_header_helper "", :copy do
+        = box_header_helper t("setting.change_basic"), :cogs do
           .box-tools.pull-right
             = form.submit t("common.update_btn"), class: primary_btn_helper
         = box_body_helper do
@@ -12,7 +12,7 @@
 
     = box_helper "danger" do
       = simple_form_for current_user, url: user_path(current_user) do |form|
-        = box_header_helper "", :copy do
+        = box_header_helper t("setting.change_password"), :cog do
           .box-tools.pull-right
             = form.submit t("common.update_btn"), class: primary_btn_helper
         = box_body_helper do

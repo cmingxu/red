@@ -76,12 +76,7 @@ class App < ApplicationRecord
   validates :name, :desc, :cpu, :mem, :disk, :image, presence: true
   validates :name, uniqueness: { scope: :service_id }
 
-
   accepts_nested_attributes_for :app_links, allow_destroy: true
-
-  before_validation(on: :create) do |app|
-    app.instances ||= 0
-  end
 
   after_create_commit do |app|
     if self.version_name.present?
@@ -127,11 +122,21 @@ class App < ApplicationRecord
 
   delegate :swan_app_name, :swan_app, :scale_up, :scale_down, :marathon_app_name, :run, :stop, :marathon_app, :suspend, :restart, :change, :rollback, :scale, :marathon_hash, :container_hash, :swan_hash, to: :backend_instance
 
+  def cpu_total
+    self.instances * self.cpu
+  end
+
+  def mem_total
+    self.instances * self.mem
+  end
+
+  def disk_total
+    self.instances * self.disk
+  end
 
   def cpu_used
     self.running? ? self.instances * self.cpu : 0
   end
-
 
   def mem_used
     self.running? ? self.instances  * self.mem : 0
