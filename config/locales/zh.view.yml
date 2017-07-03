@@ -81,6 +81,7 @@ zh-CN:
     open_in_new_window: "新窗口打开"
     dashboard: "我的主页"
     features: "功能"
+    other: "其他"
   app:
     name: "名称"
     desc: "备注"
@@ -241,6 +242,7 @@ zh-CN:
     repo_size: "大小"
     path: "地址"
     new_namespace: "新镜像仓库"
+    namespace: "镜像库"
 
   audit:
     entity: "对象"
@@ -284,6 +286,12 @@ zh-CN:
     container_stderr_logs: "错误输出"
     container_stdout_logs: "标准输出"
     delete_confirm: "移除主机后可重新发现"
+    hostname: "主机名"
+    state: "状态"
+    cpu: "CPU"
+    mem: "内存"
+    docker_version: "Docker Version"
+    created_at: "加入时间"
 
   host:
     add_host_confirm: "确认增加新主机？"

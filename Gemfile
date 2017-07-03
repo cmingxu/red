@@ -47,6 +47,9 @@ gem 'pundit'
 gem 'base32'
 gem 'jwt'
 
+gem 'hover-rails'
+
+
 
 
 

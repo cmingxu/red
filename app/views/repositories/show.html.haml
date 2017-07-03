@@ -22,7 +22,7 @@
                     %td
                       .input-group
                         - id =  "copy_#{tag.repository.name.gsub('/', '')}_#{tag.name}"
-                        = text_field_tag "",  Site.default.registry_domain + "/" + tag.repository.name + ":" + tag.name, id: id, class: 'form-control'
+                        = text_field_tag "", "docker pull " + Site.default.registry_domain + "/" + tag.repository.name + ":" + tag.name, id: id, class: 'form-control'
                         %span.btn.input-group-addon{data: { 'clipboard-target': id }}
                           = fa_icon(:copy)
 

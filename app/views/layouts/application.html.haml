@@ -56,7 +56,7 @@
             = sidebar_li_helper :namespaces, :copy, t("nav.namespaces"), namespaces_path, false, {"green": Namespace.count}
             = sidebar_li_helper :hosts, :server, t("nav.nodes"), nodes_path, false, {"blue": Node.count}
             = sidebar_li_helper :groups, :users, t("nav.groups"), groups_path
-            %li.header= t("nav.setting")
+            %li.header= t("nav.other")
             = sidebar_li_helper :system, :gears, t("nav.system"), system_path, true do
               %ul.treeview-menu
                 = sidebar_li_helper :mesos, 'circle-thin', t("nav.mesos"), mesos_path, false, {}, "text-red"
@@ -80,9 +80,8 @@
           .margin-bottom
             = bootstrap_flash
           - if page_request_meta_info[:panel_header_and_icon][:text]
-            %h1 
+            %h1
               &nbsp;
-
               -#= t("nav.#{page_request_meta_info[:panel_header_and_icon][:text]}")
               -#%small= page_request_meta_info[:panel_header_and_icon][:text_small]
           - if need_breadcrumb

@@ -1,4 +1,4 @@
-.row
+.row.margin-bottom
   .col-md-3
     = render :partial => "widgets/info_widget", locals: {color: :green, num: Node.count, what_cn: "主机", what_en: "Host", icon: :cloud, link:  nodes_path}
 
@@ -23,12 +23,12 @@
   .col-md-3
     = render :partial => "widgets/info_widget", locals: {color: :red, num: User.count, what_en: "User", what_cn: "用户",  icon: :user, link:  groups_path}
 
-.margin-bottom
-
-
-.row.statistics
+.row.statistics.margin-bottom
   .col-md-12
     = graphna_panel("docker-host", $GRAPHNA_PANEL[:docker_host_cpu_usage][:id], 5.minutes)
   .col-md-12
     = graphna_panel("docker-host", $GRAPHNA_PANEL[:docker_host_mem_usage][:id], 5.minutes)
 
+.row.margin-bottom
+  .col-md-12
+    = link_to fa_icon(:plus, class: '4x muted'), "", id: "choose_widget_place_holder", class: 'text-center hvr-hollow'

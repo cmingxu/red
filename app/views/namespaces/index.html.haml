@@ -2,26 +2,15 @@
   .col-md-3
     = render :partial => "namespaces/namespace_left", locals: { namespaces: @namespaces }
   .col-md-9
-    = box_helper "warning" do
-      = box_header_helper t("namespace.repositories"), :server do
-        = render :partial => "widgets/search_form", locals: { q: @q, search_condition: :name_cont }
+    .row
+      .col-md-3
+        = render :partial => "widgets/info_widget", locals: {color: :green, num: current_user.readable_namespaces.count, what_cn: "镜像库", what_en: "Namespaces", icon: :cloud, link:  namespaces_path}
+    
+      .col-md-3
+        = render :partial => "widgets/info_widget", locals: {color: :red, num: current_user.readable_namespaces.reduce(0) {|sum, namespace| sum += namespace.repositories.count; sum} , what_en: "Images", what_cn: "镜像", icon: :server, link:  nodes_path}
+    
+      .col-md-3
+    
+      .col-md-3
 
-      = box_body_helper do
-        - if @namespaces.first.present?
-          %table.table
-            %thead
-              %th= t("namespace.repository_name")
-              %th= t("namespace.repo_tags")
-
-            %tbody
-              - @namespaces.first.repositories.each do |repository|
-                %tr
-                  %td= repository.name
-                  %td
-                    - repository.repo_tags.each do |repo_tag|
-                      = link_to repo_tag.name, "", class: 'btn btn-flat btn-sm btn-warning'
-
-      .margin-bottom
-
-    = render :partial => "permissions/list", locals: { permissions: @namespaces.first.permissions, permission: @namespaces.first.permissions.new, resource: @namespaces.first }
 

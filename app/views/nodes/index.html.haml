@@ -1,7 +1,6 @@
 - @state["slaves"].each do |slave|
   = render :partial => "mesos/slave", locals: { slave: slave } if !Node.exists?(hostname: slave['hostname'])
 
-
 .row
   .col-md-3
     = render :partial => "widgets/info_widget", locals: {color: :green, num: Node.count, what_cn: "主机", what_en: "Host", icon: :cloud, link:  nodes_path}
@@ -44,7 +43,7 @@
               %td
                 \#
                 = node.id
-              %td= node.hostname
+              %td= link_to node.hostname, node_path(node)
               %td= node.state
               %td= node.cpu
               %td= node.mem

@@ -1,10 +1,10 @@
 = box_helper "success" do
   = box_header_helper t('nav.services'), :bars do
     .box-tools.pull-right
-      = link_to raw("#{t('service.all_services')} #{badge(current_user.readable_services.length)}"), services_path, class: 'btn btn-sm btn-default btn-flat'
-      = link_to raw("#{t('service.my_services')} #{badge(current_user.services.length)}") , services_path(owner_type: "User", owner_id: current_user.id), class: 'btn btn-sm btn-default btn-flat'
+      = link_to raw("#{t('service.all_services')} #{badge(current_user.readable_services.length)}"), services_path, class: 'btn btn-sm btn-default btn-flat hvr-rotate'
+      = link_to raw("#{t('service.my_services')} #{badge(current_user.services.length)}") , services_path(owner_type: "User", owner_id: current_user.id), class: 'btn btn-sm btn-default btn-flat hvr-rotate'
       - current_user.groups_without_default.each do |group|
-        = link_to raw("#{group.name} #{badge(group.readable_services.length, :green)}") , services_path(owner_type: "Group", owner_id: group.id), class: 'btn btn-sm btn-default btn-flat'
+        = link_to raw("#{group.name} #{badge(group.readable_services.length, :green)}") , services_path(owner_type: "Group", owner_id: group.id), class: 'btn btn-sm btn-default btn-flat hvr-rotate'
       = link_to fa_icon(:plus) + " " + t("service.new_service"), new_service_path, class: primary_btn_helper, data: { prompt: { title: t("common.owner_chooser_prompt"), name: "owner", type: "choose_owner"} }, method: :get
 
   = box_body_helper do

@@ -12,6 +12,7 @@
  *
  *= require_tree .
  *= require font-awesome
+ *= require hover
  *= require bootstrap-markdown.min
  *= require adminlte/dist/css/AdminLTE.min.css
  *= require adminlte/dist/css/skins/skin-blue.min.css
