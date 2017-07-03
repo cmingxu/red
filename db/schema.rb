@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20170630033056) do
     t.integer  "serial_num"
     t.string   "version_name"
     t.string   "build_status"
+    t.string   "slug"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
@@ -138,11 +139,13 @@ ActiveRecord::Schema.define(version: 20170630033056) do
   end
 
   create_table "projects", force: :cascade do |t|
+    t.string   "name"
     t.integer  "namespace_id"
     t.text     "dockerfile"
     t.integer  "user_id"
     t.integer  "group_id"
     t.string   "version_format"
+    t.string   "slug"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end

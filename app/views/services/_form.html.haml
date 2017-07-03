@@ -17,7 +17,7 @@
         .col-md-6
           %label.btn.btn-primary.btn-file.btn-flat
             = form.input :compose, as: :file, input_html: { style: "display: none;", onchange: 'openFile(event)' }, label: fa_icon(:upload, class: "x2") + " " +  t('service.compose')
-          = text_area_tag "ace_editor_dom", "", id: "ace_editor_dom", class: 'form-control'
+          = text_area_tag "ace_editor_dom", "", id: "ace_editor_dom", class: 'form-control', data: {'ace-mode': 'json'}
           = form.input :compose_content, as: :text, label: false, input_html: { style: 'display: none;', id: 'editor_real_input' }
 
 

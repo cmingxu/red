@@ -5,6 +5,7 @@ class CreateBuilds < ActiveRecord::Migration[5.0]
       t.integer :serial_num
       t.string :version_name
       t.string :build_status
+      t.string :slug
 
       t.timestamps
     end

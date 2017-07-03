@@ -243,6 +243,11 @@ zh-CN:
     path: "地址"
     new_namespace: "新镜像仓库"
     namespace: "镜像库"
+    new_project: "新项目"
+    project_name: "项目名称"
+    version_format: "版本格式"
+    projects: "全部项目"
+
 
   audit:
     entity: "对象"

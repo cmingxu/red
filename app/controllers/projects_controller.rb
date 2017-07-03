@@ -1,10 +1,19 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_namespace, :set_namespaces, :set_breadcrumb
+
+  DEFAULT_DOCKER_FILE = <<EOF
+  FROM ubuntu:latest
+  ADD . /app
+  RUN make build
+  WORKDIR /app
+  CMD ./start.sh
+EOF
 
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all
+    @projects = @namespace.projects.all
   end
 
   # GET /projects/1
@@ -14,7 +23,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/new
   def new
-    @project = Project.new
+    @project = @namespace.projects.new version_format: "version-{{timestamp}}", name: "project-name", dockerfile: DEFAULT_DOCKER_FILE
   end
 
   # GET /projects/1/edit
@@ -24,11 +33,13 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
-    @project = Project.new(project_params)
+    @project = @namespace.projects.new(project_params)
+    @project.group_id = @namespace.group_id
+    @project.user_id  = @namespace.user_id
 
     respond_to do |format|
       if @project.save
-        format.html { redirect_to @project, notice: 'Project was successfully created.' }
+        format.html { redirect_to @namespace, notice: 'Project was successfully created.' }
         format.json { render :show, status: :created, location: @project }
       else
         format.html { render :new }
@@ -42,7 +53,7 @@ class ProjectsController < ApplicationController
   def update
     respond_to do |format|
       if @project.update(project_params)
-        format.html { redirect_to @project, notice: 'Project was successfully updated.' }
+        format.html { redirect_to @namespace, notice: 'Project was successfully updated.' }
         format.json { render :show, status: :ok, location: @project }
       else
         format.html { render :edit }
@@ -67,8 +78,25 @@ class ProjectsController < ApplicationController
       @project = Project.find(params[:id])
     end
 
+    # Use callbacks to share common setup or constraints between actions.
+    def set_namespace
+      @namespace = Namespace.find(params[:namespace_id])
+    end
+
+    def set_namespaces
+      @namespaces = current_user.readable_namespaces
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:namespace_id, :dockerfile, :user_id, :group_id, :version_format)
+      params.require(:project).permit(:namespace_id, :dockerfile, :user_id, :group_id, :version_format, :name)
     end
+
+  def set_breadcrumb
+    @breadcrumb_list = [OpenStruct.new(name_zh_cn: "全部项目", name_en: "Namespaces", path: namespaces_path)]
+
+    if @namespace
+      @breadcrumb_list.push OpenStruct.new(name_zh_cn: @namespace.name, name_en: @namespace.name, path: namespace_path(@namespace))
+    end
+  end
 end

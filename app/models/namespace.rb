@@ -17,6 +17,8 @@ class Namespace < ApplicationRecord
   friendly_id :name, use: [:slugged, :finders]
 
   has_many :repositories, dependent: :destroy
+  has_many :projects, dependent: :destroy
+
   belongs_to :user
   belongs_to :group
 

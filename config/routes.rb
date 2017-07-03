@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  resources :builds
-  resources :projects
   get 'search/owner_search'
   get 'search/list_owner'
 
@@ -27,10 +25,13 @@ Rails.application.routes.draw do
   get 'welcome/index', as: :dashboard
 
   resources :namespaces do
-    resources :permissions do
-    end
+    resources :permissions
 
     resources :repositories
+
+    resources :projects do
+      resources :build
+    end
   end
 
   resources :audits, only: [:index]

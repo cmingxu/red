@@ -107,9 +107,10 @@ registerListOwnerTypeAhead = function () {
 
 window.editor = null;
 aceInit = function (id, data) {
+  var aceMode = $("#" + id).data('ace-mode') || "json";
   try{
     var editor = ace.edit(id);
-    editor.getSession().setMode("ace/mode/json");
+    editor.getSession().setMode("ace/mode/" + aceMode);
     editor.setTheme("ace/theme/twilight");
     editor.getSession().setTabSize(2);
     editor.getSession().setUseWrapMode(true);

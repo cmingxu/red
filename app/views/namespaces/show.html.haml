@@ -4,9 +4,10 @@
   .col-md-9
     = box_helper "warning" do
       = box_header_helper t("namespace.namespace") + @namespace.name, :server do
-        = render :partial => "widgets/search_form", locals: { q: @qrepo, search_condition: :name_cont, url: namespace_path(@namespace) }
+        .box-tools.pull-right
+          = render :partial => "widgets/search_form", locals: { q: @qrepo, search_condition: :name_cont, url: namespace_path(@namespace) }
       = box_body_helper do
-        = render :partial => "widgets/list_place_holder" if @namespaces.empty?
+        = render :partial => "widgets/list_place_holder" if @repositories.empty?
         - if @namespace.present?
           %table.table
             %thead
@@ -20,6 +21,25 @@
                   %td
                     - repository.repo_tags.each do |repo_tag|
                       = link_to repo_tag.name, "", class: 'btn btn-flat btn-sm btn-warning'
+      .margin-bottom
+
+    = box_helper "success" do
+      = box_header_helper t("namespace.projects"), :server do
+        .box-tools.pull-right.text-right
+          = render :partial => "widgets/search_form", locals: { q: @qrepo, search_condition: :name_cont, url: namespace_path(@namespace) }
+          = link_to fa_icon(:plus) + " " + t("namespace.new_project"), new_namespace_project_path(@namespace), class: primary_btn_helper
+      = box_body_helper do
+        = render :partial => "widgets/list_place_holder" if @projects.empty?
+        - if @namespace.present?
+          %table.table
+            %thead
+              %th= t("namespace.project_name")
+              %th= t("namespace.project_latest_build")
+
+            %tbody
+              - @projects.each do |project|
+                %tr
+                  %td= link_to project.name, namespace_project_path(@namespace, project)
       .margin-bottom
 
     = render :partial => "permissions/list", locals: { permissions: @namespace.permissions, permission: @namespace.permissions.new, resource: @namespace }

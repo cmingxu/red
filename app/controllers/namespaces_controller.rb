@@ -15,6 +15,9 @@ class NamespacesController < ApplicationController
     @namespaces = current_user.readable_namespaces.order("updated_at DESC").page params[:page]
     @qrepo = @namespace.repositories.ransack params[:q]
     @repositories = @qrepo.result.order('id desc')
+
+    @prepo = @namespace.projects.ransack params[:q]
+    @projects = @prepo.result.includes(:builds).order('id desc')
   end
 
   # GET /namespaces/new
