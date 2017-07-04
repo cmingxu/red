@@ -120,10 +120,13 @@ aceInit = function (id, data) {
       $('#editor_real_input').val(code);
     });
 
-    var o = JSON.parse(data) // may throw if json is malformed
-    val = JSON.stringify(o, null, 4)
-    editor.setValue(val);
-
+    if(aceMode == "json") {
+      var o = JSON.parse(data) // may throw if json is malformed
+      val = JSON.stringify(o, null, 4)
+      editor.setValue(val);
+    }else{
+      editor.setValue(data);
+    }
 
   }catch(e)
   {
@@ -190,7 +193,9 @@ $(document).on('ready turbolinks:load', function() {
   }
 
   if($("#ace_editor_dom").length) {
-    aceInit('ace_editor_dom', "");
+    var content = $("#editor_real_input").val();
+    console.log(content.replace("\r\n", "\n"));
+    aceInit('ace_editor_dom', content.replace("\r\n", "\n"));
   }
 });
 

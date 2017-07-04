@@ -7,6 +7,7 @@
 #  serial_num   :integer
 #  version_name :string
 #  build_status :string
+#  slug         :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #

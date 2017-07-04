@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'system/info', as: :system_info
   patch 'system/update_marathon_config', as: :update_marathon_config
   patch 'system/update_mesos_config', as: :update_mesos_config
+  patch 'system/update_domain_config', as: :update_domain_config
   patch 'system/update_swan_config', as: :update_swan_config
   patch 'system/update_registry_domain_config', as: :update_registry_domain_config
   patch 'system/update_graphna', as: :update_graphna_config
@@ -30,9 +31,10 @@ Rails.application.routes.draw do
     resources :repositories
 
     resources :projects do
-      resources :build
     end
   end
+
+  resources :builds, only: [:create]
 
   resources :audits, only: [:index]
   resources :versions

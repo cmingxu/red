@@ -247,6 +247,14 @@ zh-CN:
     project_name: "项目名称"
     version_format: "版本格式"
     projects: "全部项目"
+    project_latest_build: "最新构建"
+    project_build_callback: "回调地址"
+    build: "构建"
+    builds: "构建"
+    version_name: "版本"
+    uploaded_file: "文件"
+    state: "进程"
+    exception: "错误"
 
 
   audit:
@@ -334,6 +342,8 @@ zh-CN:
     marathon_detail: "详情"
     marathon_running_instances: "实例"
     marathon_health: '健康状况'
+    domain: "域名"
+    domain_config: "域名设置"
 
   setting:
     change_password: "修改密码"

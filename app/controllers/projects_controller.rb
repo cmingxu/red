@@ -1,13 +1,13 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :set_namespace, :set_namespaces, :set_breadcrumb
+  
 
   DEFAULT_DOCKER_FILE = <<EOF
   FROM ubuntu:latest
-  ADD . /app
-  RUN make build
-  WORKDIR /app
-  CMD ./start.sh
+  ADD {{file}} /
+  WORKDIR /
+  CMD ./file_just_uploaded
 EOF
 
   # GET /projects
@@ -19,6 +19,8 @@ EOF
   # GET /projects/1
   # GET /projects/1.json
   def show
+    @buildq = @project.builds.ransack params[:q]
+    @builds = @buildq.result.page(params[:page]).order('id desc')
   end
 
   # GET /projects/new
@@ -56,7 +58,7 @@ EOF
         format.html { redirect_to @namespace, notice: 'Project was successfully updated.' }
         format.json { render :show, status: :ok, location: @project }
       else
-        format.html { render :edit }
+        format.html { render :show }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end

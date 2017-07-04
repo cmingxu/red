@@ -16,6 +16,11 @@ class SystemController < ApplicationController
     end
   end
 
+  def update_domain_config
+    Site.default.update_attributes domain: params[:site][:domain]
+    render js: "$.notify('domain update successfully')"
+  end
+
   def update_registry_domain_config
     Site.default.update_attributes registry_domain: params[:site][:registry_domain]
     render js: "$.notify('registry_domain update successfully')"

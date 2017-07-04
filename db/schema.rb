@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170630033056) do
+ActiveRecord::Schema.define(version: 20170704034243) do
 
   create_table "app_links", force: :cascade do |t|
     t.integer  "service_id"
@@ -74,12 +74,14 @@ ActiveRecord::Schema.define(version: 20170630033056) do
 
   create_table "builds", force: :cascade do |t|
     t.integer  "project_id"
-    t.integer  "serial_num"
+    t.string   "serial_num"
     t.string   "version_name"
     t.string   "build_status"
     t.string   "slug"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.string   "original_filename"
+    t.text     "exception"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "group_users", force: :cascade do |t|
@@ -146,6 +148,7 @@ ActiveRecord::Schema.define(version: 20170630033056) do
     t.integer  "group_id"
     t.string   "version_format"
     t.string   "slug"
+    t.string   "token"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
@@ -236,6 +239,7 @@ ActiveRecord::Schema.define(version: 20170630033056) do
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.string   "registry_domain"
+    t.string   "domain"
   end
 
   create_table "tags", force: :cascade do |t|

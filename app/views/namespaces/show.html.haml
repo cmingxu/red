@@ -30,16 +30,24 @@
           = link_to fa_icon(:plus) + " " + t("namespace.new_project"), new_namespace_project_path(@namespace), class: primary_btn_helper
       = box_body_helper do
         = render :partial => "widgets/list_place_holder" if @projects.empty?
-        - if @namespace.present?
+        - if @projects.present?
           %table.table
             %thead
               %th= t("namespace.project_name")
               %th= t("namespace.project_latest_build")
+              %th= t("namespace.project_build_callback")
 
             %tbody
               - @projects.each do |project|
                 %tr
                   %td= link_to project.name, namespace_project_path(@namespace, project)
+                  %td= project.builds.last.try :version_name
+                  %td
+                    - if project.file_var
+                      = "curl -XPOST  #{Site.default.domain}/builds?token=#{project.token} -F '#{project.file_var}=@file-on-local-path'"
+                    - else
+                      = "curl -XPOST  #{Site.default.domain}/builds?token=#{project.token}"
+
       .margin-bottom
 
     = render :partial => "permissions/list", locals: { permissions: @namespace.permissions, permission: @namespace.permissions.new, resource: @namespace }

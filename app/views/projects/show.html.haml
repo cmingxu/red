@@ -1,1 +1,30 @@
-= render "form"
+.row
+  .col-md-3
+    = render :partial => "namespaces/namespace_left", locals: { namespaces: @namespaces }
+  .col-md-9
+    = render "form"
+    
+    = box_helper "warning" do
+      = box_header_helper t("namespace.builds") + "  " +  @project.name, :server do
+        .box-tools.pull-right
+          = paginate @builds
+          = render :partial => "widgets/search_form", locals: { q: @buildq, search_condition: :version_name_cont, url: namespace_project_path(@namespace, @project) }
+      = box_body_helper do
+        = render :partial => "widgets/list_place_holder" if @builds.empty?
+        - if @builds.present?
+          %table.table
+            %thead
+              %th= t("namespace.version_name")
+              %th= t("namespace.uploaded_file")
+              %th= t("namespace.created_at")
+              %th= t("namespace.state")
+              %th= t("namespace.exception")
+    
+            %tbody
+              - @builds.each do |build|
+                %tr
+                  %td= build.version_name
+                  %td= build.original_filename
+                  %td= time_ago_in_words build.created_at
+                  %td= build.build_status
+                  %td= build.exception

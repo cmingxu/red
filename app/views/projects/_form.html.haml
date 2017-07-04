@@ -1,18 +1,14 @@
-.row
-  .col-md-3
-    = render :partial => "namespaces/namespace_left", locals: { namespaces: @namespaces }
-  .col-md-9
-    = box_helper "green" do
-      = simple_form_for @project, url: namespace_projects_path(@namespace) do |form|
-        = box_header_helper t('namespace.new_project') , :server do
-          .box-tools.pull-right
-            = form.submit t("common.submit"), class: primary_btn_helper
-            = link_to t("common.cancel"), services_path, class: 'btn btn-default btn-flat btn-sm'
-            = form.hidden_field :namespace_id
+= box_helper "green" do
+  = simple_form_for @project, url: @project.persisted? ? namespace_project_path(@namespace) : namespace_projects_path(@namespace), method: @project.persisted? ? :patch : :post do |form|
+    = box_header_helper t('namespace.new_project') , :server do
+      .box-tools.pull-right
+        = form.submit t("common.submit"), class: primary_btn_helper
+        = link_to t("common.cancel"), services_path, class: 'btn btn-default btn-flat btn-sm'
+        = form.hidden_field :namespace_id
 
-        = box_body_helper do
-          = form.input :name, label: t("namespace.project_name")
-          = form.input :dockerfile, as: :text, label: t("namespace.dockerfile"), input_html: { style: 'display: none;' }, id: 'editor_real_input'
-          = text_area_tag "ace_editor_dom", "", id: "ace_editor_dom", class: 'form-control', data: {'ace-mode': 'html'}
-          = form.input :version_format, label: t("namespace.version_format"), hint: "eg. version-{{timestamp}}"
+    = box_body_helper do
+      = form.input :name, label: t("namespace.project_name")
+      = form.input :dockerfile, as: :text, label: t("namespace.dockerfile"), input_html: { style: 'display: none;', id: 'editor_real_input' }, hint: "variable between {{}} can be replaced during build callback"
+      = text_area_tag "ace_editor_dom", "", id: "ace_editor_dom", class: 'form-control', data: {'ace-mode': 'yaml'}
+      = form.input :version_format, label: t("namespace.version_format"), hint: "eg. version-{{timestamp}}"
 

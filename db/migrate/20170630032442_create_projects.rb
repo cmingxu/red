@@ -8,6 +8,7 @@ class CreateProjects < ActiveRecord::Migration[5.0]
       t.integer :group_id
       t.string :version_format
       t.string :slug
+      t.string :token
 
       t.timestamps
     end

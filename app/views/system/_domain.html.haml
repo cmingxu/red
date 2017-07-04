@@ -1,0 +1,8 @@
+= box_helper "success" do
+  = simple_form_for Site.default, url: update_domain_config_path, remote: true do |form|
+    = box_header_helper t("system.domain_config"), :cog do
+      .box-tools.pull-right
+        = form.submit t("common.update_btn"), class: primary_btn_helper
+
+    = box_body_helper do
+      = form.input :domain, label: t("system.domain")
