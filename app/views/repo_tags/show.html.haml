@@ -1,0 +1,16 @@
+.row
+  .col-md-3
+    = render :partial => "namespaces/namespace_left", locals: { namespaces: @namespaces }
+  .col-md-9
+    = box_helper "warning" do
+      = box_header_helper t("namespace.repositories") + @repo_tag.name, :server
+      = box_body_helper do
+        - hash = {}.tap do |hash| hash["Digest"] = @manifest[0]; hash["mediaType"] = @manifest[2]["mediaType"]; hash["Size"] = @manifest[2]["config"]["size"] end
+        = info_show_helper hash
+        %table.table
+          %thead
+            %th= t("namespace.repo_tags")
+            %th= t("namespace.repo_size")
+            %th= t("namespace.path")
+
+          %tbody

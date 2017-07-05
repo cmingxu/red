@@ -46,6 +46,9 @@ notifications:
       ignoredmediatypes:
         - application/octet-stream
 
-htpasswd:
-  realm: basic-realm
-  path: /auth/htpasswd
+auth:
+  token:
+    realm: http://0f9d05c1.ngrok.io/registry/token
+    service: foobar
+    issuer: red
+    rootcertbundle: /certs/domain.crt

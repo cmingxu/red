@@ -1,8 +1,9 @@
-class RepositoriesController < ApplicationController
-  before_action :set_namespace, :set_repository, :set_breadcrumb
+class RepoTagsController < ApplicationController
+  before_action :set_namespace, :set_repository, :set_repo_tag, :set_breadcrumb
+  before_action :set_registry_client
 
   def show
-    @repo_tags  = @repository.repo_tags.order('id desc')
+    @manifest = @client.manifest(@repo_tag.repository.name, @repo_tag.name)
   end
 
   private
@@ -13,7 +14,15 @@ class RepositoriesController < ApplicationController
   end
 
   def set_repository
-    @repository = @namespace.repositories.find params[:id]
+    @repository = @namespace.repositories.find params[:repository_id]
+  end
+
+  def set_repo_tag
+    @repo_tag = @repository.repo_tags.find params[:id]
+  end
+
+  def set_registry_client
+    @client = Portus::RegistryClient.new("114.55.130.152:5000", true, "admin@admin.com", "admin") 
   end
 
   def set_breadcrumb

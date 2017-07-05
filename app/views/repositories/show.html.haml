@@ -17,7 +17,7 @@
               .form
                 - @repo_tags.each do |tag|
                   %tr
-                    %td= tag.name
+                    %td= link_to tag.name, namespace_repository_repo_tag_path(@namespace, @repository, tag)
                     %td= tag.blob_size
                     %td
                       .input-group

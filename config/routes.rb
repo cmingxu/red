@@ -28,7 +28,9 @@ Rails.application.routes.draw do
   resources :namespaces do
     resources :permissions
 
-    resources :repositories
+    resources :repositories do
+      resources :repo_tags, only: :show
+    end
 
     resources :projects do
     end

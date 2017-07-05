@@ -2,6 +2,7 @@
 # the "registry" type.
 class Registry::AuthScope < Portus::AuthScope
   def resource
+    Registry.default
   end
 
   def scopes

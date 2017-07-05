@@ -46,13 +46,13 @@ module Portus
         if request_auth_token
           # Note that request_auth_token will raise an exception on error.
           request_auth_token(res)
-
           # Recursive call, but this time we make sure that we don't enter here
           # again. If this call fails, then there's something *really* wrong with
           # the given credentials.
           return perform_request(path, method, false)
         end
       end
+
       res
     end
 
@@ -140,13 +140,24 @@ module Portus
     # Performs an HTTP request to the given URI and request object. It returns an
     # HTTP response that has been sent from the registry.
     def get_response_token(uri, req)
-      options = { use_ssl: uri.scheme == "https", open_timeout: 2 }
+      options = { use_ssl: uri.scheme == "https", open_timeout: 20,
+                  :verify_mode => OpenSSL::SSL::VERIFY_NONE
+      }
 
-      Net::HTTP.start(uri.hostname, uri.port, options) do |http|
-        http.request(req)
+      if uri.hostname =~ /ngrok/ # hack
+        req = Net::HTTP::Get.new URI.parse("http://localhost:3000" + req.path)
+        req.basic_auth(@username, @password) if credentials?
+        Net::HTTP.start("localhost", 3000, options) do |http|
+          http.request(req)
+        end
+      else
+        Net::HTTP.start(uri.hostname, uri.port, options) do |http|
+          http.request(req)
+        end
       end
     end
   end
+
   class RegistryClient
     include HttpHelpers
 
@@ -160,8 +171,8 @@ module Portus
       @host     = host
       @use_ssl  = use_ssl
       @base_url = "http#{"s" if @use_ssl}://#{@host}/v2/"
-      @username = username || "portus"
-      @password = password || Rails.application.secrets.portus_password
+      @username = username
+      @password = password
     end
 
     # Returns whether the registry is reachable with the given credentials or
@@ -243,7 +254,7 @@ module Portus
     # wrong, it raises an exception.
     def paged_response(link, field)
       res = []
-      link += "?n=#{APP_CONFIG["registry"]["catalog_page"]["value"]}"
+      link += "?n=100"
 
       until link.empty?
         page, link = get_page(link)
