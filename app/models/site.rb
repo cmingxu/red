@@ -34,9 +34,10 @@ class Site < ApplicationRecord
   def self.default
     if !self.first
       self.create swan_addrs: "http://localhost:9999",
-        marathon_addrs: "http://localhost:8080",
-        mesos_addrs: "localhost:5050",
-        registry_domain: "myregistry.com"
+        marathon_addrs: "https://marathon.hengdingsheng.com",
+        mesos_addrs: "https://mesos.hengdingsheng.com",
+        graphna_addr: "https://graphna.hengdingsheng.com",
+        registry_domain: "registry.hengdingsheng.com"
     end
 
     self.first

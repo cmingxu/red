@@ -158,6 +158,7 @@ GEM
     minitest (5.10.2)
     multi_json (1.12.1)
     multi_xml (0.5.5)
+    mysql2 (0.4.6)
     netrc (0.11.0)
     nio4r (1.2.1)
     nokogiri (1.6.8.1)
@@ -302,6 +303,7 @@ DEPENDENCIES
   less-rails
   listen (~> 3.0.5)
   mini_magick
+  mysql2
   puma (~> 3.0)
   pundit
   rails (~> 5.0.2)

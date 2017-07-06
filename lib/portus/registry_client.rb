@@ -38,6 +38,7 @@ module Portus
       # call.
       req["Authorization"] = "Bearer #{@token}" if @token
 
+      puts uri
       res = get_response_token(uri, req)
       if res.code.to_i == 401
         # This can mean that this is the first time that the client is calling
@@ -151,6 +152,9 @@ module Portus
           http.request(req)
         end
       else
+        ap uri.hostname
+        ap uri.port
+        ap options
         Net::HTTP.start(uri.hostname, uri.port, options) do |http|
           http.request(req)
         end
