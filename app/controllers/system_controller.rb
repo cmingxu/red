@@ -55,6 +55,7 @@ class SystemController < ApplicationController
   end
 
   def update_graphna_config
-    Site.default.swan_ping params[:site][:swan_addrs]
+    Site.default.update_attributes graphna_addr: params[:site][:graphna_addr]
+    render js: "$.notify('success')"
   end
 end

@@ -1,3 +1,5 @@
+require 'portus'
+
 class RepoTagsController < ApplicationController
   before_action :set_namespace, :set_repository, :set_repo_tag, :set_breadcrumb
   before_action :set_registry_client

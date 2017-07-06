@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   patch 'system/update_domain_config', as: :update_domain_config
   patch 'system/update_swan_config', as: :update_swan_config
   patch 'system/update_registry_domain_config', as: :update_registry_domain_config
-  patch 'system/update_graphna', as: :update_graphna_config
+  patch 'system/update_graphna_config', as: :update_graphna_config
 
   get 'session/new', as: :new_session
   get 'session/particles'
