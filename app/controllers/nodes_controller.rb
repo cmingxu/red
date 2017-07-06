@@ -82,7 +82,7 @@ class NodesController < ApplicationController
 
   def mesos_state
     Rails.cache.fetch("mesos-object", expires_in: 60.second) do
-      Mesos.new(leader: "http://114.55.130.152:5050").state
+      Mesos.new(leader: $base_services[:mesos]).state
     end
   end
 

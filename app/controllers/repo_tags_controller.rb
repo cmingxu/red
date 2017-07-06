@@ -22,7 +22,7 @@ class RepoTagsController < ApplicationController
   end
 
   def set_registry_client
-    @client = Portus::RegistryClient.new("114.55.130.152:5000", true, "admin@admin.com", "admin") 
+    @client = Portus::RegistryClient.new($base_services[:registry], true, "admin@admin.com", "admin") 
   end
 
   def set_breadcrumb
