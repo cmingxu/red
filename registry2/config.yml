@@ -26,7 +26,7 @@ storage:
       enabled: false
 http:
   addr: 0.0.0.0:5000
-  host: https://myregistry.com:5000
+  host: https://registry.hengdingsheng.com
   secret: asecretforlocaldevelopment
   relativeurls: false
   debug:
@@ -35,20 +35,20 @@ http:
     X-Content-Type-Options: [nosniff]
   http2:
     disabled: false
+
 notifications:
   endpoints:
-    - name: alistener
+    - name: listener
       disabled: false
-      url: http://094d373a.ngrok.io/registry/notifications
-      timeout: 5000ms
-      threshold: 5
+      url: https://demo.hengdingsheng.com/registry/notifications
+      timeout: 3000ms
+      threshold: 2
       backoff: 1s
       ignoredmediatypes:
         - application/octet-stream
-
 auth:
   token:
-    realm: http://0f9d05c1.ngrok.io/registry/token
-    service: foobar
+    realm: https://demo.hengdingsheng.com/registry/token
+    service: registry
     issuer: red
     rootcertbundle: /certs/domain.crt

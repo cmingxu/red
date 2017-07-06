@@ -11,10 +11,10 @@ RUN bundle install
 
 ENV RAILS_ENV development
 
-EXPOSE 3000
+EXPOSE 3001
 
 #RUN ["bundle", "exec", "rake", "db:create"]
 #RUN ["bundle", "exec", "rake", "db:migrate"]
 #RUN ["bundle", "exec", "rake", "db:seed"]
 
-CMD ["bundle", "exec", "rails", "s", "-p", "3000", "-b", "0.0.0.0" ]
+CMD ["bundle", "exec", "rails", "s", "-p", "3001", "-b", "0.0.0.0" ]
