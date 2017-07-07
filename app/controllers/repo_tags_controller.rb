@@ -6,10 +6,30 @@ class RepoTagsController < ApplicationController
 
   def show
     @manifest = @client.manifest(@repo_tag.repository.name, @repo_tag.name)
+    @blob     = @client.blobs(@repo_tag.repository.name, "sha256:" + @manifest[0])
+  end
+
+  def vulnerabilities_check
+    layer, parent_layer = params[:layer], params[:parent_layer]
+    Clair::Base.token_path = "http://localhost:3000/registry/token"
+    Clair::Base.password= "admin"
+    Clair::Base.username= "admin@admin.com"
+    Clair::Layer.post @repo_tag.repository.name, params[:layer], params[:parent_layer]
+    Clair::Layer.get(@repo_tag.repository.name, params[:layer])
+  end
+
+  def destroy
+    @client.delete(@repo_tag.repository.name, @repo_tag.digest, "manifests")
+    @repository.repo_tags.where(digest: @repo_tag.digest).map &:destroy
+    @repository.destroy if @repository.repo_tags.length == 0
+    if @repository.destroyed?
+      redirect_to namespace_path(@namespace)
+    else
+      redirect_to namespace_repository_path(@namespace, @repository)
+    end
   end
 
   private
-
   def set_namespace
     @namespace = Namespace.find(params[:namespace_id])
     @namespaces = Namespace.all
@@ -36,6 +56,10 @@ class RepoTagsController < ApplicationController
 
     if @repository
       @breadcrumb_list.push OpenStruct.new(name_zh_cn: @repository.name, name_en: @repository.name, path: namespace_repository_path(@namespace, @repository))
+    end
+
+    if @repo_tag
+      @breadcrumb_list.push OpenStruct.new(name_zh_cn: @repo_tag.name, name_en: @repo_tag.name, path: namespace_repository_repo_tag_path(@namespace, @repository, @repo_tag))
     end
   end
 end

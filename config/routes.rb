@@ -29,7 +29,11 @@ Rails.application.routes.draw do
     resources :permissions
 
     resources :repositories do
-      resources :repo_tags, only: :show
+      resources :repo_tags, only: [:show, :destroy] do
+        member do
+          put :vulnerabilities_check
+        end
+      end
     end
 
     resources :projects do

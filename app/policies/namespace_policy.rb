@@ -19,6 +19,10 @@ class NamespacePolicy < ApplicationPolicy
     user.can_admin? record
   end
 
+  def all?
+    user.can_admin? record
+  end
+
   def create?
     if owner.is_a?(Group)
       return user.groups.include? owner

@@ -152,9 +152,6 @@ module Portus
           http.request(req)
         end
       else
-        ap uri.hostname
-        ap uri.port
-        ap options
         Net::HTTP.start(uri.hostname, uri.port, options) do |http|
           http.request(req)
         end
@@ -203,6 +200,23 @@ module Portus
     # something goes wrong.
     def manifest(repository, tag = "latest")
       res = perform_request("#{repository}/manifests/#{tag}", "get")
+
+      if res.code.to_i == 200
+        mf = JSON.parse(res.body)
+        id = mf.try(:[], "config").try(:[], "digest")
+        id = id.split(":").last if id.is_a? String
+        digest = res["Docker-Content-Digest"]
+        [id, digest, mf]
+      elsif res.code.to_i == 404
+        handle_error res, repository: repository, tag: tag
+      else
+        raise "Something went wrong while fetching manifest for " \
+          "#{repository}:#{tag}:[#{res.code}] - #{res.body}"
+      end
+    end
+
+    def blobs(repository, tag = "latest")
+      res = perform_request("#{repository}/blobs/#{tag}", "get")
 
       if res.code.to_i == 200
         mf = JSON.parse(res.body)

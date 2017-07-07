@@ -13,5 +13,7 @@ module Green
     # -- all .rb files in that directory are automatically loaded.
 
     config.i18n.default_locale = :'zh-CN'
+    config.autoload_paths += %W( lib/ )
+    
   end
 end

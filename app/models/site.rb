@@ -37,7 +37,8 @@ class Site < ApplicationRecord
         marathon_addrs: "https://marathon.hengdingsheng.com",
         mesos_addrs: "https://mesos.hengdingsheng.com",
         graphna_addr: "https://graphna.hengdingsheng.com",
-        registry_domain: "registry.hengdingsheng.com"
+        registry_domain: "registry.hengdingsheng.com",
+        backend_option: "marathon"
     end
 
     self.first

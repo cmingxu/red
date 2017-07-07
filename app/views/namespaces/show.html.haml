@@ -20,7 +20,7 @@
                   %td= link_to repository.name, namespace_repository_path(@namespace, repository)
                   %td
                     - repository.repo_tags.each do |repo_tag|
-                      = link_to repo_tag.name, "", class: 'btn btn-flat btn-sm btn-warning'
+                      = link_to repo_tag.name, namespace_repository_repo_tag_path(@namespace, repository, repo_tag), class: 'btn btn-flat btn-sm btn-warning'
       .margin-bottom
 
     = box_helper "success" do

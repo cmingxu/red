@@ -10,7 +10,7 @@
           %table.table
             %thead
               %th= t("namespace.repo_tags")
-              %th= t("namespace.repo_size")
+              %th= t("namespace.digest")
               %th= t("namespace.path")
 
             %tbody
@@ -18,7 +18,7 @@
                 - @repo_tags.each do |tag|
                   %tr
                     %td= link_to tag.name, namespace_repository_repo_tag_path(@namespace, @repository, tag)
-                    %td= tag.blob_size
+                    %td= tag.digest
                     %td
                       .input-group
                         - id =  "copy_#{tag.repository.name.gsub('/', '')}_#{tag.name}"
