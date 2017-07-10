@@ -214,24 +214,6 @@ module Portus
       end
     end
 
-    def blob_meta(repository, digest = "latest")
-      res = perform_request("#{repository}/blobs/#{digest}", "head")
-
-      if res.code.to_i == 200
-        puts res.body
-        mf = JSON.parse(res.body)
-        id = mf.try(:[], "config").try(:[], "digest")
-        id = id.split(":").last if id.is_a? String
-        digest = res["Docker-Content-Digest"]
-        [id, digest, mf]
-      elsif res.code.to_i == 404
-        handle_error res, repository: repository, digest: digest
-      else
-        raise "Something went wrong while fetching manifest for " \
-          "#{repository}:#{tag}:[#{res.code}] - #{res.body}"
-      end
-    end
-
     def blobs(repository, digest = "latest")
       res = perform_request("#{repository}/blobs/#{digest}", "get")
 

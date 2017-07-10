@@ -98,6 +98,11 @@ class App < ApplicationRecord
     app.stop
   end
 
+  before_save on: :create do
+    self.instances ||= 0
+  end
+
+
   aasm :column => :state do
     state :pending, :initial => true
     state :running

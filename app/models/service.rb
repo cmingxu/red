@@ -33,10 +33,6 @@ class Service < ApplicationRecord
   validates :name, uniqueness: { scope: :user_id, if: Proc.new {self.user_id.present?} }
   validates :name, uniqueness: { scope: :group_id, if: Proc.new {self.group_id.present?} }
 
-  before_save on: :create do
-    self.instances ||= 0
-  end
-
   def owner
     if self.user_id
       return User.find self.user_id

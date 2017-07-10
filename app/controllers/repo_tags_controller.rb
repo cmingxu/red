@@ -14,12 +14,7 @@ class RepoTagsController < ApplicationController
   end
 
   def vulnerabilities_check
-    layer, parent_layer = params[:layer], params[:parent_layer]
-    Clair::Base.token_path = $base_services[:demo] +"/registry/token"
-    Clair::Base.password= "admin"
-    Clair::Base.username= "admin@admin.com"
-    Clair::Layer.post @repo_tag.repository.name, params[:layer], params[:parent_layer]
-    Clair::Layer.get(@repo_tag.repository.name, params[:layer])
+    @repo_tag.start_vulnerabilities_check
     head :ok
   end
 

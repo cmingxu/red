@@ -24,7 +24,10 @@ class RepoTag < ApplicationRecord
 
   serialize :vulnerabilities_check_results, Hash
 
-  def do_vulnerabilities_check
+  def start_vulnerabilities_check
+  end
+
+  def request_vulnerabilities_check
     @client = Portus::RegistryClient.new(URI($base_services[:registry]).hostname, true, "admin@admin.com", "admin") 
 
     Clair::Base.token_path = $base_services[:demo] +"/registry/token"
@@ -34,7 +37,7 @@ class RepoTag < ApplicationRecord
     @manifest = @client.manifest(self.repository.name, self.name)
 
     @manifest[2]["layers"].each_with_index do |layer, index|
-      Clair::Layer.post self.repository.name, layer['digest'], @manifest[2]["layers"][index+1].try(:fetch, "digest")
+      puts Clair::Layer.post self.repository.name, layer['digest'], @manifest[2]["layers"][index+1].try(:fetch, "digest")
     end
   end
 

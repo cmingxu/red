@@ -29,6 +29,8 @@
             = image_tag "logo-shurenyun-ico2.svg", height: 28
             -#= "Ship Yard"
         %nav.navbar.navbar-static-top
+          %a.sidebar-toggle{role: 'button', data: {'toggle': 'push-menu' }}
+            %span.sr-only
           .container-fluid
             %button.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse")
               %span.icon-bar

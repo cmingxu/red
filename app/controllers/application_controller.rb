@@ -157,6 +157,7 @@ class ApplicationController < ActionController::Base
 
   def graphna_path
     Site.default.graphna_addr + "/dashboard-solo/db/"
+    "https://admin@changem@graphna.hengdingsheng.com" + "/dashboard-solo/db/"
   end
 
   def breadcrumb_list

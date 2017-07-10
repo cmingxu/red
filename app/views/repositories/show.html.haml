@@ -12,7 +12,6 @@
               %th= t("namespace.repo_tags")
               %th= t("namespace.path")
               %th= t("namespace.vulnerabilities")
-              %th= t("namespace.digest")
 
             %tbody
               .form
@@ -26,12 +25,15 @@
                         %span.btn.input-group-addon{data: { 'clipboard-target': id }}
                           = fa_icon(:copy)
                     %td
-                      %strong.red= tag.strip_vulnerabilities.select{|v| v.Severity == "High" }.size
-                      High
+                      %strong.text-danger
+                        = tag.strip_vulnerabilities.select{|v| v.Severity == "High" }.size
+                        High
 
-                      %strong.red= tag.strip_vulnerabilities.select{|v| v.Severity == "Medium" }.size
-                      Medium
-                    %td= tag.digest
+                      \/
+
+                      %strong.text-warning
+                        = tag.strip_vulnerabilities.select{|v| v.Severity == "Medium" }.size
+                        Medium
 
 
 
