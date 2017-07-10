@@ -5,17 +5,22 @@ class RepoTagsController < ApplicationController
   before_action :set_registry_client
 
   def show
+  end
+
+  def manifest_blob_page
     @manifest = @client.manifest(@repo_tag.repository.name, @repo_tag.name)
     @blob     = @client.blobs(@repo_tag.repository.name, "sha256:" + @manifest[0])
+    render layout: false
   end
 
   def vulnerabilities_check
     layer, parent_layer = params[:layer], params[:parent_layer]
-    Clair::Base.token_path = "http://localhost:3000/registry/token"
+    Clair::Base.token_path = $base_services[:demo] +"/registry/token"
     Clair::Base.password= "admin"
     Clair::Base.username= "admin@admin.com"
     Clair::Layer.post @repo_tag.repository.name, params[:layer], params[:parent_layer]
     Clair::Layer.get(@repo_tag.repository.name, params[:layer])
+    head :ok
   end
 
   def destroy

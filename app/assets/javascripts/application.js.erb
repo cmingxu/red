@@ -175,6 +175,14 @@ function setMainContentWidth() {
   }
 }
 
+function lazyLoadDelayDom() {
+  var delay_dom = $('.delay_dom');
+  if(delay_dom.length != 0) {
+    delay_dom.load(delay_dom.data('delay-path'));
+  }
+}
+
+
 $(document).on('ready turbolinks:load', function() {
   initPeity();
   initTooltip();
@@ -185,6 +193,7 @@ $(document).on('ready turbolinks:load', function() {
 
   registerSearchInputAnimation();
   setMainContentWidth();
+  lazyLoadDelayDom();
 
   $('select:not(.app-select)').selectpicker();
 

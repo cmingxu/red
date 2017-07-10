@@ -242,7 +242,7 @@ zh-CN:
     repo_size: "大小"
     path: "地址"
     new_namespace: "新镜像仓库"
-    namespace: "镜像库"
+    name: "镜像库"
     new_project: "新项目"
     project_name: "项目名称"
     version_format: "版本格式"
@@ -255,6 +255,25 @@ zh-CN:
     uploaded_file: "文件"
     state: "进程"
     exception: "错误"
+    pull_image: '镜像拉取'
+    repo_detail: '镜像详情'
+    repo_layers: '镜像层'
+    digest: 'Digest'
+    size: '大小'
+    remove_tag: "删除Tag"
+    vulnerabilities: "镜像安全"
+    severity: "安全级别"
+    feature: "组件"
+    version: "当前版本"
+    namespace: "Namespace"
+    fixed_by: "修复版本"
+    added_by: "引入"
+    created_at: "增加时间"
+    command: "Command"
+    rescan: "重新扫描"
+    rescan_confirm: "根据镜像大小扫描时间略有不同，请耐心等待"
+    delete_confirm: "根据Docker Registry设计理念，Tag删除之后不会释放存储空间，如有需要请联系管理员"
+    
 
 
   audit:

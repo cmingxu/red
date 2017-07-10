@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       resources :repo_tags, only: [:show, :destroy] do
         member do
           put :vulnerabilities_check
+          get :manifest_blob_page
         end
       end
     end

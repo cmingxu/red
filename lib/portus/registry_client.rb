@@ -38,7 +38,6 @@ module Portus
       # call.
       req["Authorization"] = "Bearer #{@token}" if @token
 
-      puts uri
       res = get_response_token(uri, req)
       if res.code.to_i == 401
         # This can mean that this is the first time that the client is calling
@@ -215,17 +214,36 @@ module Portus
       end
     end
 
-    def blobs(repository, tag = "latest")
-      res = perform_request("#{repository}/blobs/#{tag}", "get")
+    def blob_meta(repository, digest = "latest")
+      res = perform_request("#{repository}/blobs/#{digest}", "head")
 
       if res.code.to_i == 200
+        puts res.body
         mf = JSON.parse(res.body)
         id = mf.try(:[], "config").try(:[], "digest")
         id = id.split(":").last if id.is_a? String
         digest = res["Docker-Content-Digest"]
         [id, digest, mf]
       elsif res.code.to_i == 404
-        handle_error res, repository: repository, tag: tag
+        handle_error res, repository: repository, digest: digest
+      else
+        raise "Something went wrong while fetching manifest for " \
+          "#{repository}:#{tag}:[#{res.code}] - #{res.body}"
+      end
+    end
+
+    def blobs(repository, digest = "latest")
+      res = perform_request("#{repository}/blobs/#{digest}", "get")
+
+      if res.code.to_i == 200
+        puts res.body
+        mf = JSON.parse(res.body)
+        id = mf.try(:[], "config").try(:[], "digest")
+        id = id.split(":").last if id.is_a? String
+        digest = res["Docker-Content-Digest"]
+        [id, digest, mf]
+      elsif res.code.to_i == 404
+        handle_error res, repository: repository, digest: digest
       else
         raise "Something went wrong while fetching manifest for " \
           "#{repository}:#{tag}:[#{res.code}] - #{res.body}"

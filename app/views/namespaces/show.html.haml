@@ -3,7 +3,7 @@
     = render :partial => "namespaces/namespace_left", locals: { namespaces: @namespaces }
   .col-md-9
     = box_helper "warning" do
-      = box_header_helper t("namespace.namespace") + @namespace.name, :server do
+      = box_header_helper t("namespace.name") + " " + @namespace.name, :server do
         .box-tools.pull-right
           = render :partial => "widgets/search_form", locals: { q: @qrepo, search_condition: :name_cont, url: namespace_path(@namespace) }
       = box_body_helper do

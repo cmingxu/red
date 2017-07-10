@@ -1,0 +1,36 @@
+= box_helper "warning" do
+  = box_header_helper t("namespace.repo_detail"), :server
+  = box_body_helper do
+    - hash = {}.tap do |hash| hash["Digest"] = @manifest[0]; hash["mediaType"] = @manifest[2]["mediaType"]; hash["Size"] = @manifest[2]["config"]["size"] end
+    = info_show_helper hash
+    - if @blob
+      - history = @blob[2].delete("history")
+      = info_show_helper @blob[2]
+
+      %hr
+
+      %table.table.table-striped.table-bordered
+        %thead
+          %th{style: 'width: 150px'}= t("namespace.created_at")
+          %th= t("namespace.command")
+
+        %tbody
+          - history.each do |his|
+            %tr
+              %td= time_ago_in_words his['created']
+              %td= his['created_by']
+
+
+      %hr
+      %table.table.table-bordered
+        %thead
+          %th= t("namespace.digest")
+          %th= t("namespace.size")
+
+        %tbody
+          - @manifest[2]["layers"].each_with_index do |layer, index|
+            %tr
+              %td= layer["digest"]
+              %td
+                %strong= number_to_human_size layer["size"]
+

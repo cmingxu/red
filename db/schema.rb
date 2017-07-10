@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170704034243) do
+ActiveRecord::Schema.define(version: 20170710021037) do
 
   create_table "app_links", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "service_id"
@@ -166,8 +166,9 @@ ActiveRecord::Schema.define(version: 20170704034243) do
     t.string   "url"
     t.string   "source"
     t.integer  "user_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.text     "vulnerabilities_check_results", limit: 4294967295
   end
 
   create_table "repositories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

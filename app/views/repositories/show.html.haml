@@ -10,21 +10,28 @@
           %table.table
             %thead
               %th= t("namespace.repo_tags")
-              %th= t("namespace.digest")
               %th= t("namespace.path")
+              %th= t("namespace.vulnerabilities")
+              %th= t("namespace.digest")
 
             %tbody
               .form
                 - @repo_tags.each do |tag|
                   %tr
                     %td= link_to tag.name, namespace_repository_repo_tag_path(@namespace, @repository, tag)
-                    %td= tag.digest
                     %td
                       .input-group
                         - id =  "copy_#{tag.repository.name.gsub('/', '')}_#{tag.name}"
                         = text_field_tag "", "docker pull " + Site.default.registry_domain + "/" + tag.repository.name + ":" + tag.name, id: id, class: 'form-control'
                         %span.btn.input-group-addon{data: { 'clipboard-target': id }}
                           = fa_icon(:copy)
+                    %td
+                      %strong.red= tag.strip_vulnerabilities.select{|v| v.Severity == "High" }.size
+                      High
+
+                      %strong.red= tag.strip_vulnerabilities.select{|v| v.Severity == "Medium" }.size
+                      Medium
+                    %td= tag.digest
 
 
 

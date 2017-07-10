@@ -2,10 +2,10 @@
   .col-md-3
     = render :partial => "namespaces/namespace_left", locals: { namespaces: @namespaces }
   .col-md-9
-    = box_helper "warning" do
-      = box_header_helper "", :server do
+    = box_helper "success" do
+      = box_header_helper t('namespace.pull_image'), :server do
         .box-tool.pull-right
-          = link_to t('common.remove'), namespace_repository_repo_tag_path(@namespace, @repository, @repo_tag), method: :delete, class: danger_btn_helper, data: { confirm: t("common.remove") }
+          = link_to t('namespace.remove_tag'), namespace_repository_repo_tag_path(@namespace, @repository, @repo_tag), method: :delete, class: danger_btn_helper, data: { confirm: t("namespace.delete_confirm") }
       = box_body_helper do
         .input-group
           - id =  "copy_#{@repository.name.gsub('/', '')}_#{@repo_tag.name}"
@@ -13,23 +13,34 @@
           %span.btn.input-group-addon{data: { 'clipboard-target': id }}
             = fa_icon(:copy)
 
-    = box_helper "warning" do
-      = box_header_helper t("namespace.repositories") + @repo_tag.name, :server
+    = box_helper "danger" do
+      = box_header_helper t('namespace.vulnerabilities'), :server do
+        .box-tool.pull-right
+          = link_to t('namespace.rescan'), vulnerabilities_check_namespace_repository_repo_tag_path(@namespace, @repository, @repo_tag), method: :put, class: danger_btn_helper, data: { confirm: t("namespace.rescan_confirm") }
       = box_body_helper do
-        - hash = {}.tap do |hash| hash["Digest"] = @manifest[0]; hash["mediaType"] = @manifest[2]["mediaType"]; hash["Size"] = @manifest[2]["config"]["size"] end
-        = info_show_helper hash
-        = info_show_helper @blob[2] if  @blob
-
-
         %table.table
           %thead
-            %th= t("namespace.digest")
-            %th= t("namespace.size")
+            %th CVE
+            %th= t("namespace.severity")
+            %th= t("namespace.feature")
+            %th= t("namespace.version")
+            %th= t("namespace.namespace")
+            %th= t("namespace.fixed_by")
+            %th= t("namespace.added_by")
 
           %tbody
-            - @manifest[2]["layers"].each_with_index do |layer, index|
+            - @repo_tag.strip_vulnerabilities.sort_by{|v| ["High", "Medium", "Low", "Negligible", "Unkown"].index(v.Severity) || 10000 }.each do |v|
               %tr
-                %td= layer["digest"]
-                %td= number_to_human_size layer["size"]
-                %td= link_to "check", vulnerabilities_check_namespace_repository_repo_tag_path(@namespace, @repository, @repo_tag, layer: layer["digest"], parent_layer: @manifest[2]["layers"][index+1].try(:fetch, "digest")), method: :put, data: { confirm: "check" }, class: danger_btn_helper
+                %td= link_to v.Name, v.Link, target: '_blank'
+                %td= vuln_serverity(v.Severity)
+                %td
+                  %strong= v.FeatureName
+                %td= v.Version
+                %td= v.NamespaceName
+                %td= v.FixedBy
+                %td= v.AddedBy
+
+
+    .delay_dom{ data: { 'delay-path': manifest_blob_page_namespace_repository_repo_tag_path(@namespace, @repository, @repo_tag)}} 
+      = render :partial => "widgets/loading"
 
