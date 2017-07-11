@@ -14,8 +14,8 @@ class RepoTagsController < ApplicationController
   end
 
   def vulnerabilities_check
-    @repo_tag.start_vulnerabilities_check
-    head :ok
+    VulnerabilitiesCheckWorker.perform_in(1.seconds, @repo_tag.id)
+    redirect_to namespace_repository_repo_tag_path(@namespace, @repository, @repo_tag)
   end
 
   def destroy

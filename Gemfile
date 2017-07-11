@@ -73,6 +73,8 @@ gem 'docker_registry2'
 
 gem 'ledermann-rails-settings'
 
+gem 'sidekiq'
+
 
 
 # Use Redis adapter to run Action Cable in production
