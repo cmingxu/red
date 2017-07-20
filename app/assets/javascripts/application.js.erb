@@ -203,7 +203,6 @@ $(document).on('ready turbolinks:load', function() {
 
   if($("#ace_editor_dom").length) {
     var content = $("#editor_real_input").val();
-    console.log(content.replace("\r\n", "\n"));
     aceInit('ace_editor_dom', content.replace("\r\n", "\n"));
   }
 });

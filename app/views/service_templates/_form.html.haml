@@ -28,7 +28,7 @@
             = f.input :readme, as: :text, label: false, input_html: {'data-provide': 'markdown-editable', style: 'height: 400px;'}
           .tab-pane#raw_config{role: 'tabpanel'}
             = f.input :raw_config, as: :text, label: false, input_html: {style: "height: 400px;", id: 'editor'}
-            
+
       = hidden_field_tag "owner_type", params[:owner_type] || @service_template.owner.try(:class).try(:to_s)
       = hidden_field_tag "owner_id", params[:owner_id] || @service_template.owner.try(:id)
 

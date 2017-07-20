@@ -1,7 +1,7 @@
 = box_helper "warning" do
   = box_header_helper t("common.user") do
     .box-tools.pull-right
-      = link_to fa_icon(:plus) + " " + t("group.enroll_new_user"), "", class: 'btn btn-success btn-sm btn-flat'
+      -#= link_to fa_icon(:plus) + " " + t("group.enroll_new_user"), "", class: 'btn btn-success btn-sm btn-flat'
       = link_to fa_icon(:plus) + " " + t("group.new_group_user"), "#newUser", class: 'btn btn-primary btn-sm btn-flat', data: { toggle: 'modal' }
       = modal_dialog id: "newUser", header: { show_close: true, dismiss: 'modal', title: t('user.new_user') }, body:   { content: render(:partial => "users/form", locals: { group: @group, user: @group.users.new, siteadmin_require: false, groupadmin_require: true }) }, footer: { content: '' }
 
@@ -26,7 +26,8 @@
               - user.groups_without_default.order('created_at ASC').each do |g|
                 = link_to g.name, group_path(g)
             %td
+              = modal_dialog id: "editUser#{user.id}", header: { show_close: true, dismiss: 'modal', title: t('user.edit_user') }, body:   { content: render(:partial => "users/form", locals: { group: @group, user: user, siteadmin_require: false, groupadmin_require: true }) }, footer: { content: '' }
               = drop_down_menu :default, t("common.actions") do
-                = drop_down_menu_item t("common.edit"), ""
+                = drop_down_menu_item t("common.edit"), "#editUser#{user.id}", data: { toggle: 'modal' }
                 = drop_down_menu_item t("common.remove"), leave_group_user_path(group, user), method: :delete, data: { confirm: t("common.remove") } unless group.is_default?
 
