@@ -1,0 +1,33 @@
+= box_helper "success" do
+  = box_header_helper t('nav.pods'), :server do
+    .box-tools.pull-right
+
+  = box_body_helper do
+    = render :partial => "widgets/list_place_holder" if @pods.empty?
+    %table.table
+      %thead
+        %th= t("pods.name")
+        %th= t("pods.namespace")
+        %th= t("pods.status")
+        %th= t("pods.image")
+        %th= t("pods.ip")
+        %th= t("pods.created_at")
+      %tbody
+        - @pods.each do |pod|
+          %tr
+            %td
+              = pod.metadata.name
+            %td
+              = pod.metadata.namespace
+            %td
+              = pod.status.phase
+            %td
+              = pod.spec.containers.first.image
+            %td
+              = pod.status.hostIP
+              \/
+              = pod.status.podIP
+            %td
+              = Time.parse( pod.status.startTime )
+
+

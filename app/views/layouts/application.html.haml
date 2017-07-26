@@ -54,6 +54,7 @@
             %li.header= t("nav.features")
             = sidebar_li_helper :dashboard, :home, t("nav.dashboard"), dashboard_path, false, {"red": "new"}
             = sidebar_li_helper :services, :bars, t("nav.services"), services_path
+            = sidebar_li_helper :pods, :server, t("nav.pods"), pods_path
             = sidebar_li_helper :service_templates, 'shopping-bag', t("nav.service_templates"), service_templates_path
             = sidebar_li_helper :namespaces, :copy, t("nav.namespaces"), namespaces_path, false, {"green": Namespace.count}
             = sidebar_li_helper :hosts, :server, t("nav.nodes"), nodes_path, false, {"blue": Node.count}

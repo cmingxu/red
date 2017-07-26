@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   end
 
   resources :builds, only: [:create]
+  resources :pods
 
   resources :audits, only: [:index]
   resources :versions

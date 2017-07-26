@@ -75,6 +75,8 @@ gem 'ledermann-rails-settings'
 
 gem 'sidekiq'
 
+gem 'kubeclient'
+
 
 
 # Use Redis adapter to run Action Cable in production

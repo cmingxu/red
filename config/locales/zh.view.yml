@@ -82,6 +82,7 @@ zh-CN:
     dashboard: "我的主页"
     features: "功能"
     other: "其他"
+    pods: "Pod"
   app:
     name: "名称"
     desc: "备注"
@@ -273,8 +274,6 @@ zh-CN:
     rescan: "重新扫描"
     rescan_confirm: "根据镜像大小扫描时间略有不同，请耐心等待"
     delete_confirm: "根据Docker Registry设计理念，Tag删除之后不会释放存储空间，如有需要请联系管理员"
-    
-
 
   audit:
     entity: "对象"
@@ -367,6 +366,15 @@ zh-CN:
   setting:
     change_password: "修改密码"
     change_basic: '基本信息'
+
+  pods:
+    name: "名称"
+    namespace: "域"
+    status: "状态"
+    image: "镜像"
+    ip: "IP"
+    created_at: "创建时间"
+
 
 
 

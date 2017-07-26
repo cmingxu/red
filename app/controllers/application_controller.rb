@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   attr_accessor :page_request_meta_info
   before_action :set_page_request_meta_info
-  before_action :set_backend
+  before_action :set_backend, :initialize_k8_client
 
   protect_from_forgery with: :exception
   before_action :login_required
@@ -165,6 +165,16 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  def initialize_k8_client
+    config = Kubeclient::Config.read('/Users/kevinxu/.kube/config')
+    @k8client = Kubeclient::Client.new(
+      config.context.api_endpoint,
+      config.context.api_version,
+      { ssl_options: config.context.ssl_options,
+      auth_options: config.context.auth_options }
+    )
+  end
 
   private
   def user_not_authorized
