@@ -6,7 +6,7 @@
 
     = box_body_helper do
       .col-md-6
-        = image_tag group.icon.small.try(:url) || "placeholder.png"
+        = image_tag group.icon.small.try(:url) || "placeholder.png", width: 200, class: 'margin-bottom'
         %label.btn.btn-primary.btn-flat.btn-file{style: 'display: block; width: 200px;'}
           = f.input :icon, input_html: { style: "display: none;" }, label: fa_icon(:upload) + " " + t('common.upload_icon')
 

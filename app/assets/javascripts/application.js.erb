@@ -222,15 +222,18 @@ function readURL(input) {
   }
 }
 
-var openFile = function(event) {
+var openFile = function(event, fileType="json") {
   var input = event.target;
 
   var reader = new FileReader();
   reader.onload = function(){
     var text = reader.result;
     if(window.editor != null && window.editor.setValue) {
-      var o = JSON.parse(text) // may throw if json is malformed
-      val = JSON.stringify(o, null, 4)
+      val = text;
+      if(fileType=="json") {
+        var o = JSON.parse(text) // may throw if json is malformed
+        val = JSON.stringify(o, null, 4)
+      }
       window.editor.setValue(val);
     }
   };

@@ -1,2 +1,20 @@
-%h1 Pods#new
-%p Find me in app/views/pods/new.html.haml
+= box_helper "green" do
+  = simple_form_for :pods, url: pods_path do |form|
+    = box_header_helper t('common.new_pod') , :server do
+      .box-tools.pull-right
+        = form.submit t("common.submit"), class: primary_btn_helper
+        = link_to t("common.cancel"), pods_path, class: 'btn btn-default btn-flat btn-sm'
+    = box_body_helper do
+      .row.read_from_compose
+        .col-md-6
+          %label.btn.btn-primary.btn-file.btn-flat
+            = form.input :compose, as: :file, input_html: { style: "display: none;", onchange: 'openFile(event, "yaml")' }, label: fa_icon(:upload, class: "x2") + " " +  t('service.compose')
+          = text_area_tag "ace_editor_dom", "", id: "ace_editor_dom", class: 'form-control', data: {'ace-mode': 'yaml'}
+          = form.input :compose_content, as: :text, label: false, input_html: { style: 'display: none;', id: 'editor_real_input' }
+      .row
+        .col-md-12.margin-bottom.text-red
+          = fa_icon("info") + "    " + t("common.choose_from_file")
+
+
+
+

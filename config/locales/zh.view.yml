@@ -82,7 +82,7 @@ zh-CN:
     dashboard: "我的主页"
     features: "功能"
     other: "其他"
-    pods: "Pod"
+    pods: "Kubernetes"
   app:
     name: "名称"
     desc: "备注"
