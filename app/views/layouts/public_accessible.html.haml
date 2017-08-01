@@ -1,0 +1,83 @@
+!!! 5
+%html(lang="en")
+  %head
+    %meta(charset="utf-8")
+    %meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    %title= content_for?(:title) ? yield(:title) : "Shipyard"
+
+    = csrf_meta_tags
+    = stylesheet_link_tag "application", :media => "all"
+    = favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144'
+    = favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114'
+    = favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72'
+    = favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png'
+    -#= favicon_link_tag image_path('favicon.ico'), :rel => 'shortcut icon'
+    = javascript_include_tag "application"
+    / Le HTML5 shim, for IE6-8 support of HTML elements
+    /[if lt IE 9]
+      = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"
+    = yield :custom_assets
+
+  %body{class: [controller_name, "skin-blue", "sidebar-mini"].join(" ") }
+    .wrapper{style: 'min-height: 960px'}
+      %header.main-header
+        %a.logo{href: root_path}
+          %span.logo-mini
+
+          %span.logo-lg
+            -#= image_tag "logo-shurenyun-ico2.svg", height: 28
+            = "云平台管理系统"
+        %nav.navbar.navbar-static-top
+          %a.sidebar-toggle{role: 'button', data: {'toggle': 'push-menu' }}
+            %span.sr-only
+          .container-fluid
+            %button.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse")
+              %span.icon-bar
+              %span.icon-bar
+              %span.icon-bar
+
+            .navbar-collapse.collapse.navbar-responsive-collapse
+              %ul.nav.navbar-nav.navbar-right
+                %li{class: navbar_nav_active_class(:system) }= link_to t('nav.system'), system_path
+                = drop_down fa_icon(:user) + " #{current_user.display}" do
+                  = menu_item t('nav.setting'), setting_path
+                  = menu_item t('nav.audits'), audits_path if current_user.site_admin?
+                  = menu_item t('nav.logout'), logout_path, method: :delete
+                  = drop_down_divider
+                  = menu_item fa_icon(:language) + " " + desired_language, toggle_locale_path, remote: true, method: :put
+
+
+      %aside.main-sidebar
+      .content-wrapper
+        .content-header
+          .margin-bottom
+            = bootstrap_flash
+          - if page_request_meta_info[:panel_header_and_icon][:text]
+            %h1
+              &nbsp;
+              -#= t("nav.#{page_request_meta_info[:panel_header_and_icon][:text]}")
+              -#%small= page_request_meta_info[:panel_header_and_icon][:text_small]
+          - if need_breadcrumb
+            = render :partial => "widgets/breadcrumb"
+
+        .content
+          = render :partial => "widgets/owner_chooser"
+
+          - if controller.class.ancestors.include? NodesController
+            .row
+              .col-md-3
+                = render :partial => "nodes/node_left", locals: {nodes: @nodes}
+              .col-md-9#node_details
+                = yield
+          - elsif controller.class.ancestors.include? SystemController
+            .row
+              .col-md-3
+                = render :partial => "system/system_left"
+              .col-md-9#system_details
+                = yield
+          - else
+            = yield
+
+      %footer.main-footer
+        %p &copy; Company 2017

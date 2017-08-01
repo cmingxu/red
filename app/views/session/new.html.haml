@@ -1,5 +1,5 @@
 .new_user_form.text-center.col-md-6.col-md-offset-3
-  = image_tag "logo.svg", height: 80
+  -#= image_tag "logo.svg", height: 80
 
   = simple_form_for @user, :url => login_path, class: 'login-form' do |form|
     = form.input :email, wrapper: :horizontal_input_group, label: false do
